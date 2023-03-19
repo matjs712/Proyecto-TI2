@@ -34,7 +34,17 @@
             </p>
           </a>
         </li>
-       
+
+        <li class="nav-item">
+          <a href="{{ url('/auto') }}" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Autos
+              {{-- <span class="right badge badge-danger">New</span> --}}
+            </p>
+          </a>
+        </li>
+
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-table"></i>

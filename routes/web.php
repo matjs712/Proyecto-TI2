@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CarsController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,4 +25,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     Route::put('update-cat/{id}',     [CategoryController::class,'update']);
     Route::get('delete-cat/{id}',     [CategoryController::class,'destroy']);
     
+    // Autos
+    Route::get('auto',        'Admin\CarsController@index');
+    Route::get('crear-auto',   'Admin\CarsController@create');
+    Route::post('insert-auto',  'Admin\CarsController@store');
+    Route::get('edit-auto/{id}',     [CarsController::class,'edit']);
+    Route::put('update-auto/{id}',     [CarsController::class,'update']);
+    Route::get('delete-auto/{id}',     [CarsController::class,'destroy']);
+        
  });
