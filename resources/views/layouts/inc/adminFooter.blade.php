@@ -4,5 +4,5 @@
       Sales
     </div> --}}
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2023 <a href="">Grupo DCIM</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2023 <a href="">Grupo IDCM</a>.</strong> All rights reserved.
   </footer>
