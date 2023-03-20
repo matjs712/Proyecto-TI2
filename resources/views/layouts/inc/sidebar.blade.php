@@ -26,11 +26,19 @@
              with font-awesome or any other icon font library -->
         
         <li class="nav-item">
-          <a href="{{ url('/categorias') }}" class="nav-link">
+          <a href="{{ url('/dashboard') }}" class="nav-link  {{ Request::is('dashboard') ? 'active': ''}}">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Inicio
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{{ url('/categorias') }}" class="nav-link {{ Request::is('categorias') ? 'active': '' }}">
             <i class="nav-icon fas fa-th"></i>
             <p>
               Categorías
-              {{-- <span class="right badge badge-danger">New</span> --}}
             </p>
           </a>
         </li>
