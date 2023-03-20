@@ -35,7 +35,7 @@
           </a>
         </li>
        
-        <li class="nav-item has-treeview">
+        {{-- <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-table"></i>
             <p>
@@ -63,8 +63,8 @@
               </a>
             </li>
           </ul>
-        </li>
-        <li class="nav-header">EXAMPLES</li>
+        </li> --}}
+        {{-- <li class="nav-header">EXAMPLES</li>
         <li class="nav-item">
           <a href="pages/calendar.html" class="nav-link">
             <i class="nav-icon far fa-calendar-alt"></i>
@@ -170,7 +170,7 @@
             <i class="fas fa-circle nav-icon"></i>
             <p>Level 1</p>
           </a>
-        </li>
+        </li> --}}
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
