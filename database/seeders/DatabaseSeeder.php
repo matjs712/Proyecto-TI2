@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Database\Seeders\UsersTableSeeder;
+use Database\Seeders\CategoriasTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,6 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(UsersTableSeeder::class);
+        $this->call(CategoriasTableSeeder::class);
 
     }
 }
