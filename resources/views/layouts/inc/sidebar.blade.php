@@ -35,7 +35,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="{{ url('/categorias') }}" class="nav-link {{ (Request::is('categorias') || Request::is('crear-categoria') ) ? 'active': '' }}">
+          <a href="{{ url('/categorias') }}" class="nav-link {{ (Request::is('categorias') || Request::is('crear-categoria') || Request::is('edit-cat/*') ) ? 'active': '' }}">
             <i class="fa fa-circle" aria-hidden="true"></i>
             <p>
               Categorías
@@ -44,7 +44,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="{{ url('/productos') }}" class="nav-link {{ (Request::is('productos') ||Request::is('crear-producto') ) ? 'active': '' }}">
+          <a href="{{ url('/productos') }}" class="nav-link {{ (Request::is('productos') ||Request::is('crear-producto') || Request::is('edit-prod/*')  ) ? 'active': '' }}">
             <i class="fas fa-star    "></i>
             <p>
               Productos

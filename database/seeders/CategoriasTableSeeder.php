@@ -33,6 +33,17 @@ class CategoriasTableSeeder extends Seeder
                 'meta_description' => 'Pantalones increibles',
                 'meta_keywords' => 'Pantalones, Pantalones negros, Cargos',
             ],
+            [
+                'name' => 'Poleras',
+                'slug' => 'Poleras',
+                'description' => 'Poleras de todo tipo y de todas las tallas.',
+                'status' => 1,
+                'popular' => 1,
+                'image' =>  'asd',
+                'meta_title' => 'poleras',
+                'meta_description' => 'Poleras increibles',
+                'meta_keywords' => 'Poleras, poleras, Poleras large',
+            ],
         ]);
     }
 }

@@ -31,7 +31,7 @@
                     <td>{{ $categoria->slug }}</td>
                     <td>{{ $categoria->description }}</td>
                     <td>{!! ($categoria->status == 1)? '<span class="badge badge-success">Visible</span>' : '<span class="badge badge-danger">No visible</span>' !!}</td>
-                    <td>{!! ($categoria->poular == 1)? '<span class="badge badge-danger">No</span>':'<span class="badge badge-success">Si</span>'  !!}</td>
+                    <td>{!! ($categoria->popular == 1)? '<span class="badge badge-danger">No</span>':'<span class="badge badge-success">Si</span>'  !!}</td>
                     <td>
                         <img width="100" src="{{ asset('assets/uploads/categorias/'.$categoria->image) }}" alt="categoria-name">
                     </td>

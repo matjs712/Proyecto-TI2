@@ -24,7 +24,7 @@
                       <input type="text" name="slug" value="{{ $categoria->slug }}" class="form-control" placeholder="Poleras">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group">
                       <label for="descripcion">Descripción</label>
                       <textarea type="text" rows="5" style="resize:none;" name="description" class="form-control" placeholder="Categoría dedicada solo a peloras de ...">{{ $categoria->description }}</textarea>

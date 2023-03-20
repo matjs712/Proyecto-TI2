@@ -14,9 +14,10 @@
             <thead style="background-color:#343a40; color:white;">
                 <tr class="text-center">
                     <th>Id</th>
+                    <th>Categoria</th>
                     <th>Nombre</th>
-                    <th>Slug</th>
-                    <th>Descripción pequeña</th>
+                    <th>Precio</th>
+                    <th>Precio de oferta</th>
                     <th>Imagen</th>
                     <th>Opciones</th>
                 </tr>
@@ -25,9 +26,10 @@
                 @foreach ($productos as $product)
                 <tr class="text-center"> 
                     <td scope="row">{{ $product->id }}</td>
+                    <td>{{ $product-> category->name }}</td>
                     <td>{{ $product->name }}</td>
-                    <td>{{ $product->slug }}</td>
-                    <td>{{ $product->small_description }}</td>
+                    <td><span class="badge badge-primary">{{ $product->original_price }}</span></td>
+                    <td><span class="badge badge-success">{{ $product->selling_price }}</span></td>
                     {{-- <td>{!! ($product->status == 0)? '<span class="badge badge-success">Visible</span>' : '<span class="badge badge-danger">No visible</span>' !!}</td> --}}
                     <td>
                         <img width="100" src="{{ asset('assets/uploads/productos/'.$product->image) }}" alt="producto-name">
