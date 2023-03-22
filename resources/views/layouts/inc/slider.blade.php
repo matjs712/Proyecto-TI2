@@ -1,27 +1,77 @@
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="https://via.placeholder.com/800x400?text=First+Slide" class="d-block w-100"  alt="First Slide">
-      </div>
-      <div class="carousel-item">
-        <img src="https://via.placeholder.com/800x400?text=Second+Slide" class="d-block w-100" alt="Second Slide">
-      </div>
-      <div class="carousel-item">
-        <img src="https://via.placeholder.com/800x400?text=Third+Slide" class="d-block w-100" alt="Third Slide">
-      </div>
+@section('css_after')
+<style>
+  .owl-carousel{
+    max-height:500px;  
+  }
+  .owl-carousel img{
+  height: 500px !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+.owl-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.owl-nav button {
+  color: white;
+  font-size: 30px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.owl-nav button:hover {
+  opacity: 0.7;
+}
+.owl-prev, .owl-next{
+ font-size: 100px !important;
+ background: #e4e4e4 !important;
+ z-index: 100000 !important;
+ position: absolute !important;
+ height: 22px !important;
+ width: 22px !important;
+}
+.owl-next{
+  right: 10px !important;
+}
+.owl-prev{
+  left: 10px !important;
+}
+
+
+</style>
+@endsection
+
+<div class="owl-carousel owl-theme">
+  @foreach ( $categorias as $categoria )
+    <div class="item">
+      <img src="{{ asset('assets/uploads/categorias/'.$categoria->image) }}" alt="">
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div>
-  
+  @endforeach
+</div>
+
+@section('after_scripts')
+<script>
+  $('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    navText: ["<i class='fas fa-angle-left'></i>", "<i class='fas fa-angle-right'></i>"],
+    autoplay:true,
+    autoplayTimeout:3000,
+    responsive:{
+        0:{
+            items:1
+        }
+    }
+})
+</script>
+
+@endsection

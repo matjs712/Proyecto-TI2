@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class FrontendController extends Controller
 {
@@ -14,7 +15,8 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        return view('frontend.index');
+        $categorias = Category::all();
+        return view('frontend.index', compact('categorias'));
     }
 
     /**
