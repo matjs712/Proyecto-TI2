@@ -4,12 +4,16 @@
 @section('content')
 
     <div class="card">
-        <img class="card-img-top" src="holder.js/100x180/" alt="">
         <div class="card-body">
-            <h4 class="card-title">Mat coder</h4>
-            <p class="card-text">Text</p>
+            <div style="width:100; margin:auto" >
+                <canvas id="myChart" ></canvas>
+            </div>
         </div>
     </div>
 
 
+@endsection
+
+@section('after_scripts')
+<script src="{{asset('admin/js/myChart.js')}}"></script>
 @endsection
