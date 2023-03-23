@@ -63,7 +63,18 @@
 
 
 {{-- CHARTS --}}
-
+<?php
+  $conn = mysqli_connect("localhost", "root", "", "proyectoti");
+  $resultado = mysqli_query($conn, "SELECT name, qty FROM products");
+  $datos = array();
+  while ($fila = mysqli_fetch_assoc($resultado)) {
+      $datos[] = array(
+          'label' => $fila['name'],
+          'value' => $fila['qty']
+      );
+  }
+  $datos_json = json_encode($datos);
+?>
 
   <script>
   $(function () {
