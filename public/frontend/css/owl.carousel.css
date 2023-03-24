@@ -1,0 +1,18 @@
+  .owl-carousel{
+    max-height:500px;  
+  }
+  .owl-carousel img{
+  height: 500px !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+.owl-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1;
+  display: none;
+}

@@ -7,13 +7,17 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\HomeController;
 
+// FRONTEND ROUTES
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
-
-
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+// Route::get('/categorias', [FrontendController::class, 'category'])->name('category');
+Route::get('/ver-categoria/{slug}', [FrontendController::class, 'viewCategory'])->name('viewCategory');
+Route::get('/categorias/{cate_slug}/{prod_slug}', [FrontendController::class, 'productview'])->name('productview');
 
+
+// ADMIN ROUTES
  Route::middleware(['auth','isAdmin'])->group(function (){
     Route::get('/dashboard',  'Admin\FrontendController@index')->name('dashboard');
     
