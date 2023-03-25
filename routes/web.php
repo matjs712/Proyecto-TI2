@@ -2,20 +2,29 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\FrontendController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Frontend\CartController;
 
 // FRONTEND ROUTES
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
-Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 // Route::get('/categorias', [FrontendController::class, 'category'])->name('category');
 Route::get('/ver-categoria/{slug}', [FrontendController::class, 'viewCategory'])->name('viewCategory');
 Route::get('/categorias/{cate_slug}/{prod_slug}', [FrontendController::class, 'productview'])->name('productview');
 
+Route::post('add-to-cart', [CartController::class, 'addProduct'])->name('addProduct');
+Route::post('delete-cart-item', [CartController::class, 'deleteProduct'])->name('deleteProduct');
+Route::post('update-cart', [CartController::class, 'updateCart'])->name('updateCart');
+
+Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
+   Route::get('carrito', [CartController::class, 'viewCart'])->name('viewCart');
+});
+
+Auth::routes();
 
 // ADMIN ROUTES
  Route::middleware(['auth','isAdmin'])->group(function (){

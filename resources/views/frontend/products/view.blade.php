@@ -6,12 +6,16 @@
 
 <div class="py-3 mb-4 shadow-sm bg-warning border-top">
     <div class="container">
-        <h6 class="mb-0">{{ $producto->category->name }} / {{ $producto->name }}</h6>
+        <h6 class="mb-0">
+            <a href="{{ url('/') }}">Inicio</a> / 
+            <a href="{{ url('ver-categoria/'.$producto->category->slug) }}">{{ $producto->category->name }}</a> / 
+            <a href="{{ url('categorias/'.$producto->category->slug.'/'.$producto->slug) }}">{{ $producto->name }}</a>
+        </h6>
     </div>
 </div>
 
 <div class="container">
-    <div class="card shadow">
+    <div class="card shadow prod_data">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-4 border-right">
@@ -38,17 +42,18 @@
                     @endif
                     <div class="row mt-2 align-items-center">
                         <div class="col-md-3">
+                            <input type="hidden" value="{{ $producto->id }}" class="prod_id">
                             <label for="qty">Cantidad</label>
                             <div class="input-group text-center">
-                                <span class="input-group-text">-</span>
-                                <input type="text" name="qty" value="1" class="form-control">
-                                <span class="input-group-text">+</span>
+                                <button class="input-group-text decrement-btn">-</button>
+                                <input type="text" name="qty" value="1" class="form-control qty-input">
+                                <button class="input-group-text increment-btn">+</button>
                             </div>
                         </div>
                         <div class="col-md-9">
                             <br>
                             <button class="btn btn-success me-3 float-start"><i class="fa-regular fa-heart"></i> Añadir a la lista</button>
-                            <button class="btn btn-primary me-3 float-start"><i class="fa fa-cart-plus" aria-hidden="true"></i> Añadir al carrito</button>
+                            <button class="btn btn-primary me-3 float-start addCartBtn"><i class="fa fa-cart-plus" aria-hidden="true"></i> Añadir al carrito</button>
                         </div>
                     </div>
                 </div>
@@ -56,5 +61,4 @@
         </div>
     </div>
 </div>
-
 @endsection
