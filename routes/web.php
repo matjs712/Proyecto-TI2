@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CheckoutController;
+use App\Http\Controllers\Frontend\UserController;
 
 // FRONTEND ROUTES
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
@@ -22,6 +24,11 @@ Route::post('update-cart', [CartController::class, 'updateCart'])->name('updateC
 
 Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    Route::get('carrito', [CartController::class, 'viewCart'])->name('viewCart');
+   Route::get('checkout',[CheckoutController::class, 'index'])->name('checkout.index');
+   Route::post('place-order',[CheckoutController::class, 'placeorder'])->name('placeorder');
+   Route::get('mis-ordenes',[UserController::class, 'index'])->name('ordenes.index');
+   Route::get('ver-orden/{id}', [UserController::class, 'view'])->name('ordenes.view');
+
 });
 
 Auth::routes();

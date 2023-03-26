@@ -53,7 +53,9 @@
                         <div class="col-md-9">
                             <br>
                             <button class="btn btn-success me-3 float-start"><i class="fa-regular fa-heart"></i> Añadir a la lista</button>
+                            @if ($producto->qty > 0)
                             <button class="btn btn-primary me-3 float-start addCartBtn"><i class="fa fa-cart-plus" aria-hidden="true"></i> Añadir al carrito</button>
+                            @endif
                         </div>
                     </div>
                 </div>

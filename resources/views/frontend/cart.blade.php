@@ -16,6 +16,7 @@ Mi Carrito
 
     <div class="container my-5">
         <div class="card shadow">
+            @if ($cartItems->count() > 0)
             <div class="card-body">
                 @php $total = 0; @endphp
                 @foreach ($cartItems as $item)
@@ -31,24 +32,34 @@ Mi Carrito
                         </div>
                         <div class="col-md-3">
                             <input hidden class="prod_id" type="text" value="{{ $item->prod_id }}">
-                            <label for="qty">Cantidad</label>
-                            <div class="input-group text-center mb-3" style="width:130px;">
-                                <button class="input-group-text changeQuantity decrement-btn">-</button>
-                                <input type="text" name="qty" class="form-control qty-input text-center" value="{{ $item->prod_qty }}">
-                                <button class="input-group-text changeQuantity increment-btn">+</button>
-                            </div>
+                            @if ($item->products->qty >= $item->prod_qty)
+                                <label for="qty">Cantidad</label>
+                                <div class="input-group text-center mb-3" style="width:130px;">
+                                    <button class="input-group-text changeQuantity decrement-btn">-</button>
+                                    <input type="text" name="qty" class="form-control qty-input text-center" value="{{ $item->prod_qty }}">
+                                    <button class="input-group-text changeQuantity increment-btn">+</button>
+                                </div>
+                                @php $total += $item->products->selling_price * $item->prod_qty; @endphp
+                            @else
+                            <h6>Fuera de stock</h6>
+                            @endif
                         </div>
                         <div class="col-md-2">
                             <button class="btn btn-danger delete-cart-item"><i class="fa fa-trash"></i> Remover</button>
                         </div>
                     </div>    
-                    @php $total += $item->products->selling_price * $item->prod_qty; @endphp
                 @endforeach
             </div>
             <div class="card-footer d-flex justify-content-between align-items-center">
                 <h6>Total: {{ $total }}</h6>
-                <button class="btn btn-outline-success">Seguir al Checkout</button>
+                <a href="{{ url('checkout') }}" class="btn btn-outline-success">Seguir al Checkout</a>
             </div>
+            @else
+                <div class="card-body text-center">
+                    <h2>Tu <i class="fa fa-shopping-cart" aria-hidden="true"></i> carrito esta vacio</h2>
+                    <a href="{{ url('/') }}" class="btn btn-outline-primary">Continua comprando</a>
+                </div>
+            @endif
         </div>
     </div>
 @endsection
