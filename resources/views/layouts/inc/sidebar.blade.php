@@ -51,143 +51,26 @@
             </p>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a href="{{ url('ordenes') }}" class="nav-link {{ Request::is('ordenes') ? 'active': '' }}">
+            <i class="fas fa-star"></i>
+            <p>
+              Ordenes
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{{ url('usuarios') }}" class="nav-link {{ Request::is('usuarios') ? 'active': '' }}">
+            <i class="fas fa-star"></i>
+            <p>
+              Usuarios
+            </p>
+          </a>
+        </li>
        
-        {{-- <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-table"></i>
-            <p>
-              Tables
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="pages/tables/simple.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Simple Tables</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/tables/data.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>DataTables</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/tables/jsgrid.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>jsGrid</p>
-              </a>
-            </li>
-          </ul>
-        </li> --}}
-        {{-- <li class="nav-header">EXAMPLES</li>
-        <li class="nav-item">
-          <a href="pages/calendar.html" class="nav-link">
-            <i class="nav-icon far fa-calendar-alt"></i>
-            <p>
-              Calendar
-              <span class="badge badge-info right">2</span>
-            </p>
-          </a>
-        </li>
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon far fa-plus-square"></i>
-            <p>
-              Extras
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="pages/examples/login.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Login</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/examples/register.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Register</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/examples/forgot-password.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Forgot Password</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/examples/recover-password.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Recover Password</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/examples/lockscreen.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Lockscreen</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/examples/legacy-user-menu.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Legacy User Menu</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/examples/language-menu.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Language Menu</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/examples/404.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Error 404</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/examples/500.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Error 500</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/examples/pace.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Pace</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/examples/blank.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Blank Page</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="starter.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Starter Page</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-header">MISCELLANEOUS</li>
-        <li class="nav-item">
-          <a href="https://adminlte.io/docs/3.0" class="nav-link">
-            <i class="nav-icon fas fa-file"></i>
-            <p>Documentation</p>
-          </a>
-        </li>
-        <li class="nav-header">MULTI LEVEL EXAMPLE</li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="fas fa-circle nav-icon"></i>
-            <p>Level 1</p>
-          </a>
-        </li> --}}
+        
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

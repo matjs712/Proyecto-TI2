@@ -10,7 +10,7 @@ $(document).ready(function(){
         })
 
         $.ajax({
-            type: "POST",
+            method: "POST",
             url: "/add-to-cart",
             data: {
                 'product_id'  : prod_id,
@@ -21,7 +21,25 @@ $(document).ready(function(){
             }
         });
     })
-
+    $('.addToWishlist').click(function (e){
+        e.preventDefault()
+        var prod_id = $(this).closest('.prod_data').find('.prod_id').val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        })
+        $.ajax({
+            method: "POST",
+            url: "/add-to-wishlist",
+            data: {
+                'prod_id': prod_id,
+            },
+            success: function (response){
+                swal(response.status);
+            }
+        });
+    })
     $('.increment-btn').click(function (e){
         e.preventDefault()
 
@@ -56,13 +74,38 @@ $(document).ready(function(){
         })
         
         $.ajax({
-            type: "POST",
+            method: "POST",
             url: "delete-cart-item",
             data: {
                 'product_id'  : prod_id,
             },
             success: function (response){
                 swal("", response.status, "success");
+                setTimeout(function(){
+                    window.location.reload();
+                }, 2000);
+            }
+        });
+    })
+    $('.remove-wishlist-item').click(function (e){
+        e.preventDefault()
+        
+        var prod_id = $(this).closest('.prod_data').find('.prod_id').val();
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        })
+        
+        $.ajax({
+            method: "POST",
+            url: "delete-wishlist-item",
+            data: {
+                'prod_id'  : prod_id,
+            },
+            success: function (response){
+                swal(response.status);
                 setTimeout(function(){
                     window.location.reload();
                 }, 2000);
@@ -92,4 +135,5 @@ $(document).ready(function(){
         });
         
     })
+
 })
