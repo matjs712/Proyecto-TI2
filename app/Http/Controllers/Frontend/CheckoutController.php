@@ -8,8 +8,11 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Transbank\Webpay\Webpay;
+use Transbank\Webpay\Configuration;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+
 
 class CheckoutController extends Controller
 {
@@ -28,6 +31,7 @@ class CheckoutController extends Controller
     }
 
     public function placeorder(Request $request){
+
         $order              = new Order();
         $order->user_id     = Auth::id();
         $order->fname       = $request->input('fname');
@@ -49,9 +53,36 @@ class CheckoutController extends Controller
         $order->total_price = $total;
 
         $order->save();
+
+        // Crear una instancia de la configuración de Transbank
+        // $config = new Configuration();
+        // $config->setEnvironment(env('TRANSBANK_ENVIRONMENT'));
+        // $config->setCommerceCode(env('TRANSBANK_COMMERCE_CODE'));
+        // $config->setPrivateKey(env('TRANSBANK_PRIVATE_KEY'));
+        // $config->setPublicCert(env('TRANSBANK_PUBLIC_CERT'));
+        // $config->setWebpayCert(env('TRANSBANK_WEBPAY_CERT'));
+
+
+        // // Crear una instancia de Webpay
+        // $webpay = new Webpay($config);
+        // $transaction = $webpay->getNormalTransaction();
+        // $amount = $total; // monto de la transacción
+        // $sessionId = $order->id; // identificador único de la sesión de compra
+        // $returnUrl = url('/order/confirmation'); // URL a la que se redirecciona al usuario después del pago
+        // $initResult = $transaction->initTransaction($amount, $sessionId, $returnUrl);
+        
+        // // Guardar los datos de la transacción en la tabla Order
+        // $order->token_ws = $initResult->getToken();
+        // $order->url_confirmacion = $initResult->getUrl();
+        // $order->save();
+
+        // // Redirigir al usuario a la página de pago de Transbank
+        // $redirectUrl = $initResult->getUrl();
+        
+        
         
         $cartItems = Cart::where('user_id', Auth::id())->get();
-
+        
         foreach($cartItems as $item){
             OrderItem::create([
                 'order_id' => $order->id,
@@ -78,6 +109,8 @@ class CheckoutController extends Controller
         }
         $cartItems = Cart::where('user_id', Auth::id())->get();
         Cart::destroy($cartItems);
+        
+        // return redirect()->away($redirectUrl);
         return redirect('/')->with('status','Orden realizada correctamente!!');
     }
 }

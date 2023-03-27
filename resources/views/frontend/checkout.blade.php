@@ -28,39 +28,48 @@ Checkout
                             <div class="row checkout-form">
                                 <div class="col-md-6">
                                     <label for="firstName">Primer nombre</label>
-                                    <input type="text" name="fname" value="{{ Auth::user()->name }}" class="form-control" placeholder="Juan">
+                                    <input type="text" name="fname" value="{{ Auth::user()->name }}" class="fname form-control" placeholder="Juan">
+                                    <span style="color:red" id="fname_error"></span>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="lastName">Apellido</label>
-                                    <input type="text" name="lname" value="{{ Auth::user()->lname }}" class="form-control" placeholder="Aguirre">
+                                    <input type="text" name="lname" value="{{ Auth::user()->lname }}" class="lname form-control" placeholder="Aguirre">
+                                    <span style="color:red" id="lname_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Email</label>
-                                    <input type="text" name="email" value="{{ Auth::user()->email }}" class="form-control" placeholder="email@gmail.com">
+                                    <input type="text" name="email" value="{{ Auth::user()->email }}" class="email form-control" placeholder="email@gmail.com">
+                                    <span style="color:red" id="email_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Numero de teléfono</label>
-                                    <input type="text" name="telefono" value="{{ Auth::user()->telefono }}" class="form-control" placeholder="9 12345678">
+                                    <input type="text" name="telefono" value="{{ Auth::user()->telefono }}" class="phone form-control" placeholder="9 12345678">
+                                    <span style="color:red" id="phone_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Dirección 1</label>
-                                    <input type="text" name="direccion1" value="{{ Auth::user()->direccion1 }}" class="form-control" placeholder="Calle fantasia 123">
+                                    <input type="text" name="direccion1" value="{{ Auth::user()->direccion1 }}" class="direccion1 form-control" placeholder="Calle fantasia 123">
+                                    <span style="color:red" id="direccion1_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Direccion 2</label>
-                                    <input type="text" name="direccion2" value="{{ Auth::user()->direccion2 }}" class="form-control" placeholder="Calle fantasia 123">
+                                    <input type="text" name="direccion2" value="{{ Auth::user()->direccion2 }}" class="direccion2 form-control" placeholder="Calle fantasia 123">
+                                    <span style="color:red" id="direccion2_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Región</label>
-                                    <input type="text" name="region" value="{{ Auth::user()->region }}" class="form-control" placeholder="Metropolitana">
+                                    <input type="text" name="region" value="{{ Auth::user()->region }}" class="region form-control" placeholder="Metropolitana">
+                                    <span style="color:red" id="region_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Ciudad</label>
-                                    <input type="text" name="ciudad" value="{{ Auth::user()->ciudad }}" class="form-control" placeholder="Metropolitana">
+                                    <input type="text" name="ciudad" value="{{ Auth::user()->ciudad }}" class="ciudad form-control" placeholder="Metropolitana">
+                                    <span style="color:red" id="ciudad_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Comuna</label>
-                                    <input type="text" name="comuna" value="{{ Auth::user()->comuna }}" class="form-control" placeholder="Providencia">
+                                    <input type="text" name="comuna" value="{{ Auth::user()->comuna }}" class="comuna form-control" placeholder="Providencia">
+                                    <span style="color:red" id="comuna_error"></span>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +84,7 @@ Checkout
                                 <table class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Porducto</th>
+                                            <th>Producto</th>
                                             <th>Cantidad</th>
                                             <th>Precio</th>
                                         </tr>
@@ -91,7 +100,7 @@ Checkout
                                     </tbody>
                                 </table>
                                 <hr>
-                                <button style="width: 100%;" class="btn btn-primary">Realizar orden</button>
+                                <button style="width: 100%;" class="btn btn-primary pagoBtn">Ir al pago</button>
                             </div>
                             @else
                             <div class="card-body text-center">
