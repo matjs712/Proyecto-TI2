@@ -22,12 +22,16 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/ver-categoria/{slug}', [FrontendController::class, 'viewCategory'])->name('viewCategory');
 Route::get('/categorias/{cate_slug}/{prod_slug}', [FrontendController::class, 'productview'])->name('productview');
 
+Auth::routes();
+
 // CARRITO
-Route::post('add-to-cart', [CartController::class, 'addProduct'])->name('addProduct');
-Route::post('delete-cart-item', [CartController::class, 'deleteProduct'])->name('deleteProduct');
-Route::post('update-cart', [CartController::class, 'updateCart'])->name('updateCart');
+Route::get('load-cart-data', [CartController::class, 'cartCount']);
+Route::post('add-to-cart', [CartController::class, 'addProduct']);
+Route::post('delete-cart-item', [CartController::class, 'deleteProduct']);
+Route::post('update-cart', [CartController::class, 'updateCart']);
 
 //WISHLIST
+Route::get('load-wish-data', [WishListController::class, 'wishCount']);
 Route::post('add-to-wishlist', [WishlistController::class, 'add']);
 Route::post('delete-wishlist-item', [WishlistController::class, 'destroy']);
 
@@ -40,7 +44,6 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    Route::get('wishlist', [WishlistController::class, 'index']);
 });
 
-Auth::routes();
 
 // ADMIN ROUTES
  Route::middleware(['auth','isAdmin'])->group(function (){

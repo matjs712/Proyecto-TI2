@@ -49,4 +49,9 @@ class WishlistController extends Controller
             return response()->json(['status' => "Inicia sesión para continuar."]);
         }
     }
+    function wishCount(){
+        $count = Wishlist::where('user_id', Auth::id())->count();
+        return response()->json(['count' => $count]);
+    }
+
 }

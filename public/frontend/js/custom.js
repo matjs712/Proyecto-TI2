@@ -1,4 +1,14 @@
 $(document).ready(function(){
+
+    loadCart();
+    loadWish();
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+    
     $('.addCartBtn').click(function (e){
         e.preventDefault()
         var prod_id = $(this).closest('.prod_data').find('.prod_id').val();
@@ -17,10 +27,35 @@ $(document).ready(function(){
                 'product_qty' : prod_qty,
             },
             success: function (response){
+                loadCart();
                 swal(response.status);
             }
         });
     })
+
+    function loadCart(){
+        
+        $.ajax({
+            method: "GET",
+            url: "/load-cart-data",
+            success: function (response){
+                $('.cart-count').html('');
+                $('.cart-count').html(response.count);
+            }
+        });
+    }
+    function loadWish(){
+        
+        $.ajax({
+            method: "GET",
+            url: "/load-wish-data",
+            success: function (response){
+                $('.wish-count').html('');
+                $('.wish-count').html(response.count);
+            }
+        });
+    }
+
     $('.addToWishlist').click(function (e){
         e.preventDefault()
         var prod_id = $(this).closest('.prod_data').find('.prod_id').val();
@@ -36,6 +71,7 @@ $(document).ready(function(){
                 'prod_id': prod_id,
             },
             success: function (response){
+                loadWish();
                 swal(response.status);
             }
         });
@@ -83,7 +119,7 @@ $(document).ready(function(){
                 swal("", response.status, "success");
                 setTimeout(function(){
                     window.location.reload();
-                }, 2000);
+                }, 1000);
             }
         });
     })
@@ -108,7 +144,7 @@ $(document).ready(function(){
                 swal(response.status);
                 setTimeout(function(){
                     window.location.reload();
-                }, 2000);
+                }, 1000);
             }
         });
     })
