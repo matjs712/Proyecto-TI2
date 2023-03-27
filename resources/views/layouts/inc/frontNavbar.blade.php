@@ -14,16 +14,6 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Categorias</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('carrito') }}">Carrito
-        <span class="badge badge-pill bg-primary text-white cart-count">0</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('wishlist') }}">Lista
-          <span class="badge badge-pill bg-success text-white wish-count">0</span>
-        </a>
-      </li>
 
       @guest
         @if (Route::has('login'))
@@ -42,6 +32,16 @@
         </li>
         @endif
         @else
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url('carrito') }}">Carrito
+          <span class="badge badge-pill bg-primary text-white cart-count">0</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url('wishlist') }}">Lista
+            <span class="badge badge-pill bg-success text-white wish-count">0</span>
+          </a>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ Auth::user()->name }}
