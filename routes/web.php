@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\IngredienteController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\WishlistController;
@@ -64,13 +65,21 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
     Route::get('edit-prod/{id}',     [ProductController::class,'edit']);
     Route::put('update-prod/{id}',     [ProductController::class,'update']);
     Route::get('delete-prod/{id}',     [ProductController::class,'destroy']);
+    
+    //  INGREDIENTES
+    Route::get('ingredientes',        'Admin\IngredienteController@index');
+    Route::get('crear-ingrediente',   'Admin\IngredienteController@create');
+    Route::post('insert-ingrediente',  'Admin\IngredienteController@store');
+    Route::get('edit-ing/{id}',     [IngredienteController::class,'edit']);
+    Route::put('update-ing/{id}',     [IngredienteController::class,'update']);
+    Route::get('delete-ing/{id}',     [IngredienteController::class,'destroy']);
 
    //  ORDENES
     Route::get('ordenes', [OrdenController::class, 'index']);
     Route::get('admin/ver-orden/{id}', [OrdenController::class, 'view']);
     Route::put('update-order/{id}', [OrdenController::class, 'updateorder']);
-
-   //  USUARIOS
+   
+    //  USUARIOS
     Route::get('usuarios', [DashboardController::class, 'index']);
     Route::get('ver-usuario/{id}', [DashboardController::class, 'view']);
     
