@@ -3,13 +3,19 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+
+use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\Admin\OrdenController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Admin\CategoryController;
+
+
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProveedorController;
 use App\Http\Controllers\Admin\IngredienteController;
+use App\Http\Controllers\Admin\RegistroController as AdminRegistroController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\WishlistController;
@@ -73,6 +79,22 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
     Route::get('edit-ing/{id}',     [IngredienteController::class,'edit']);
     Route::put('update-ing/{id}',     [IngredienteController::class,'update']);
     Route::get('delete-ing/{id}',     [IngredienteController::class,'destroy']);
+    
+    //  PROVEEDORES
+    Route::get('proveedores',        'Admin\ProveedorController@index');
+    Route::get('crear-proveedor',   'Admin\ProveedorController@create');
+    Route::post('insert-proveedor',  'Admin\ProveedorController@store');
+    Route::get('edit-prov/{id}',     [ProveedorController::class,'edit']);
+    Route::put('update-prov/{id}',     [ProveedorController::class,'update']);
+    Route::get('delete-prov/{id}',     [ProveedorController::class,'destroy']);
+    
+    //  REGISTROS
+    Route::get('registros',        'Admin\RegistroController@index');
+    Route::get('crear-registro',   'Admin\RegistroController@create');
+    Route::post('insert-registro',  'Admin\RegistroController@store');
+    Route::get('edit-reg/{id}',     [AdminRegistroController::class,'edit']);
+    Route::put('update-reg/{id}',     [AdminRegistroController::class,'update']);
+    Route::get('delete-reg/{id}',     [AdminRegistroController::class,'destroy']);
 
    //  ORDENES
     Route::get('ordenes', [OrdenController::class, 'index']);

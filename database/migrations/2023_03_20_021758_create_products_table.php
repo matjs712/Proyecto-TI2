@@ -22,14 +22,14 @@ class CreateProductsTable extends Migration
             $table->longText('description');
             $table->string('original_price');
             $table->string('selling_price');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('qty');
-            $table->string('tax');
+            // $table->string('tax');
             $table->tinyInteger('status');
             $table->tinyInteger('trending');
-            $table->mediumText('meta_title');
-            $table->mediumText('meta_keywords');
-            $table->mediumText('meta_description');
+            // $table->mediumText('meta_title');
+            // $table->mediumText('meta_keywords');
+            // $table->mediumText('meta_description');
             $table->timestamps();
         });
     }

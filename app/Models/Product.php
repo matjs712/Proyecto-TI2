@@ -20,12 +20,12 @@ class Product extends Model
         'selling_price',
         'image',
         'qty',
-        'tax',
+        // 'tax',
         'status',
         'trending',
-        'meta_title',
-        'meta_keywords',
-        'meta_description',
+        // 'meta_title',
+        // 'meta_keywords',
+        // 'meta_description',
     ];
     public function category(){
         return $this->belongsTo(Category::class, 'cate_id', 'id');

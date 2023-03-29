@@ -66,12 +66,12 @@
                     </div>
                 </div>
                 
-                <div class="col-md-6">
+                {{-- <div class="col-md-6">
                   <div class="form-group">
                     <label for="popular">Tax</label>
                     <input type="number" name="tax" value="{{ $producto->tax }}" class="form-control">
                   </div>
-              </div>
+              </div> --}}
               @if ($producto->image)
                     <img src="{{ asset('assets/uploads/productos/'.$producto->image) }}" width="300" alt="imagen-producto">
                 @endif
@@ -92,7 +92,7 @@
                   </div>
               </div>
                 
-              <div class="col-md-6">
+              {{-- <div class="col-md-6">
                   <div class="form-group">
                     <label for="estado">Meta titulo</label>
                     <input type="text" name="meta_title" value="{{ $producto->meta_title }}" class="form-control">
@@ -111,7 +111,7 @@
                     <input type="text" name="meta_keywords" value="{{ $producto->meta_keywords }}" class="form-control">
                   </div>
               </div>
-                
+                 --}}
                 <div class="col-md-12 mt-4">
                     <button type="submit" class="btn btn-primary">Editar</button>
                 </div>

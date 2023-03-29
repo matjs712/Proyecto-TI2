@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Ingrediente;
 use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
@@ -29,7 +30,8 @@ class ProductController extends Controller
     public function create()
     {
         $categorias = Category::all();
-        return view('admin.product.create', compact('categorias'));
+        $ingredientes = Ingrediente::all();
+        return view('admin.product.create', compact('categorias','ingredientes'));
     }
 
     /**
@@ -41,6 +43,29 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $producto = new Product();
+        $ingredientes = Ingrediente::all();
+        $ingredientesCount = count(preg_grep('/^ingrediente/', array_keys($request->all())));
+        $ingredienteFaltante = '';
+
+        for ($i = 1; $i <= $ingredientesCount; $i++) {
+            $idIngrediente = $request->input('ingrediente'.$i);
+            $cantidadRequerida = $request->input('cantidad'.$i) * $request->qty;
+            $ingrediente = $ingredientes->firstWhere('id', $idIngrediente);
+            if (!$ingrediente || $cantidadRequerida > $ingrediente->cantidad) {
+                $ingredienteFaltante = $ingrediente->name;
+                return redirect('/productos')->with('status', 'Cantidad de '.$ingredienteFaltante.' supera la del inventario!.');
+            }
+        }
+
+        
+        for ($i = 1; $i <= $ingredientesCount; $i++) {
+            $idIngrediente = $request->input('ingrediente'.$i);
+            $cantidadRequerida = $request->input('cantidad'.$i) * $request->qty;
+            
+            $ingrediente = Ingrediente::find($idIngrediente);
+            $ingrediente->cantidad = $ingrediente->cantidad - $cantidadRequerida;
+            $ingrediente->update();
+        }
 
         if($request->hasFile('image')){
             $file = $request->file('image');
@@ -58,12 +83,12 @@ class ProductController extends Controller
         $producto->original_price = $request->input('price');
         $producto->selling_price = $request->input('selling_price');
         $producto->qty = $request->input('qty');
-        $producto->tax = $request->input('tax');
+        // $producto->tax = $request->input('tax');
         $producto->status = $request->input('status') == TRUE ? '1':'0';
         $producto->trending = $request->input('trending') == TRUE ? '1':'0';
-        $producto->meta_title = $request->input('meta_title');
-        $producto->meta_description = $request->input('meta_description');
-        $producto->meta_keywords = $request->input('meta_keywords');
+        // $producto->meta_title = $request->input('meta_title');
+        // $producto->meta_description = $request->input('meta_description');
+        // $producto->meta_keywords = $request->input('meta_keywords');
         $producto->save();
 
         return redirect('/productos')->with('status', 'Producto añadido exitosamente!.');
@@ -126,12 +151,12 @@ class ProductController extends Controller
         $producto->original_price = $request->input('price');
         $producto->selling_price = $request->input('selling_price');
         $producto->qty = $request->input('qty');
-        $producto->tax = $request->input('tax');
+        // $producto->tax = $request->input('tax');
         $producto->status = $request->input('status') == TRUE ? '1':'0';
         $producto->trending = $request->input('trending') == TRUE ? '1':'0';
-        $producto->meta_title = $request->input('meta_title');
-        $producto->meta_description = $request->input('meta_description');
-        $producto->meta_keywords = $request->input('meta_keywords');
+        // $producto->meta_title = $request->input('meta_title');
+        // $producto->meta_description = $request->input('meta_description');
+        // $producto->meta_keywords = $request->input('meta_keywords');
         $producto->update();
 
         return redirect('/productos')->with('status', 'Producto Editado exitosamente!.');

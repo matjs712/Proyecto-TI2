@@ -126,7 +126,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ url('/registro') }}" class="nav-link {{ (Request::is('registro')  ) ? 'active': '' }}">
+              <a href="{{ url('/registros') }}" class="nav-link {{ (Request::is('registro')  ) ? 'active': '' }}">
                 <i class="far fa-circle nav-icon"></i><p>Ver todos</p>
               </a>
             </li>

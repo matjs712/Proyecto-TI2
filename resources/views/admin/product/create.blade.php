@@ -65,12 +65,12 @@
                     </div>
                 </div>
                 
-                <div class="col-md-6">
+                {{-- <div class="col-md-6">
                   <div class="form-group">
                     <label for="popular">Tax</label>
                     <input type="number" name="tax" class="form-control">
                   </div>
-              </div>
+              </div> --}}
                 <div class="col-md-12 mb-4">
                   <label for="">Imagen</label>
                     <input type="file" name="image" class="form-control">
@@ -87,7 +87,7 @@
                     <input type="checkbox" name="trending" class="form-control">
                   </div>
               </div>
-                
+{{--                 
               <div class="col-md-6">
                   <div class="form-group">
                     <label for="estado">Meta titulo</label>
@@ -107,7 +107,29 @@
                     <input type="text" name="meta_keywords" class="form-control">
                   </div>
               </div>
-                
+                 --}}
+                <div class="col-md-12">
+                  <div class="form-group d-flex">
+                    <div class="col-md-3">
+                      <label for="ingrediente1">Ingrediente 1</label>
+                      <select class="form-control" name="ingrediente1" id="ingrediente1">
+                        @foreach($ingredientes as $ingrediente)
+                        <option value="{{ $ingrediente->id }}">{{ $ingrediente->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="">Cantidad </label>
+                      <input class="form-control" type="number" name="cantidad1" id="cantidad1" value="1">
+                    </div>
+                  </div>
+
+                  <div id="ingredientes-extra"></div>
+
+                </div>
+                <button type="button" class="btn btn-dark" id="agregar-ingrediente">Agregar ingrediente</button>
+
+
                 <div class="col-md-12 mt-4">
                     <button type="submit" class="btn btn-primary">Crear</button>
                 </div>
@@ -117,4 +139,30 @@
     </div>
 </div>
 
+@endsection
+@section('after_scripts')
+<script>
+  let ingredienteCount = 1;
+  document.getElementById('agregar-ingrediente').addEventListener('click', function() {
+      ingredienteCount++;
+      const div = document.createElement('div');
+      div.innerHTML = `
+          <div class="form-group d-flex">
+            <div class="col-md-3">
+              <label for="ingrediente${ingredienteCount}">Ingrediente ${ingredienteCount}</label>
+                <select class="form-control" name="ingrediente${ingredienteCount}" id="ingrediente${ingredienteCount}">
+                    @foreach($ingredientes as $ingrediente)
+                        <option value="{{ $ingrediente->id }}">{{ $ingrediente->name }}</option>
+                    @endforeach
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="ingrediente${ingredienteCount}">Cantidad </label>
+                <input class="form-control" type="number" name="cantidad${ingredienteCount}" id="cantidad${ingredienteCount}" value="1">
+              </div>
+          </div>
+      `;
+      document.getElementById('ingredientes-extra').appendChild(div);
+  });
+</script>
 @endsection
