@@ -24,13 +24,13 @@ class ProductosTableSeeder extends Seeder
                 'original_price' => '18999',
                 'selling_price' => '16999',
                 'qty' => '4',
-                'tax' => '18',
+                // 'tax' => '18',
                 'status' => 1,
                 'trending' => 0,
                 'image' =>  'asd',
-                'meta_title' => 'pantalones',
-                'meta_description' => 'Pantalones increibles',
-                'meta_keywords' => 'Pantalones, Pantalones negros, Cargos',
+                // 'meta_title' => 'pantalones',
+                // 'meta_description' => 'Pantalones increibles',
+                // 'meta_keywords' => 'Pantalones, Pantalones negros, Cargos',
             ],
         ]);
     }

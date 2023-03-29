@@ -44,7 +44,7 @@ class RegistroController extends Controller
         $registro->cantidad = $request->input('cantidad');
         $registro->save();
 
-        $ingrediente = Ingrediente::find($request->input('id_proveedor'));
+        $ingrediente = Ingrediente::find($request->input('id_ingrediente'));
         $ingrediente->cantidad = $ingrediente->cantidad + $request->input('cantidad');
         $ingrediente->save();
 
@@ -78,11 +78,11 @@ class RegistroController extends Controller
         
         $registro = Registro::find($id);
         
-        $ingrediente = Ingrediente::find($request->input('id_proveedor'));
+        $ingrediente = Ingrediente::find($request->input('id_ingrediente'));
         if($request->input('cantidad') < $registro->cantidad){
-            $ingrediente->cantidad = $ingrediente->cantidad - ($registro->cantidad - $request->input('cantidad') );
-        }else if($request->input('cantidad') > $registro->cantidad){
-            $ingrediente->cantidad = $ingrediente->cantidad + ($request->input('cantidad') - $registro->cantidad);
+            $ingrediente->decrement('cantidad', $registro->cantidad - $request->input('cantidad'));
+        } else if($request->input('cantidad') > $registro->cantidad){
+            $ingrediente->increment('cantidad', $request->input('cantidad') - $registro->cantidad);
         }
 
         $ingrediente->save();

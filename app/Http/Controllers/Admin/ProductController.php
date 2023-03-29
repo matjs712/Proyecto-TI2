@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Ingrediente;
+use App\Models\ProductoIngrediente;
 use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
@@ -42,29 +43,27 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
+    //AQUI VA LA VALIDACIÒN DEL FORMULARIO  
+
+
         $producto = new Product();
         $ingredientes = Ingrediente::all();
         $ingredientesCount = count(preg_grep('/^ingrediente/', array_keys($request->all())));
         $ingredienteFaltante = '';
 
-        for ($i = 1; $i <= $ingredientesCount; $i++) {
-            $idIngrediente = $request->input('ingrediente'.$i);
-            $cantidadRequerida = $request->input('cantidad'.$i) * $request->qty;
-            $ingrediente = $ingredientes->firstWhere('id', $idIngrediente);
-            if (!$ingrediente || $cantidadRequerida > $ingrediente->cantidad) {
-                $ingredienteFaltante = $ingrediente->name;
-                return redirect('/productos')->with('status', 'Cantidad de '.$ingredienteFaltante.' supera la del inventario!.');
+        if($ingredientesCount >= 1){
+            if($request->ingrediente1 != ''){
+                for ($i = 1; $i <= $ingredientesCount; $i++) {
+                    $idIngrediente = $request->input('ingrediente'.$i);
+                    $cantidadRequerida = $request->input('cantidad'.$i) * $request->qty;
+                    $ingrediente = $ingredientes->firstWhere('id', $idIngrediente);
+                    if (!$ingrediente || $cantidadRequerida > $ingrediente->cantidad) {
+                        $ingredienteFaltante = $ingrediente->name;
+                        return redirect('/productos')->with('status', 'Cantidad de '.$ingredienteFaltante.' supera la del inventario!.');
+                    }
+                }    
             }
-        }
-
-        
-        for ($i = 1; $i <= $ingredientesCount; $i++) {
-            $idIngrediente = $request->input('ingrediente'.$i);
-            $cantidadRequerida = $request->input('cantidad'.$i) * $request->qty;
-            
-            $ingrediente = Ingrediente::find($idIngrediente);
-            $ingrediente->cantidad = $ingrediente->cantidad - $cantidadRequerida;
-            $ingrediente->update();
         }
 
         if($request->hasFile('image')){
@@ -91,6 +90,25 @@ class ProductController extends Controller
         // $producto->meta_keywords = $request->input('meta_keywords');
         $producto->save();
 
+        if($ingredientesCount >= 1 ){
+            if($request->ingrediente1 != ''){
+                for ($i = 1; $i <= $ingredientesCount; $i++) {
+                    $idIngrediente = $request->input('ingrediente'.$i);
+                    $cantidadRequerida = $request->input('cantidad'.$i) * $request->qty;
+
+                    $productoIngrediente = new ProductoIngrediente();
+                    $productoIngrediente->id_producto = $producto->id;
+                    $productoIngrediente->id_ingrediente = $idIngrediente;
+                    $productoIngrediente->cantidad = $cantidadRequerida;
+                    $productoIngrediente->save();
+
+                    $ingrediente = Ingrediente::find($idIngrediente);
+                    $ingrediente->cantidad = $ingrediente->cantidad - $cantidadRequerida;
+                    $ingrediente->update();
+                }
+            }
+        }
+
         return redirect('/productos')->with('status', 'Producto añadido exitosamente!.');
     }
 
@@ -115,7 +133,9 @@ class ProductController extends Controller
     {
         $producto = Product::find($id);
         $categorias = Category::all();
-        return view('admin.product.edit', compact('producto','categorias'));
+        $ingredientes = Ingrediente::all();
+        $productoIngredientes = ProductoIngrediente::where('id_producto', $id)->get();
+        return view('admin.product.edit', compact('producto','categorias','productoIngredientes', 'ingredientes'));
     }
 
     /**
@@ -127,7 +147,26 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
+
         $producto = Product::find($id);
+        // $ingredientes = Ingrediente::all();
+        $ingredientesCount = count(preg_grep('/^ingrediente/', array_keys($request->all())));
+        $ingredienteFaltante = '';
+        // dd($request);
+        if($ingredientesCount >= 1){
+            if($request->ingrediente1 != ''){
+                for ($i = 1; $i <= $ingredientesCount; $i++) {
+                    $idIngrediente = $request->input('ingrediente'.$i);
+                    $cantidadRequerida = $request->input('cantidad'.$i) * $request->qty;
+                    $ingrediente = Ingrediente::find($idIngrediente);
+                    if (!$ingrediente || $cantidadRequerida > $ingrediente->cantidad) {
+                        $ingredienteFaltante = $ingrediente->name;
+                        return redirect('/productos')->with('status', 'Cantidad de '.$ingredienteFaltante.' supera la del inventario!.');
+                    }
+                }
+            }
+        }
 
         if($request->hasFile('image')){
             $path = 'assets/uploads/productos/'.$producto->image;
@@ -158,6 +197,49 @@ class ProductController extends Controller
         // $producto->meta_description = $request->input('meta_description');
         // $producto->meta_keywords = $request->input('meta_keywords');
         $producto->update();
+
+        // dd($productoIngrediente);
+
+        if($ingredientesCount >= 1){
+            if($request->ingrediente1 != ''){
+                for ($i = 1; $i <= $ingredientesCount; $i++) {
+                    $idIngrediente = $request->input('ingrediente'.$i);
+                    $cantidadRequerida = $request->input('cantidad'.$i) * $request->qty;
+                    $ingrediente = Ingrediente::find($idIngrediente);
+                    
+                    $productoIngrediente = ProductoIngrediente::where('id_producto',$producto->id)
+                    ->where('id_ingrediente',$idIngrediente)->first();
+                    // dd($cantidadRequerida);
+                    
+                    if (!$productoIngrediente) {
+                        $productoIngredienteNew = new ProductoIngrediente();
+                        $productoIngredienteNew->id_producto = $producto->id;
+                        $productoIngredienteNew->id_ingrediente = $idIngrediente;
+                        $productoIngredienteNew->cantidad = $cantidadRequerida;
+                        $productoIngredienteNew->save();
+
+                        $ingrediente->cantidad = $ingrediente->cantidad - $cantidadRequerida;
+                        $ingrediente->update();
+                    }
+
+                    // REVISAR ESTA PARTE YA QUE NO SE ACTUALIZAN BIEN LAS CANTIDADES EN EL INGREDIENTE
+
+                    if($productoIngrediente){    
+                        if($cantidadRequerida < $productoIngrediente->cantidad){
+                            $ingrediente->decrement('cantidad', $productoIngrediente->cantidad - $cantidadRequerida);
+                        } else if($cantidadRequerida > $productoIngrediente->cantidad){
+                            $ingrediente->increment('cantidad', $cantidadRequerida - $productoIngrediente->cantidad);
+                        }
+                        
+                        $productoIngrediente->id_ingrediente = $idIngrediente;
+                        $productoIngrediente->update();
+                        $ingrediente->update();
+                    }
+
+                }
+            }
+        }
+
 
         return redirect('/productos')->with('status', 'Producto Editado exitosamente!.');
     }

@@ -30,4 +30,9 @@ class Product extends Model
     public function category(){
         return $this->belongsTo(Category::class, 'cate_id', 'id');
     }
+
+    public function ingredientes(){
+        return $this->belongsToMany(Ingrediente::class, 'producto_ingredientes', 'id_producto', 'id_ingrediente')->withPivot('cantidad');
+    }
+
 }

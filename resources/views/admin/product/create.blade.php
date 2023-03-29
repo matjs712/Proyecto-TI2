@@ -113,6 +113,7 @@
                     <div class="col-md-3">
                       <label for="ingrediente1">Ingrediente 1</label>
                       <select class="form-control" name="ingrediente1" id="ingrediente1">
+                        <option value="">Seleccione un ingrediente</option>
                         @foreach($ingredientes as $ingrediente)
                         <option value="{{ $ingrediente->id }}">{{ $ingrediente->name }}</option>
                         @endforeach
@@ -120,7 +121,7 @@
                     </div>
                     <div class="col-md-3">
                       <label for="">Cantidad </label>
-                      <input class="form-control" type="number" name="cantidad1" id="cantidad1" value="1">
+                      <input class="form-control" type="number" name="cantidad1" id="cantidad1" value="0">
                     </div>
                   </div>
 
@@ -128,7 +129,6 @@
 
                 </div>
                 <button type="button" class="btn btn-dark" id="agregar-ingrediente">Agregar ingrediente</button>
-
 
                 <div class="col-md-12 mt-4">
                     <button type="submit" class="btn btn-primary">Crear</button>
@@ -151,6 +151,7 @@
             <div class="col-md-3">
               <label for="ingrediente${ingredienteCount}">Ingrediente ${ingredienteCount}</label>
                 <select class="form-control" name="ingrediente${ingredienteCount}" id="ingrediente${ingredienteCount}">
+                  <option value="">Seleccione un ingrediente</option>
                     @foreach($ingredientes as $ingrediente)
                         <option value="{{ $ingrediente->id }}">{{ $ingrediente->name }}</option>
                     @endforeach
@@ -158,11 +159,12 @@
               </div>
               <div class="col-md-3">
                 <label for="ingrediente${ingredienteCount}">Cantidad </label>
-                <input class="form-control" type="number" name="cantidad${ingredienteCount}" id="cantidad${ingredienteCount}" value="1">
+                <input class="form-control" type="number" name="cantidad${ingredienteCount}" id="cantidad${ingredienteCount}" value="0">
               </div>
           </div>
       `;
       document.getElementById('ingredientes-extra').appendChild(div);
+
   });
 </script>
 @endsection

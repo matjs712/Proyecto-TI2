@@ -112,6 +112,36 @@
                   </div>
               </div>
                  --}}
+
+                <div class="col-md-12">
+                  @foreach ($productoIngredientes as $index => $prodIng)
+                    <div class="form-group d-flex">
+                      <div class="col-md-3">
+                        <label>Ingrediente</label>
+                        <select class="form-control" name="ingrediente{{ $index + 1 }}">
+                          @foreach($ingredientes as $ingrediente)
+                            <option value="{{ $ingrediente->id }}" @if ($prodIng->id_ingrediente == $ingrediente->id) selected @endif>{{ $ingrediente->name }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label>Cantidad</label>
+                          <input class="form-control" type="number" name="cantidad{{ $index + 1 }}" value="{{ $prodIng->cantidad/2 }}">
+                        </div>
+                      </div>
+                    </div>
+                  @endforeach
+                    
+                    <div id="ingredientes-extra"></div>
+
+                  </div>
+                  <button type="button" class="btn btn-dark" id="agregar-ingrediente">Agregar ingrediente</button>
+  
+
+                </div>
+
+
                 <div class="col-md-12 mt-4">
                     <button type="submit" class="btn btn-primary">Editar</button>
                 </div>
@@ -120,5 +150,32 @@
         </form>
     </div>
 </div>
+
+@endsection
+@section('after_scripts')
+<script>
+  let ingredienteCount = {{ $productoIngredientes->count() }}; // Inicializa con la cantidad de registros existentes en la tabla Registros + 1
+  document.getElementById('agregar-ingrediente').addEventListener('click', function() {
+      ingredienteCount++;
+      const div = document.createElement('div');
+      div.innerHTML = `
+          <div class="form-group d-flex">
+            <div class="col-md-3">
+              <label for="ingrediente${ingredienteCount}">Ingrediente ${ingredienteCount}</label>
+                <select class="form-control" name="ingrediente${ingredienteCount}" id="ingrediente${ingredienteCount}">
+                    @foreach($ingredientes as $ingrediente)
+                        <option value="{{ $ingrediente->id }}">{{ $ingrediente->name }}</option>
+                    @endforeach
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="ingrediente${ingredienteCount}">Cantidad </label>
+                <input class="form-control" type="number" name="cantidad${ingredienteCount}" id="cantidad${ingredienteCount}" value="1">
+              </div>
+          </div>
+      `;
+      document.getElementById('ingredientes-extra').appendChild(div);
+  });
+</script>
 
 @endsection
