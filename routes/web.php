@@ -71,6 +71,8 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
     Route::get('edit-prod/{id}',     [ProductController::class,'edit']);
     Route::put('update-prod/{id}',     [ProductController::class,'update']);
     Route::get('delete-prod/{id}',     [ProductController::class,'destroy']);
+    Route::get('/modal-productos/{id}', 'Admin\ProductController@show');
+
     
     //  INGREDIENTES
     Route::get('ingredientes',        'Admin\IngredienteController@index');

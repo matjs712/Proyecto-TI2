@@ -120,7 +120,9 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+         $producto = Product::findOrFail($id);
+         $productoIngrediente = ProductoIngrediente::where('id_producto', $producto->id)->get();
+         return view('admin.product.show', compact('producto','productoIngrediente'));
     }
 
     /**
@@ -147,8 +149,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-
         $producto = Product::find($id);
         // $ingredientes = Ingrediente::all();
         $ingredientesCount = count(preg_grep('/^ingrediente/', array_keys($request->all())));
