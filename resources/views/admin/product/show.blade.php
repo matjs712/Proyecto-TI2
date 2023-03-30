@@ -48,7 +48,7 @@
         </div>
         <div class="col-md-6 d-flex flex-column">
             @foreach ($productoIngrediente as $ing)
-            <span>{{ $ing->cantidad }} gr</span>
+            <span>{{ $ing->cantidad / 2 }} gr</span>
             @endforeach
         </div>
     </div>
