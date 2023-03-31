@@ -70,8 +70,9 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        $categoria = Category::findOrFail($id);
+        return view('admin.category.show', compact('categoria'));
+   }
 
     /**
      * Show the form for editing the specified resource.

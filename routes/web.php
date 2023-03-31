@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -63,7 +62,8 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
     Route::get('edit-cat/{id}',     [CategoryController::class,'edit']);
     Route::put('update-cat/{id}',     [CategoryController::class,'update']);
     Route::get('delete-cat/{id}',     [CategoryController::class,'destroy']);
-    
+    Route::get('modal-categorias/{id}', 'Admin\CategoryController@show');
+
     // PRODUCTOS
     Route::get('productos',        'Admin\ProductController@index');
     Route::get('crear-producto',   'Admin\ProductController@create');

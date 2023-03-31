@@ -1,7 +1,3 @@
-{{-- <div class="row">
-    <div class="col-md-6"><strong>ID:</strong></div>
-    <div class="col-md-6">{{ $producto->id }}</div>
-</div> --}}
 <div class="row">
     <div class="col-md-12 d-flex">
         <div class="col-md-6"><strong>Nombre:</strong></div>
@@ -48,6 +44,26 @@
     <div class="col-md-12 d-flex">
         <div class="col-md-6"><strong>Precio en oferta:</strong></div>
         <div class="col-md-6">{{ $producto->selling_price }}</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 d-flex">
+        <div class="col-md-6"><strong>Estado:</strong></div>
+        <div class="col-md-6">{{ $producto->status == 1 ? 'Visible':'No visible' }}</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 d-flex">
+        <div class="col-md-6"><strong>Popular:</strong></div>
+        <div class="col-md-6">{{ $producto->trending == 1 ? 'Producto Destacado':'No Destacado' }}</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 d-flex">
+        <div class="col-md-6"><strong>Imagen:</strong></div>
+        <div class="col-md-6">
+            <img src="{{ asset('assets/uploads/productos/'.$producto->image) }}" width="100" alt="">
+        </div>
     </div>
 </div>
 <br>

@@ -42,7 +42,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
-                                    <button class="btn mb-1 btn-success"><i class="fas fa-edit"></i>Ver más</button>
+                                    <a href="#" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalCategoria" data-category-id="{{ $categoria->id }}">Ver más</a>
                                     <a href="{{ url('edit-cat/'.$categoria->id) }}" class="btn mb-1 btn-primary"><i class="fas fa-edit"></i>Editar</a>
                                     <a href="{{ url('delete-cat/'.$categoria->id) }}" class="btn btn-danger text-white"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
                                 </div>
@@ -57,6 +57,28 @@
 </div>
 
 
+<div class="modal fade" id="modalCategoria" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Detalles de la categoría</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí se agregará el contenido del registro mediante AJAX -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 @endsection
 
 @section('after_scripts')
@@ -68,6 +90,29 @@
             responsive: true,
             "language": spanishLanguage,
         });
+
+        $('#modalCategoria').on('show.bs.modal', function (event) {
+            // Obtén el botón que abrió el modal
+            var button = $(event.relatedTarget);
+            
+            // Obtén el ID del registro que se está editando
+            var registroId = button.data('category-id');
+            
+            // Realiza una petición AJAX para obtener el contenido del registro
+            $.ajax({
+                url: '/modal-categorias/' + registroId,
+                type: 'GET',
+                success: function(data) {
+                    // Actualiza el contenido del modal con el contenido del registro
+                    $('#modalCategoria .modal-body').html(data);
+                },
+                error: function() {
+                    // Muestra un mensaje de error si la petición AJAX falla
+                    alert('Ocurrió un error al cargar el registro.');
+                }
+            });
+        });
+
     })
 </script>
 
