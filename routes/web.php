@@ -25,8 +25,10 @@ Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Route::get('/categorias', [FrontendController::class, 'category'])->name('category');
-Route::get('/ver-categoria/{slug}', [FrontendController::class, 'viewCategory'])->name('viewCategory');
-Route::get('/categorias/{cate_slug}/{prod_slug}', [FrontendController::class, 'productview'])->name('productview');
+Route::get('/ver-categoria/{slug}', [FrontendController::class, 'viewCategory']);
+Route::get('/categorias/{cate_slug}/{prod_slug}', [FrontendController::class, 'productview']);
+
+Route::get('/ver-producto/{slug}', [FrontendController::class, 'viewProducto']);
 
 Auth::routes();
 

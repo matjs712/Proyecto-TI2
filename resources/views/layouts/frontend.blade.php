@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@200&family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="{{ asset('frontend/css/owl.carousel.min.css') }}">
   <link rel="stylesheet" href="{{ asset('frontend/css/owl.theme.default.min.css') }}">
   <link rel="stylesheet" href="{{ asset('frontend/css/owl.carousel.css') }}">
@@ -19,8 +19,8 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
   <script src="{{ asset('frontend/js/owl.carousel.js') }}"></script>
-  <script src="{{ asset('frontend/js/owl.carousel.min.js') }}"></script>
-
+  <script src="{{ asset('frontend/js/owl.carousel.js') }}"></script>
+  <link rel="stylesheet" href="{{ asset('frontend/css/login.css') }}">
 
   <style>
     body{
@@ -36,16 +36,22 @@
   @include('layouts.inc.frontNavbar')
   
   <div class="wrapper">
-          @yield('slider')
-          @yield('slider_script')
+    @include('layouts.inc.slider')
+          {{-- @yield('slider_script') --}}
           <br>
           <br>
-          @yield('trending')
-          @yield('trending_script')
+          <div style="height: 90vh;">
+            @yield('trending')
+            @yield('trending_script')
+          </div>
           <br>
           <br>
           @yield('trending_cat')
           @yield('trending_cat_script')
+          
+          @include('layouts.inc.footer')
+          @yield('footer_script')
+
   </div>
   <script src="{{ asset('frontend/js/custom.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

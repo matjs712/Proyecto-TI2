@@ -1,5 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{{ url('/') }}">Sales.cl</a>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <img src="{{ asset('images/logo_pagina.png') }}" width="50" alt="">
+  <a class="navbar-brand" href="{{ url('/') }}">De Sabelle</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -40,12 +42,12 @@
         @else
         <li class="nav-item">
           <a class="nav-link" href="{{ url('carrito') }}">Carrito
-          <span class="badge badge-pill bg-primary text-white cart-count">0</span>
+          <span class="badge badge-pill text-white cart-count" style="background: #cf4647">0</span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url('wishlist') }}">Lista
-            <span class="badge badge-pill bg-success text-white wish-count">0</span>
+            <span class="badge badge-pill text-white wish-count" style="background: #a7c5bd">0</span>
           </a>
         </li>
         <li class="nav-item dropdown">
@@ -70,8 +72,8 @@
       
     </ul>
   </div>
-</nav>
 
+</nav>
 <div class="modal fade" style="width: 95%" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content clearfix">

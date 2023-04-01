@@ -59,14 +59,26 @@ class FrontendController extends Controller
             return redirect('/')->with('status','Categoria no existe');
         }
     }
+    public function viewProducto($prod_slug)
+    {
+            if(Product::where('slug',$prod_slug)->exists()){
+            
+            $producto = Product::where('slug',$prod_slug)->first();
+            return view('frontend.products.show', compact('producto'));
+            
+            }else{
+                return redirect('/')->with('status','Producto no existe');        
+            }
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function footer()
     {
-        //
+        $categorias = Category::all()->limit(4);
+        return view('frontend.inc.footer', compact('categorias'));
     }
 
     /**
