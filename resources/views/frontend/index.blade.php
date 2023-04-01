@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('title')
-Sales Home
+De Sabelle
 @endsection
 
 @section('slider')

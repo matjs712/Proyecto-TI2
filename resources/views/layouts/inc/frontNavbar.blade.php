@@ -2,19 +2,31 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
   <img src="{{ asset('images/logo_pagina.png') }}" width="50" alt="">
   <a class="navbar-brand" href="{{ url('/') }}">De Sabelle</a>
+
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
-      <li class="nav-item active">
+      <li class="nav-item">
+        <div class="search-bar">
+          <form action="{{ url('/searchproduct') }}" method="POST">
+            @csrf
+            <div class="input-group">
+              <input type="search" name="nameProduct" id="search_product" class="form-control" placeholder="Busca un producto..">
+              <button type="submit" class="input-group-text search"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+          </form>
+          </div>
+      </li>
+      <li class="nav-item active ml-3">
         <a class="nav-link" href="{{ url('/') }}">Inicio <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Productos</a>
+        <a class="nav-link" href="{{ url('todo-productos') }}">Productos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Categorias</a>
+        <a class="nav-link" href="{{ url('todo-categorias') }}">Categorias</a>
       </li>
 
       @guest
@@ -69,7 +81,6 @@
             </form>
         </li>
       @endguest
-      
     </ul>
   </div>
 

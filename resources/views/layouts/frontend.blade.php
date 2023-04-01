@@ -20,6 +20,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
   <script src="{{ asset('frontend/js/owl.carousel.js') }}"></script>
   <script src="{{ asset('frontend/js/owl.carousel.js') }}"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="{{ asset('frontend/css/login.css') }}">
 
   <style>
@@ -32,9 +33,10 @@
   @yield('css_after')
 </head>
 <body class="hold-transition sidebar-mini">
+  <div id="preloader"></div>
 
   @include('layouts.inc.frontNavbar')
-  
+  {{-- <iframe width="560" hidden height="315" src="https://www.youtube.com/embed/Yf5d_Zx3AaI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>   --}}
   <div class="wrapper">
     @include('layouts.inc.slider')
           {{-- @yield('slider_script') --}}
@@ -55,6 +57,26 @@
   </div>
   <script src="{{ asset('frontend/js/custom.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script>
+      var availableTags = [];
+
+      $.ajax({
+        method: "GET",
+        url: "/product-list/",  
+        success: function (response){
+          // console.log(response);
+          autoComplete(response);
+        }
+      });
+
+      function autoComplete(availableTags){
+        $( "#search_product" ).autocomplete({
+          source: availableTags
+        });
+      }
+
+    </script>
   @yield('after_scripts')
 
 @if (session('status'))
@@ -62,6 +84,13 @@
     swal("{{ session('status')}}")
   </script>
 @endif
+<script>
+  
+  var loader = document.getElementById('preloader');
+  window.addEventListener("load", function (){
+    loader.style.display = "none";
+  }) 
 
+</script>
 </body>
 </html>

@@ -134,8 +134,33 @@
 @media only screen and (max-width: 576px){
     .modal-dialog{ width: 95% !important; }
 } */
-
-
+#preloader{
+    background:#ffffff url('../../images/preloader.gif') no-repeat center center;
+    background-size: 30%;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 10000;
+}
+.search-bar{
+    width: 100%;
+    margin: 0 5px;
+    /* margin-left: 5%;
+    margin-right: 5%; */
+}
+.search-bar input,  .search-bar input:focus{
+    background-color: #333;
+    border: none;
+    color: white;
+}
+.search{
+    background: #cf4647;
+    color: white;
+    border: #333;
+}
+.ui-menu{
+    z-index: 3500 !important;
+}
 section{
     padding: 60px 14% 70px !important;
 }
