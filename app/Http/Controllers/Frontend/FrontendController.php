@@ -27,6 +27,10 @@ class FrontendController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function categorias(){
+        $categorias = Category::all();
+        return view('frontend.categorias.categorias', compact('categorias'));
+    }
     public function viewCategory($slug)
     {
         if(Category::where('slug',$slug)->exists()){
@@ -59,14 +63,26 @@ class FrontendController extends Controller
             return redirect('/')->with('status','Categoria no existe');
         }
     }
+    public function viewProducto($prod_slug)
+    {
+            if(Product::where('slug',$prod_slug)->exists()){
+            
+            $producto = Product::where('slug',$prod_slug)->first();
+            return view('frontend.products.show', compact('producto'));
+            
+            }else{
+                return redirect('/')->with('status','Producto no existe');        
+            }
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function footer()
     {
-        //
+        $categorias = Category::all()->limit(4);
+        return view('frontend.inc.footer', compact('categorias'));
     }
 
     /**
@@ -75,9 +91,14 @@ class FrontendController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function productList()
     {
-        //
+        $products = Product::select('name')->where('status',1)->get();
+        $data = [];
+        foreach($products as $item){
+            $data[] = $item['name'];
+        }
+        return $data;
     }
 
     /**
@@ -86,9 +107,19 @@ class FrontendController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function searchproduct(Request $request)
     {
-        //
+        $searched_product = $request->nameProduct;
+        if($searched_product !== ""){
+            $product = Product::where('name','LIKE', "%$searched_product%")->first();
+            if($product){
+                return redirect('categorias/'.$product->category->slug.'/'.$product->slug);
+            }else{
+                return redirect()->back()->with('status','No hay producto relacionados con tu busqueda');    
+            }
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**

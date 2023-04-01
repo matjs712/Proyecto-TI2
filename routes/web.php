@@ -10,7 +10,6 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 
-
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProveedorController;
 use App\Http\Controllers\Admin\IngredienteController;
@@ -21,14 +20,21 @@ use App\Http\Controllers\Frontend\WishlistController;
 
 // FRONTEND ROUTES
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
-
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-// Route::get('/categorias', [FrontendController::class, 'category'])->name('category');
-Route::get('/ver-categoria/{slug}', [FrontendController::class, 'viewCategory'])->name('viewCategory');
-Route::get('/categorias/{cate_slug}/{prod_slug}', [FrontendController::class, 'productview'])->name('productview');
+// CATEGORIAS
+Route::get('/todo-categorias', [FrontendController::class, 'categorias']);
+Route::get('/ver-categoria/{slug}', [FrontendController::class, 'viewCategory']);
+Route::get('/categorias/{cate_slug}/{prod_slug}', [FrontendController::class, 'productview']);
+
+// PRODUCTOS
+Route::get('/ver-producto/{slug}', [FrontendController::class, 'viewProducto']);
+Route::get('product-list', [FrontendController::class, 'productList']);
+Route::post('searchproduct', [FrontendController::class, 'searchproduct']);
+
 
 Auth::routes();
+
 
 // CARRITO
 Route::get('load-cart-data', [CartController::class, 'cartCount']);
@@ -49,7 +55,6 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    Route::get('ver-orden/{id}', [UserController::class, 'view']);
    Route::get('wishlist', [WishlistController::class, 'index']);
 });
-
 
 // ADMIN ROUTES
  Route::middleware(['auth','isAdmin'])->group(function (){
@@ -106,5 +111,4 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
     //  USUARIOS
     Route::get('usuarios', [DashboardController::class, 'index']);
     Route::get('ver-usuario/{id}', [DashboardController::class, 'view']);
-    
  });

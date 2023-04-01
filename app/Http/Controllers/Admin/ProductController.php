@@ -218,17 +218,17 @@ class ProductController extends Controller
                         $productoIngredienteNew->cantidad = $cantidadRequerida;
                         $productoIngredienteNew->save();
 
-                        $ingrediente->cantidad = $ingrediente->cantidad - $cantidadRequerida;
-                        $ingrediente->update();
+                        // $ingrediente->cantidad = $ingrediente->cantidad - $cantidadRequerida;
+                        // $ingrediente->update();
                     }
 
                     // REVISAR ESTA PARTE YA QUE NO SE ACTUALIZAN BIEN LAS CANTIDADES EN EL INGREDIENTE
 
                     if($productoIngrediente){    
                         if($cantidadRequerida < $productoIngrediente->cantidad){
-                            $ingrediente->decrement('cantidad', $productoIngrediente->cantidad - $cantidadRequerida);
+                            $ingrediente->increment('cantidad', $productoIngrediente->cantidad - $cantidadRequerida);
                         } else if($cantidadRequerida > $productoIngrediente->cantidad){
-                            $ingrediente->increment('cantidad', $cantidadRequerida - $productoIngrediente->cantidad);
+                            $ingrediente->decrement('cantidad', $cantidadRequerida - $productoIngrediente->cantidad);
                         }
                         
                         $productoIngrediente->id_ingrediente = $idIngrediente;

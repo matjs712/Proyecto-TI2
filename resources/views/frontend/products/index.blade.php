@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <div class="container pt-5">
-        <h2>Todas las {{ $categoria->name }}</h2>
+        <h2>Todos los {{ $categoria->name }}</h2>
         <div class="row">
             @foreach ($productos as $producto)
                 <div class="col-md-3">
