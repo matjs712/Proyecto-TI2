@@ -37,7 +37,15 @@
                                             <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                             <td>{{ $item->tracking_number }}</td>
                                             <td>{{ $item->total_price }}</td>
-                                            <td>{{ $item->status == '0' ? 'Pendiente': 'Completado'}}</td>
+                                            <td>
+                                                @if ($item->status == 0)
+                                                Pendiente
+                                                @elseif ($item->status == 1)
+                                                Completado
+                                                @elseif ($item->status == 2)
+                                                Aprobada
+                                            @endif
+                                            </td>
                                             <td>
                                                 <a class="btn btn-success" href="{{ url('admin/ver-orden/'.$item->id) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
                                             </td>

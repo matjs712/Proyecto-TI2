@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class OrdenController extends Controller
 {
     public function index(){
-        $orders = Order::where('status','0')->get();
+        $orders = Order::where('status','2')->orWhere('status','0')->get();
         $ordersOld = Order::where('status','1')->get();
         return view('admin.orders.index', compact('orders','ordersOld'));
     }

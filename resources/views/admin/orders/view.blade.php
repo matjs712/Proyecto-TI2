@@ -62,6 +62,7 @@
                                     @method('PUT')
                                     <label>Estado de la orden</label>
                                     <select name="orden_status" class="form-control">
+                                        <option {{ $orders->status == '2'? 'selected': '' }} value="2">Aprobada</option>
                                         <option {{ $orders->status == '0'? 'selected': '' }} value="0">Pendiente</option>
                                         <option {{ $orders->status == '1'? 'selected': '' }} value="1">Completada</option>
                                     </select>
