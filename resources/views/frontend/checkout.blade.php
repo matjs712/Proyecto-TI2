@@ -14,10 +14,8 @@ Checkout
     </div>
 </div>
 
-
-
     <div class="container">
-        <form action="{{ url('place-order') }}" method="POST">
+        <form action="{{ url('iniciar_compra') }}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-md-7">
@@ -101,6 +99,8 @@ Checkout
                                 </table>
                                 <hr>
                                 <button style="width: 100%;" class="btn btn-primary pagoBtn">Ir al pago</button>
+                                {{-- <button id="payButton" onclick="pay()">Pagar</button> --}}
+
                             </div>
                             @else
                             <div class="card-body text-center">
