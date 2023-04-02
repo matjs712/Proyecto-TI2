@@ -101,11 +101,12 @@
                     <div class="star-icon">
                         @if ($user_rating)
                             @for ($i = 1; $i <= $user_rating->stars_rated ; $i++)
-                            <input type="radio" value="{{ $i }}" checked name="product_rating" checked id="rating{{ $i }}">
-                            <label for="rating{{ $i }}" class="fa fa-star"></label>
+                            <input type="radio" value="{{$i}}" checked name="product_rating" id="rating{{$i}}">
+                            <label for="rating{{$i}}" class="fa fa-star"></label>
                             @endfor
-                            @for ($j = $rate_number+1 ; $j<=5 ; $j++ )
-
+                            @for ($j = $user_rating->stars_rated+1 ; $j<=5 ; $j++ )
+                            <input type="radio" value="{{$j}}" name="product_rating" id="rating{{$j}}">
+                            <label for="rating{{$j}}" class="fa fa-star"></label>
                             @endfor
                         @else
                         <input type="radio" value="1" name="product_rating" checked id="rating1">

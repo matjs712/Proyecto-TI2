@@ -76,9 +76,10 @@ class FrontendController extends Controller
             $rating_sum = Rating::where('product_id',$producto->id)->sum('stars_rated');
             $user_rating = Rating::where('product_id',$producto->id)->where('user_id', Auth::id())->first();
             if($rating->count() > 0){
-                $rating_value = $rating_sum / $rating->count();
+                $rating_value = $rating_sum/$rating->count();
+            }else{
+                $rating_value = 0;
             }
-            $rating_value = 0;
             return view('frontend.products.view', compact('producto','rating','rating_value','user_rating'));
             
             }else{
@@ -97,9 +98,10 @@ class FrontendController extends Controller
             $rating_sum = Rating::where('product_id',$producto->id)->sum('stars_rated');
             $user_rating = Rating::where('product_id',$producto->id)->where('user_id', Auth::id())->first();
             if($rating->count() > 0){
-                $rating_value = $rating_sum / $rating->count();
+                $rating_value = $rating_sum/$rating->count();
+            }else{
+                $rating_value = 0;
             }
-            $rating_value = 0;
             return view('frontend.products.show', compact('producto','rating','rating_value','user_rating'));
             
             }else{
