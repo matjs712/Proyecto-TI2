@@ -2,7 +2,7 @@
   <div class="home-text">
     <h1>Lo mejor en <br>Sales gourmet</h1>
     <p>Encuentra las variedades de nuestras exquisitas sales <br> Atrevete a darle un sabor unico a tu comida.</p>
-    <a class="btn btn-home" href="#">Elige tu producto</a>
+    <a class="btn btn-home" href="{{ url('todo-productos') }}">Elige tu producto</a>
   </div>
   <div class="custom-shape-divider-bottom-1680324404">
     <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">

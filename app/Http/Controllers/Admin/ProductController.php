@@ -137,7 +137,8 @@ class ProductController extends Controller
         $categorias = Category::all();
         $ingredientes = Ingrediente::all();
         $productoIngredientes = ProductoIngrediente::where('id_producto', $id)->get();
-        return view('admin.product.edit', compact('producto','categorias','productoIngredientes', 'ingredientes'));
+        $productoIngredientesCount = ProductoIngrediente::where('id_producto', $id)->count();
+        return view('admin.product.edit', compact('producto','categorias','productoIngredientes', 'ingredientes','productoIngredientesCount'));
     }
 
     /**
@@ -206,6 +207,7 @@ class ProductController extends Controller
                     $idIngrediente = $request->input('ingrediente'.$i);
                     $cantidadRequerida = $request->input('cantidad'.$i) * $request->qty;
                     $ingrediente = Ingrediente::find($idIngrediente);
+                    // dd($ingrediente);
                     
                     $productoIngrediente = ProductoIngrediente::where('id_producto',$producto->id)
                     ->where('id_ingrediente',$idIngrediente)->first();
@@ -217,12 +219,11 @@ class ProductController extends Controller
                         $productoIngredienteNew->id_ingrediente = $idIngrediente;
                         $productoIngredienteNew->cantidad = $cantidadRequerida;
                         $productoIngredienteNew->save();
-
-                        // $ingrediente->cantidad = $ingrediente->cantidad - $cantidadRequerida;
-                        // $ingrediente->update();
+                        $ingrediente->cantidad = $ingrediente->cantidad - $cantidadRequerida;
+                        $ingrediente->update();
                     }
 
-                    // REVISAR ESTA PARTE YA QUE NO SE ACTUALIZAN BIEN LAS CANTIDADES EN EL INGREDIENTE
+                    // REVISAR , REALIZAR PRUEBAS
 
                     if($productoIngrediente){    
                         if($cantidadRequerida < $productoIngrediente->cantidad){
@@ -230,8 +231,8 @@ class ProductController extends Controller
                         } else if($cantidadRequerida > $productoIngrediente->cantidad){
                             $ingrediente->decrement('cantidad', $cantidadRequerida - $productoIngrediente->cantidad);
                         }
-                        
                         $productoIngrediente->id_ingrediente = $idIngrediente;
+                        $productoIngrediente->cantidad = $cantidadRequerida;
                         $productoIngrediente->update();
                         $ingrediente->update();
                     }

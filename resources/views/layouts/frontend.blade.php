@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-
+  <link rel="icon" href="{{ asset('images/logo_pagina.png') }}">
   <title>@yield('title')</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
@@ -37,9 +37,9 @@
 
   @include('layouts.inc.frontNavbar')
   {{-- <iframe width="560" hidden height="315" src="https://www.youtube.com/embed/Yf5d_Zx3AaI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>   --}}
+  {{-- @yield('slider_script') --}}
   <div class="wrapper">
     @include('layouts.inc.slider')
-          {{-- @yield('slider_script') --}}
           <br>
           <br>
           <div style="height: 90vh;">

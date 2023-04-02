@@ -3,8 +3,7 @@
         <h2>PRODUCTOS DESTACADOS</h2>
     </div>
 </div>
-<div class="container">
-
+<div class="container section">
     <div class="row">
         <div class="col-md-12">
             <div id="prod" class="owl-carousel owl-theme mt-2 ">

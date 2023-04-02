@@ -3,13 +3,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\Admin\OrdenController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\CartController;
-use App\Http\Controllers\Frontend\UserController;
 
+use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProveedorController;
@@ -33,10 +34,8 @@ Route::get('/todo-productos', [FrontendController::class, 'productos']);
 Route::get('/ver-producto/{slug}', [FrontendController::class, 'viewProducto']);
 Route::get('product-list', [FrontendController::class, 'productList']);
 Route::post('searchproduct', [FrontendController::class, 'searchproduct']);
-// Route::get('/products/filter', [FrontendController::class, 'filter'])->name('products.filter');
-
-// Route::get('/productos/filtrar', [FrontendController::class, 'filtrarProductos']);
-
+Route::get('productos/sort-by', [FrontendController::class, 'filter'])->name('products.filter');
+// Route::get('productos/range-price', [FrontendController::class, 'range'])->name('products.range');
 
 Auth::routes();
 
@@ -62,7 +61,8 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    Route::get('mis-ordenes',[UserController::class, 'index']);
    Route::get('ver-orden/{id}', [UserController::class, 'view']);
    Route::get('wishlist', [WishlistController::class, 'index']);
-
+   
+   Route::post('add-rating', [RatingController::class, 'add']);
 
 });
 
