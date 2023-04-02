@@ -1,10 +1,10 @@
 @extends('layouts.front')
 @section('title')
-{{ $producto->name }}
+{{ $producto->name }} | De Sabelle
 @endsection
 @section('content')
 
-<div class="py-3 mb-4 shadow-sm bg-warning border-top">
+<div class="py-3 mb-4 shadow-sm border-top migaja">
     <div class="container">
         <h6 class="mb-0">
             <a href="{{ url('/') }}">Inicio</a> / 
@@ -31,15 +31,31 @@
                     <hr>
                     <label style="mb-3">Precio original: <s>${{ $producto->original_price }}</s></label>
                     <label style="fw-bold"><strong>Oferta: ${{ $producto->selling_price }}</strong></label>
+                    @php $rate_number = number_format($rating_value) @endphp
+                    <div class="rating">
+                        @for ($i = 1; $i <= $rate_number ; $i++)
+                            <i class="fa fa-star gold" aria-hidden="true"></i>
+                        @endfor
+                        @for ($j = $rate_number+1 ; $j<=5 ; $j++ )
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        @endfor
+                        <span>{{ $rating->count() }} Calificaciones</span>
+                    </div>
                     <p class="mt-3">
                         {!! $producto->small_description !!}
                     </p>
                     <hr>
-                    @if ($producto->qty > 0)
+                    <div class="d-flex align-items-center justify-content-between flex-wrap">
+                        @if ($producto->qty > 0)
                         <label class="badge bg-success text-white">En stock</label>
                         @else
                         <label class="badge bg-danger  text-white">Sin stock</label>
-                    @endif
+                        @endif
+                        <button type="button" class="btn btn-naranjo" data-toggle="modal" data-target="#exampleModalCenter">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            Califica este producto
+                          </button>
+                    </div>
                     <div class="row mt-2 align-items-center">
                         <div class="col-md-3">
                             <input type="hidden" value="{{ $producto->id }}" class="prod_id">
@@ -52,15 +68,65 @@
                         </div>
                         <div class="col-md-9">
                             <br>
-                            <button class="btn btn-success me-3 float-start addToWishlist"><i class="fa-regular fa-heart"></i> Añadir a la lista</button>
+                            <button class="btn btn-azul me-3 float-start addToWishlist"><i class="fa-regular fa-heart"></i> Añadir a la lista</button>
                             @if ($producto->qty > 0)
-                            <button class="btn btn-primary me-3 float-start addCartBtn"><i class="fa fa-cart-plus" aria-hidden="true"></i> Añadir al carrito</button>
+                            <button class="btn btn-red me-3 float-start addCartBtn"><i class="fa fa-cart-plus" aria-hidden="true"></i> Añadir al carrito</button>
                             @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="card-footer bg-white">
+            <h2>Descripción</h2>
+            <p>{{ $producto->description }}</p>
+        </div>
     </div>
 </div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <form action="{{ url('add-rating') }}" method="POST">
+            @csrf
+            <input type="hidden" name="product_id" value="{{ $producto->id }}">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"><b>¿Que te parecio este producto?</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="rating-css">
+                    <div class="star-icon">
+                        @if ($user_rating)
+                            @for ($i = 1; $i <= $user_rating->stars_rated ; $i++)
+                            <input type="radio" value="{{ $i }}" checked name="product_rating" checked id="rating{{ $i }}">
+                            <label for="rating{{ $i }}" class="fa fa-star"></label>
+                            @endfor
+                            @for ($j = $rate_number+1 ; $j<=5 ; $j++ )
+
+                            @endfor
+                        @else
+                        <input type="radio" value="1" name="product_rating" checked id="rating1">
+                        <label for="rating1" class="fa fa-star"></label>
+                        <input type="radio" value="2" name="product_rating" id="rating2">
+                        <label for="rating2" class="fa fa-star"></label>
+                        <input type="radio" value="3" name="product_rating" id="rating3">
+                        <label for="rating3" class="fa fa-star"></label>
+                        <input type="radio" value="4" name="product_rating" id="rating4">
+                        <label for="rating4" class="fa fa-star"></label>
+                        <input type="radio" value="5" name="product_rating" id="rating5">
+                        <label for="rating5" class="fa fa-star"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-red">Puntuar</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
 @endsection

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Rating;
+use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
 {
@@ -33,11 +35,18 @@ class FrontendController extends Controller
     }
     public function productos(){
         $productos = Product::all();
-        return view('frontend.products.productos', compact('productos'));
+        $categorias = Category::all();
+        return view('frontend.products.productos', compact('productos','categorias'));
     }
     public function filter(Request $request)
     {
-
+      if($request->sort_by == 'precio_bajo'){
+        $productos = Product::orderBy('selling_price','asc')->get();
+      }
+      if($request->sort_by == 'precio_alto'){
+        $productos = Product::orderBy('selling_price','desc')->get();
+      }
+      return view('frontend.products.filter_result', compact('productos'));
     }
     
     public function viewCategory($slug)
@@ -63,7 +72,14 @@ class FrontendController extends Controller
             
             $categoria = Category::where('slug',$cate_slug)->first();
             $producto = Product::where('slug',$prod_slug)->where('cate_id',$categoria->id)->first();
-            return view('frontend.products.view', compact('producto'));
+            $rating = Rating::where('product_id',$producto->id)->get();
+            $rating_sum = Rating::where('product_id',$producto->id)->sum('stars_rated');
+            $user_rating = Rating::where('product_id',$producto->id)->where('user_id', Auth::id())->first();
+            if($rating->count() > 0){
+                $rating_value = $rating_sum / $rating->count();
+            }
+            $rating_value = 0;
+            return view('frontend.products.view', compact('producto','rating','rating_value','user_rating'));
             
             }else{
                 return redirect('/')->with('status','Producto no existe');        
@@ -77,7 +93,14 @@ class FrontendController extends Controller
             if(Product::where('slug',$prod_slug)->exists()){
             
             $producto = Product::where('slug',$prod_slug)->first();
-            return view('frontend.products.show', compact('producto'));
+            $rating = Rating::where('product_id',$producto->id)->get();
+            $rating_sum = Rating::where('product_id',$producto->id)->sum('stars_rated');
+            $user_rating = Rating::where('product_id',$producto->id)->where('user_id', Auth::id())->first();
+            if($rating->count() > 0){
+                $rating_value = $rating_sum / $rating->count();
+            }
+            $rating_value = 0;
+            return view('frontend.products.show', compact('producto','rating','rating_value','user_rating'));
             
             }else{
                 return redirect('/')->with('status','Producto no existe');        
