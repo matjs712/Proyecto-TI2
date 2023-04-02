@@ -144,7 +144,8 @@ class CheckoutController extends Controller
         $confirmacion = (new Transaction)->commit( $request->get('token_ws'));
         $order = Order::where('id', $confirmacion->buyOrder)->first();
         if($confirmacion->isApproved()){
-
+            $order->status = 2;
+            
             $cartItems = Cart::where('user_id', Auth::id())->get();
             
             foreach($cartItems as $item){
@@ -158,7 +159,8 @@ class CheckoutController extends Controller
                 $prod->qty = $prod->qty - $item->prod_qty;
                 $prod->update();
             }
-
+            $order->update();
+            
             if(Auth::user()->direccion1 == NULL){
                 $user = User::where('id', Auth::user()->id)->first();
                 $user->name       = $request->input('fname');
@@ -177,7 +179,7 @@ class CheckoutController extends Controller
             return redirect('/mis-ordenes')->with('status','Compra realizada con exito!!');
             // return 'compra exitosa!';
         }
-
+        return redirect('/mis-ordenes')->with('status','La compra no se ha podido realizar!!');
     }
 
 }

@@ -32,6 +32,7 @@ Route::get('/categorias/{cate_slug}/{prod_slug}', [FrontendController::class, 'p
 Route::get('/todo-productos', [FrontendController::class, 'productos']);
 Route::get('/ver-producto/{slug}', [FrontendController::class, 'viewProducto']);
 Route::get('product-list', [FrontendController::class, 'productList']);
+Route::post('searchproduct', [FrontendController::class, 'searchproduct']);
 // Route::get('/products/filter', [FrontendController::class, 'filter'])->name('products.filter');
 
 // Route::get('/productos/filtrar', [FrontendController::class, 'filtrarProductos']);
