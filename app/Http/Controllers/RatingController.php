@@ -20,12 +20,12 @@ class RatingController extends Controller
                                  ->where('order_items.prod_id', $product_id)->get();
             if($verified_purchase->count() > 0){
 
-                $existing_rating = Rating::where('user_id',Auth::id())->where('product_id',$product_id)->exists();
+                $existing_rating = Rating::where('user_id',Auth::id())->where('product_id',$product_id)->first();
                 if($existing_rating){
 
                     $existing_rating->stars_rated = $stars_rated;
                     $existing_rating->update();
-                    
+
                 }else{
                     Rating::create([
                         'user_id'=>Auth::id(),
