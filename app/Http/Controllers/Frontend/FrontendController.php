@@ -30,21 +30,23 @@ class FrontendController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function categorias(){
-        $categorias = Category::all();
+        $categorias = Category::where('status', 1)->paginate(9);
+        $categorias->setPath('todo-categorias');
         return view('frontend.categorias.categorias', compact('categorias'));
     }
     public function productos(){
-        $productos = Product::all();
+        $productos = Product::where('status', 1)->paginate(9);
+        $productos->setPath('todo-productos');
         $categorias = Category::all();
         return view('frontend.products.productos', compact('productos','categorias'));
     }
     public function filter(Request $request)
     {
       if($request->sort_by == 'precio_bajo'){
-        $productos = Product::orderBy('selling_price','asc')->get();
+        $productos = Product::where('status', 1)->orderBy('selling_price','asc')->paginate(9);
       }
       if($request->sort_by == 'precio_alto'){
-        $productos = Product::orderBy('selling_price','desc')->get();
+        $productos = Product::where('status', 1)->orderBy('selling_price','desc')->paginate(9);
       }
       return view('frontend.products.filter_result', compact('productos'));
     }

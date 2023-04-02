@@ -406,3 +406,22 @@ a:hover{
     color: #ffd900;
 }
 /* End of Star Rating */
+
+
+.page-link{
+    color: #8cab94 !important;
+}
+.page-link:hover{
+    color: #ffffff !important;
+    background-color: #a7c5bd !important;
+}
+.page-item.active .page-link {
+    z-index:3;
+    color:#fff !important;
+    background-color:#cf4647 !important;
+    border-color:#cf4647 !important;
+}
+.page-item.active:hover .page-link {
+    color:#fff !important;
+}
+   

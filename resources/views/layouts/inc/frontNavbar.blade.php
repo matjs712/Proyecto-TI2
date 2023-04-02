@@ -13,7 +13,7 @@
           <form action="{{ url('/searchproduct') }}" method="POST">
             @csrf
             <div class="input-group">
-              <input type="search" name="nameProduct" id="search_product" class="form-control" placeholder="Busca un producto..">
+              <input type="search" name="nameProduct" id="search_product" class="form-control" placeholder="¿Que estas buscando?">
               <button type="submit" class="input-group-text search"><i class="fa fa-search" aria-hidden="true"></i></button>
             </div>
           </form>

@@ -65,6 +65,13 @@ Productos | De Sabelle
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="pagination-container">
+                {{ $productos->links('layouts.inc.pagination') }}
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 @section('after_scripts')
