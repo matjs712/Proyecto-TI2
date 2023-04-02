@@ -3,20 +3,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\Admin\OrdenController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\UserController;
-use App\Http\Controllers\Admin\CategoryController;
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProveedorController;
 use App\Http\Controllers\Admin\IngredienteController;
-use App\Http\Controllers\Admin\RegistroController as AdminRegistroController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\WishlistController;
+use App\Http\Controllers\Admin\RegistroController as AdminRegistroController;
 
 // FRONTEND ROUTES
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
@@ -28,9 +29,12 @@ Route::get('/ver-categoria/{slug}', [FrontendController::class, 'viewCategory'])
 Route::get('/categorias/{cate_slug}/{prod_slug}', [FrontendController::class, 'productview']);
 
 // PRODUCTOS
+Route::get('/todo-productos', [FrontendController::class, 'productos']);
 Route::get('/ver-producto/{slug}', [FrontendController::class, 'viewProducto']);
 Route::get('product-list', [FrontendController::class, 'productList']);
-Route::post('searchproduct', [FrontendController::class, 'searchproduct']);
+// Route::get('/products/filter', [FrontendController::class, 'filter'])->name('products.filter');
+
+// Route::get('/productos/filtrar', [FrontendController::class, 'filtrarProductos']);
 
 
 Auth::routes();
@@ -50,10 +54,15 @@ Route::post('delete-wishlist-item', [WishlistController::class, 'destroy']);
 Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    Route::get('carrito', [CartController::class, 'viewCart']);
    Route::get('checkout',[CheckoutController::class, 'index']);
-   Route::post('place-order',[CheckoutController::class, 'placeorder']);
+   // Route::post('place-order',[CheckoutController::class, 'placeorder']);
+   Route::post('iniciar_compra',[CheckoutController::class, 'iniciar_compra']);
+   Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
+
    Route::get('mis-ordenes',[UserController::class, 'index']);
    Route::get('ver-orden/{id}', [UserController::class, 'view']);
    Route::get('wishlist', [WishlistController::class, 'index']);
+
+
 });
 
 // ADMIN ROUTES
