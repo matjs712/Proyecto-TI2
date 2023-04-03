@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Logo;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Ingrediente;
+use Illuminate\Http\Request;
 use App\Models\ProductoIngrediente;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 
 class ProductController extends Controller
 {
@@ -19,6 +21,11 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         $productos = Product::all();
         return view('admin.product.index', compact('productos'));
     }
@@ -30,6 +37,11 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         $categorias = Category::all();
         $ingredientes = Ingrediente::all();
         return view('admin.product.create', compact('categorias','ingredientes'));
@@ -133,6 +145,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         $producto = Product::find($id);
         $categorias = Category::all();
         $ingredientes = Ingrediente::all();

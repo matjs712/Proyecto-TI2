@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Logo;
 use App\Models\Rating;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class FrontendController extends Controller
 {
@@ -21,6 +23,11 @@ class FrontendController extends Controller
         $banners = Category::all();
         $productos = Product::where('trending','1')->take('5')->get();
         $categorias = Category::where('popular','1')->take('5')->get();
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+
         return view('frontend.index', compact('banners','categorias','productos'));
     }
 
@@ -32,12 +39,22 @@ class FrontendController extends Controller
     public function categorias(){
         $categorias = Category::where('status', 1)->paginate(9);
         $categorias->setPath('todo-categorias');
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+
         return view('frontend.categorias.categorias', compact('categorias'));
     }
     public function productos(){
         $productos = Product::where('status', 1)->paginate(9);
         $productos->setPath('todo-productos');
         $categorias = Category::all();
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+
         return view('frontend.products.productos', compact('productos','categorias'));
     }
     public function filter(Request $request)
@@ -53,6 +70,11 @@ class FrontendController extends Controller
     
     public function viewCategory($slug)
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+
         if(Category::where('slug',$slug)->exists()){
             $categoria = Category::where('slug',$slug)->first();
             $productos = Product::where('cate_id',$categoria->id)->where('status','1')->get();
@@ -69,6 +91,11 @@ class FrontendController extends Controller
      */
     public function productview($cate_slug,$prod_slug)
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+
         if(Category::where('slug',$cate_slug)->exists()){
             if(Product::where('slug',$prod_slug)->exists()){
             
@@ -93,6 +120,12 @@ class FrontendController extends Controller
     }
     public function viewProducto($prod_slug)
     {
+
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+
             if(Product::where('slug',$prod_slug)->exists()){
             
             $producto = Product::where('slug',$prod_slug)->first();
@@ -156,39 +189,5 @@ class FrontendController extends Controller
         }else{
             return redirect()->back();
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('title')
-Checkout
+Checkout | {{ $sitio }}
 @endsection
 @section('content')
 

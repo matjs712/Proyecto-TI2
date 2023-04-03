@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('title')
-{{ $producto->name }} | De Sabelle
+{{ $producto->name }} | {{ $sitio }}
 @endsection
 @section('content')
 

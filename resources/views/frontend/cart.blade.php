@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('title')
-Mi Carrito
+Mi Carrito | {{ $sitio }}
 @endsection
 @section('content')
 

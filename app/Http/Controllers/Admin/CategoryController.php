@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Logo;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 
 
 class CategoryController extends Controller
@@ -17,6 +19,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+
         $categorias = Category::all();
         return view('admin.category.index', compact('categorias'));
     }
@@ -28,6 +35,11 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         return view('admin.category.create');
     }
 
@@ -71,6 +83,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         $categoria = Category::findOrFail($id);
+
         return view('admin.category.show', compact('categoria'));
    }
 
@@ -83,6 +96,11 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $categoria = Category::find($id);
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+
         return view('admin.category.edit', compact('categoria'));
     }
 

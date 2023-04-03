@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('title')
-Lista
+Lista | {{ $sitio }}
 @endsection
 @section('content')
 

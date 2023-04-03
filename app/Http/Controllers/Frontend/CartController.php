@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Cart;
+use App\Models\Logo;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class CartController extends Controller
 {
@@ -17,6 +19,11 @@ class CartController extends Controller
      */
     public function viewCart()
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+
         $cartItems = Cart::where('user_id',Auth::id())->get();
         return view('frontend.cart', compact('cartItems'));
     }

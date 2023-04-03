@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('title')
-De Sabelle
+{{ $sitio }}
 @endsection
 
 @section('slider')

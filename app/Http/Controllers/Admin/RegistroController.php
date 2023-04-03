@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Logo;
 use App\Models\Registro;
 use App\Models\Proveedor;
 use App\Models\Ingrediente;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
 
 class RegistroController extends Controller
 {
     public function index()
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         $registros = Registro::all();
         return view('admin.registro.index', compact('registros'));
     }
@@ -23,6 +30,11 @@ class RegistroController extends Controller
      */
     public function create()
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         $proveedores = Proveedor::all();
         $ingredientes = Ingrediente::all();
         return view('admin.registro.create', compact('proveedores','ingredientes'));
@@ -60,6 +72,11 @@ class RegistroController extends Controller
      */
     public function edit($id)
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         $registro = Registro::find($id);
         $proveedores = Proveedor::all();
         $ingredientes = Ingrediente::all();

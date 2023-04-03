@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('title')
-Productos | De Sabelle
+Productos | {{ $sitio }}
 @endsection
 @section('content')
 <div class="py-3 mb-4 shadow-sm border-top migaja">

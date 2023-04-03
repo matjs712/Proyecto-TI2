@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('title')
-{{ $categoria->name }}
+{{ $categoria->name }} | {{ $sitio }}
 @endsection
 @section('content')
     <div class="container pt-5">

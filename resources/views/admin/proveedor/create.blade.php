@@ -1,6 +1,7 @@
 @extends('layouts.admin')
-@section('title', 'Proveedores')
-
+@section('title')
+Proveedores | {{ $sitio }}
+@endsection
 @section('content')
 
 <div class="card">

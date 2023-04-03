@@ -1,7 +1,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark">
-  <img src="{{ asset('images/logo_pagina.png') }}" width="50" alt="">
-  <a class="navbar-brand" href="{{ url('/') }}">De Sabelle</a>
+  <img src="{{ asset($logo) }}" width="50" alt="">
+  <a class="navbar-brand" href="{{ url('/') }}">{{ $sitio }}</a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

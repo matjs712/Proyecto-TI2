@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('title')
-Mis pedidos
+Mis pedidos | {{ $sitio }}
 @endsection
 @section('content')
 

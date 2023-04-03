@@ -1,6 +1,7 @@
 @extends('layouts.admin')
-@section('title', 'Usuario')
-
+@section('title')
+Usuarios | {{ $sitio }}
+@endsection
 @section('content')
     <div class="container">
         <div class="row">
