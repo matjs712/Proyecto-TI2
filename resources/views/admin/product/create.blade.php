@@ -139,32 +139,53 @@
     </div>
 </div>
 
+
 @endsection
 @section('after_scripts')
 <script>
+  const input = document.querySelector('#image');
+  const preview = document.querySelector('#preview');
+
+  input.addEventListener('change', () => {
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      preview.setAttribute('src', reader.result);
+    });
+
+    reader.readAsDataURL(file);
+
   let ingredienteCount = 1;
   document.getElementById('agregar-ingrediente').addEventListener('click', function() {
-      ingredienteCount++;
-      const div = document.createElement('div');
-      div.innerHTML = `
-          <div class="form-group d-flex">
+    ingredienteCount++;
+    const div = document.createElement('div');
+    div.innerHTML = `
+        <div class="form-group d-flex">
+          <div class="col-md-3">
+            <label for="ingrediente${ingredienteCount}">Ingrediente ${ingredienteCount}</label>
+              <select class="form-control" name="ingrediente${ingredienteCount}" id="ingrediente${ingredienteCount}">
+                <option value="">Seleccione un ingrediente</option>
+                  @foreach($ingredientes as $ingrediente)
+                      <option value="{{ $ingrediente->id }}">{{ $ingrediente->name }}</option>
+                  @endforeach
+              </select>
+            </div>
             <div class="col-md-3">
-              <label for="ingrediente${ingredienteCount}">Ingrediente ${ingredienteCount}</label>
-                <select class="form-control" name="ingrediente${ingredienteCount}" id="ingrediente${ingredienteCount}">
-                  <option value="">Seleccione un ingrediente</option>
-                    @foreach($ingredientes as $ingrediente)
-                        <option value="{{ $ingrediente->id }}">{{ $ingrediente->name }}</option>
-                    @endforeach
-                </select>
-              </div>
-              <div class="col-md-3">
-                <label for="ingrediente${ingredienteCount}">Cantidad </label>
-                <input class="form-control" type="number" name="cantidad${ingredienteCount}" id="cantidad${ingredienteCount}" value="0">
-              </div>
-          </div>
-      `;
-      document.getElementById('ingredientes-extra').appendChild(div);
+              <label for="ingrediente${ingredienteCount}">Cantidad </label>
+              <input class="form-control" type="number" name="cantidad${ingredienteCount}" id="cantidad${ingredienteCount}" value="0">
+            </div>
+        </div>
+    `;
+    document.getElementById('ingredientes-extra').appendChild(div);
 
   });
 </script>
+
+<style>
+    #preview {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
 @endsection
