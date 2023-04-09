@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Ingrediente;
 use App\Models\ProductoIngrediente;
 use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -53,7 +54,7 @@ class ProductController extends Controller
         $ingredienteFaltante = '';
 
         if($ingredientesCount >= 1){
-            if($request->ingrediente1 != ''){
+            if($request->ingredientes != ''){
                 for ($i = 1; $i <= $ingredientesCount; $i++) {
                     $idIngrediente = $request->input('ingrediente'.$i);
                     $cantidadRequerida = $request->input('cantidad'.$i) * $request->qty;
@@ -70,7 +71,12 @@ class ProductController extends Controller
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
             $filename = time().'.'.$ext;
-            $file->move('assets/uploads/productos/', $filename);
+
+            $image = Image::make($file);
+            $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
+
+            $image->save(public_path('assets/uploads/productos/' . $filename));
+            
             $producto->image = $filename;
         }
 
