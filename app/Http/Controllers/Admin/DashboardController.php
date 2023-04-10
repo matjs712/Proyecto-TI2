@@ -49,7 +49,10 @@ class DashboardController extends Controller
             $file = $request->file('logo');
             $ext = $file->getClientOriginalExtension();
             $filename = time().'.'.$ext;
-            $file->move('logo/', $filename);
+            $image = Image::make($file);
+            $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
+
+            $image->save(public_path('logo/' . $filename));
             $logo_sitio->logo = $filename;
         }
 
@@ -99,7 +102,10 @@ class DashboardController extends Controller
             $file = $request->file('perfil');
             $ext = $file->getClientOriginalExtension();
             $filename = time().'.'.$ext;
-            $file->move('users/', $filename);
+            $image = Image::make($file);
+            $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
+
+            $image->save(public_path('users/' . $filename));
             $admin->imagen = $filename;
         }
     

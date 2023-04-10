@@ -201,7 +201,11 @@ class ProductController extends Controller
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
             $filename = time().'.'.$ext;
-            $file->move('assets/uploads/productos/', $filename);
+            
+            $image = Image::make($file);
+            $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
+
+            $image->save(public_path('assets/uploads/productos/' . $filename));
             $producto->image = $filename;
         }
 
