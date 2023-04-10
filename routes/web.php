@@ -121,4 +121,9 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
     //  USUARIOS
     Route::get('usuarios', [DashboardController::class, 'index']);
     Route::get('ver-usuario/{id}', [DashboardController::class, 'view']);
+
+   //  CONFIGURACIÓN
+   Route::get('configuracion', [DashboardController::class, 'configuracion']);
+   Route::put('update-general',     [DashboardController::class,'updateConfiguracion']);
+   Route::put('update-admin',     [DashboardController::class,'updateCredenciales']);
  });

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <link rel="icon" href="{{ asset('images/logo_pagina.png') }}">
+  <link rel="icon" href="{{ asset($logo) }}">
 
   <title>@yield('title')</title>
   {{-- FONT AWESOM & GOOGLE FONTS --}}

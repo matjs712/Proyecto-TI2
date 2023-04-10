@@ -1,6 +1,7 @@
 @extends('layouts.admin')
-@section('title', 'Productos')
-
+@section('title')
+Productos | {{ $sitio }}
+@endsection
 @section('content')
 
 <div class="card">
@@ -78,6 +79,7 @@
                 <div class="col-md-12 mb-4">
                   <label for="">Imagen</label>
                     <input type="file" name="image"  class="form-control">
+                    <img id="preview" width="200" height="200" src="#" alt=" ">
                 </div>
               <div class="col-md-6">
                   <div class="form-group">
@@ -127,7 +129,8 @@
                       <div class="col-md-3">
                         <div class="form-group">
                           <label>Cantidad</label>
-                          <input class="form-control" type="number" name="cantidad{{ $index + 1 }}" value="{{ $prodIng->cantidad/($productoIngredientesCount*$producto->qty) }}">
+                          <input class="form-control" type="number" name="cantidad{{ $index + 1 }}" 
+                          value="{{ $prodIng->cantidad/2 }}">
                         </div>
                       </div>
                     </div>
@@ -154,6 +157,20 @@
 @endsection
 @section('after_scripts')
 <script>
+  const input = document.querySelector('#image');
+  const preview = document.querySelector('#preview');
+
+  input.addEventListener('change', () => {
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      preview.setAttribute('src', reader.result);
+    });
+
+    reader.readAsDataURL(file);
+  });
+
   let ingredienteCount = {{ $productoIngredientes->count() }}; // Inicializa con la cantidad de registros existentes en la tabla Registros + 1
   document.getElementById('agregar-ingrediente').addEventListener('click', function() {
       ingredienteCount++;

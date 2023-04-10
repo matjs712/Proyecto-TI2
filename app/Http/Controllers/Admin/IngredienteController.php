@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Logo;
+use App\Models\Ingrediente;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Ingrediente;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 
 class IngredienteController extends Controller
 {
@@ -16,6 +18,11 @@ class IngredienteController extends Controller
      */
     public function index()
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         $ingredientes = Ingrediente::all();
         return view('admin.ingrediente.index', compact('ingredientes'));
     }
@@ -27,6 +34,11 @@ class IngredienteController extends Controller
      */
     public function create()
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         return view('admin.ingrediente.create');
     }
 
@@ -54,6 +66,11 @@ class IngredienteController extends Controller
      */
     public function edit($id)
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         $ingrediente = Ingrediente::find($id);
         return view('admin.ingrediente.edit', compact('ingrediente'));
     }

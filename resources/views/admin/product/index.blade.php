@@ -1,6 +1,7 @@
 @extends('layouts.admin')
-@section('title', 'Productos')
-
+@section('title')
+Productos | {{ $sitio }}
+@endsection
 @section('content')
 
 

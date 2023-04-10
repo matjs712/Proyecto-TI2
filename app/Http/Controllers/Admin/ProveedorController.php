@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Logo;
+use App\Models\Proveedor;
+use App\Models\Ingrediente;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Ingrediente;
-use App\Models\Proveedor;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 
 class ProveedorController extends Controller
 {
@@ -17,6 +19,11 @@ class ProveedorController extends Controller
      */
     public function index()
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+
         $proveedores = Proveedor::all();
         return view('admin.proveedor.index', compact('proveedores'));
     }
@@ -28,6 +35,11 @@ class ProveedorController extends Controller
      */
     public function create()
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+
         return view('admin.proveedor.create');
     }
 
@@ -56,6 +68,11 @@ class ProveedorController extends Controller
      */
     public function edit($id)
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         $proveedor = Proveedor::find($id);
         return view('admin.proveedor.edit', compact('proveedor'));
     }

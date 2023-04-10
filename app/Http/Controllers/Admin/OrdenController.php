@@ -2,19 +2,31 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Logo;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
 
 class OrdenController extends Controller
 {
     public function index(){
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         $orders = Order::where('status','2')->orWhere('status','0')->get();
         $ordersOld = Order::where('status','1')->get();
         return view('admin.orders.index', compact('orders','ordersOld'));
     }
     public function view($id){
         $orders = Order::where('id',$id)->first();
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         return view('admin.orders.view', compact('orders'));
     }
 

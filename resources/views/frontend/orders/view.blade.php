@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('title')
-Información orden
+Información orden | {{ $sitio }}
 @endsection
 @section('content')
 

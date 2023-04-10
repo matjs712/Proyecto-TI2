@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('title')
-Productos | De Sabelle
+Productos | {{ $sitio }}
 @endsection
 @section('content')
 <div class="py-3 mb-4 shadow-sm border-top migaja">
@@ -62,6 +62,13 @@ Productos | De Sabelle
                         <h2>No se encontraron productos.</h2>
                     </div>
                 @endif
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="pagination-container">
+                {{ $productos->links('layouts.inc.pagination') }}
             </div>
         </div>
     </div>

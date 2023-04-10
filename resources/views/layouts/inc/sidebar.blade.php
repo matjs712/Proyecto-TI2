@@ -2,9 +2,9 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
   <a href="{{ url('/') }}" class="brand-link">
-    <img src="{{ asset('images/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+    <img src="{{ asset($logo) }}" alt="Logo" class="brand-image img-circle elevation-3"
          style="opacity: .8">
-    <span class="brand-text font-weight-light">Tienda ONline</span>
+    <span class="brand-text font-weight-light">{{ $sitio }}</span>
   </a>
 
   <!-- Sidebar -->
@@ -12,7 +12,7 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="{{ asset('images/default.png') }}" class="img-circle elevation-2" alt="User Image">
+        <img src="{{ asset('users/'.Auth::user()->imagen) }}" class="img-circle elevation-2" alt="User">
       </div>
       <div class="info">
         <a href="#" class="d-block">{{ Auth::user()->name }}</a>
@@ -157,6 +157,14 @@
             <i class="fas fa-star"></i>
             <p>
               Usuarios
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('configuracion') }}" class="nav-link {{ Request::is('configuracion') ? 'active': '' }}">
+            <i class="fas fa-star"></i>
+            <p>
+              Configuración
             </p>
           </a>
         </li>

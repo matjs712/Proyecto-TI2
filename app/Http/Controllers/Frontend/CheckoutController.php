@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Cart;
+use App\Models\Logo;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Transbank\Webpay\WebpayPlus;
-use Transbank\Webpay\WebpayPlus\Transaction;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
+use Transbank\Webpay\WebpayPlus\Transaction;
 
 
 class CheckoutController extends Controller
@@ -29,6 +31,10 @@ class CheckoutController extends Controller
     }
 
     public function index(){
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
 
         $cartItems = Cart::where('user_id', Auth::id())->get();
         foreach($cartItems as $item){

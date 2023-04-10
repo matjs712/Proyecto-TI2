@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <link rel="icon" href="{{ asset('images/logo_pagina.png') }}">
+  <link rel="icon" href="{{  asset($logo) }}">
   <title>@yield('title')</title>
 
   <!-- Font Awesome Icons -->

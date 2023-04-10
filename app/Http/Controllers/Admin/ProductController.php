@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Logo;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Ingrediente;
+use Illuminate\Http\Request;
 use App\Models\ProductoIngrediente;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
+
 
 class ProductController extends Controller
 {
@@ -20,6 +23,11 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         $productos = Product::all();
         return view('admin.product.index', compact('productos'));
     }
@@ -31,6 +39,11 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         $categorias = Category::all();
         $ingredientes = Ingrediente::all();
         return view('admin.product.create', compact('categorias','ingredientes'));
@@ -46,15 +59,13 @@ class ProductController extends Controller
     {
 
     //AQUI VA LA VALIDACIÒN DEL FORMULARIO  
-
-
         $producto = new Product();
         $ingredientes = Ingrediente::all();
         $ingredientesCount = count(preg_grep('/^ingrediente/', array_keys($request->all())));
         $ingredienteFaltante = '';
 
         if($ingredientesCount >= 1){
-            if($request->ingredientes != ''){
+            if($request->ingrediente1    != ''){
                 for ($i = 1; $i <= $ingredientesCount; $i++) {
                     $idIngrediente = $request->input('ingrediente'.$i);
                     $cantidadRequerida = $request->input('cantidad'.$i) * $request->qty;
@@ -139,6 +150,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
         $producto = Product::find($id);
         $categorias = Category::all();
         $ingredientes = Ingrediente::all();
@@ -185,7 +201,11 @@ class ProductController extends Controller
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
             $filename = time().'.'.$ext;
-            $file->move('assets/uploads/productos/', $filename);
+            
+            $image = Image::make($file);
+            $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
+
+            $image->save(public_path('assets/uploads/productos/' . $filename));
             $producto->image = $filename;
         }
 

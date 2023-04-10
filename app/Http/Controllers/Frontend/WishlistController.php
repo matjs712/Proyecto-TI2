@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Logo;
+use App\Models\Product;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class WishlistController extends Controller
 {
     public function index(){
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+
         $wishlist = Wishlist::where('user_id', Auth::id())->get();
         return view('frontend.wishlist', compact('wishlist'));
     }
