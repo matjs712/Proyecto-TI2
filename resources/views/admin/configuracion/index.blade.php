@@ -28,10 +28,10 @@ Configuración | {{ $sitio }}
                             <div class="form-group d-flex align-items-center flex-wrap">
                               <div>
                                 <label for="logo">Logo del sitio</label>
-                                <input type="file" name="logo" class="form-control">
+                                <input type="file" id="logoSitio" name="logo" class="form-control">
                                 <img id="preview1" width="200" height="200" src="#" alt=" ">
                               </div>
-                              <img src="{{ asset($logo) }}" width="200" alt="Logo">
+                              {{-- <img src="{{ asset($logo) }}" width="200" alt="Logo"> --}}
                             </div>
                             <div class="form-group d-flex align-items-center flex-wrap">
                               <div>
@@ -49,7 +49,7 @@ Configuración | {{ $sitio }}
                             <div class="form-group d-flex align-items-center flex-wrap">
                                 <div class="mr-2">
                                   <label for="perfil">Foto de perfil</label>
-                                  <input type="file" name="perfil" class="form-control">
+                                  <input type="file" id="perfil" name="perfil" class="form-control">
                                   <img id="preview2" width="200" height="200" src="#" alt=" ">
                                 </div>
                                 <div class="d-flex justify-content-center m-2">
@@ -86,26 +86,26 @@ Configuración | {{ $sitio }}
 
 @section('after_scripts')
 <script>
-  const input = document.querySelector('#logo');
-  const preview = document.querySelector('#preview1');
+  const logoSitio = document.querySelector('#logoSitio');
+  const previewLogo = document.querySelector('#preview1');
 
-  input.addEventListener('change', () => {
-    const file = input.files[0];
-    const reader = new FileReader();
+  logoSitio.addEventListener('change', () => {
+    var file = logoSitio.files[0];
+    var reader = new FileReader();
 
     reader.addEventListener('load', () => {
-      preview.setAttribute('src', reader.result);
+      previewLogo.setAttribute('src', reader.result);
     });
 
     reader.readAsDataURL(file);
   });
 
-  const input = document.querySelector('#perfil');
-  const preview = document.querySelector('#preview2');
+  var input = document.querySelector('#perfil');
+  var preview = document.querySelector('#preview2');
 
   input.addEventListener('change', () => {
-    const file = input.files[0];
-    const reader = new FileReader();
+    var file = input.files[0];
+    var reader = new FileReader();
 
     reader.addEventListener('load', () => {
       preview.setAttribute('src', reader.result);

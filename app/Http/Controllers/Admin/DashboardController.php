@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
+use Intervention\Image\Facades\Image;
 
 class DashboardController extends Controller
 {

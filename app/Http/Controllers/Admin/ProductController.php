@@ -59,7 +59,7 @@ class ProductController extends Controller
     {
 
     //AQUI VA LA VALIDACIÒN DEL FORMULARIO  
-        dd($request);
+        // dd($request);
         $producto = new Product();
         $ingredientes = Ingrediente::all();
         $ingredientesCount = count(preg_grep('/^ingrediente/', array_keys($request->all())));
@@ -163,7 +163,7 @@ class ProductController extends Controller
         $productoIngredientesCount = ProductoIngrediente::where('id_producto', $id)->count();
         return view('admin.product.edit', compact('producto','categorias','productoIngredientes', 'ingredientes','productoIngredientesCount'));
     }
-
+    
     /**
      * Update the specified resource in storage.
      *
@@ -174,10 +174,9 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $producto = Product::find($id);
-        // $ingredientes = Ingrediente::all();
         $ingredientesCount = count(preg_grep('/^ingrediente/', array_keys($request->all())));
         $ingredienteFaltante = '';
-        // dd($request);
+
         if($ingredientesCount >= 1){
             if($request->ingrediente1 != ''){
                 for ($i = 1; $i <= $ingredientesCount; $i++) {
@@ -198,14 +197,14 @@ class ProductController extends Controller
             if(File::exists($path)){
                 File::delete($path); 
             }
-
+            
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
             $filename = time().'.'.$ext;
             
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
+            
             $image->save(public_path('assets/uploads/productos/' . $filename));
             $producto->image = $filename;
         }
@@ -218,15 +217,11 @@ class ProductController extends Controller
         $producto->original_price = $request->input('price');
         $producto->selling_price = $request->input('selling_price');
         $producto->qty = $request->input('qty');
-        // $producto->tax = $request->input('tax');
         $producto->status = $request->input('status') == TRUE ? '1':'0';
         $producto->trending = $request->input('trending') == TRUE ? '1':'0';
-        // $producto->meta_title = $request->input('meta_title');
-        // $producto->meta_description = $request->input('meta_description');
-        // $producto->meta_keywords = $request->input('meta_keywords');
         $producto->update();
-
-        // dd($productoIngrediente);
+        
+        // dd($ingredientesCount);    
 
         if($ingredientesCount >= 1){
             if($request->ingrediente1 != ''){
@@ -252,7 +247,7 @@ class ProductController extends Controller
 
                     // REVISAR , REALIZAR PRUEBAS
 
-                    if($productoIngrediente){    
+                    if($productoIngrediente){
                         if($cantidadRequerida < $productoIngrediente->cantidad){
                             $ingrediente->increment('cantidad', $productoIngrediente->cantidad - $cantidadRequerida);
                         } else if($cantidadRequerida > $productoIngrediente->cantidad){
@@ -267,7 +262,6 @@ class ProductController extends Controller
                 }
             }
         }
-
 
         return redirect('/productos')->with('status', 'Producto Editado exitosamente!.');
     }
