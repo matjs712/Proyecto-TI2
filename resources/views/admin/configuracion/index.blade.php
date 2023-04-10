@@ -29,6 +29,7 @@ Configuración | {{ $sitio }}
                               <div>
                                 <label for="logo">Logo del sitio</label>
                                 <input type="file" name="logo" class="form-control">
+                                <img id="preview1" width="200" height="200" src="#" alt=" ">
                               </div>
                               <img src="{{ asset($logo) }}" width="200" alt="Logo">
                             </div>
@@ -49,6 +50,7 @@ Configuración | {{ $sitio }}
                                 <div class="mr-2">
                                   <label for="perfil">Foto de perfil</label>
                                   <input type="file" name="perfil" class="form-control">
+                                  <img id="preview2" width="200" height="200" src="#" alt=" ">
                                 </div>
                                 <div class="d-flex justify-content-center m-2">
                                     <img src="{{ asset('users/'.Auth::user()->imagen) }}" width="200" alt="perfil">
@@ -83,4 +85,34 @@ Configuración | {{ $sitio }}
 @endsection
 
 @section('after_scripts')
+<script>
+  const input = document.querySelector('#logo');
+  const preview = document.querySelector('#preview1');
+
+  input.addEventListener('change', () => {
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      preview.setAttribute('src', reader.result);
+    });
+
+    reader.readAsDataURL(file);
+  });
+
+  const input = document.querySelector('#perfil');
+  const preview = document.querySelector('#preview2');
+
+  input.addEventListener('change', () => {
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      preview.setAttribute('src', reader.result);
+    });
+
+    reader.readAsDataURL(file);
+  });
+
+</script>
 @endsection

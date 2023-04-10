@@ -57,7 +57,12 @@ class CategoryController extends Controller
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
             $filename = time().'.'.$ext;
-            $file->move('assets/uploads/categorias/', $filename);
+
+            $image = Image::make($file);
+            $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
+
+            $image->save(public_path('assets/uploads/categorias/' . $filename));
+
             $categoria->image = $filename;
         }
 
@@ -125,7 +130,12 @@ class CategoryController extends Controller
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
             $filename = time().'.'.$ext;
-            $file->move('assets/uploads/categorias/', $filename);
+            
+            $image = Image::make($file);
+            $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
+
+            $image->save(public_path('assets/uploads/categorias/' . $filename));
+            
             $categoria->image = $filename;
         }
 

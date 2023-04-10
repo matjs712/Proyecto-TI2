@@ -53,6 +53,7 @@ Categorias | {{ $sitio }}
                 <div class="col-md-12 mb-4">
                   <label for="">Imagen</label>
                     <input type="file" name="image" class="form-control">
+                    <img id="preview" width="200" height="200" src="#" alt=" ">
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
@@ -75,5 +76,23 @@ Categorias | {{ $sitio }}
         </form>
     </div>
 </div>
+
+@endsection
+@section('after_scripts')
+<script>
+  const input = document.querySelector('#image');
+  const preview = document.querySelector('#preview');
+
+  input.addEventListener('change', () => {
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      preview.setAttribute('src', reader.result);
+    });
+
+    reader.readAsDataURL(file);
+  });
+</script>
 
 @endsection
