@@ -2,13 +2,40 @@ $(document).ready(function(){
 
     loadCart();
     loadWish();
+    getQTY();
+    
+    $('.qty-button').click(function() {
+        $('.qty-count').html('');
+    });
+    
 
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     })
+
+    function getQTY(){    
+        $.ajax({
+            method: "GET",
+            url: "/cantidad-ingredientes",
+            success: function (response){
+                $('.qty-item').html('');
+                $('.qty-count').html('');
+                var count = 0; 
+                $.each(response, function(key, value){
+                    if(value < 1000){
+                        count++;
+                        $('.qty-count').html(count);
+                        $('.qty-item').append('<a href="/ingredientes" class="dropdown-item"><div class="media"><div class="media-body"><span>Quedan '+value+' gramos de '+key+'</span></div></div></a> ');
+                    }
+                });
+            }
+        });
+    }
     
+
+
     $('.addCartBtn').click(function (e){
         e.preventDefault()
         var prod_id = $(this).closest('.prod_data').find('.prod_id').val();
@@ -171,5 +198,8 @@ $(document).ready(function(){
         });
         
     })
+
+
+
 })
 

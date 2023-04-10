@@ -106,7 +106,7 @@ class ProductController extends Controller
         // $producto->meta_description = $request->input('meta_description');
         // $producto->meta_keywords = $request->input('meta_keywords');
         $producto->save();
-
+        
         if($ingredientesCount >= 1 ){
             if($request->ingrediente1 != ''){
                 for ($i = 1; $i <= $ingredientesCount; $i++) {

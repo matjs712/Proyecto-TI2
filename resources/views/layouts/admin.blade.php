@@ -53,6 +53,7 @@
 <script src="{{ asset('admin/dist/js/adminlte.min.js') }}"></script>
 <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
 <script src="{{ asset('admin/js/idioma.js') }}"></script>
+<script src="{{ asset('frontend/js/custom.js') }}"></script>
 
 
 {{-- CHARTS --}}

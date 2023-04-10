@@ -92,6 +92,11 @@ class IngredienteController extends Controller
 
         return redirect('/ingredientes')->with('status', 'Ingrediente Editado exitosamente!.');
     }
+    public function qty()
+    {
+        $ingredientes = Ingrediente::all()->pluck('cantidad', 'name');
+        return response()->json($ingredientes);
+    }
 
     /**
      * Remove the specified resource from storage.
