@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
+use Intervention\Image\Facades\Image;
 
 
 class CategoryController extends Controller

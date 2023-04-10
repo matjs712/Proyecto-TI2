@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductosTableSeeder extends Seeder
 {
@@ -17,17 +18,17 @@ class ProductosTableSeeder extends Seeder
         DB::table('products')->insert([
             [
                 'cate_id' => 1,
-                'name' => 'Polera Black',
-                'slug' => 'Polera-Black',
-                'description' => 'Increible polera deseñada con las mejor tela del mundo.',
-                'small_description' => 'Increible polera.',
-                'original_price' => '18999',
-                'selling_price' => '16999',
+                'name' => 'Sal de ajo',
+                'slug' => 'sal-ajo',
+                'description' => 'Exquisita Sal de Ajo, perfecto para condimentar tus comidas.',
+                'small_description' => 'Exquisita Sal de Ajo.',
+                'original_price' => '2000',
+                'selling_price' => '1600',
                 'qty' => '4',
                 // 'tax' => '18',
                 'status' => 1,
-                'trending' => 0,
-                'image' =>  'asd',
+                'trending' => 1,
+                'image' => 'a',
                 // 'meta_title' => 'pantalones',
                 // 'meta_description' => 'Pantalones increibles',
                 // 'meta_keywords' => 'Pantalones, Pantalones negros, Cargos',

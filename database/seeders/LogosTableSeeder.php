@@ -16,8 +16,8 @@ class LogosTableSeeder extends Seeder
     {
         DB::table('logos')->insert([
             [
-                'logo' => 'default',
-                'sitio' => 'sitio',
+                'logo' => 'asd',
+                'sitio' => 'De Sabelle',
             ],
         ]);
     }

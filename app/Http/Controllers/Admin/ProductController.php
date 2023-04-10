@@ -59,13 +59,14 @@ class ProductController extends Controller
     {
 
     //AQUI VA LA VALIDACIÒN DEL FORMULARIO  
+        dd($request);
         $producto = new Product();
         $ingredientes = Ingrediente::all();
         $ingredientesCount = count(preg_grep('/^ingrediente/', array_keys($request->all())));
         $ingredienteFaltante = '';
 
         if($ingredientesCount >= 1){
-            if($request->ingredientes    != ''){
+            if($request->ingrediente1    != ''){
                 for ($i = 1; $i <= $ingredientesCount; $i++) {
                     $idIngrediente = $request->input('ingrediente'.$i);
                     $cantidadRequerida = $request->input('cantidad'.$i) * $request->qty;
