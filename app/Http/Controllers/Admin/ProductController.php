@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
 
+
 class ProductController extends Controller
 {
     /**
@@ -58,15 +59,13 @@ class ProductController extends Controller
     {
 
     //AQUI VA LA VALIDACIÒN DEL FORMULARIO  
-
-
         $producto = new Product();
         $ingredientes = Ingrediente::all();
         $ingredientesCount = count(preg_grep('/^ingrediente/', array_keys($request->all())));
         $ingredienteFaltante = '';
 
         if($ingredientesCount >= 1){
-            if($request->ingredientes != ''){
+            if($request->ingredientes    != ''){
                 for ($i = 1; $i <= $ingredientesCount; $i++) {
                     $idIngrediente = $request->input('ingrediente'.$i);
                     $cantidadRequerida = $request->input('cantidad'.$i) * $request->qty;

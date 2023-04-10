@@ -128,7 +128,8 @@ Productos | {{ $sitio }}
                       <div class="col-md-3">
                         <div class="form-group">
                           <label>Cantidad</label>
-                          <input class="form-control" type="number" name="cantidad{{ $index + 1 }}" value="{{ $prodIng->cantidad/($productoIngredientesCount*$producto->qty) }}">
+                          <input class="form-control" type="number" name="cantidad{{ $index + 1 }}" 
+                          value="{{ $prodIng->cantidad/2 }}">
                         </div>
                       </div>
                     </div>

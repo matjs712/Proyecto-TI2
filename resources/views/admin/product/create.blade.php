@@ -73,9 +73,12 @@ Productos | {{ $sitio }}
                   </div>
               </div> --}}
                 <div class="col-md-12 mb-4">
-                  <label for="">Imagen</label>
-                    <input type="file" name="image" class="form-control">
+                    <label for="">Imagen</label>
+                    {{-- <input type="file" name="image" class="form-control"> --}}
+                    <input type="file" id="image" name="image" class="form-control">
+                    <img id="preview" width="200" height="200" src="#" alt=" ">
                 </div>
+                
               <div class="col-md-6">
                   <div class="form-group">
                     <label for="estado">Estado</label>
@@ -156,6 +159,7 @@ Productos | {{ $sitio }}
     });
 
     reader.readAsDataURL(file);
+  });
 
   let ingredienteCount = 1;
   document.getElementById('agregar-ingrediente').addEventListener('click', function() {
@@ -182,11 +186,4 @@ Productos | {{ $sitio }}
 
   });
 </script>
-
-<style>
-    #preview {
-      max-width: 100%;
-      height: auto;
-    }
-  </style>
 @endsection
