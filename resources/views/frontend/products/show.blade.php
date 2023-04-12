@@ -78,8 +78,26 @@
             </div>
         </div>
         <div class="card-footer bg-white">
-            <h2>Descripción</h2>
-            <p>{{ $producto->description }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Descripción</h2>
+                <a href="{{ url('add-review/'.$producto->slug.'/userreview') }}" class="btn btn-naranjo"><i class="fa fa-star" aria-hidden="true"></i>Añadir Review</a>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p>{{ $producto->description }}</p>
+                </div>
+                <div class="col-md-8">
+                    <label for="">First name</label>
+                    <a href=""><i class="fas fa-edit text-danger"></i></a>
+                    <br>
+                    <i class="fa fa-star gold"></i>
+                    <i class="fa fa-star gold"></i>
+                    <i class="fa fa-star gold"></i>
+                    <i class="fa fa-star gold"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>

@@ -27,6 +27,7 @@ class DashboardController extends Controller
         $logo = Logo::first();
         $path = 'logo/'.$logo->logo;
         View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
 
         $usuario = User::find($id);
         return view('admin.usuarios.view', compact('usuario'));

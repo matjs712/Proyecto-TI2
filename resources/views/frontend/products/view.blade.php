@@ -54,11 +54,7 @@
                         <button type="button" class="btn btn-naranjo" data-toggle="modal" data-target="#exampleModalCenter">
                             <i class="fa fa-star" aria-hidden="true"></i>
                             Califica este producto
-                          </button>
-                        <a href="{{ url('add-review/'.$producto->slug.'/userreview') }}" class="btn btn-naranjo">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            Califica este producto
-                          </a>
+                        </button>
                     </div>
                     <div class="row mt-2 align-items-center">
                         <div class="col-md-3">
@@ -82,7 +78,10 @@
             </div>
         </div>
         <div class="card-footer bg-white">
-            <h2>Descripción</h2>
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Descripción</h2>
+                <a href="{{ url('add-review/'.$producto->slug.'/userreview') }}" class="btn btn-naranjo"><i class="fa fa-star" aria-hidden="true"></i>Añadir Review</a>
+            </div>
             <p>{{ $producto->description }}</p>
         </div>
     </div>

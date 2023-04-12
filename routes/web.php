@@ -65,7 +65,7 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    
    Route::post('add-rating', [RatingController::class, 'add']);
    Route::get('add-review/{product_slug}/userreview', [ReviewController::class, 'add']);
-
+   Route::post('add-review', [ReviewController::class, 'create']);
 });
 
 // ADMIN ROUTES
