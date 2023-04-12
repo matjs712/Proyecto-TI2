@@ -116,5 +116,4 @@ class DashboardController extends Controller
     
         return redirect('/configuracion')->with('status', 'Información actualizada exitosamente.');
     }
-    
 }
