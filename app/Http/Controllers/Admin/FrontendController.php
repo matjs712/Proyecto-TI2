@@ -23,7 +23,7 @@ class FrontendController extends Controller
         View::share('logo', $path);
         View::share('sitio', $logo->sitio);
 
-        return view('dashboard');
+        return view('admin.index');
     }
 
     public function ChartIngredientes(){
