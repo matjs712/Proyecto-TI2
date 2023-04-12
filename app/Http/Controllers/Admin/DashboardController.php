@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -52,8 +53,7 @@ class DashboardController extends Controller
             $filename = time().'.'.$ext;
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('logo/' . $filename));
+            Storage::putFileAs('logo/', $file, $filename);
             $logo_sitio->logo = $filename;
         }
 
@@ -105,8 +105,8 @@ class DashboardController extends Controller
             $filename = time().'.'.$ext;
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('users/' . $filename));
+            
+            Storage::putFileAs('storage/users', $file, $filename);
             $admin->imagen = $filename;
         }
     
