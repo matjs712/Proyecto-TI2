@@ -117,4 +117,19 @@ class DashboardController extends Controller
         return redirect('/configuracion')->with('status', 'Información actualizada exitosamente.');
     }
     
+    public function ChartIngredientes(){
+        $ingredientes = Ingrediente::Select('name', 'cantidad')->get();
+
+        $registroProveedores = DB::table('registros')
+                               ->join('proveedors', 'proveedors.id', '=', 'registros.id_proveedor')
+                               ->join('ingredientes', 'ingredientes.id', '=', 'registros.id_ingrediente')
+                               ->select('proveedors.name as proveedor', 'ingredientes.name as ingrediente', 'registros.cantidad')
+                               ->get();
+
+        $data = [
+            "chart1" =>$ingredientes,
+            "chart2" =>$registroProveedores
+        ];
+        return response()->json($data);
+    }
 }
