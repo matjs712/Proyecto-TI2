@@ -95,6 +95,8 @@
                     <i class="fa fa-star gold"></i>
                     <i class="fa fa-star gold"></i>
                     <i class="fa fa-star"></i>
+                    <small>Reviewed on 27 aug 2021</small>
+                    <p>The Product was good, nice website.</p>
                 </div>
 
             </div>
