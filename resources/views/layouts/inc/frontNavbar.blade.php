@@ -26,7 +26,7 @@
         <a class="nav-link" href="{{ url('todo-productos') }}">Productos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ url('todo-categorias') }}">Categorias</a>
+        <a class="nav-link" href="{{ url('todo-categorias') }}">Categorías</a>
       </li>
 
       @guest

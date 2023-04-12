@@ -23,10 +23,15 @@ class ReviewController extends Controller
         $producto = Product::where('slug', $product_slug)->where('status','1')->first();
         if($producto){
             $product_id = $producto->id;
-            $verified_purchase = Order::where('orders.user_id', Auth::id())
-            ->join('order_items','orders.id','order_items.order_id')
-            ->where('order_items.prod_id', $product_id)->get();
-            return view('frontend.reviews.index', compact('producto','verified_purchase'));
+            $review = Review::where('user_id', Auth::id())->where('product_id', $producto->id)->first();
+            if($review){
+                return view('frontend.reviews.edit', compact('review'));
+            }else{
+                $verified_purchase = Order::where('orders.user_id', Auth::id())
+                ->join('order_items','orders.id','order_items.order_id')
+                ->where('order_items.prod_id', $product_id)->get();
+                return view('frontend.reviews.index', compact('producto','verified_purchase'));
+            }
         }else{
             return redirect()->back()->with('status','El producto no existe');
         }     
@@ -50,5 +55,42 @@ class ReviewController extends Controller
         }else{
             return redirect()->back()->with('status','El producto no existe');
         }
+    }
+    public function edit($product_slug){
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        
+        $producto = Product::where('slug', $product_slug)->where('status','1')->first();
+
+        if($producto){
+            $review = Review::where('user_id', Auth::id())->where('product_id',$producto->id)->first();
+            if($review){
+                return view('frontend.reviews.edit', compact('review'));
+            }else{
+                return redirect()->back()->with('status','No haz escrito esta reseña.');    
+            }
+        }else{
+            return redirect()->back()->with('status','El producto no existe');
+        }
+
+    }
+    public function update(Request $request){
+        
+        $user_review = $request->input('user_review');
+        if($user_review != ''){
+            $review_id = $request->input('review_id');
+            $review = Review::find($review_id)->where('user_id', Auth::id())->first();
+            if($review){
+                $review->user_review = $request->input('user_review');
+                $review->update();
+                return redirect('categorias/'.$review->products->category->slug.'/'.$review->products->slug)->with('status','Reseña actualizada');    
+            }else{
+                return redirect()->back()->with('status','No estas autorizado');    
+            }
+        }
+        
+        
     }
 }

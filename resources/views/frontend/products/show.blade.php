@@ -51,10 +51,13 @@
                         @else
                         <label class="badge bg-danger  text-white">Sin stock</label>
                         @endif
-                        <button type="button" class="btn btn-naranjo" data-toggle="modal" data-target="#exampleModalCenter">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            Califica este producto
-                          </button>
+                        <div class="d-flex align-items-center flex-wrap">
+                            <button type="button" class="btn btn-naranjo mr-2" data-toggle="modal" data-target="#exampleModalCenter">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                Califica este producto
+                            </button>
+                            <a href="{{ url('add-review/'.$producto->slug.'/userreview') }}" class="btn btn-azul"><i class="fa fa-star" aria-hidden="true"></i>Añadir Review</a>
+                        </div>
                     </div>
                     <div class="row mt-2 align-items-center">
                         <div class="col-md-3">
@@ -78,28 +81,47 @@
             </div>
         </div>
         <div class="card-footer bg-white">
-            <div class="d-flex justify-content-between align-items-center">
-                <h2>Descripción</h2>
-                <a href="{{ url('add-review/'.$producto->slug.'/userreview') }}" class="btn btn-naranjo"><i class="fa fa-star" aria-hidden="true"></i>Añadir Review</a>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <p>{{ $producto->description }}</p>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Descripción</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Reseñas</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Especificaciones</a>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <p class="pt-4 pb-2">{{ $producto->description }}</p>
                 </div>
-                <div class="col-md-8">
-                    <label for="">First name</label>
-                    <a href=""><i class="fas fa-edit text-danger"></i></a>
+                <div class="tab-pane fade pt-4 pb-2" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    
+                    @foreach ($reviews as $item)    
+                    <label for="">{{ $item->user->name.' '.$item->user->lname }}</label>
+                    @if ($item->user->id == Auth::id())
+                        <a href="{{ url('edit-review/'.$producto->slug.'/userreview') }}"><i class="fas fa-edit text-danger"></i></a>
+                    @endif
                     <br>
-                    <i class="fa fa-star gold"></i>
-                    <i class="fa fa-star gold"></i>
-                    <i class="fa fa-star gold"></i>
-                    <i class="fa fa-star gold"></i>
-                    <i class="fa fa-star"></i>
-                    <small>Reviewed on 27 aug 2021</small>
-                    <p>The Product was good, nice website.</p>
+                    @php  
+                        $rating = App\Models\Rating::where('product_id', $producto->id)->where('user_id', $item->user->id)->first();
+                    @endphp
+                    @if ($rating)
+                        @php $user_rated = $rating->stars_rated @endphp
+                        @for ($i=1; $i<=$user_rated; $i++)
+                        <i class="fa fa-star gold"></i>
+                        @endfor
+                        @for ($j=$user_rated+1; $j<=5; $j++)
+                        <i class="fa fa-star"></i>
+                        @endfor
+                    @endif
+                    <small>Comentado el {{ $item->created_at->format('d/m/Y') }}</small>
+                    <p>{{ $item->user_review }}</p>
+                @endforeach
                 </div>
-
-            </div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+              </div>
         </div>
     </div>
 </div>
