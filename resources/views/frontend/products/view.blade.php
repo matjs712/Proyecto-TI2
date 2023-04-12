@@ -55,6 +55,10 @@
                             <i class="fa fa-star" aria-hidden="true"></i>
                             Califica este producto
                           </button>
+                        <a href="{{ url('add-review/'.$producto->slug.'/userreview') }}" class="btn btn-naranjo">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            Califica este producto
+                          </a>
                     </div>
                     <div class="row mt-2 align-items-center">
                         <div class="col-md-3">

@@ -19,6 +19,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Admin\RegistroController as AdminRegistroController;
+use App\Http\Controllers\Frontend\ReviewController;
 
 // FRONTEND ROUTES
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
@@ -63,6 +64,7 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    Route::get('wishlist', [WishlistController::class, 'index']);
    
    Route::post('add-rating', [RatingController::class, 'add']);
+   Route::get('add-review/{product_slug}/userreview', [ReviewController::class, 'add']);
 
 });
 
