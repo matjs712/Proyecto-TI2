@@ -74,6 +74,7 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
     
     // CATEGORIAS
     Route::get('categorias',        'Admin\CategoryController@index');
+    Route::get('datos-graficos',        'Admin\CategoryController@ChartIngredientes');
     Route::get('crear-categoria',   'Admin\CategoryController@create');
     Route::post('insert-category',  'Admin\CategoryController@store');
     Route::get('edit-cat/{id}',     [CategoryController::class,'edit']);
