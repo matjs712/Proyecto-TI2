@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
-
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -85,8 +85,8 @@ class ProductController extends Controller
 
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('assets/uploads/productos/' . $filename));
+            
+            Storage::putFileAs('storage/assets/uploads/productos', $file, $filename);
             
             $producto->image = $filename;
         }
@@ -204,8 +204,7 @@ class ProductController extends Controller
             
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('assets/uploads/productos/' . $filename));
+            Storage::putFileAs('storage/assets/uploads/productos', $file, $filename);
             $producto->image = $filename;
         }
 

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Storage;
 
 
 class CategoryController extends Controller
@@ -60,9 +61,8 @@ class CategoryController extends Controller
 
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('assets/uploads/categorias/' . $filename));
-
+            
+            Storage::putFileAs('storage/assets/uploads/categorias', $file, $filename);
             $categoria->image = $filename;
         }
 
@@ -133,8 +133,8 @@ class CategoryController extends Controller
             
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('assets/uploads/categorias/' . $filename));
+            
+            Storage::putFileAs('storage/assets/uploads/categorias', $file, $filename);
             
             $categoria->image = $filename;
         }
