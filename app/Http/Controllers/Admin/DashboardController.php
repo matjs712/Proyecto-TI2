@@ -106,7 +106,7 @@ class DashboardController extends Controller
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
             
-            Storage::putFileAs('storage/users', $file, $filename);
+            Storage::putFileAs('users', $file, $filename);
             $admin->imagen = $filename;
         }
     

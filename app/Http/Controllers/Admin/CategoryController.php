@@ -122,7 +122,7 @@ class CategoryController extends Controller
         $categoria = Category::find($id);
 
         if($request->hasFile('image')){
-            $path = 'assets/uploads/categorias/'.$categoria->image;
+            $path = 'storage/assets/uploads/categorias/'.$categoria->image;
             
             if(File::exists($path)){
                 File::delete($path); 
@@ -166,7 +166,7 @@ class CategoryController extends Controller
         $categoria = Category::find($id);
 
         if($categoria->image){
-            $path = 'assets/uploads/categorias/'.$categoria->image;
+            $path = 'storage/assets/uploads/categorias/'.$categoria->image;
             
             if(File::exists($path)){
                 File::delete($path); 

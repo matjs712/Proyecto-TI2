@@ -192,7 +192,7 @@ class ProductController extends Controller
         }
 
         if($request->hasFile('image')){
-            $path = 'assets/uploads/productos/'.$producto->image;
+            $path = 'storage/assets/uploads/productos/'.$producto->image;
             
             if(File::exists($path)){
                 File::delete($path); 
@@ -276,7 +276,7 @@ class ProductController extends Controller
         $producto = Product::find($id);
 
         if($producto->image){
-            $path = 'assets/uploads/productos/'.$producto->image;
+            $path = 'storage/assets/uploads/productos/'.$producto->image;
             
             if(File::exists($path)){
                 File::delete($path); 
