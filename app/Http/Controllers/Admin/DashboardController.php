@@ -20,6 +20,8 @@ class DashboardController extends Controller
         $this->middleware('can:ver configuracion')->only('configuracion');
         $this->middleware('can:add usuarios')->only('create','store');
         $this->middleware('can:edit usuarios')->only('edit', 'update');
+        $this->middleware('can:ver info usuarios')->only('view');
+        $this->middleware('can:destroy usuarios')->only('destroy');
     }
     
     public function index(){
@@ -37,10 +39,20 @@ class DashboardController extends Controller
         $path = 'logo/'.$logo->logo;
         View::share('sitio', $logo->sitio);
         View::share('logo', $path);
-        return view('admin.usuarios.create');
-    }
-    public function store(){
 
+        $roles = Role::all();
+
+        return view('admin.usuarios.create', compact('roles'));
+    }
+    public function store(Request $request){
+        $user = new User();
+        $user->name = $request->name;
+        $user->role_as = $request->role;
+        $user->email = $request->email;
+        $user->password = bcrypt('password');
+        $user->save();
+        $user->roles()->sync($request->role);
+        return redirect('usuarios')->with('status','Usuario creado exitosamente!');
     }
     public function edit(User $user){
         $logo = Logo::first();
@@ -52,8 +64,15 @@ class DashboardController extends Controller
         return view('admin.usuarios.edit', compact('user', 'roles'));
     }
     public function update(Request $request, User $user){
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->telefono = $request->telefono;
+        $user->update();
+
         $user->roles()->sync($request->roles);
-        return redirect('usuarios')->with('status','Rol asignado correctamente');
+
+        return redirect('usuarios')->with('status','Usuario modificado exitosamente!.');
     }
 
     public function view($id){
@@ -151,4 +170,19 @@ class DashboardController extends Controller
         return redirect('/configuracion')->with('status', 'Información actualizada exitosamente.');
     }
     
+    public function destroy($id)
+    {
+        $user = User::find($id);
+
+        if($user->image){
+            $path = 'assets/users/'.$user->image;
+            
+            if(File::exists($path)){
+                File::delete($path); 
+            }
+        }
+
+        $user->delete();
+        return redirect('/usuarios')->with('status','Usuarios eliminado exitosamente.');
+    }
 }

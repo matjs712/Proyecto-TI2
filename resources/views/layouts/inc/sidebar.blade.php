@@ -218,6 +218,16 @@
             @endcan
           @endcan
         @endcan
+        @can('ver perfil')
+        <li class="nav-item">
+          <a href="{{ url('perfil') }}" class="nav-link {{ Request::is('perfil') ? 'active': '' }}">
+            <i class="fas fa-star"></i>
+            <p>
+              Perfil
+            </p>
+          </a>
+        </li>
+        @endcan
         <li class="nav-item mt-3">
           <a class="nav-link" href="{{ route('logout') }}"
           onclick="event.preventDefault();

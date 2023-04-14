@@ -8,7 +8,9 @@ Usuarios | {{ $sitio }}
 <div class="card">
     <div class="card-header d-flex aling-items-center flex-wrap">
         <h4>Usuarios registrados</h4>
-        {{-- <a class="btn btn-warning ml-4" href="{{ url('/crear-producto') }}"><i class="fa fa-plus" aria-hidden="true"></i></a> --}}
+        @can('add usuarios')
+            <a class="btn btn-warning ml-4" href="{{ url('/add-usuario') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        @endcan
     </div>
     <div class="card-body">
         <table style="width: 100%;" class="table table-bordered" id="tablaUsuarios">
@@ -35,9 +37,15 @@ Usuarios | {{ $sitio }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
-                                    <a href="{{ url('ver-usuario/'.$user->id) }}" class="btn mb-1 btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Ver usuario</a>
-                                    <a href="{{ route('usuarios.edit', $user) }}" class="btn mb-1 btn-success text-white"><i class="fas fa-edit"></i> Editar</a>
+                                    @can('ver info usuarios')
+                                        <a href="{{ url('ver-usuario/'.$user->id) }}" class="btn mb-1 btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Ver usuario</a>
+                                    @endcan
+                                    @can('edit usuarios')
+                                        <a href="{{ route('usuarios.edit', $user) }}" class="btn mb-1 btn-success text-white"><i class="fas fa-edit"></i> Editar</a>
+                                    @endcan
+                                    @can('destroy usuarios')
                                     <a href="{{ url('delete-usuario/'.$user->id) }}" class="btn btn-danger text-white"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
+                                    @endcan
                                 </div>
                             </div>
                           </div>

@@ -9,21 +9,31 @@ Usuarios | {{ $sitio }}
                 <div class="col-md-6">
                     <div class="form-group">
                         <p class="h5">Nombre</p>
-                        <input type="text" value="{{ $user->name }}" class="form-control">
                     </div>  
                     <div class="form-group">
-                        <h5>Rol</h5>
                         {!!  Form::model($user, ['route' => ['usuarios.update', $user], 'method'=> 'put' ]) !!}
-                        @foreach ($roles as $rol)
-                            <div>
-                                <label>
-                                    {!! Form::checkbox('roles[]', $rol->id, null, ['class'=>'mr-1']) !!}
-                                    {{ $rol->name }}
-                                    {{-- {{ $rol->name }} --}}
-                                </label>
-                            </div>
-                        @endforeach
-                        {!! Form::submit('Asignar rol',['class'=>'btn btn-primary mt-2']) !!}
+                        
+                            {!! Form::label('name', 'Nombre') !!}
+                            {!! Form::text('name', $user->name, ['class' => 'form-control', 'placeholder' => 'Nombre del usuario']) !!}
+           
+                            {!! Form::label('name', 'Email') !!}
+                            {!! Form::text('email', $user->email, ['class' => 'form-control', 'placeholder' => 'correo@gmail.com']) !!}
+           
+                            {!! Form::label('name', 'Telefono') !!}
+                            {!! Form::text('telefono', $user->telefono, ['class' => 'form-control', 'placeholder' => '9 53455123']) !!}
+           
+                            {!! Form::label('name', 'Rol') !!}
+                                 @foreach ($roles as $rol)
+                                    <div>
+                                        <label>
+                                            {!! Form::checkbox('roles[]', $rol->id, null, ['class'=>'mr-1']) !!}
+                                            {{ $rol->name }}
+                                            {{-- {{ $rol->name }} --}}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            
+                        {!! Form::submit('Modificar',['class'=>'btn btn-primary mt-2']) !!}
 
                         {!! Form::close() !!}
                     </div>
