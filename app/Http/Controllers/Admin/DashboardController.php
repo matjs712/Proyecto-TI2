@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Logo;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Configuration;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
-use Spatie\Permission\Models\Role;
 
 class DashboardController extends Controller
 {
@@ -25,20 +26,16 @@ class DashboardController extends Controller
     }
     
     public function index(){
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('sitio', $logo->sitio);
-        View::share('logo', $path);
+        logo_sitio();
+        secciones();
 
         $usuarios = User::all();
         return view('admin.usuarios.index', compact('usuarios'));
     }
 
     public function create(){
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('sitio', $logo->sitio);
-        View::share('logo', $path);
+        logo_sitio();
+        secciones();
 
         $roles = Role::all();
 
@@ -55,10 +52,8 @@ class DashboardController extends Controller
         return redirect('usuarios')->with('status','Usuario creado exitosamente!');
     }
     public function edit(User $user){
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('sitio', $logo->sitio);
-        View::share('logo', $path);
+        logo_sitio();
+        secciones();
         $roles = Role::all();
 
         return view('admin.usuarios.edit', compact('user', 'roles'));
@@ -76,22 +71,21 @@ class DashboardController extends Controller
     }
 
     public function view($id){
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
 
         $usuario = User::find($id);
         return view('admin.usuarios.view', compact('usuario'));
     }
     public function configuracion(){
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         return view('admin.configuracion.index');
     }
+    
     public function updateConfiguracion(Request $request){
+
+        // dd($request);
         $logo_sitio = Logo::first();
         if($request->hasFile('logo')){  
             $path = 'logo/'.$logo_sitio->logo;
@@ -113,9 +107,28 @@ class DashboardController extends Controller
         $logo_sitio->sitio = $request->nombreSitio;
         $logo_sitio->update();
 
+        // SECCIONES
+        $secciones = Configuration::first();
+        $this->seccionesUpdate($secciones, $request);
+
+    
         return redirect('/configuracion')->with('status', 'Información de sitio actualizada exitosamente.');
         
     }
+    
+    private function seccionesUpdate($secciones, $request) {
+        $secciones->productos = $request->productos === 'productos' ? 1 : 0;
+        $secciones->ingredientes = $request->ingredientes === 'ingredientes' ? 1 : 0;
+        $secciones->categorias = $request->categorias === 'categorias' ? 1 : 0;
+        $secciones->proveedores = $request->proveedores === 'proveedores' ? 1 : 0;
+        $secciones->registros = $request->registros === 'registros' ? 1 : 0;
+        $secciones->usuarios = $request->usuarios === 'usuarios' ? 1 : 0;
+        $secciones->roles_permisos = $request->roles_permisos === 'roles_permisos' ? 1 : 0;
+        $secciones->ordenes = $request->ordenes === 'ordenes' ? 1 : 0;
+        $secciones->update();
+    }
+    
+    
     public function updateCredenciales(Request $request){
         // Obtener el usuario autenticado
         $admin = User::where('id', Auth::id())->first();

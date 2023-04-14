@@ -30,10 +30,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         
         $productos = Product::all();
         return view('admin.product.index', compact('productos'));
@@ -46,10 +44,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         
         $categorias = Category::all();
         $ingredientes = Ingrediente::all();
@@ -158,10 +154,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         
         $producto = Product::find($id);
         $categorias = Category::all();

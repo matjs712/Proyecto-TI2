@@ -39,6 +39,45 @@ Configuración | {{ $sitio }}
                                 <input type="text" name="nombreSitio" class="form-control" value="{{ $sitio }}">
                               </div>
                             </div>
+
+                            <div class="form-group d-flex align-items-center flex-wrap">
+                              <div>
+                                <label for="secciones">Secciones</label>
+                                <div>
+                                  <input type="checkbox" id="productos" name="productos" {{ $productos ? 'checked':'' }} value="productos">
+                                  <label for="productos">Productos</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" id="categorias" name="categorias" {{ $categorias ? 'checked':'' }} value="categorias">
+                                  <label for="categorias">Categorías</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" id="ingredientes" name="ingredientes" {{ $ingredientes ? 'checked':'' }} value="ingredientes">
+                                  <label for="ingredientes">Ingredientes</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" id="proveedores" name="proveedores" {{ $proveedores ? 'checked':'' }} value="proveedores">
+                                  <label for="proveedores">Proveedores</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" id="registros" name="registros" {{ $registros ? 'checked':'' }} value="registros">
+                                  <label for="registros">Registros</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" id="ordenes" name="ordenes" {{ $ordenes ? 'checked':'' }} value="ordenes">
+                                  <label for="ordenes">Ordenes</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" id="usuarios" name="usuarios" {{ $usuarios ? 'checked':'' }} value="usuarios">
+                                  <label for="usuarios">Usuarios</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" id="roles_permisos" name="roles_permisos" {{ $roles_permisos ? 'checked':'' }} value="roles_permisos">
+                                  <label for="roles_permisos">Roles & permisos</label>
+                                </div>
+                              </div>
+                            </div>
+                            
                             <button type="submit" class="btn btn-primary">Actualizar</button>
                         </form>
                     </div>

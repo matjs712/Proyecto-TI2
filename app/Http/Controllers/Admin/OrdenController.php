@@ -16,10 +16,8 @@ class OrdenController extends Controller
     }
 
     public function index(){
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         
         $orders = Order::where('status','2')->orWhere('status','0')->get();
         $ordersOld = Order::where('status','1')->get();
@@ -27,10 +25,8 @@ class OrdenController extends Controller
     }
     public function view($id){
         $orders = Order::where('id',$id)->first();
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         
         return view('admin.orders.view', compact('orders'));
     }

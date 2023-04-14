@@ -36,6 +36,8 @@
           </li>
         @endcan
         @can('ver productos')
+        
+        @if ($productos)  
           <li class="nav-header">PRODUCTOS</li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -52,55 +54,61 @@
                 </a>
               </li>
               @can('add productos')
-                <li class="nav-item">
-                  <a href="{{ url('/crear-producto') }}" class="nav-link {{ (Request::is('crear-producto')|| Request::is('edit-prod/*') ) ? 'active': ''}} ">
-                    <i class="far fa-circle nav-icon"></i><p>Ingresar</p>
-                  </a>
-                </li>
-              @endcan
-            </ul>
-          </li>
-        @endcan
-        @can('ver categorias')
-        <li class="nav-header">CATEGORÍAS</li>
-        <li class="nav-item">
-          <a href="{{ url('/categorias') }}" class="nav-link {{ (Request::is('categorias') || Request::is('crear-categoria') || Request::is('edit-cat/*') ) ? 'active': '' }}">
-            <i class="fa fa-circle" aria-hidden="true"></i>
-            <p>
-              Categorías
-            </p>
-          </a>
-        </li>
-        @endcan
-
-        @can('ver ingredientes')
-        <li class="nav-header">INGREDIENTES</li>
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
-            <p>
-              Ingredientes
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{ url('/ingredientes') }}" class="nav-link {{ (Request::is('ingredientes') ) ? 'active': '' }}">
-                <i class="far fa-circle nav-icon"></i><p>Ver todos</p>
-              </a>
-            </li>
-            @can('add ingredientes')
               <li class="nav-item">
-                <a href="{{ url('/crear-ingrediente') }}" class="nav-link {{ (Request::is('crear-ingrediente') || Request::is('edit-ing/*') ) ? 'active': ''}} ">
+                <a href="{{ url('/crear-producto') }}" class="nav-link {{ (Request::is('crear-producto')|| Request::is('edit-prod/*') ) ? 'active': ''}} ">
                   <i class="far fa-circle nav-icon"></i><p>Ingresar</p>
                 </a>
               </li>
-            @endcan
-          </ul>
-        </li>
+              @endcan
+            </ul>
+          </li>
+          @endif
+        @endcan
+        @can('ver categorias')
+          @if ($categorias)
+            <li class="nav-header">CATEGORÍAS</li>
+            <li class="nav-item">
+              <a href="{{ url('/categorias') }}" class="nav-link {{ (Request::is('categorias') || Request::is('crear-categoria') || Request::is('edit-cat/*') ) ? 'active': '' }}">
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <p>
+                  Categorías
+                </p>
+              </a>
+            </li>
+          @endif
+        @endcan
+
+        @can('ver ingredientes')
+          @if ($ingredientes)
+            <li class="nav-header">INGREDIENTES</li>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>
+                  Ingredientes
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ url('/ingredientes') }}" class="nav-link {{ (Request::is('ingredientes') ) ? 'active': '' }}">
+                    <i class="far fa-circle nav-icon"></i><p>Ver todos</p>
+                  </a>
+                </li>
+                @can('add ingredientes')
+                  <li class="nav-item">
+                    <a href="{{ url('/crear-ingrediente') }}" class="nav-link {{ (Request::is('crear-ingrediente') || Request::is('edit-ing/*') ) ? 'active': ''}} ">
+                      <i class="far fa-circle nav-icon"></i><p>Ingresar</p>
+                    </a>
+                  </li>
+                @endcan
+              </ul>
+            </li>
+          @endif
         @endcan
 
         @can('ver proveedores')
+          @if ($proveedores)
           <li class="nav-header">PROOVEDORES</li>
           
           <li class="nav-item has-treeview">
@@ -128,9 +136,11 @@
               @endcan
             </ul>
           </li>
+          @endif
         @endcan
 
         @can('ver registros')
+          @if ($registros)
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
@@ -154,10 +164,12 @@
               @endcan
             </ul>
           </li>
+          @endif
         @endcan
 
         
         @can('ver ordenes')
+          @if ($ordenes)
           <li class="nav-header">ORDENES</li>
           
           <li class="nav-item">
@@ -168,11 +180,13 @@
               </p>
             </a>
           </li>
+          @endif
         @endcan
 
         @can(['ver usuarios','ver configuracion'])
           <li class="nav-header">USUARIOS & CONFIGURACIÓN</li>
           @can('ver usuarios')
+            @if ($usuarios)
             <li class="nav-item">
               <a href="#" class="nav-link {{ Request::is('usuarios') ? 'active': '' }}">
                 <i class="fas fa-star"></i>
@@ -196,6 +210,7 @@
                 @endcan
               </ul>
             </li>
+            @endif
           @endcan
           @can('ver configuracion')
             <li class="nav-item">
@@ -207,14 +222,16 @@
               </a>
             </li>
             @can('ver roles')
-            <li class="nav-item">
-              <a href="{{ url('roles') }}" class="nav-link {{ Request::is('roles') ? 'active': '' }}">
-                <i class="fas fa-star"></i>
-                <p>
-                  Roles & Permisos
-                </p>
-              </a>
-            </li>
+              @if ($roles_permisos)
+                <li class="nav-item">
+                  <a href="{{ url('roles') }}" class="nav-link {{ Request::is('roles') ? 'active': '' }}">
+                    <i class="fas fa-star"></i>
+                    <p>
+                      Roles & Permisos
+                    </p>
+                  </a>
+                </li>
+              @endif
             @endcan
           @endcan
         @endcan

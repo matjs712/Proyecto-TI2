@@ -25,10 +25,8 @@ class IngredienteController extends Controller
      */
     public function index()
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         
         $ingredientes = Ingrediente::all();
         return view('admin.ingrediente.index', compact('ingredientes'));
@@ -41,10 +39,8 @@ class IngredienteController extends Controller
      */
     public function create()
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         
         return view('admin.ingrediente.create');
     }
@@ -73,10 +69,8 @@ class IngredienteController extends Controller
      */
     public function edit($id)
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         
         $ingrediente = Ingrediente::find($id);
         return view('admin.ingrediente.edit', compact('ingrediente'));

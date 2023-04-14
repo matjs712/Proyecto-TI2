@@ -27,11 +27,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
-
+        logo_sitio();
+        secciones();
+        
         $categorias = Category::all();
         return view('admin.category.index', compact('categorias'));
     }
@@ -43,11 +41,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
-        
+        logo_sitio();
+            secciones();
+            
         return view('admin.category.create');
     }
 
@@ -109,11 +105,9 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $categoria = Category::find($id);
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
-
+        logo_sitio();
+        secciones();
+        
         return view('admin.category.edit', compact('categoria'));
     }
 

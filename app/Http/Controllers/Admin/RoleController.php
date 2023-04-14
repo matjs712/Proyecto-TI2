@@ -18,10 +18,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         
         $roles = Role::all();
 
@@ -35,10 +33,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
 
         $permissions = Permission::all();
 
@@ -69,10 +65,8 @@ class RoleController extends Controller
      */
     public function show(Role $rol)
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         
         // dd($rol);
         return view('admin.roles.show');
@@ -86,10 +80,8 @@ class RoleController extends Controller
      */
     public function edit(Role $rol)
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         $permissions = Permission::all();
        return view('admin.roles.edit', compact('rol','permissions'));
     }
