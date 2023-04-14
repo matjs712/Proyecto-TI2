@@ -65,7 +65,8 @@ class DashboardController extends Controller
         $user->telefono = $request->telefono;
         $user->update();
 
-        $user->roles()->sync($request->roles);
+        // $user->roles()->sync($request->roles);
+        $user->roles()->sync([$request->role_id]);
 
         return redirect('usuarios')->with('status','Usuario modificado exitosamente!.');
     }

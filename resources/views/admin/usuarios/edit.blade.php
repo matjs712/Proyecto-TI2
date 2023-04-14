@@ -23,15 +23,16 @@ Usuarios | {{ $sitio }}
                             {!! Form::text('telefono', $user->telefono, ['class' => 'form-control', 'placeholder' => '9 53455123']) !!}
            
                             {!! Form::label('name', 'Rol') !!}
-                                 @foreach ($roles as $rol)
+                                 {{-- @foreach ($roles as $rol) --}}
                                     <div>
                                         <label>
-                                            {!! Form::checkbox('roles[]', $rol->id, null, ['class'=>'mr-1']) !!}
-                                            {{ $rol->name }}
+                                            {!! Form::select('role_id', $roles->pluck('name', 'id'), $user->roles->first()->id, ['class' => 'form-control', 'placeholder' => 'Seleccione un rol']) !!}
+                                            {{-- {{ $rol->name }} --}}
                                             {{-- {{ $rol->name }} --}}
                                         </label>
                                     </div>
-                                @endforeach
+                                {{-- @endforeach --}}
+                                
                             
                         {!! Form::submit('Modificar',['class'=>'btn btn-primary mt-2']) !!}
 
