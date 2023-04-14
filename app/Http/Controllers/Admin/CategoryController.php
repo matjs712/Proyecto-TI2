@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
+    public function __construct(){
+        $this->middleware('can:ver categorias')->only('index');
+        $this->middleware('can:add categorias')->only('create','store');
+        $this->middleware('can:edit categorias')->only('edit', 'update');
+        $this->middleware('can:destroy categorias')->only('destroy');
+    }
+    
     /**
      * Display a listing of the resource.
      *

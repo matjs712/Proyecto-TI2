@@ -31,7 +31,7 @@ Configuración | {{ $sitio }}
                                 <input type="file" id="logoSitio" name="logo" class="form-control">
                                 <img id="preview1" width="200" height="200" src="#" alt=" ">
                               </div>
-                              {{-- <img src="{{ asset($logo) }}" width="200" alt="Logo"> --}}
+                              <img src="{{ asset($logo) }}" width="200" alt="Logo">
                             </div>
                             <div class="form-group d-flex align-items-center flex-wrap">
                               <div>

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -15,19 +16,30 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            [
-                'name' => 'administrador',
-                'email' => 'administrador@sales.cl',
-                'password' => bcrypt('password'),
-                'role_as' => 1,
-            ],
-            [
-                'name' => 'normal',
-                'email' => 'normal@sales.cl',
-                'password' => bcrypt('password'),
-                'role_as' => 0,
-            ],
+
+        User::create([
+            'name' => 'administrador',
+            'email' => 'administrador@sales.cl',
+            'password' => bcrypt('password'),
+            'role_as' => 1,
+        ])->assignRole('admin');
+        User::create([
+            'name' => 'nutricionista',
+            'email' => 'nutricionista@sales.cl',
+            'password' => bcrypt('password'),
+            'role_as' => 2,
+        ])->assignRole('nutricionista');
+        User::create([
+            'name' => 'chef',
+            'email' => 'chef@sales.cl',
+            'password' => bcrypt('password'),
+            'role_as' => 3,
+        ])->assignRole('chef');
+        User::create([
+            'name' => 'normal',
+            'email' => 'normal@sales.cl',
+            'password' => bcrypt('password'),
+            'role_as' => 0,
         ]);
       
     }

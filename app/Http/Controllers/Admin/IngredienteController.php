@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\View;
 
 class IngredienteController extends Controller
 {
+    public function __construct(){
+        $this->middleware('can:ver ingredientes')->only('index');
+        $this->middleware('can:add ingredientes')->only('create','store');
+        $this->middleware('can:edit ingredientes')->only('edit', 'update');
+        $this->middleware('can:destroy ingredientes')->only('destroy');
+    }
+    
     /**
      * Display a listing of the resource.
      *

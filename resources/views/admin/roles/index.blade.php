@@ -1,35 +1,29 @@
 @extends('layouts.admin')
 @section('title')
-Proveedores | {{ $sitio }}
+Roles | {{ $sitio }}
 @endsection
 @section('content')
 
 
 <div class="card">
     <div class="card-header d-flex aling-items-center flex-wrap">
-        <h4>Proveedores</h4>
-        @can('add proveedores')
-            <a class="btn btn-warning ml-4" href="{{ url('/crear-proveedor') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
-        @endcan
+        <h4>Roles & Permisos</h4>
+        <a class="btn btn-warning ml-4" href="{{ url('/add-roles') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
     </div>
     <div class="card-body">
-        <table style="width: 100%;" class="table table-bordered" id="tablaProveedores">
+        <table style="width: 100%;" class="table table-bordered" id="tablaRoles">
             <thead style="background-color:#343a40; color:white;">
                 <tr class="text-center">
                     <th>Id</th>
                     <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>Email</th>
-                    <th>Opciones</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($proveedores as $item)
+                @foreach ($roles as $rol)
                 <tr class="text-center"> 
-                    <td scope="row">{{ $item->id }}</td>
-                    <td>{{ $item->name }}</td>
-                    <td><span class="badge badge-primary">{{ $item->telefono }}</span></td>
-                    <td><span class="badge badge-success">{{ $item->email }}</span></td>
+                    <td scope="row">{{ $rol->id }}</td>
+                    <td>{{ $rol->name }}</td>
                     <td>
                         <div class="dropdown text-center">
                             <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -37,13 +31,9 @@ Proveedores | {{ $sitio }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
-                                    <button class="btn mb-1 btn-success"><i class="fas fa-edit"></i>Ver más</button>
-                                    @can('edit proveedores')
-                                        <a href="{{ url('edit-prov/'.$item->id) }}" class="btn mb-1 btn-primary"><i class="fas fa-edit"></i>Editar</a>
-                                    @endcan
-                                    @can('destroy proveedores')
-                                        <a href="{{ url('delete-prov/'.$item->id) }}" class="btn btn-danger text-white"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
-                                    @endcan
+                                    <a href="{{ route('roles.show',$rol) }}" class="btn mb-1 btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Ver rol</a>
+                                    <a href="{{ route('roles.edit', $rol) }}" class="btn mb-1 btn-success text-white"><i class="fas fa-edit"></i> Editar</a>
+                                    <a href="{{ url('delete-rol/'.$rol->id) }}" class="btn btn-danger text-white"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
                                 </div>
                             </div>
                           </div>
@@ -63,7 +53,7 @@ Proveedores | {{ $sitio }}
 <script>	
     
     $(document).ready(function(){
-        $('#tablaProveedores').DataTable({
+        $('#tablaRoles').DataTable({
             responsive: true,
             "language": spanishLanguage,
         });

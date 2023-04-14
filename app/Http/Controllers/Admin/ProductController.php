@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    public function __construct(){
+        $this->middleware('can:ver productos')->only('index');
+        $this->middleware('can:add productos')->only('create','store');
+        $this->middleware('can:edit productos')->only('edit', 'update');
+        $this->middleware('can:destroy productos')->only('destroy');
+    }
+    
     /**
      * Display a listing of the resource.
      *

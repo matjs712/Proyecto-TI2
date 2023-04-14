@@ -35,8 +35,9 @@ Usuarios | {{ $sitio }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
-                                    <a href="{{ url('ver-usuario/'.$user->id) }}" class="btn mb-1 btn-primary"><i class="fas fa-edit"></i>Ver usuario</a>
-                                    <a href="{{ url('delete-prod/'.$user->id) }}" class="btn btn-danger text-white"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
+                                    <a href="{{ url('ver-usuario/'.$user->id) }}" class="btn mb-1 btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Ver usuario</a>
+                                    <a href="{{ route('usuarios.edit', $user) }}" class="btn mb-1 btn-success text-white"><i class="fas fa-edit"></i> Editar</a>
+                                    <a href="{{ url('delete-usuario/'.$user->id) }}" class="btn btn-danger text-white"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
                                 </div>
                             </div>
                           </div>

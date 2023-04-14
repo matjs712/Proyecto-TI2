@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\View;
 
 class RegistroController extends Controller
 {
+    public function __construct(){
+        $this->middleware('can:ver registros')->only('index');
+        $this->middleware('can:add registros')->only('create','store');
+        $this->middleware('can:edit registros')->only('edit', 'update');
+        $this->middleware('can:destroy registros')->only('destroy');
+    }
+    
+
     public function index()
     {
         $logo = Logo::first();
