@@ -14,6 +14,7 @@ class WishlistController extends Controller
 {
     public function index(){
         logo_sitio();
+        secciones();
 
         $wishlist = Wishlist::where('user_id', Auth::id())->get();
         return view('frontend.wishlist', compact('wishlist'));

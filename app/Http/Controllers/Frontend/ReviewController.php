@@ -16,6 +16,7 @@ class ReviewController extends Controller
     public function add($product_slug){
 
         logo_sitio();
+        secciones();
 
         $producto = Product::where('slug', $product_slug)->where('status','1')->first();
         if($producto){
@@ -55,6 +56,7 @@ class ReviewController extends Controller
     }
     public function edit($product_slug){
         logo_sitio();
+        secciones();
         
         $producto = Product::where('slug', $product_slug)->where('status','1')->first();
 

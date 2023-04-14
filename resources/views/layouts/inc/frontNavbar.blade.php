@@ -17,17 +17,21 @@
               <button type="submit" class="input-group-text search"  style="background-color: {{ $color_secundario }}"><i class="fa fa-search"  aria-hidden="true"></i></button>
             </div>
           </form>
-          </div>
+        </div>
       </li>
       <li class="nav-item active ml-3">
         <a class="nav-link" href="{{ url('/') }}">Inicio <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('todo-productos') }}">Productos</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('todo-categorias') }}">Categorías</a>
-      </li>
+      @if ($productosFront)
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url('todo-productos') }}">Productos</a>
+        </li>
+      @endif
+      @if ($categoriasFront)
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url('todo-categorias') }}">Categorías</a>
+        </li>
+      @endif
 
       @guest
         @if (Route::has('login'))

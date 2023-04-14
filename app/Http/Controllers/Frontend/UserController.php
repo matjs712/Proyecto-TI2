@@ -13,12 +13,14 @@ class UserController extends Controller
 {
     public function index(){
         logo_sitio();
+        secciones();
 
         $orders = Order::where('user_id', Auth::id())->get();
         return view('frontend.orders.index', compact('orders'));
     }
     public function view($id){
         logo_sitio();
+        secciones();
 
         $orders = Order::where('id', $id)->where('user_id', Auth::id())->first();
         return view('frontend.orders.view', compact('orders'));

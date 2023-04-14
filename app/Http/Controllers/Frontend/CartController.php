@@ -20,7 +20,7 @@ class CartController extends Controller
     public function viewCart()
     {
         logo_sitio();
-
+        secciones();
         $cartItems = Cart::where('user_id',Auth::id())->get();
         return view('frontend.cart', compact('cartItems'));
     }

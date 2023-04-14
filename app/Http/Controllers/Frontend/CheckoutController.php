@@ -32,6 +32,7 @@ class CheckoutController extends Controller
 
     public function index(){
         logo_sitio();
+        secciones();
 
         $cartItems = Cart::where('user_id', Auth::id())->get();
         foreach($cartItems as $item){
