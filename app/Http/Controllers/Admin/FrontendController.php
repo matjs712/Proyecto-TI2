@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\View;
 
 class FrontendController extends Controller
 {
+    public function __construct(){
+        $this->middleware('can:ver dashboard')->only('index');
+    }
+    
     /**
      * Display a listing of the resource.
      *

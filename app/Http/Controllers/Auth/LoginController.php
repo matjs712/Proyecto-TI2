@@ -30,9 +30,9 @@ class LoginController extends Controller
     // protected $redirectTo = RouteServiceProvider::HOME;
     protected function authenticated()
     {
-        if(Auth::user()->role_as == '1') //1 = Admin Login
+        if(Auth::user()->role_as == '1' || Auth::user()->role_as == '2' || Auth::user()->role_as == '3') //1 = Admin Login
         {
-            return redirect('dashboard')->with('status','Bienvenido Administrador');
+            return redirect('dashboard')->with('status','Bienvenido '.Auth::user()->name);
         }
         elseif(Auth::user()->role_as == '0') // Normal or Default User Login
         {

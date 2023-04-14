@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\View;
 
 class OrdenController extends Controller
 {
+    public function __construct(){
+        $this->middleware('can:ver ordenes')->only('index','view');
+        $this->middleware('can:editar ordenes')->only('update');
+    }
+
     public function index(){
         $logo = Logo::first();
         $path = 'logo/'.$logo->logo;

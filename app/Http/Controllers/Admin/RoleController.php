@@ -3,22 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Logo;
-use App\Models\Proveedor;
-use App\Models\Ingrediente;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
-class ProveedorController extends Controller
+class RoleController extends Controller
 {
-    public function __construct(){
-        $this->middleware('can:ver proveedores')->only('index');
-        $this->middleware('can:add proveedores')->only('create','store');
-        $this->middleware('can:edit proveedores')->only('edit', 'update');
-        $this->middleware('can:destroy proveedores')->only('destroy');
-    }
-    
     /**
      * Display a listing of the resource.
      *
@@ -30,9 +22,10 @@ class ProveedorController extends Controller
         $path = 'logo/'.$logo->logo;
         View::share('logo', $path);
         View::share('sitio', $logo->sitio);
+        
+        $roles = Role::all();
 
-        $proveedores = Proveedor::all();
-        return view('admin.proveedor.index', compact('proveedores'));
+        return view('admin.roles.index', compact('roles'));
     }
 
     /**
@@ -47,7 +40,9 @@ class ProveedorController extends Controller
         View::share('logo', $path);
         View::share('sitio', $logo->sitio);
 
-        return view('admin.proveedor.create');
+        $permissions = Permission::all();
+
+       return view('admin.roles.create', compact('permissions'));
     }
 
     /**
@@ -58,30 +53,45 @@ class ProveedorController extends Controller
      */
     public function store(Request $request)
     {
-        $proveedor = new Proveedor();
-
-        $proveedor->name = $request->input('name');
-        $proveedor->telefono = $request->input('telefono');
-        $proveedor->email = $request->input('email');
-        $proveedor->save();
-
-        return redirect('/proveedores')->with('status', 'Proveedor añadido exitosamente!.');
+        $request->validate([
+            'name'=>'required'
+        ]);
+        $role = Role::create(['name' => $request->name]);
+        $role->permissions()->sync($request->permissions);
+        return redirect()->route('roles.edit',$role)->with('status','Rol creado exitosamente.');
     }
+
     /**
-     * Show the form for editing the specified resource.
+     * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function show(Role $rol)
     {
         $logo = Logo::first();
         $path = 'logo/'.$logo->logo;
         View::share('logo', $path);
         View::share('sitio', $logo->sitio);
         
-        $proveedor = Proveedor::find($id);
-        return view('admin.proveedor.edit', compact('proveedor'));
+        // dd($rol);
+        return view('admin.roles.show');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Role $rol)
+    {
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
+        $permissions = Permission::all();
+       return view('admin.roles.edit', compact('rol','permissions'));
     }
 
     /**
@@ -91,16 +101,14 @@ class ProveedorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $rol)
     {
-        $proveedor = Proveedor::find($id);
-
-        $proveedor->name = $request->input('name');
-        $proveedor->telefono = $request->input('telefono');
-        $proveedor->email = $request->input('email');
-        $proveedor->update();
-
-        return redirect('/proveedores')->with('status', 'Proveedor Editado exitosamente!.');
+        $request->validate([
+            'name'=>'required'
+        ]);
+        $rol->update($request->all());
+        $rol->permissions()->sync($request->permissions);
+        return redirect()->route('roles.edit',$rol)->with('status','Rol ha sido actualizado exitosamente.');
     }
 
     /**
@@ -111,8 +119,9 @@ class ProveedorController extends Controller
      */
     public function destroy($id)
     {
-        $proveedor = Proveedor::find($id);
-        $proveedor->delete();
-        return redirect('/proveedores')->with('status','Proveedor eliminado Exitosamente');
+        $rol = Role::find($id);
+        $rol->delete();
+
+        return redirect('/roles')->with('status','Rol eliminado Exitosamente');
     }
 }

@@ -68,8 +68,10 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="{{ url('mis-ordenes') }}">Mis pedidos</a>
-            @if (Auth::user()->role_as == 1)
-            <a class="dropdown-item" href="{{ url('/dashboard') }}">Panel de administración</a>
+            @if (Auth::user()->role_as == 1 || Auth::user()->role_as == 2 || Auth::user()->role_as == 3)
+              @can('ver dashboard')
+              <a class="dropdown-item" href="{{ url('/dashboard') }}">Panel de administración</a>
+              @endcan
             @endif
             <a class="dropdown-item" href="{{ route('logout') }}"
             onclick="event.preventDefault();
