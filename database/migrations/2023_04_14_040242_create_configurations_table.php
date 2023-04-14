@@ -23,6 +23,14 @@ class CreateConfigurationsTable extends Migration
             $table->integer('ordenes')->default(1);
             $table->integer('usuarios')->default(1);
             $table->integer('roles_permisos')->default(1);
+            $table->string('color_principal')->default('#524656');
+            $table->string('color_secundario')->default('#e5ddcb');
+            $table->string('color_barra_lateral')->default('#343a40');
+            $table->string('color_fondo_admin')->default('#ffffff');
+            $table->string('color_barra_horizontal')->default('#ffffff');
+            $table->string('color_a_tag_sidebar')->default('#ffffff');
+            $table->string('color_a_tag_hover')->default('#0e74cd');
+            $table->string('color_barra_busqueda')->default('#373737');
             $table->timestamps();
         });
     }

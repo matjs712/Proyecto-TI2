@@ -1,5 +1,5 @@
 
-<nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: {{ $color_principal }}">
   <img src="{{ asset($logo) }}" width="50" alt="">
   <a class="navbar-brand" href="{{ url('/') }}">{{ $sitio }}</a>
 
@@ -13,8 +13,8 @@
           <form action="{{ url('/searchproduct') }}" method="POST">
             @csrf
             <div class="input-group">
-              <input type="search" name="nameProduct" id="search_product" class="form-control" placeholder="¿Que estas buscando?">
-              <button type="submit" class="input-group-text search"><i class="fa fa-search" aria-hidden="true"></i></button>
+              <input type="search" style="background-color:{{ $color_barra_busqueda }}" name="nameProduct" id="search_product" class="form-control" placeholder="¿Que estas buscando?">
+              <button type="submit" class="input-group-text search"  style="background-color: {{ $color_secundario }}"><i class="fa fa-search"  aria-hidden="true"></i></button>
             </div>
           </form>
           </div>

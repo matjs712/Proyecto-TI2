@@ -63,6 +63,7 @@ class DashboardController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->telefono = $request->telefono;
+        $user->role_as = $request->role_id;
         $user->update();
 
         // $user->roles()->sync($request->roles);
@@ -87,6 +88,7 @@ class DashboardController extends Controller
     public function updateConfiguracion(Request $request){
 
         // dd($request);
+        
         $logo_sitio = Logo::first();
         if($request->hasFile('logo')){  
             $path = 'logo/'.$logo_sitio->logo;
@@ -111,7 +113,11 @@ class DashboardController extends Controller
         // SECCIONES
         $secciones = Configuration::first();
         $this->seccionesUpdate($secciones, $request);
-
+        
+        // COLORES
+        $colores = Configuration::first();
+        $this->coloresUpdate($colores, $request);
+        
     
         return redirect('/configuracion')->with('status', 'Información de sitio actualizada exitosamente.');
         
@@ -127,6 +133,19 @@ class DashboardController extends Controller
         $secciones->roles_permisos = $request->roles_permisos === 'roles_permisos' ? 1 : 0;
         $secciones->ordenes = $request->ordenes === 'ordenes' ? 1 : 0;
         $secciones->update();
+    }
+    private function coloresUpdate($colores, $request) {
+        $colores->color_barra_lateral = $request->color_barra_lateral;
+        $colores->color_fondo_admin = $request->color_fondo_admin;
+        $colores->color_barra_horizontal = $request->color_barra_horizontal;
+        $colores->color_a_tag_sidebar = $request->color_a_tag_sidebar;
+        $colores->color_a_tag_hover = $request->color_a_tag_hover;
+
+        $colores->color_principal = $request->color_principal;
+        $colores->color_secundario = $request->color_secundario;
+        $colores->color_barra_busqueda = $request->color_barra_busqueda;
+
+        $colores->update();
     }
     
     

@@ -18,5 +18,13 @@ class Configuration extends Model
         'ordenes',
         'usuarios',
         'roles_permisos',
+        'color_principal',
+        'color_secundario',
+        'color_barra_lateral',
+        'color_fondo_admin',
+        'color_barra_horizontal',
+        'color_a_tag_sidebar',
+        'color_a_tag_hover',
+        'color_barra_busqueda'
     ];
 }

@@ -15,10 +15,7 @@ class ReviewController extends Controller
 {
     public function add($product_slug){
 
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
 
         $producto = Product::where('slug', $product_slug)->where('status','1')->first();
         if($producto){
@@ -57,10 +54,7 @@ class ReviewController extends Controller
         }
     }
     public function edit($product_slug){
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
         
         $producto = Product::where('slug', $product_slug)->where('status','1')->first();
 

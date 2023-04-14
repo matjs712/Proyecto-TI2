@@ -21,13 +21,10 @@ class FrontendController extends Controller
      */
     public function index()
     {
+        logo_sitio();
         $banners = Category::all();
         $productos = Product::where('trending','1')->take('5')->get();
         $categorias = Category::where('popular','1')->take('5')->get();
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
 
         return view('frontend.index', compact('banners','categorias','productos'));
     }
@@ -38,12 +35,9 @@ class FrontendController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function categorias(){
+        logo_sitio();
         $categorias = Category::where('status', 1)->paginate(9);
         $categorias->setPath('todo-categorias');
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
 
         return view('frontend.categorias.categorias', compact('categorias'));
     }
@@ -51,10 +45,7 @@ class FrontendController extends Controller
         $productos = Product::where('status', 1)->paginate(9);
         $productos->setPath('todo-productos');
         $categorias = Category::all();
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
 
         return view('frontend.products.productos', compact('productos','categorias'));
     }
@@ -71,10 +62,7 @@ class FrontendController extends Controller
     
     public function viewCategory($slug)
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
 
         if(Category::where('slug',$slug)->exists()){
             $categoria = Category::where('slug',$slug)->first();
@@ -92,10 +80,7 @@ class FrontendController extends Controller
      */
     public function productview($cate_slug,$prod_slug)
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
 
         if(Category::where('slug',$cate_slug)->exists()){
             if(Product::where('slug',$prod_slug)->exists()){
@@ -123,10 +108,7 @@ class FrontendController extends Controller
     public function viewProducto($prod_slug)
     {
 
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
 
             if(Product::where('slug',$prod_slug)->exists()){
             

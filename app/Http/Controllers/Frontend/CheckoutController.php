@@ -31,10 +31,7 @@ class CheckoutController extends Controller
     }
 
     public function index(){
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
 
         $cartItems = Cart::where('user_id', Auth::id())->get();
         foreach($cartItems as $item){

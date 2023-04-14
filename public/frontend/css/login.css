@@ -149,12 +149,11 @@
     margin-right: 5%; */
 }
 .search-bar input,  .search-bar input:focus{
-    background-color: #333;
+    
     border: none;
     color: white;
 }
 .search{
-    background: #cf4647;
     color: white;
     border: #333;
 }
@@ -164,12 +163,7 @@
 section{
     padding: 60px 14% 70px !important;
 }
-nav{
-    background: #281b24 !important;
-}
-body{
-    background-color: #ffffff;
-}
+
 .home{
     position: relative !important;
     width: 100% !important;
@@ -213,7 +207,6 @@ body{
   top: 60%;
   left: 10%;
   padding: 15px 25px;
-  background: #cf4647;
   color: white;
   font-size: 14px;
   font-weight: 500;
