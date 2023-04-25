@@ -60,12 +60,20 @@ class FrontendController extends Controller
     }
     public function filter(Request $request)
     {
+     if($request->filter_by != ''){
+        $category = Category::where('slug', $request->filter_by)->first();
+     }
+     
       if($request->sort_by == 'precio_bajo'){
-        $productos = Product::where('status', 1)->orderBy('selling_price','asc')->paginate(9);
+        $productos = Product::where('status', 1)->where('cate_id', $category->id)->orderBy('selling_price','asc')->paginate(9);
       }
-      if($request->sort_by == 'precio_alto'){
-        $productos = Product::where('status', 1)->orderBy('selling_price','desc')->paginate(9);
+      else if($request->sort_by == 'precio_alto'){
+        $productos = Product::where('status', 1)->where('cate_id', $category->id)->orderBy('selling_price','desc')->paginate(9);
       }
+      else{
+        $productos = Product::where('status', 1)->where('cate_id', $category->id)->paginate(9);
+      }
+      
       return view('frontend.products.filter_result', compact('productos'));
     }
     

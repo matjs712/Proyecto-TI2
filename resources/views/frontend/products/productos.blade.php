@@ -24,14 +24,14 @@ Productos | {{ $sitio }}
                       <option value="precio_bajo">Precio más bajo</option>
                     </select>
                   </div>
-                  {{-- <div class="form-group">
-                    <select name="sort_by" id="sort_by" class="form-control">
-                      <option value="">Ordenar por categoría</option>
+                  <div class="form-group">
+                    <select name="filter_by" id="filter_by" class="form-control">
+                      <option value="">Filtrar por categoría</option>
                       @foreach ($categorias as $item)
                       <option value="{{ $item->slug }}">{{ $item->name }}</option>
                       @endforeach
                     </select>
-                  </div> --}}
+                  </div>
             </div>
         </div>
     </div>
@@ -78,12 +78,13 @@ Productos | {{ $sitio }}
 <script>
    $(document).ready(function (){
 
-    $('#sort_by').on('change', function(){
+    $('#sort_by, #filter_by').on('change', function(){
         let sort_by = $('#sort_by').val();
+        let filter_by = $('#filter_by').val();
         $.ajax({
             url:"{{ route('products.filter') }}",
             method:"GET",
-            data:{sort_by:sort_by},
+            data:{sort_by:sort_by, filter_by:filter_by},
             success:function(res){
                 $('.search-result').html(res);
             }
