@@ -26,10 +26,8 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
 
         $proveedores = Proveedor::all();
         return view('admin.proveedor.index', compact('proveedores'));
@@ -42,10 +40,8 @@ class ProveedorController extends Controller
      */
     public function create()
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
 
         return view('admin.proveedor.create');
     }
@@ -75,10 +71,8 @@ class ProveedorController extends Controller
      */
     public function edit($id)
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         
         $proveedor = Proveedor::find($id);
         return view('admin.proveedor.edit', compact('proveedor'));

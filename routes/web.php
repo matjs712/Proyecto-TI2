@@ -8,8 +8,9 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\OrdenController;
-use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\PerfilController;
 
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -132,6 +133,7 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
     Route::get('usuarios/{user}/edit', [DashboardController::class, 'edit'])->name('usuarios.edit');
     Route::put('usuarios/{user}', [DashboardController::class, 'update'])->name('usuarios.update');
     Route::get('ver-usuario/{id}', [DashboardController::class, 'view']);
+    Route::get('delete-usuario/{id}', [DashboardController::class, 'destroy']);
 
    //  CONFIGURACIÓN
    Route::get('configuracion', [DashboardController::class, 'configuracion']);
@@ -146,4 +148,9 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    Route::get('roles/{rol}/edit', [RoleController::class, 'edit'])->name('roles.edit');
    Route::put('roles/{rol}', [RoleController::class, 'update'])->name('roles.update');
    Route::get('delete-rol/{id}', [RoleController::class, 'destroy']);
+
+   //PERFIL
+   Route::get('perfil', [PerfilController::class, 'index']);
+   Route::put('update-perfil-general/{id}', [PerfilController::class, 'update']);
+   Route::put('update-credenciales-perfil/{id}', [PerfilController::class, 'updateCredential']);
  });

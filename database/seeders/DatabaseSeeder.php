@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\LogosTableSeeder;
 use Database\Seeders\UsersTableSeeder;
+use Database\Seeders\ConfigurationSeeder;
 use Database\Seeders\ProductosTableSeeder;
 use Database\Seeders\CategoriasTableSeeder;
 
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CategoriasTableSeeder::class);
         $this->call(ProductosTableSeeder::class);
         $this->call(LogosTableSeeder::class);
+        $this->call(ConfigurationSeeder::class);
 
     }
 }

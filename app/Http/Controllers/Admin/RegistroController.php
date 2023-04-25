@@ -22,10 +22,8 @@ class RegistroController extends Controller
 
     public function index()
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         
         $registros = Registro::all();
         return view('admin.registro.index', compact('registros'));
@@ -38,10 +36,8 @@ class RegistroController extends Controller
      */
     public function create()
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         
         $proveedores = Proveedor::all();
         $ingredientes = Ingrediente::all();
@@ -80,10 +76,8 @@ class RegistroController extends Controller
      */
     public function edit($id)
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         
         $registro = Registro::find($id);
         $proveedores = Proveedor::all();

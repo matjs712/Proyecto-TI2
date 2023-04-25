@@ -19,11 +19,8 @@ class CartController extends Controller
      */
     public function viewCart()
     {
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
-
+        logo_sitio();
+        secciones();
         $cartItems = Cart::where('user_id',Auth::id())->get();
         return view('frontend.cart', compact('cartItems'));
     }

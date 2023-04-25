@@ -10,7 +10,7 @@
                 @foreach ($productos as $producto)
                 <div class="card text-left card-slider" style="position: relative;">
                     @if ( $producto->trending == '1' )
-                            <label style="font-size: 16px; position:absolute; top:5%; background:#cf4647;" class="text-white float-end badge trending_tag">Popular</label>
+                            <label style="font-size: 16px; position:absolute; top:5%; background:{{ $color_secundario }};" class="text-white float-end badge trending_tag">Popular</label>
                         @endif
                     <img src="{{ asset('assets/uploads/productos/'.$producto->image) }}" alt="">
                 <div class="card-body bg-white text-center">

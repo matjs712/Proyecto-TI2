@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Logo;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Configuration;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -12,7 +14,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
-use Spatie\Permission\Models\Role;
 
 class DashboardController extends Controller
 {
@@ -21,59 +22,74 @@ class DashboardController extends Controller
         $this->middleware('can:ver configuracion')->only('configuracion');
         $this->middleware('can:add usuarios')->only('create','store');
         $this->middleware('can:edit usuarios')->only('edit', 'update');
+        $this->middleware('can:ver info usuarios')->only('view');
+        $this->middleware('can:destroy usuarios')->only('destroy');
     }
     
     public function index(){
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('sitio', $logo->sitio);
-        View::share('logo', $path);
+        logo_sitio();
+        secciones();
 
         $usuarios = User::all();
         return view('admin.usuarios.index', compact('usuarios'));
     }
 
     public function create(){
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('sitio', $logo->sitio);
-        View::share('logo', $path);
-        return view('admin.usuarios.create');
-    }
-    public function store(){
+        logo_sitio();
+        secciones();
 
+        $roles = Role::all();
+
+        return view('admin.usuarios.create', compact('roles'));
+    }
+    public function store(Request $request){
+        $user = new User();
+        $user->name = $request->name;
+        $user->role_as = $request->role;
+        $user->email = $request->email;
+        $user->password = bcrypt('password');
+        $user->save();
+        $user->roles()->sync($request->role);
+        return redirect('usuarios')->with('status','Usuario creado exitosamente!');
     }
     public function edit(User $user){
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('sitio', $logo->sitio);
-        View::share('logo', $path);
+        logo_sitio();
+        secciones();
         $roles = Role::all();
 
         return view('admin.usuarios.edit', compact('user', 'roles'));
     }
     public function update(Request $request, User $user){
-        $user->roles()->sync($request->roles);
-        return redirect('usuarios')->with('status','Rol asignado correctamente');
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->telefono = $request->telefono;
+        $user->role_as = $request->role_id;
+        $user->update();
+
+        // $user->roles()->sync($request->roles);
+        $user->roles()->sync([$request->role_id]);
+
+        return redirect('usuarios')->with('status','Usuario modificado exitosamente!.');
     }
 
     public function view($id){
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
 
         $usuario = User::find($id);
         return view('admin.usuarios.view', compact('usuario'));
     }
     public function configuracion(){
-        $logo = Logo::first();
-        $path = 'logo/'.$logo->logo;
-        View::share('logo', $path);
-        View::share('sitio', $logo->sitio);
+        logo_sitio();
+        secciones();
         return view('admin.configuracion.index');
     }
+    
     public function updateConfiguracion(Request $request){
+
+        // dd($request);
+        
         $logo_sitio = Logo::first();
         if($request->hasFile('logo')){  
             $path = 'logo/'.$logo_sitio->logo;
@@ -94,9 +110,45 @@ class DashboardController extends Controller
         $logo_sitio->sitio = $request->nombreSitio;
         $logo_sitio->update();
 
+        // SECCIONES
+        $secciones = Configuration::first();
+        $this->seccionesUpdate($secciones, $request);
+        
+        // COLORES
+        $colores = Configuration::first();
+        $this->coloresUpdate($colores, $request);
+        
+    
         return redirect('/configuracion')->with('status', 'Información de sitio actualizada exitosamente.');
         
     }
+    
+    private function seccionesUpdate($secciones, $request) {
+        $secciones->productos = $request->productos === 'productos' ? 1 : 0;
+        $secciones->ingredientes = $request->ingredientes === 'ingredientes' ? 1 : 0;
+        $secciones->categorias = $request->categorias === 'categorias' ? 1 : 0;
+        $secciones->proveedores = $request->proveedores === 'proveedores' ? 1 : 0;
+        $secciones->registros = $request->registros === 'registros' ? 1 : 0;
+        $secciones->usuarios = $request->usuarios === 'usuarios' ? 1 : 0;
+        $secciones->roles_permisos = $request->roles_permisos === 'roles_permisos' ? 1 : 0;
+        $secciones->ordenes = $request->ordenes === 'ordenes' ? 1 : 0;
+        $secciones->update();
+    }
+    private function coloresUpdate($colores, $request) {
+        $colores->color_barra_lateral = $request->color_barra_lateral;
+        $colores->color_fondo_admin = $request->color_fondo_admin;
+        $colores->color_barra_horizontal = $request->color_barra_horizontal;
+        $colores->color_a_tag_sidebar = $request->color_a_tag_sidebar;
+        $colores->color_a_tag_hover = $request->color_a_tag_hover;
+
+        $colores->color_principal = $request->color_principal;
+        $colores->color_secundario = $request->color_secundario;
+        $colores->color_barra_busqueda = $request->color_barra_busqueda;
+
+        $colores->update();
+    }
+    
+    
     public function updateCredenciales(Request $request){
         // Obtener el usuario autenticado
         $admin = User::where('id', Auth::id())->first();
@@ -149,5 +201,21 @@ class DashboardController extends Controller
         $admin->save();
     
         return redirect('/configuracion')->with('status', 'Información actualizada exitosamente.');
+    }
+    
+    public function destroy($id)
+    {
+        $user = User::find($id);
+
+        if($user->image){
+            $path = 'assets/users/'.$user->image;
+            
+            if(File::exists($path)){
+                File::delete($path); 
+            }
+        }
+
+        $user->delete();
+        return redirect('/usuarios')->with('status','Usuarios eliminado exitosamente.');
     }
 }

@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<nav class="main-header navbar navbar-expand navbar-light" style="background-color:{{ $color_barra_horizontal }}">
   <!-- Left navbar links -->
   <ul class="navbar-nav">
     <li class="nav-item">
@@ -71,7 +71,7 @@
         <i class="fas fa-th-large"></i>
       </a>
     </li> --}}
-    <li class="nav-item">
+    {{-- <li class="nav-item">
       <a class="nav-link" href="{{ route('logout') }}"
       onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
@@ -80,7 +80,7 @@
       <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
           @csrf
       </form>
-    </li>
+    </li> --}}
   </ul>
 </nav>
 <!-- /.navbar -->

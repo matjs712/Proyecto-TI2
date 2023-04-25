@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Configuration extends Model
+{
+    use HasFactory;
+    protected $table = 'configurations';
+    protected $fillable = [
+        'productos',
+        'ingredientes',
+        'categorias',
+        'proveedores',
+        'registros',
+        'ordenes',
+        'usuarios',
+        'roles_permisos',
+        'color_principal',
+        'color_secundario',
+        'color_barra_lateral',
+        'color_fondo_admin',
+        'color_barra_horizontal',
+        'color_a_tag_sidebar',
+        'color_a_tag_hover',
+        'color_barra_busqueda'
+    ];
+}

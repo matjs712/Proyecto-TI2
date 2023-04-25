@@ -17,15 +17,17 @@
   <!-- Theme style -->  
   <link rel="stylesheet" href="{{ asset('admin/dist/css/adminlte.min.css') }}">
   
+  <link rel="stylesheet" href="{{ asset('admin/dist/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}">
+  
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini" >
 <div class="wrapper">
 
 @include('layouts.inc.adminNav')
 @include('layouts.inc.sidebar')
 
   <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="background-color: {{ $color_fondo_admin }}">
         @yield('content')
   </div>
   <!-- /.content-wrapper -->
