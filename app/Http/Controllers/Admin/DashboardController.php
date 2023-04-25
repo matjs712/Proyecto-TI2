@@ -11,9 +11,18 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 
 class DashboardController extends Controller
 {
+    public function __construct(){
+        $this->middleware('can:ver usuarios')->only('index');
+        $this->middleware('can:ver configuracion')->only('configuracion');
+        $this->middleware('can:add usuarios')->only('create','store');
+        $this->middleware('can:edit usuarios')->only('edit', 'update');
+    }
+    
     public function index(){
         $logo = Logo::first();
         $path = 'logo/'.$logo->logo;
@@ -23,10 +32,36 @@ class DashboardController extends Controller
         $usuarios = User::all();
         return view('admin.usuarios.index', compact('usuarios'));
     }
+
+    public function create(){
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('sitio', $logo->sitio);
+        View::share('logo', $path);
+        return view('admin.usuarios.create');
+    }
+    public function store(){
+
+    }
+    public function edit(User $user){
+        $logo = Logo::first();
+        $path = 'logo/'.$logo->logo;
+        View::share('sitio', $logo->sitio);
+        View::share('logo', $path);
+        $roles = Role::all();
+
+        return view('admin.usuarios.edit', compact('user', 'roles'));
+    }
+    public function update(Request $request, User $user){
+        $user->roles()->sync($request->roles);
+        return redirect('usuarios')->with('status','Rol asignado correctamente');
+    }
+
     public function view($id){
         $logo = Logo::first();
         $path = 'logo/'.$logo->logo;
         View::share('logo', $path);
+        View::share('sitio', $logo->sitio);
 
         $usuario = User::find($id);
         return view('admin.usuarios.view', compact('usuario'));
@@ -52,8 +87,7 @@ class DashboardController extends Controller
             $filename = time().'.'.$ext;
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('logo/' . $filename));
+            Storage::putFileAs('logo/', $file, $filename);
             $logo_sitio->logo = $filename;
         }
 
@@ -105,8 +139,8 @@ class DashboardController extends Controller
             $filename = time().'.'.$ext;
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('users/' . $filename));
+            
+            Storage::putFileAs('users', $file, $filename);
             $admin->imagen = $filename;
         }
     

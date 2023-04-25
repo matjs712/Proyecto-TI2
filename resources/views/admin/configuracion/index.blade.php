@@ -31,19 +31,7 @@ Configuración | {{ $sitio }}
                                 <input type="file" id="logoSitio" name="logo" class="form-control">
                                 <img id="preview1" width="200" height="200" src="#" alt=" ">
                               </div>
-                              {{-- <img src="{{ asset($logo) }}" width="200" alt="Logo"> --}}
-                            </div><div class="form-group d-flex align-items-center flex-wrap">
-                              <div>
-                                <label for="banner_1">Banner 1</label>
-                                <input type="file" id="banner_1" name="banner_1" class="form-control">
-                                <img id="preview_banner_1" width="200" height="200" src="#" alt=" ">
-                              </div>
-                            </div><div class="form-group d-flex align-items-center flex-wrap">
-                              <div>
-                                <label for="banner_2">Banner 2</label>
-                                <input type="file" id="banner_2" name="banner_2" class="form-control">
-                                <img id="preview_banner_2" width="200" height="200" src="#" alt=" ">
-                              </div>
+                              <img src="{{ asset($logo) }}" width="200" alt="Logo">
                             </div>
                             <div class="form-group d-flex align-items-center flex-wrap">
                               <div>

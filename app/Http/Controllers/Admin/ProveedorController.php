@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\View;
 
 class ProveedorController extends Controller
 {
+    public function __construct(){
+        $this->middleware('can:ver proveedores')->only('index');
+        $this->middleware('can:add proveedores')->only('create','store');
+        $this->middleware('can:edit proveedores')->only('edit', 'update');
+        $this->middleware('can:destroy proveedores')->only('destroy');
+    }
+    
     /**
      * Display a listing of the resource.
      *

@@ -6,20 +6,21 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RegistroController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\OrdenController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Frontend\CartController;
 
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProveedorController;
+use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Admin\IngredienteController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Admin\RegistroController as AdminRegistroController;
-use App\Http\Controllers\Frontend\ReviewController;
 
 // FRONTEND ROUTES
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
@@ -65,7 +66,9 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    
    Route::post('add-rating', [RatingController::class, 'add']);
    Route::get('add-review/{product_slug}/userreview', [ReviewController::class, 'add']);
-
+   Route::post('add-review', [ReviewController::class, 'create']);
+   Route::get('edit-review/{product_slug}/userreview', [ReviewController::class, 'edit']);
+   Route::put('update-review', [ReviewController::class, 'update']);
 });
 
 // ADMIN ROUTES
@@ -124,10 +127,23 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    
     //  USUARIOS
     Route::get('usuarios', [DashboardController::class, 'index']);
+    Route::get('add-usuario', [DashboardController::class, 'create']);
+    Route::post('insert-usuario', [DashboardController::class, 'store']);
+    Route::get('usuarios/{user}/edit', [DashboardController::class, 'edit'])->name('usuarios.edit');
+    Route::put('usuarios/{user}', [DashboardController::class, 'update'])->name('usuarios.update');
     Route::get('ver-usuario/{id}', [DashboardController::class, 'view']);
 
    //  CONFIGURACIÓN
    Route::get('configuracion', [DashboardController::class, 'configuracion']);
    Route::put('update-general',     [DashboardController::class,'updateConfiguracion']);
    Route::put('update-admin',     [DashboardController::class,'updateCredenciales']);
+
+   //ROLES Y PERMISOS
+   Route::get('roles', [RoleController::class, 'index']);
+   Route::get('add-roles', [RoleController::class, 'create']);
+   Route::post('store-roles', [RoleController::class, 'store'])->name('roles.store');;
+   Route::get('roles/{rol}/show', [RoleController::class, 'show'])->name('roles.show');
+   Route::get('roles/{rol}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+   Route::put('roles/{rol}', [RoleController::class, 'update'])->name('roles.update');
+   Route::get('delete-rol/{id}', [RoleController::class, 'destroy']);
  });

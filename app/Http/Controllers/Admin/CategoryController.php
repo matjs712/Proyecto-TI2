@@ -9,10 +9,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 
 class CategoryController extends Controller
 {
+    public function __construct(){
+        $this->middleware('can:ver categorias')->only('index');
+        $this->middleware('can:add categorias')->only('create','store');
+        $this->middleware('can:edit categorias')->only('edit', 'update');
+        $this->middleware('can:destroy categorias')->only('destroy');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -61,9 +69,8 @@ class CategoryController extends Controller
 
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('assets/uploads/categorias/' . $filename));
-
+            
+            Storage::putFileAs('storage/assets/uploads/categorias', $file, $filename);
             $categoria->image = $filename;
         }
 
@@ -122,7 +129,7 @@ class CategoryController extends Controller
         $categoria = Category::find($id);
 
         if($request->hasFile('image')){
-            $path = 'assets/uploads/categorias/'.$categoria->image;
+            $path = 'storage/assets/uploads/categorias/'.$categoria->image;
             
             if(File::exists($path)){
                 File::delete($path); 
@@ -134,8 +141,8 @@ class CategoryController extends Controller
             
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('assets/uploads/categorias/' . $filename));
+            
+            Storage::putFileAs('storage/assets/uploads/categorias', $file, $filename);
             
             $categoria->image = $filename;
         }
@@ -166,7 +173,7 @@ class CategoryController extends Controller
         $categoria = Category::find($id);
 
         if($categoria->image){
-            $path = 'assets/uploads/categorias/'.$categoria->image;
+            $path = 'storage/assets/uploads/categorias/'.$categoria->image;
             
             if(File::exists($path)){
                 File::delete($path); 

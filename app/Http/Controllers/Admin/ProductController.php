@@ -12,10 +12,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
-
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    public function __construct(){
+        $this->middleware('can:ver productos')->only('index');
+        $this->middleware('can:add productos')->only('create','store');
+        $this->middleware('can:edit productos')->only('edit', 'update');
+        $this->middleware('can:destroy productos')->only('destroy');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -86,8 +93,8 @@ class ProductController extends Controller
 
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('assets/uploads/productos/' . $filename));
+            
+            Storage::putFileAs('storage/assets/uploads/productos', $file, $filename);
             
             $producto->image = $filename;
         }
@@ -192,7 +199,7 @@ class ProductController extends Controller
         }
 
         if($request->hasFile('image')){
-            $path = 'assets/uploads/productos/'.$producto->image;
+            $path = 'storage/assets/uploads/productos/'.$producto->image;
             
             if(File::exists($path)){
                 File::delete($path); 
@@ -204,8 +211,7 @@ class ProductController extends Controller
             
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-            
-            $image->save(public_path('assets/uploads/productos/' . $filename));
+            Storage::putFileAs('storage/assets/uploads/productos', $file, $filename);
             $producto->image = $filename;
         }
 
@@ -277,7 +283,7 @@ class ProductController extends Controller
         $producto = Product::find($id);
 
         if($producto->image){
-            $path = 'assets/uploads/productos/'.$producto->image;
+            $path = 'storage/assets/uploads/productos/'.$producto->image;
             
             if(File::exists($path)){
                 File::delete($path); 

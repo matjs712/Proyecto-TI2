@@ -15,7 +15,17 @@ Usuarios | {{ $sitio }}
                         <div class="row">
                             <div class="col-md-4 mt-3">
                                 <label>Rol</label>
-                                <div class="p-2 border">{{ $usuario->role_as == '0'? 'Usuario':'Administrador' }}</div>
+                                <div class="p-2 border">
+                                    @if ($usuario->role_as == '0')
+                                        <span>Usuario</span>
+                                        @elseif ($usuario->role_as == '1')
+                                            <span>Administrador</span>
+                                        @elseif ($usuario->role_as == '2')
+                                            <span>Nutricionista</span>
+                                        @elseif ($usuario->role_as == '3')
+                                            <span>Chef</span>
+                                    @endif
+                                </div>
                             </div>
                             <div class="col-md-4 mt-3">
                                 <label>Nombre</label>

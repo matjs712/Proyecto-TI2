@@ -8,7 +8,9 @@ Categorias | {{ $sitio }}
 <div class="card">
     <div class="card-header d-flex aling-items-center flex-wrap">
         <h4>Categorias</h4>
-        <a class="btn btn-warning ml-4" href="{{ url('/crear-categoria') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        @can('add categorias')
+            <a class="btn btn-warning ml-4" href="{{ url('/crear-categoria') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>    
+        @endcan
     </div>
     <div class="card-body">
         <table style="width: 100%;" class="table table-bordered" id="tablaCategorias">
@@ -44,8 +46,12 @@ Categorias | {{ $sitio }}
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
                                     <a href="#" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalCategoria" data-category-id="{{ $categoria->id }}">Ver más</a>
-                                    <a href="{{ url('edit-cat/'.$categoria->id) }}" class="btn mb-1 btn-primary"><i class="fas fa-edit"></i>Editar</a>
-                                    <a href="{{ url('delete-cat/'.$categoria->id) }}" class="btn btn-danger text-white"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
+                                    @can('edit categorias')
+                                        <a href="{{ url('edit-cat/'.$categoria->id) }}" class="btn mb-1 btn-primary"><i class="fas fa-edit"></i>Editar</a>
+                                    @endcan
+                                    @can('destroy categorias')
+                                        <a href="{{ url('delete-cat/'.$categoria->id) }}" class="btn btn-danger text-white"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
+                                    @endcan
                                 </div>
                             </div>
                           </div>

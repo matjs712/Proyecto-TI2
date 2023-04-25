@@ -25,41 +25,44 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         
-        <li class="nav-item">
-          <a href="{{ url('/dashboard') }}" class="nav-link  {{ Request::is('dashboard') ? 'active': ''}}">
-            <i class="nav-icon fas fa-th"></i>
-            <p>
-              Inicio
-            </p>
-          </a>
-        </li>
-
-        <li class="nav-header">PRODUCTOS</li>
-
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
-            <p>
-              Productos
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{ url('/productos') }}" class="nav-link {{ (Request::is('productos')  ) ? 'active': '' }}">
-                <i class="far fa-circle nav-icon"></i><p>Ver todos</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ url('/crear-producto') }}" class="nav-link {{ (Request::is('crear-producto')|| Request::is('edit-prod/*') ) ? 'active': ''}} ">
-                <i class="far fa-circle nav-icon"></i><p>Ingresar</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-
+        @can('ver dashboard')
+          <li class="nav-item">
+            <a href="{{ url('/dashboard') }}" class="nav-link  {{ Request::is('dashboard') ? 'active': ''}}">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Inicio
+              </p>
+            </a>
+          </li>
+        @endcan
+        @can('ver productos')
+          <li class="nav-header">PRODUCTOS</li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Productos
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ url('/productos') }}" class="nav-link {{ (Request::is('productos')  ) ? 'active': '' }}">
+                  <i class="far fa-circle nav-icon"></i><p>Ver todos</p>
+                </a>
+              </li>
+              @can('add productos')
+                <li class="nav-item">
+                  <a href="{{ url('/crear-producto') }}" class="nav-link {{ (Request::is('crear-producto')|| Request::is('edit-prod/*') ) ? 'active': ''}} ">
+                    <i class="far fa-circle nav-icon"></i><p>Ingresar</p>
+                  </a>
+                </li>
+              @endcan
+            </ul>
+          </li>
+        @endcan
+        @can('ver categorias')
         <li class="nav-header">CATEGORÍAS</li>
-
         <li class="nav-item">
           <a href="{{ url('/categorias') }}" class="nav-link {{ (Request::is('categorias') || Request::is('crear-categoria') || Request::is('edit-cat/*') ) ? 'active': '' }}">
             <i class="fa fa-circle" aria-hidden="true"></i>
@@ -68,9 +71,10 @@
             </p>
           </a>
         </li>
+        @endcan
 
+        @can('ver ingredientes')
         <li class="nav-header">INGREDIENTES</li>
-
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-chart-pie"></i>
@@ -85,89 +89,135 @@
                 <i class="far fa-circle nav-icon"></i><p>Ver todos</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="{{ url('/crear-ingrediente') }}" class="nav-link {{ (Request::is('crear-ingrediente') || Request::is('edit-ing/*') ) ? 'active': ''}} ">
-                <i class="far fa-circle nav-icon"></i><p>Ingresar</p>
-              </a>
-            </li>
+            @can('add ingredientes')
+              <li class="nav-item">
+                <a href="{{ url('/crear-ingrediente') }}" class="nav-link {{ (Request::is('crear-ingrediente') || Request::is('edit-ing/*') ) ? 'active': ''}} ">
+                  <i class="far fa-circle nav-icon"></i><p>Ingresar</p>
+                </a>
+              </li>
+            @endcan
           </ul>
         </li>
+        @endcan
 
-        <li class="nav-header">PROOVEDORES</li>
+        @can('ver proveedores')
+          <li class="nav-header">PROOVEDORES</li>
+          
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Proveedores
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              @can('ver proveedores')
+                <li class="nav-item">
+                  <a href="{{ url('/proveedores') }}" class="nav-link {{ (Request::is('proveedores')  ) ? 'active': '' }}">
+                    <i class="far fa-circle nav-icon"></i><p>Ver todos</p>
+                  </a>
+                </li>
+              @endcan
+              @can('add proveedores')
+                <li class="nav-item">
+                  <a href="{{ url('/crear-proveedor') }}" class="nav-link {{ (Request::is('crear-proveedor')|| Request::is('edit-prov/*') ) ? 'active': ''}} ">
+                    <i class="far fa-circle nav-icon"></i><p>Ingresar</p>
+                  </a>
+                </li>    
+              @endcan
+            </ul>
+          </li>
+        @endcan
 
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
-            <p>
-              Proveedores
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{ url('/proveedores') }}" class="nav-link {{ (Request::is('proveedores')  ) ? 'active': '' }}">
-                <i class="far fa-circle nav-icon"></i><p>Ver todos</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ url('/crear-proveedor') }}" class="nav-link {{ (Request::is('crear-proveedor')|| Request::is('edit-prov/*') ) ? 'active': ''}} ">
-                <i class="far fa-circle nav-icon"></i><p>Ingresar</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
-            <p>
-              Registro
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{ url('/registros') }}" class="nav-link {{ (Request::is('registro')  ) ? 'active': '' }}">
-                <i class="far fa-circle nav-icon"></i><p>Ver todos</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ url('/crear-registro') }}" class="nav-link {{ (Request::is('crear-registro')|| Request::is('edit-reg/*') ) ? 'active': ''}} ">
-                <i class="far fa-circle nav-icon"></i><p>Ingresar</p>
-              </a>
-            </li>
-          </ul>
-        </li>
+        @can('ver registros')
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Registro
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ url('/registros') }}" class="nav-link {{ (Request::is('registro')  ) ? 'active': '' }}">
+                  <i class="far fa-circle nav-icon"></i><p>Ver todos</p>
+                </a>
+              </li>
+              @can('add registros')
+                <li class="nav-item">
+                  <a href="{{ url('/crear-registro') }}" class="nav-link {{ (Request::is('crear-registro')|| Request::is('edit-reg/*') ) ? 'active': ''}} ">
+                    <i class="far fa-circle nav-icon"></i><p>Ingresar</p>
+                  </a>
+                </li>
+              @endcan
+            </ul>
+          </li>
+        @endcan
 
         
-        <li class="nav-header">ORDENES</li>
-        
-        <li class="nav-item">
-          <a href="{{ url('ordenes') }}" class="nav-link {{ Request::is('ordenes') ? 'active': '' }}">
-            <i class="fas fa-star"></i>
-            <p>
-              Ordenes
-            </p>
-          </a>
-        </li>
+        @can('ver ordenes')
+          <li class="nav-header">ORDENES</li>
+          
+          <li class="nav-item">
+            <a href="{{ url('ordenes') }}" class="nav-link {{ Request::is('ordenes') ? 'active': '' }}">
+              <i class="fas fa-star"></i>
+              <p>
+                Ordenes
+              </p>
+            </a>
+          </li>
+        @endcan
 
-        <li class="nav-header">USUARIOS & CONFIGURACIÓN</li>
-
-        <li class="nav-item">
-          <a href="{{ url('usuarios') }}" class="nav-link {{ Request::is('usuarios') ? 'active': '' }}">
-            <i class="fas fa-star"></i>
-            <p>
-              Usuarios
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ url('configuracion') }}" class="nav-link {{ Request::is('configuracion') ? 'active': '' }}">
-            <i class="fas fa-star"></i>
-            <p>
-              Configuración
-            </p>
-          </a>
-        </li>
+        @can(['ver usuarios','ver configuracion'])
+          <li class="nav-header">USUARIOS & CONFIGURACIÓN</li>
+          @can('ver usuarios')
+            <li class="nav-item">
+              <a href="#" class="nav-link {{ Request::is('usuarios') ? 'active': '' }}">
+                <i class="fas fa-star"></i>
+                <p>
+                  Usuarios
+                </p>
+                <i class="right fas fa-angle-left"></i>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ url('/usuarios') }}" class="nav-link {{ (Request::is('usuarios')  ) ? 'active': '' }}">
+                    <i class="far fa-circle nav-icon"></i><p>Ver todos</p>
+                  </a>
+                </li>
+                @can('add usuarios')
+                  <li class="nav-item">
+                    <a href="{{ url('/add-usuario') }}" class="nav-link {{ (Request::is('add-usuario')|| Request::is('edit-reg/*') ) ? 'active': ''}} ">
+                      <i class="far fa-circle nav-icon"></i><p>Ingresar</p>
+                    </a>
+                  </li>
+                @endcan
+              </ul>
+            </li>
+          @endcan
+          @can('ver configuracion')
+            <li class="nav-item">
+              <a href="{{ url('configuracion') }}" class="nav-link {{ Request::is('configuracion') ? 'active': '' }}">
+                <i class="fas fa-star"></i>
+                <p>
+                  Configuración
+                </p>
+              </a>
+            </li>
+            @can('ver roles')
+            <li class="nav-item">
+              <a href="{{ url('roles') }}" class="nav-link {{ Request::is('roles') ? 'active': '' }}">
+                <i class="fas fa-star"></i>
+                <p>
+                  Roles & Permisos
+                </p>
+              </a>
+            </li>
+            @endcan
+          @endcan
+        @endcan
         <li class="nav-item mt-3">
           <a class="nav-link" href="{{ route('logout') }}"
           onclick="event.preventDefault();

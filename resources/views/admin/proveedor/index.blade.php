@@ -8,7 +8,9 @@ Proveedores | {{ $sitio }}
 <div class="card">
     <div class="card-header d-flex aling-items-center flex-wrap">
         <h4>Proveedores</h4>
-        <a class="btn btn-warning ml-4" href="{{ url('/crear-proveedor') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        @can('add proveedores')
+            <a class="btn btn-warning ml-4" href="{{ url('/crear-proveedor') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        @endcan
     </div>
     <div class="card-body">
         <table style="width: 100%;" class="table table-bordered" id="tablaProveedores">
@@ -36,8 +38,12 @@ Proveedores | {{ $sitio }}
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
                                     <button class="btn mb-1 btn-success"><i class="fas fa-edit"></i>Ver más</button>
-                                    <a href="{{ url('edit-prov/'.$item->id) }}" class="btn mb-1 btn-primary"><i class="fas fa-edit"></i>Editar</a>
-                                    <a href="{{ url('delete-prov/'.$item->id) }}" class="btn btn-danger text-white"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
+                                    @can('edit proveedores')
+                                        <a href="{{ url('edit-prov/'.$item->id) }}" class="btn mb-1 btn-primary"><i class="fas fa-edit"></i>Editar</a>
+                                    @endcan
+                                    @can('destroy proveedores')
+                                        <a href="{{ url('delete-prov/'.$item->id) }}" class="btn btn-danger text-white"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
+                                    @endcan
                                 </div>
                             </div>
                           </div>
