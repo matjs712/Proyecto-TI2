@@ -63,7 +63,10 @@ class FrontendController extends Controller
      if($request->filter_by != ''){
         $category = Category::where('slug', $request->filter_by)->first();
      }
-     
+     else{
+        $category = new Category();
+        $category->id = 1;
+     }
       if($request->sort_by == 'precio_bajo'){
         $productos = Product::where('status', 1)->where('cate_id', $category->id)->orderBy('selling_price','asc')->paginate(9);
       }
