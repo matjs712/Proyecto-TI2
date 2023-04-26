@@ -29,6 +29,7 @@ class Configuration extends Model
         'texto_banner_uno',
         'texto_banner_dos',
         'texto_banner_tres',
-        'texto_banner_cuatro'
+        'texto_banner_cuatro',
+        'banner'
     ];
 }
