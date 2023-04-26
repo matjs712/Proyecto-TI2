@@ -140,14 +140,15 @@ class DashboardController extends Controller
         $colores->color_barra_horizontal = $request->color_barra_horizontal;
         $colores->color_a_tag_sidebar = $request->color_a_tag_sidebar;
         $colores->color_a_tag_hover = $request->color_a_tag_hover;
-
         $colores->color_principal = $request->color_principal;
         $colores->color_secundario = $request->color_secundario;
         $colores->color_barra_busqueda = $request->color_barra_busqueda;
-
+        $colores->texto_banner_uno = $request->texto_banner_1;
+        $colores->texto_banner_dos = $request->texto_banner_2;
+        $colores->texto_banner_tres = $request->texto_banner_3;
+        $colores->texto_banner_cuatro = $request->texto_banner_4;
         $colores->update();
     }
-    
     
     public function updateCredenciales(Request $request){
         // Obtener el usuario autenticado
