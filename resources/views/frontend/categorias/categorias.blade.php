@@ -46,7 +46,7 @@ Categorias | {{ $sitio }}
                                     @if ( $item->trending == '1' )
                                         <label style="z-index:100;font-size: 16px; position:absolute; top:5%; background:#cf4647;" class="text-white float-end badge trending_tag">Popular</label>
                                     @endif
-                                    <img src="{{ asset($item->image) }}" alt="">
+                                    <img src="{{ Storage::url('uploads/categorias/'.$item->image) }}" alt="">
                                     <div class="card-body bg-white text-center">
                                         <a href="{{ url('ver-categoria/'.$item->slug)  }}">
                                             <h4 class="card-title">{{ $item->name }}</h4>
