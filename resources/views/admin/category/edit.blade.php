@@ -53,12 +53,12 @@ Categorias | {{ $sitio }}
                 <div class="col-md-8 mt-2 mb-4">
                   @if ($categoria->image)
                   <div class="d-flex align-items-center flex-wrap">
-                    <img src="{{ asset('assets/uploads/categorias/'.$categoria->image) }}" width="300" alt="imagen-categoria">
-                    <img id="preview" width="200" height="200" src="#" alt=" ">
+                    <img src="{{ Storage::url('uploads/categorias/'.$categoria->image) }}" width="300" alt="imagen-categoria">
                   </div>
                   @endif
                     <label for="image">Imagen</label>
                     <input type="file" id="image" name="image" class="form-control">
+                    <img id="preview" width="200" height="200" src="{{ Storage::url('uploads/categorias/'.$categoria->image) }}" alt=" ">
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">

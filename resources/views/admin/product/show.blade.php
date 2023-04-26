@@ -62,7 +62,7 @@
     <div class="col-md-12 d-flex">
         <div class="col-md-6"><strong>Imagen:</strong></div>
         <div class="col-md-6">
-            <img src="{{ asset('assets/uploads/productos/'.$producto->image) }}" width="100" alt="">
+            <img src=" {{Storage::url('uploads/productos/'.$producto->image)}} " width="100" alt="">
         </div>
     </div>
 </div>

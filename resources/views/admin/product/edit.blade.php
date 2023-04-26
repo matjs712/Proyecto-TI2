@@ -76,12 +76,12 @@ Productos | {{ $sitio }}
               <div class="col-md-12 mb-4">
                   <div class="d-flex align-items-center flex-wrap">
                     @if ($producto->image)
-                        <img src="{{ asset('assets/uploads/productos/'.$producto->image) }}" width="300" alt="imagen-producto">
+                        <img src="{{Storage::url('uploads/productos/'.$producto->image)}}" width="300" alt="imagen-producto">
                     @endif
-                    <img id="preview" width="200" height="200" src="#" alt=" ">
                   </div>
                   <label for="">Imagen</label>
                     <input type="file" id="image" name="image"  class="form-control">
+                    <img id="preview" width="200" height="200" src="{{Storage::url('uploads/productos/'.$producto->image)}}" alt=" ">
                 </div>
               <div class="col-md-6">
                   <div class="form-group">
