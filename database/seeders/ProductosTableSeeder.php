@@ -33,6 +33,19 @@ class ProductosTableSeeder extends Seeder
                 // 'meta_description' => 'Pantalones increibles',
                 // 'meta_keywords' => 'Pantalones, Pantalones negros, Cargos',
             ],
+            [
+                'cate_id' => 1,
+                'name' => 'Sal de merquen',
+                'slug' => 'sal-merquen',
+                'description' => 'Exquisita Sal de merquen, perfecto para condimentar tus comidas.',
+                'small_description' => 'Exquisita Sal de merquen.',
+                'original_price' => '4990',
+                'selling_price' => '3590',
+                'qty' => '2',
+                'status' => 1,
+                'trending' => 1,
+                'image' => 'a',
+            ],
         ]);
     }
 }

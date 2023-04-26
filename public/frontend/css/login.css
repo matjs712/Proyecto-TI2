@@ -186,22 +186,26 @@ section{
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); /* adjust opacity as needed */
 }
+.home-text{
+    display: flex !important;
+    flex-direction: column !important;
+}
 .home-text h1{
-  top: 30%;
-  left: 10%;
-  position: absolute;
-  z-index: 1;
-  color: white;
+    top: 30%;
+    left: 10%;
+    position: absolute;
+    z-index: 1;
+    color: white;
 }
 .home-text p{
-  position: absolute;
-  top: 47%;
-  left: 10%;
-  color: white;
-  font-size: 30px;
-  line-height: 33px;
-  margin-bottom: 60px;
-  z-index: 1;
+    position: absolute;
+    top: 47%;
+    left: 10%;
+    color: white;
+    font-size: 30px;
+    line-height: 33px;
+    margin-bottom: 60px;
+    z-index: 1;
 }
 .btn-home{
   position: absolute;
@@ -418,4 +422,3 @@ a:hover{
 .page-item.active:hover .page-link {
     color:#fff !important;
 }
-   
