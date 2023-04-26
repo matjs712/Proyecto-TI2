@@ -50,9 +50,9 @@ class ProductosTableSeeder extends Seeder
                 // 'meta_keywords' => 'Pantalones, Pantalones negros, Cargos',
             ],[
                 'cate_id' => 1,
-                'name' => 'Sal de mar',
-                'slug' => 'sal-mar',
-                'description' => 'Exquisita Sal de mar, perfecto para condimentar tus comidas.',
+                'name' => 'Sal de tomate',
+                'slug' => 'sal-tomate',
+                'description' => 'Exquisita Sal de tomate, perfecto para condimentar tus comidas.',
                 'small_description' => 'Exquisita Sal de mar.',
                 'original_price' => '1600',
                 'selling_price' => '1000',
