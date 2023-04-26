@@ -39,7 +39,7 @@ Registros | {{ $sitio }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
-                                    <button class="btn mb-1 btn-success"><i class="fas fa-edit"></i>Ver más</button>
+                                    {{-- <button class="btn mb-1 btn-success"><i class="fas fa-edit"></i>Ver más</button> --}}
                                     @can('edit registros')
                                         <a href="{{ url('edit-reg/'.$item->id) }}" class="btn mb-1 btn-primary"><i class="fas fa-edit"></i>Editar</a>             
                                     @endcan
