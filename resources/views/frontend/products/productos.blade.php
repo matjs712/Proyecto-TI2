@@ -24,11 +24,18 @@ Productos | {{ $sitio }}
                       <option value="precio_bajo">Precio más bajo</option>
                     </select>
                   </div>
-                  <div class="form-group">
-                    <select name="filter_by" id="filter_by" class="form-control">
+                  <div class="form-group mr-4">
+                    <select name="filter_by_category" id="filter_by_category" class="form-control">
                       <option value="">Filtrar por categoría</option>
                       @foreach ($categorias as $item)
                       <option value="{{ $item->slug }}">{{ $item->name }}</option>
+                      @endforeach
+                    </select>
+                  </div> <div class="form-group">
+                    <select name="filter_by_ingredient" id="filter_by_ingredient" class="form-control">
+                      <option value="">Filtrar por Ingrediente</option>
+                      @foreach ($ingredientes as $item)
+                      <option value="{{ $item->id }}">{{ $item->name }}</option>
                       @endforeach
                     </select>
                   </div>
@@ -78,13 +85,16 @@ Productos | {{ $sitio }}
 <script>
    $(document).ready(function (){
 
-    $('#sort_by, #filter_by').on('change', function(){
+    $('#sort_by, #filter_by_category, #filter_by_ingredient').on('change', function(){
         let sort_by = $('#sort_by').val();
-        let filter_by = $('#filter_by').val();
+        let filter_by_category = $('#filter_by_category').val();
+        let filter_by_ingredient = $('#filter_by_ingredient').val();
         $.ajax({
             url:"{{ route('products.filter') }}",
             method:"GET",
-            data:{sort_by:sort_by, filter_by:filter_by},
+            data:{sort_by:sort_by,
+                  filter_by_category:filter_by_category,
+                  filter_by_ingredient:filter_by_ingredient},
             success:function(res){
                 $('.search-result').html(res);
             }
