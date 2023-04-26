@@ -160,7 +160,35 @@ Configuración | {{ $sitio }}
                                 </div>
                               </div>
                             </div>
-                            
+                            <hr>
+                            <h4>Textos principales</h4>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-3">
+                                  <label>Texto corto 1:</label>
+                                  <div class="input-group">
+                                    <textarea name="texto_banner_1" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_1 }}</textarea>
+                                  </div>
+                              </div>
+                              <div class="col-md-3">
+                                  <label>Texto corto 2:</label>
+                                  <div class="input-group">
+                                    <textarea name="texto_banner_2" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_2 }}</textarea>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <label>Texto largo 1:</label>
+                                  <div class="input-group">
+                                    <textarea name="texto_banner_3" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_3 }}</textarea>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <label>Texto largo 2:</label>
+                                  <div class="input-group">
+                                    <textarea name="texto_banner_4" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_4 }}</textarea>
+                                  </div>
+                              </div>
+                            </div>
                             <button type="submit" class="mt-4 btn btn-primary">Actualizar</button>
                         </form>
                     </div>

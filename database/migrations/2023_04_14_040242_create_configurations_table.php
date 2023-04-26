@@ -31,6 +31,11 @@ class CreateConfigurationsTable extends Migration
             $table->string('color_a_tag_sidebar')->default('#ffffff');
             $table->string('color_a_tag_hover')->default('#0e74cd');
             $table->string('color_barra_busqueda')->default('#373737');
+            $table->string('texto_banner_uno')->default('Lo mejor en');
+            $table->string('texto_banner_dos')->default('Sales Gourmet');
+            $table->string('texto_banner_tres')->default('Encuentra las variedades de nuestras exquisitas sales ');
+            $table->string('texto_banner_cuatro')->default('Atrevete a darle un sabor unico a tu comida.');
+            
             $table->timestamps();
         });
     }
