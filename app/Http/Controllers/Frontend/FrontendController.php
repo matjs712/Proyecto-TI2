@@ -7,6 +7,7 @@ use App\Models\Rating;
 use App\Models\Review;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Ingrediente;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -50,26 +51,39 @@ class FrontendController extends Controller
         logo_sitio();
         secciones();
 
-        return view('frontend.products.productos', compact('productos','categorias'));
+        return view('frontend.products.productos', compact('productos','categorias', 'ingredientes'));
     }
     public function filter(Request $request)
     {
-     if($request->filter_by != ''){
-        $category = Category::where('slug', $request->filter_by)->first();
-     }
-     else{
-        $category = new Category();
-        $category->id = 1;
-     }
-      if($request->sort_by == 'precio_bajo'){
-        $productos = Product::where('status', 1)->where('cate_id', $category->id)->orderBy('selling_price','asc')->paginate(9);
-      }
-      else if($request->sort_by == 'precio_alto'){
-        $productos = Product::where('status', 1)->where('cate_id', $category->id)->orderBy('selling_price','desc')->paginate(9);
-      }
-      else{
-        $productos = Product::where('status', 1)->where('cate_id', $category->id)->paginate(9);
-      }
+        $category = null;
+        $ingredient = null;
+        $order = null;
+        if($request->filter_by_category != ''){
+            $category = Category::where('slug', $request->filter_by_category)->first();
+        }
+        if($request->filter_by_ingredient != ''){
+            $ingredient = Ingrediente::where('id', $request->filter_by_ingredient)->first();
+        }
+        if($request->sort_by == 'precio_bajo'){
+            $order = 'asc';
+        }
+        else{
+            $order = 'desc';
+        }
+
+        $productos = Product::where('status', 1)
+            ->when($category, function($query) use ($category) {
+                $query->where('cate_id', $category->id);
+            })
+            ->when($ingredient, function($query) use ($ingredient) {
+                $query->whereHas('ingredientes', function($q) use ($ingredient) {
+                  $q->where('producto_ingredientes.id_ingrediente', $ingredient->id);
+                });
+            })
+            ->when($order, function($query) use ($order){
+                $query->orderBy('selling_price', $order);
+            })
+            ->paginate(9);
       
       return view('frontend.products.filter_result', compact('productos'));
     }
