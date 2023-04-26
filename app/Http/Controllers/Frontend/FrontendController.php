@@ -48,6 +48,7 @@ class FrontendController extends Controller
         $productos = Product::where('status', 1)->paginate(9);
         $productos->setPath('todo-productos');
         $categorias = Category::all();
+        $ingredientes = Ingrediente::all();
         logo_sitio();
         secciones();
 
