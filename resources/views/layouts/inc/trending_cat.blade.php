@@ -10,7 +10,7 @@
                 @foreach ($categorias as $categoria)
                 <a class="text-white" href="{{ url('ver-categoria/'.$categoria->slug) }}">
                 <div class="card text-left card-slider card-cat">
-                    <img src="{{ asset('assets/uploads/categorias/'.$categoria->image) }}" alt="">
+                    <img src="{{ asset($categoria->image) }}" alt="">
                     <div class="card-body text-center card-body-cat text-center">
                             <h4 class="card-title">{{ $categoria->name }}</h4>
                             <p class="card-text"><b>{{ $categoria->description }}</b></p>
