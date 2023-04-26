@@ -31,7 +31,7 @@ Roles | {{ $sitio }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
-                                    <a href="{{ route('roles.show',$rol) }}" class="btn mb-1 btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Ver rol</a>
+                                    {{-- <a href="{{ route('roles.show',$rol) }}" class="btn mb-1 btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Ver rol</a> --}}
                                     <a href="{{ route('roles.edit', $rol) }}" class="btn mb-1 btn-success text-white"><i class="fas fa-edit"></i> Editar</a>
                                     <a href="{{ url('delete-rol/'.$rol->id) }}" class="btn btn-danger text-white"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
                                 </div>
