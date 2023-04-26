@@ -31,7 +31,7 @@ Categorias | {{ $sitio }}
                       <textarea type="text" rows="5" style="resize:none;" name="description" class="form-control" placeholder="Categoría dedicada solo a peloras de ..."></textarea>
                     </div>
                 </div>
-                <div class="col-md-12 mb-3">
+                {{-- <div class="col-md-12 mb-3">
                     <div class="form-group">
                       <label for="">Meta titulo</label>
                       <input type="text" name="meta_title" class="form-control">
@@ -48,7 +48,7 @@ Categorias | {{ $sitio }}
                       <label for="">Meta Descripción</label>
                       <input type="text" name="meta_description" class="form-control">
                     </div>
-                </div>
+                </div> --}}
                 
                 <div class="col-md-12 mb-4">
                   <label for="">Imagen</label>

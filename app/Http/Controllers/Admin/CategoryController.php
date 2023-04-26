@@ -75,9 +75,9 @@ class CategoryController extends Controller
         $categoria->description = $request->input('description');
         $categoria->status = $request->input('status') == TRUE ? '1':'0';
         $categoria->popular = $request->input('status') == TRUE ? '1':'0';
-        $categoria->meta_title = $request->input('meta_title');
-        $categoria->meta_description = $request->input('meta_description');
-        $categoria->meta_keywords = $request->input('meta_keywords');
+        // $categoria->meta_title = $request->input('meta_title');
+        // $categoria->meta_description = $request->input('meta_description');
+        // $categoria->meta_keywords = $request->input('meta_keywords');
         $categoria->save();
 
         return redirect('/categorias')->with('status', 'Categoría añadida exitosamente!.');
@@ -146,9 +146,9 @@ class CategoryController extends Controller
         $categoria->description = $request->input('description');
         $categoria->status = $request->input('status') == TRUE ? '1':'0';
         $categoria->popular = $request->input('popular') == TRUE ? '1':'0';
-        $categoria->meta_title = $request->input('meta_title');
-        $categoria->meta_description = $request->input('meta_description');
-        $categoria->meta_keywords = $request->input('meta_keywords');
+        // $categoria->meta_title = $request->input('meta_title');
+        // $categoria->meta_description = $request->input('meta_description');
+        // $categoria->meta_keywords = $request->input('meta_keywords');
         
         $categoria->update();
 
