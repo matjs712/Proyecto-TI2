@@ -6,6 +6,7 @@ use App\Models\Logo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Configuration;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -90,6 +91,7 @@ class DashboardController extends Controller
         // dd($request);
         
         $logo_sitio = Logo::first();
+
         if($request->hasFile('logo')){  
             $path = 'logo/'.$logo_sitio->logo;
 
@@ -109,6 +111,24 @@ class DashboardController extends Controller
 
         $logo_sitio->sitio = $request->nombreSitio;
         $logo_sitio->update();
+
+        $banner = Configuration::first();
+        if($request->hasFile('banner')){  
+            $path = 'banner/'.$banner->banner;
+
+            if(File::exists($path)){
+                File::delete($path); 
+            }
+            $file = $request->file('banner');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time().'.'.$ext;
+            $image = Image::make($file);
+            $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
+            $image->save(storage_path('app/public/banner/' . $filename));
+            $banner->banner = $filename;
+        }
+        $banner->update();
+
 
         // SECCIONES
         $secciones = Configuration::first();

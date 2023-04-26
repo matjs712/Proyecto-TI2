@@ -189,6 +189,17 @@ Configuración | {{ $sitio }}
                                   </div>
                               </div>
                             </div>
+                            <hr>
+                            <h4>Imagen principal</h4>
+                            <div class="row">
+                              <div class="col-md-6">
+                                  <input type="file" id="banner" name="banner" class="form-control">
+                                  <img id="previewBanner" width="200" height="200" src="#" alt=" ">
+                                <img src="{{ asset($banner) }}" width="200" alt="banner">
+                              </div>  
+                            </div>
+                            <br>
+
                             <button type="submit" class="mt-4 btn btn-primary">Actualizar</button>
                         </form>
                     </div>
@@ -300,6 +311,20 @@ $('.my-colorpicker8').on('colorpickerChange', function(event) {
 
     reader.addEventListener('load', () => {
       preview.setAttribute('src', reader.result);
+    });
+
+    reader.readAsDataURL(file);
+  });
+
+  const banner = document.querySelector('#banner');
+  const previewBanner = document.querySelector('#previewBanner');
+
+  banner.addEventListener('change', () => {
+    var file = banner.files[0];
+    var reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      previewBanner.setAttribute('src', reader.result);
     });
 
     reader.readAsDataURL(file);

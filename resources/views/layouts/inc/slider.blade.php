@@ -1,4 +1,4 @@
-<section class="home">
+<section class="home" style="background-image: url('{{ asset($banner) }}')">
   <div class="home-text">
     <h1>{{ $texto_1 }} <br>{{ $texto_2 }}</h1>
     <p>{{ $texto_3 }}<br>{{ $texto_4 }}</p>

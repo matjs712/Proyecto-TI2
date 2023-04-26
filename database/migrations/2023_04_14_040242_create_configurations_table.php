@@ -35,7 +35,7 @@ class CreateConfigurationsTable extends Migration
             $table->string('texto_banner_dos')->default('Sales Gourmet');
             $table->string('texto_banner_tres')->default('Encuentra las variedades de nuestras exquisitas sales ');
             $table->string('texto_banner_cuatro')->default('Atrevete a darle un sabor unico a tu comida.');
-            
+            $table->string('banner')->default(' ');
             $table->timestamps();
         });
     }

@@ -168,7 +168,8 @@ section{
     position: relative !important;
     width: 100% !important;
     height: 102vh !important;
-    background-image: url('../../images/fondo.jpg');
+    /* background-image: url('../../images/fondo.jpg'); */
+    /* background-image: url('{{ asset('storage/images/fondo.jpg') }}'); */
     background-size: cover !important;
     background-repeat: no-repeat !important;
     background-position: right !important;
