@@ -33,5 +33,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductosIngredientes::class);
         $this->call(LogosTableSeeder::class);
         $this->call(ConfigurationSeeder::class);
+
     }
 }
