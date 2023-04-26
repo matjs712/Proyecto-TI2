@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
 
 class LogosTableSeeder extends Seeder
 {
@@ -16,7 +18,7 @@ class LogosTableSeeder extends Seeder
     {
         DB::table('logos')->insert([
             [
-                'logo' => 'asd',
+                'logo' => Storage::url('images/admin/logo_pagina.png'),
                 'sitio' => 'De Sabelle',
             ],
         ]);
