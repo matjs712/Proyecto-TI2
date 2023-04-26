@@ -12,7 +12,7 @@
                     @if ( $producto->trending == '1' )
                             <label style="font-size: 16px; position:absolute; top:5%; background:{{ $color_secundario }};" class="text-white float-end badge trending_tag">Popular</label>
                         @endif
-                    <img src="{{ Storage::url('uploads/productos/'.$producto->image) }}" alt="">
+                    <img src="{{ Storage::url('products/'.$producto->image) }}" alt="">
                     <div class="card-body bg-white text-center">
                     <a href="{{ url('ver-producto/'.$producto->slug) }}">
                         <h4 class="card-title">{{ $producto->name }}</h4>

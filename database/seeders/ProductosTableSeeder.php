@@ -41,13 +41,9 @@ class ProductosTableSeeder extends Seeder
                 'original_price' => '3000',
                 'selling_price' => '2600',
                 'qty' => '4',
-                // 'tax' => '18',
                 'status' => 1,
                 'trending' => 0,
                 'image' => Storage::url('images/products/sal-merken.png'),
-                // 'meta_title' => 'pantalones',
-                // 'meta_description' => 'Pantalones increibles',
-                // 'meta_keywords' => 'Pantalones, Pantalones negros, Cargos',
             ],[
                 'cate_id' => 1,
                 'name' => 'Sal de tomate',
@@ -61,9 +57,6 @@ class ProductosTableSeeder extends Seeder
                 'status' => 1,
                 'trending' => 1,
                 'image' => 'a',
-                // 'meta_title' => 'pantalones',
-                // 'meta_description' => 'Pantalones increibles',
-                // 'meta_keywords' => 'Pantalones, Pantalones negros, Cargos',
             ]
         ]);
     }
