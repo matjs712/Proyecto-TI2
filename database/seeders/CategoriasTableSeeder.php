@@ -29,21 +29,10 @@ class CategoriasTableSeeder extends Seeder
                 'status' => 1,
                 'popular' => 1,
                 'image' =>  Storage::url('images/categories/logo.png'),
-                'meta_title' => 'Frascos de sal',
-                'meta_description' => 'Frascos de sal',
-                'meta_keywords' => 'Sal, Sal gourmet, Sal premium',
-            ],
-            [
-                'name' => 'Sacos de sal',
-                'slug' => 'sacos',
-                'description' => 'Sacos de sal sin procesar.',
-                'status' => 1,
-                'popular' => 1,
-                'image' =>  Storage::url('images/categories/saco.png'),
-                'meta_title' => 'Sacos de sal',
-                'meta_description' => 'Sacos de sal',
-                'meta_keywords' => 'Sal, Sal Gourmet, Sacos de sal',
-            ],
+                // 'meta_title' => 'Frascos de sal',
+                // 'meta_description' => 'Frascos de sal',
+                // 'meta_keywords' => 'Sal, Sal gourmet, Sal premium',
+            ]
         ]);
     }
 }

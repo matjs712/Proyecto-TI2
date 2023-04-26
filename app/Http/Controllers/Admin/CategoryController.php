@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Logo;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
@@ -55,32 +56,50 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $categoria = new Category();
+{
+    $request->validate([    
+            'name' => 'required|max:255',    
+            'slug' => 'required|unique:categorias|max:255',    
+            'description' => 'nullable|max:65535',    
+            'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',    
+            'status' => 'nullable',    
+            'popular' => 'nullable'
+        ], [    
+            'name.required' => 'El nombre de la categoría es obligatorio.',    
+            'name.max' => 'El nombre de la categoría no debe exceder los 255 caracteres.',    
+            'slug.required' => 'El slug es obligatorio.',    
+            'slug.unique' => 'El slug ya ha sido utilizado por otra categoría.',    
+            'slug.max' => 'El slug no debe exceder los 255 caracteres.',    
+            'description.max' => 'La descripción no debe exceder los 65535 caracteres.',    
+            'image.required' => 'La imagen es obligatoria.',    
+            'image.image' => 'El archivo seleccionado debe ser una imagen.',    
+            'image.mimes' => 'La imagen debe tener un formato válido (jpg, jpeg, png o gif).',    
+            'image.max' => 'La imagen no debe pesar más de 2MB.'
+        ]);
 
-        if($request->hasFile('image')){
-            $file = $request->file('image');
-            $ext = $file->getClientOriginalExtension();
-            $filename = time().'.'.$ext;
 
-            $image = Image::make($file);
-            $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-            $image->save(storage_path('app/public/uploads/categorias/' . $filename));
-            $categoria->image = $filename;
-        }
+    $categoria = new Category();
 
-        $categoria->name = $request->input('name');
-        $categoria->slug = $request->input('slug');
-        $categoria->description = $request->input('description');
-        $categoria->status = $request->input('status') == TRUE ? '1':'0';
-        $categoria->popular = $request->input('status') == TRUE ? '1':'0';
-        // $categoria->meta_title = $request->input('meta_title');
-        // $categoria->meta_description = $request->input('meta_description');
-        // $categoria->meta_keywords = $request->input('meta_keywords');
-        $categoria->save();
+    if($request->hasFile('image')){
+        $file = $request->file('image');
+        $ext = $file->getClientOriginalExtension();
+        $filename = time().'.'.$ext;
 
-        return redirect('/categorias')->with('status', 'Categoría añadida exitosamente!.');
+        $image = Image::make($file);
+        $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
+        $image->save(storage_path('app/public/uploads/categorias/' . $filename));
+        $categoria->image = $filename;
     }
+
+    $categoria->name = $request->input('name');
+    $categoria->slug = $request->input('slug');
+    $categoria->description = $request->input('description');
+    $categoria->status = $request->input('status') == TRUE ? '1':'0';
+    $categoria->popular = $request->input('status') == TRUE ? '1':'0';
+    $categoria->save();
+
+    return redirect('/categorias')->with('status', 'Categoría añadida exitosamente!.');
+}
 
     /**
      * Display the specified resource.
@@ -121,6 +140,22 @@ class CategoryController extends Controller
     {
         $categoria = Category::find($id);
 
+        $request->validate([
+            'name' => ['required', Rule::unique('categorias')->ignore($categoria->id)],
+            'slug' => ['required', Rule::unique('categorias')->ignore($categoria->id)],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'description' => ['nullable', 'string'],
+        ], [    
+            'name.required' => 'El nombre de la categoría es obligatorio.',    
+            'slug.required' => 'El slug es obligatorio.',    
+            'slug.unique' => 'El slug ya ha sido utilizado por otra categoría.',    
+            'description.max' => 'La descripción no debe exceder los 65535 caracteres.',    
+            'image.required' => 'La imagen es obligatoria.',    
+            'image.image' => 'El archivo seleccionado debe ser una imagen.',    
+            'image.mimes' => 'La imagen debe tener un formato válido (jpg, jpeg, png o gif).',    
+            'image.max' => 'La imagen no debe pesar más de 2MB.'
+        ]);
+
         if($request->hasFile('image')){
             $path = storage_path('app/public/uploads/categorias/'.$categoria->imagen);          
             if(File::exists($path)){
@@ -142,10 +177,6 @@ class CategoryController extends Controller
         $categoria->description = $request->input('description');
         $categoria->status = $request->input('status') == TRUE ? '1':'0';
         $categoria->popular = $request->input('popular') == TRUE ? '1':'0';
-        $categoria->meta_title = $request->input('meta_title');
-        $categoria->meta_description = $request->input('meta_description');
-        $categoria->meta_keywords = $request->input('meta_keywords');
-        
         $categoria->update();
 
         return redirect('/categorias')->with('status','Categoría actualizada exitosamente.');
