@@ -76,7 +76,7 @@ Productos | {{ $sitio }}
                     <label for="">Imagen</label>
                     {{-- <input type="file" name="image" class="form-control"> --}}
                     <input type="file" id="image" name="image" class="form-control">
-                    <img id="preview" width="200" height="200" src="#" alt=" ">
+                    <img id="preview" width="200" height="200" src="" alt=" ">
                 </div>
                 
               <div class="col-md-6">

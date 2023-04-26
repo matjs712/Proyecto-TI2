@@ -86,12 +86,9 @@ class ProductController extends Controller
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
             $filename = time().'.'.$ext;
-
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('assets/uploads/productos/' . $filename));
-            
+            $image->save(storage_path('app/public/uploads/productos/' . $filename));            
             $producto->image = $filename;
         }
 
@@ -193,8 +190,7 @@ class ProductController extends Controller
         }
 
         if($request->hasFile('image')){
-            $path = 'assets/uploads/productos/'.$producto->image;
-            
+            $path = storage_path('app/public/uploads/productos/'.$producto->image);
             if(File::exists($path)){
                 File::delete($path); 
             }
@@ -205,8 +201,7 @@ class ProductController extends Controller
             
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-            
-            $image->save(public_path('assets/uploads/productos/' . $filename));
+            $image->save(storage_path('app/public/uploads/productos/' . $filename));  
             $producto->image = $filename;
         }
 
@@ -278,7 +273,7 @@ class ProductController extends Controller
         $producto = Product::find($id);
 
         if($producto->image){
-            $path = 'assets/uploads/productos/'.$producto->image;
+            $path = storage_path('app/public/uploads/productos/'.$producto->image);
             
             if(File::exists($path)){
                 File::delete($path); 

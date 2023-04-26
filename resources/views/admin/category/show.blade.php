@@ -22,7 +22,7 @@
     <div class="col-md-12 d-flex">
         <div class="col-md-6"><strong>Imagen:</strong></div>
         <div class="col-md-6">
-            <img src="{{ asset('assets/uploads/categorias/'.$categoria->image) }}" width="100" alt="">
+            <img src="{{ Storage::url('uploads/categorias/'.$categoria->image) }}" width="100" alt="">
         </div>
     </div>
 

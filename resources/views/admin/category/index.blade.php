@@ -36,7 +36,7 @@ Categorias | {{ $sitio }}
                     <td>{!! ($categoria->status == 1)? '<span class="badge badge-success">Visible</span>' : '<span class="badge badge-danger">No visible</span>' !!}</td>
                     <td>{!! ($categoria->popular == 1)? '<span class="badge badge-success">Si</span>':'<span class="badge badge-danger">No</span>'  !!}</td>
                     <td>
-                        <img width="100" src="{{ asset('assets/uploads/categorias/'.$categoria->image) }}" alt="categoria-name">
+                        <img width="100" src="{{Storage::url('uploads/categorias/'.$categoria->image) }}" alt="categoria-name">
                     </td>
                     <td>
                         <div class="dropdown text-center">

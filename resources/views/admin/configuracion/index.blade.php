@@ -29,9 +29,8 @@ Configuración | {{ $sitio }}
                               <div>
                                 <label for="logo">Logo del sitio</label>
                                 <input type="file" id="logoSitio" name="logo" class="form-control">
-                                <img id="preview1" width="200" height="200" src="#" alt=" ">
+                                <img id="preview1" width="200" height="200" src="{{asset($logo)}}" alt=" ">
                               </div>
-                              <img src="{{ asset($logo) }}" width="200" alt="Logo">
                             </div>
                             <hr>
                             <div class="form-group d-flex align-items-center flex-wrap">
@@ -172,13 +171,11 @@ Configuración | {{ $sitio }}
                                 <div class="mr-2">
                                   <label for="perfil">Foto de perfil</label>
                                   <input type="file" id="perfil" name="perfil" class="form-control">
-                                  <img id="preview2" width="200" height="200" src="#" alt=" ">
+                                  <img id="preview2" width="200" height="200" src="{{ Storage::url('users/'.Auth::user()->imagen) }}" alt=" ">
                                 </div>
                                 <div class="d-flex justify-content-center m-2">
-                                    <img src="{{ asset('users/'.Auth::user()->imagen) }}" width="200" alt="perfil">
                                 </div>
                               </div>
-
                             <div class="form-group">
                                 <label for="logo">Contraseña actual</label>
                                 <input type="password" name="passActual" class="form-control">

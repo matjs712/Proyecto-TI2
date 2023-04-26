@@ -42,7 +42,7 @@ class PerfilController extends Controller
         $user->telefono = $request->telefono;
 
         if ($request->hasFile('perfil')) {  
-            $path = 'users/'.$user->imagen;
+            $path = storage_path('app/public/uploads/users/'.$user->imagen);      
     
             if(File::exists($path)){
                 File::delete($path); 
@@ -53,8 +53,7 @@ class PerfilController extends Controller
             $filename = time().'.'.$ext;
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('users/' . $filename));
+            $image->save(storage_path('app/public/uploads/users/' . $filename));
             $user->imagen = $filename;
         }
         $user->update();

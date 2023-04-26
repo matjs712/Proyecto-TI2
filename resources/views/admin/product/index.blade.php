@@ -35,7 +35,9 @@ Productos | {{ $sitio }}
                     <td><span class="badge badge-success">{{ $product->selling_price }}</span></td>
                     {{-- <td>{!! ($product->status == 0)? '<span class="badge badge-success">Visible</span>' : '<span class="badge badge-danger">No visible</span>' !!}</td> --}}
                     <td>
-                        <img width="100" src="{{ asset('assets/uploads/productos/'.$product->image) }}" alt="producto-name">
+                    @if ($product->image)
+                        <img src="{{Storage::url('uploads/productos/'.$product->image)}}" width="150" alt="imagen-producto">
+                    @endif
                     </td>
                     <td>
                         <div class="dropdown text-center">

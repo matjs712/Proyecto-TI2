@@ -13,7 +13,7 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="{{ asset('users/'.Auth::user()->imagen) }}" class="img-circle elevation-2" alt="User">
+        <img src="{{ Storage::url('users/'.Auth::user()->imagen) }}" class="img-circle elevation-2" alt="User">
       </div>
       <div class="info">
         <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'" onmouseout="this.style.backgroundColor='transparent'"   style="color: {{ $color_a_tag_sidebar }}" href="#" class="d-block">{{ Auth::user()->name }}</a>

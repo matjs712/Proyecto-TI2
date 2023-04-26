@@ -60,7 +60,7 @@
 
 {{-- CHARTS --}}
 <?php
-  $conn = mysqli_connect("localhost", "root", "", "proyectoti");
+  $conn = mysqli_connect("localhost", "root", "", "proyecto");
   $resultado = mysqli_query($conn, "SELECT name, qty FROM products");
   $datos = array();
   while ($fila = mysqli_fetch_assoc($resultado)) {

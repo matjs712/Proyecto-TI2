@@ -42,7 +42,7 @@ class CategoryController extends Controller
     public function create()
     {
         logo_sitio();
-            secciones();
+        secciones();
             
         return view('admin.category.create');
     }
@@ -64,9 +64,7 @@ class CategoryController extends Controller
 
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('assets/uploads/categorias/' . $filename));
-
+            $image->save(storage_path('app/public/uploads/categorias/' . $filename));
             $categoria->image = $filename;
         }
 
@@ -123,8 +121,7 @@ class CategoryController extends Controller
         $categoria = Category::find($id);
 
         if($request->hasFile('image')){
-            $path = 'assets/uploads/categorias/'.$categoria->image;
-            
+            $path = storage_path('app/public/uploads/categorias/'.$categoria->imagen);          
             if(File::exists($path)){
                 File::delete($path); 
             }
@@ -135,9 +132,7 @@ class CategoryController extends Controller
             
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('assets/uploads/categorias/' . $filename));
-            
+            $image->save(storage_path('app/public/uploads/categorias/' . $filename));
             $categoria->image = $filename;
         }
 
@@ -167,7 +162,7 @@ class CategoryController extends Controller
         $categoria = Category::find($id);
 
         if($categoria->image){
-            $path = 'assets/uploads/categorias/'.$categoria->image;
+            $path = storage_path('app/public/uploads/categorias/'.$categoria->imagen);   
             
             if(File::exists($path)){
                 File::delete($path); 
