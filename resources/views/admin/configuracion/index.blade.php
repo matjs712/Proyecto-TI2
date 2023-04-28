@@ -193,8 +193,7 @@ Configuración | {{ $sitio }}
                             <div class="row">
                               <div class="col-md-6">
                                   <input type="file" id="banner" name="banner" class="form-control">
-                                  <img id="previewBanner" width="200" height="200" src="#" alt=" ">
-                                <img src="{{ asset($banner) }}" width="200" alt="banner">
+                                  <img id="previewBanner" width="200" height="200" src="{{ asset($banner) }}" alt=" ">
                               </div>  
                             </div>
                             <br>
