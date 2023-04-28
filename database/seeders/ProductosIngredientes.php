@@ -21,10 +21,15 @@ class ProductosIngredientes extends Seeder
                 'cantidad'=>100,
             ],
             [
-                'id_proveedor' => 1,
+                'id_producto' => 1,
                 'id_ingrediente'=>2,
                 'cantidad'=>50,
             ],
+            [
+                'id_producto' => 3,
+                'id_ingrediente'=>3,
+                'cantidad'=>50,
+            ]
         ]);
     }
 }

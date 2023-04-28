@@ -24,14 +24,21 @@ Productos | {{ $sitio }}
                       <option value="precio_bajo">Precio más bajo</option>
                     </select>
                   </div>
-                  {{-- <div class="form-group">
-                    <select name="sort_by" id="sort_by" class="form-control">
-                      <option value="">Ordenar por categoría</option>
+                  <div class="form-group mr-4">
+                    <select name="filter_by_category" id="filter_by_category" class="form-control">
+                      <option value="">Filtrar por categoría</option>
                       @foreach ($categorias as $item)
                       <option value="{{ $item->slug }}">{{ $item->name }}</option>
                       @endforeach
                     </select>
-                  </div> --}}
+                  </div> <div class="form-group">
+                    <select name="filter_by_ingredient" id="filter_by_ingredient" class="form-control">
+                      <option value="">Filtrar por Ingrediente</option>
+                      @foreach ($ingredientes as $item)
+                      <option value="{{ $item->id }}">{{ $item->name }}</option>
+                      @endforeach
+                    </select>
+                  </div>
             </div>
         </div>
     </div>
@@ -46,7 +53,7 @@ Productos | {{ $sitio }}
                                     @if ( $producto->trending == '1' )
                                         <label style="z-index:100;font-size: 16px; position:absolute; top:5%; background:#cf4647;" class="text-white float-end badge trending_tag">Popular</label>
                                     @endif
-                                    <img src="{{ asset('assets/uploads/productos/'.$producto->image) }}" alt="">
+                                    <img src="{{ Storage::url('uploads/productos/'.$producto->image) }}" alt="">
                                     <div class="card-body bg-white text-center">
                                         <a href="{{ url('ver-producto/'.$producto->slug) }}">
                                             <h4 class="card-title">{{ $producto->name }}</h4>
@@ -78,12 +85,16 @@ Productos | {{ $sitio }}
 <script>
    $(document).ready(function (){
 
-    $('#sort_by').on('change', function(){
+    $('#sort_by, #filter_by_category, #filter_by_ingredient').on('change', function(){
         let sort_by = $('#sort_by').val();
+        let filter_by_category = $('#filter_by_category').val();
+        let filter_by_ingredient = $('#filter_by_ingredient').val();
         $.ajax({
             url:"{{ route('products.filter') }}",
             method:"GET",
-            data:{sort_by:sort_by},
+            data:{sort_by:sort_by,
+                  filter_by_category:filter_by_category,
+                  filter_by_ingredient:filter_by_ingredient},
             success:function(res){
                 $('.search-result').html(res);
             }

@@ -22,7 +22,7 @@ Mi Carrito | {{ $sitio }}
                 @foreach ($cartItems as $item)
                     <div class="row prod_data my-4">
                         <div class="col-md-2">
-                            <img width="100" src="{{ asset('assets/uploads/productos/'.$item->products->image) }}" alt="{{ $item->products->name }}">
+                            <img width="100" src="{{ Storage::url('uploads/productos/'.$item->products->image) }}" alt="{{ $item->products->name }}">
                         </div>
                         <div class="col-md-3">
                             <h6><b>{{ $item->products->name }}</b></h6>

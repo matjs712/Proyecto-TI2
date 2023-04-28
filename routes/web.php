@@ -74,7 +74,8 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
 
 // ADMIN ROUTES
  Route::middleware(['auth','isAdmin'])->group(function (){
-    Route::get('/dashboard',  'Admin\FrontendController@index')->name('dashboard');
+   Route::get('/dashboard',  'Admin\FrontendController@index')->name('dashboard');
+   Route::get('/datos-graficos',  'Admin\FrontendController@ChartIngredientes');
     
     // CATEGORIAS
     Route::get('categorias',        'Admin\CategoryController@index');

@@ -50,7 +50,7 @@ Información orden | {{ $sitio }}
                                             <td>{{ $item->qty }}</td>
                                             <td>{{ $item->price }}</td>
                                             <td>
-                                                <img width="100" src="{{ asset('assets/uploads/productos/'.$item->products->image) }}" alt="">
+                                                <img width="100" src="{{ Storage::url('uploads/productos/'.$item->products->image) }}" alt="">
                                             </td>
                                         </tr>
                                     @endforeach

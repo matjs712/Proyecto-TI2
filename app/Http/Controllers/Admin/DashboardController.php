@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -93,8 +94,7 @@ class DashboardController extends Controller
         $logo_sitio = Logo::first();
 
         if($request->hasFile('logo')){  
-            $path = 'logo/'.$logo_sitio->logo;
-
+            $path = storage_path('app/public/logo/'.$logo_sitio->logo);
             if(File::exists($path)){
                 File::delete($path); 
             }
@@ -105,7 +105,8 @@ class DashboardController extends Controller
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
 
-            $image->save(public_path('logo/' . $filename));
+            $image->save(storage_path('app/public/logo/' . $filename));
+
             $logo_sitio->logo = $filename;
         }
 
@@ -201,7 +202,7 @@ class DashboardController extends Controller
     
         // Actualizar la imagen del perfil si se proporcionó
         if ($request->hasFile('perfil')) {  
-            $path = 'users/'.$admin->imagen;
+            $path = storage_path('app/public/users/'.$admin->imagen);
     
             if(File::exists($path)){
                 File::delete($path); 
@@ -212,8 +213,7 @@ class DashboardController extends Controller
             $filename = time().'.'.$ext;
             $image = Image::make($file);
             $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-
-            $image->save(public_path('users/' . $filename));
+            $image->save(storage_path('app/public/users/' . $filename));
             $admin->imagen = $filename;
         }
     
@@ -229,8 +229,7 @@ class DashboardController extends Controller
         $user = User::find($id);
 
         if($user->image){
-            $path = 'assets/users/'.$user->image;
-            
+            $path = storage_path('app/public/users/'.$user->imagen);            
             if(File::exists($path)){
                 File::delete($path); 
             }

@@ -5,7 +5,7 @@
           <!-- AREA CHART -->
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Area Chart</h3>
+              <h3 class="card-title">Ingredientes</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -15,7 +15,7 @@
             </div>
             <div class="card-body">
               <div class="chart">
-                <canvas id="areaChart" style="height:250px; min-height:250px"></canvas>
+                <canvas id="myChart" style="height:250px; min-height:250px"></canvas>
               </div>
             </div>
             <!-- /.card-body -->
@@ -74,7 +74,7 @@
             </div>
             <div class="card-body">
               <div class="chart">
-                <canvas id="lineChart" style="height:250px; min-height:250px"></canvas>
+                <canvas id="doughnutChart" style="height:250px; min-height:250px"></canvas>
               </div>
             </div>
             <!-- /.card-body -->
