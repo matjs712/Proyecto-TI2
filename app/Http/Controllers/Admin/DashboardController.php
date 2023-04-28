@@ -73,7 +73,7 @@ class DashboardController extends Controller
 
         return redirect('usuarios')->with('status','Usuario modificado exitosamente!.');
     }
-// HOLA
+
     public function view($id){
         logo_sitio();
         secciones();
