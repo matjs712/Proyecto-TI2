@@ -10,7 +10,7 @@
                 <div class="col-md-3">
                     <a href="{{ url('categorias/'.$categoria->slug.'/'.$producto->slug) }}">
                         <div class="card text-left">
-                            <img class="card-img-top" style="object-fit: cover" height="200" src="{{ asset('assets/uploads/productos/'.$producto->image) }}" alt="">
+                            <img class="card-img-top" style="object-fit: cover" height="200" src="{{ Storage::url('uploads/productos/'.$producto->image) }}" alt="">
                             <div class="card-body">
                                 <h4 class="card-title">{{ $producto->name }}</h4>
                                 <span class="float-start">${{ $producto->selling_price }}</span>

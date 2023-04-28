@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UsersTableSeeder extends Seeder
 {
@@ -19,6 +20,7 @@ class UsersTableSeeder extends Seeder
 
         User::create([
             'name' => 'administrador',
+            'imagen' => Storage::url('images/admin/perfil.jpg'),
             'email' => 'administrador@sales.cl',
             'password' => bcrypt('password'),
             'role_as' => 1,

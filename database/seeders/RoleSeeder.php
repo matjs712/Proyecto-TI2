@@ -93,6 +93,6 @@ class RoleSeeder extends Seeder
         Permission::create(['name'=>'ver configuracion',
                             'description'=>'Ver configuración' ])->syncRoles([$admin]);
         Permission::create(['name'=>'ver perfil',
-                            'description'=>'Ver configuración' ])->syncRoles([$chef, $nutricionista]);
+                            'description'=>'Ver perfil' ])->syncRoles([$chef, $nutricionista]);
     }
 }

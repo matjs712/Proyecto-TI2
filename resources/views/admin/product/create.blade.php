@@ -81,7 +81,7 @@ Productos | {{ $sitio }}
                 
               <div class="col-md-6">
                   <div class="form-group">
-                    <label for="estado">Estado</label>
+                    <label for="estado">Visibilidad</label>
                     <input type="checkbox" name="status" class="form-control">
                   </div>
               </div>

@@ -159,7 +159,46 @@ Configuración | {{ $sitio }}
                                 </div>
                               </div>
                             </div>
-                            
+                            <hr>
+                            <h4>Textos principales</h4>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-3">
+                                  <label>Texto corto 1:</label>
+                                  <div class="input-group">
+                                    <textarea name="texto_banner_1" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_1 }}</textarea>
+                                  </div>
+                              </div>
+                              <div class="col-md-3">
+                                  <label>Texto corto 2:</label>
+                                  <div class="input-group">
+                                    <textarea name="texto_banner_2" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_2 }}</textarea>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <label>Texto largo 1:</label>
+                                  <div class="input-group">
+                                    <textarea name="texto_banner_3" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_3 }}</textarea>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <label>Texto largo 2:</label>
+                                  <div class="input-group">
+                                    <textarea name="texto_banner_4" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_4 }}</textarea>
+                                  </div>
+                              </div>
+                            </div>
+                            <hr>
+                            <h4>Imagen principal</h4>
+                            <div class="row">
+                              <div class="col-md-6">
+                                  <input type="file" id="banner" name="banner" class="form-control">
+                                  <img id="previewBanner" width="200" height="200" src="#" alt=" ">
+                                <img src="{{ asset($banner) }}" width="200" alt="banner">
+                              </div>  
+                            </div>
+                            <br>
+
                             <button type="submit" class="mt-4 btn btn-primary">Actualizar</button>
                         </form>
                     </div>
@@ -269,6 +308,20 @@ $('.my-colorpicker8').on('colorpickerChange', function(event) {
 
     reader.addEventListener('load', () => {
       preview.setAttribute('src', reader.result);
+    });
+
+    reader.readAsDataURL(file);
+  });
+
+  const banner = document.querySelector('#banner');
+  const previewBanner = document.querySelector('#previewBanner');
+
+  banner.addEventListener('change', () => {
+    var file = banner.files[0];
+    var reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      previewBanner.setAttribute('src', reader.result);
     });
 
     reader.readAsDataURL(file);

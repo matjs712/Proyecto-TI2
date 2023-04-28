@@ -81,7 +81,7 @@ Productos | {{ $sitio }}
                   </div>
                   <label for="">Imagen</label>
                     <input type="file" id="image" name="image"  class="form-control">
-                    <img id="preview" width="200" height="200" src="{{Storage::url('uploads/productos/'.$producto->image)}}" alt=" ">
+                    <img id="preview" width="200" height="200" src="" alt=" ">
                 </div>
               <div class="col-md-6">
                   <div class="form-group">

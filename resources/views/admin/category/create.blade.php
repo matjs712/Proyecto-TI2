@@ -10,70 +10,69 @@ Categorias | {{ $sitio }}
         <h4>Añadir Categoría</h4>
     </div>
     <div class="card-body">
-        <form action="{{ url('insert-category') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="name">Nombre Categoría</label>
-                      <input type="text" name="name" class="form-control" placeholder="Poleras">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="slug">Slug</label>
-                      <input type="text" name="slug" class="form-control" placeholder="Poleras">
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="descripcion">Descripción</label>
-                      <textarea type="text" rows="5" style="resize:none;" name="description" class="form-control" placeholder="Categoría dedicada solo a peloras de ..."></textarea>
-                    </div>
-                </div>
-                <div class="col-md-12 mb-3">
-                    <div class="form-group">
-                      <label for="">Meta titulo</label>
-                      <input type="text" name="meta_title" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-12 mb-3">
-                    <div class="form-group">
-                      <label for="">Meta Palabras claves</label>
-                      <input type="text" name="meta_keywords" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-12 mb-3">
-                    <div class="form-group">
-                      <label for="">Meta Descripción</label>
-                      <input type="text" name="meta_description" class="form-control">
-                    </div>
-                </div>
-                
-                <div class="col-md-12 mb-4">
-                  <label for="">Imagen</label>
-                    <input type="file" id="image" name="image" class="form-control">
-                    <img id="preview" width="200" height="200" src="" alt=" ">
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="popular">Popular</label>
-                    <input type="checkbox" name="popular" class="form-control">
-                  </div>
-              </div>
-              <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="estado">Estado</label>
-                    <input type="checkbox" name="status" class="form-control">
-                  </div>
-              </div>
-                
-                <div class="col-md-12 mt-4">
-                    <button type="submit" class="btn btn-primary">Crear</button>
-                </div>
-
+      <form action="{{ url('insert-category') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="name">Nombre Categoría</label>
+              <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Poleras" value="{{ old('name') }}">
+              @error('name')
+              <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
-        </form>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="slug">Slug</label>
+              <input type="text" name="slug" class="form-control @error('slug') is-invalid @enderror" placeholder="poleras" value="{{ old('slug') }}">
+              @error('slug')
+              <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="descripcion">Descripción</label>
+              <textarea type="text" rows="5" style="resize:none;" name="description" class="form-control @error('description') is-invalid @enderror" placeholder="Categoría dedicada solo a peloras de ...">{{ old('description') }}</textarea>
+              @error('description')
+              <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+            </div>
+          </div>
+          <div class="col-md-12 mb-4">
+            <label for="">Imagen</label>
+            <input type="file" id="image" name="image" class="form-control @error('image') is-invalid @enderror" value="{{ old('image') }}">
+            <img id="preview" width="200" height="200" src="" alt=" ">
+            @error('image')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="estado">Visibilidad</label>
+              <input type="checkbox" name="status" class="form-control @error('status') is-invalid @enderror" {{ old('status') ? 'checked' : '' }}>
+              @error('status')
+              <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="popular">Popular</label>
+              <input type="checkbox" name="popular" class="form-control @error('popular') is-invalid @enderror" {{ old('popular') ? 'checked' : '' }}>
+              @error('popular')
+              <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+            </div>
+          </div>
+      
+          <div class="col-md-12 mt-4">
+            <button type="submit" class="btn btn-primary">Crear</button>
+          </div>
+        </div>
+      </form>
+      
     </div>
 </div>
 

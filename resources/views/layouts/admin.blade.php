@@ -56,11 +56,8 @@
 <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
 <script src="{{ asset('admin/js/idioma.js') }}"></script>
 <script src="{{ asset('frontend/js/custom.js') }}"></script>
+<script src="{{ asset('admin/js/myChart.js') }}"></script>
 
-
-
-
- 
 
 @yield('after_scripts')
 

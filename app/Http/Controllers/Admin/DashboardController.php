@@ -6,6 +6,7 @@ use App\Models\Logo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Configuration;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -90,6 +92,7 @@ class DashboardController extends Controller
         // dd($request);
         
         $logo_sitio = Logo::first();
+
         if($request->hasFile('logo')){  
             $path = storage_path('app/public/logo/'.$logo_sitio->logo);
             if(File::exists($path)){
@@ -109,6 +112,24 @@ class DashboardController extends Controller
 
         $logo_sitio->sitio = $request->nombreSitio;
         $logo_sitio->update();
+
+        $banner = Configuration::first();
+        if($request->hasFile('banner')){  
+            $path = 'banner/'.$banner->banner;
+
+            if(File::exists($path)){
+                File::delete($path); 
+            }
+            $file = $request->file('banner');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time().'.'.$ext;
+            $image = Image::make($file);
+            $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
+            $image->save(storage_path('app/public/banner/' . $filename));
+            $banner->banner = $filename;
+        }
+        $banner->update();
+
 
         // SECCIONES
         $secciones = Configuration::first();
@@ -140,14 +161,15 @@ class DashboardController extends Controller
         $colores->color_barra_horizontal = $request->color_barra_horizontal;
         $colores->color_a_tag_sidebar = $request->color_a_tag_sidebar;
         $colores->color_a_tag_hover = $request->color_a_tag_hover;
-
         $colores->color_principal = $request->color_principal;
         $colores->color_secundario = $request->color_secundario;
         $colores->color_barra_busqueda = $request->color_barra_busqueda;
-
+        $colores->texto_banner_uno = $request->texto_banner_1;
+        $colores->texto_banner_dos = $request->texto_banner_2;
+        $colores->texto_banner_tres = $request->texto_banner_3;
+        $colores->texto_banner_cuatro = $request->texto_banner_4;
         $colores->update();
     }
-    
     
     public function updateCredenciales(Request $request){
         // Obtener el usuario autenticado

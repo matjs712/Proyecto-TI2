@@ -25,6 +25,11 @@ class Configuration extends Model
         'color_barra_horizontal',
         'color_a_tag_sidebar',
         'color_a_tag_hover',
-        'color_barra_busqueda'
+        'color_barra_busqueda',
+        'texto_banner_uno',
+        'texto_banner_dos',
+        'texto_banner_tres',
+        'texto_banner_cuatro',
+        'banner'
     ];
 }

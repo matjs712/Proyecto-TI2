@@ -19,7 +19,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-4 border-right">
-                    <img style="width: 100%;" src="{{ asset('assets/uploads/productos/'.$producto->image) }}" alt="{{ $producto->name }}">
+                    <img style="width: 100%;" src="{{ Storage::url('uploads/productos/'.$producto->image) }}" alt="{{ $producto->name }}">
                 </div>
                 <div class="col-md-8">
                     <h2 class="mb-0 d-flex justify-content-between align-items-center">

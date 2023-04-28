@@ -2,6 +2,7 @@
 use App\Models\Logo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Storage;
 
 function logo_sitio(){
     $logo = Logo::first();
@@ -34,6 +35,18 @@ function logo_sitio(){
     
     $color_barra_busqueda = DB::table('configurations')->select('color_barra_busqueda')->first();
     View::share('color_barra_busqueda', $color_barra_busqueda->color_barra_busqueda);
+    
+    $texto_1 = DB::table('configurations')->select('texto_banner_uno')->first();
+    View::share('texto_1', $texto_1->texto_banner_uno);
+    $texto_2 = DB::table('configurations')->select('texto_banner_dos')->first();
+    View::share('texto_2', $texto_2->texto_banner_dos);
+    $texto_3 = DB::table('configurations')->select('texto_banner_tres')->first();
+    View::share('texto_3', $texto_3->texto_banner_tres);
+    $texto_4 = DB::table('configurations')->select('texto_banner_cuatro')->first();
+    View::share('texto_4', $texto_4->texto_banner_cuatro);
 
+    $banner = DB::table('configurations')->select('banner')->first();
+    $path = 'banner/'.$banner->banner;
 
+    View::share('banner', Storage::url($path));
 }
