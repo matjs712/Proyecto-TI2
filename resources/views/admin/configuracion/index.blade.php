@@ -110,6 +110,106 @@ Configuración | {{ $sitio }}
                               </div>
                             </div>
                             <br>
+
+
+                            <h4>Colores botones</h4>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-3">
+                                  <label>Color principal:</label>
+                                  <div class="input-group my-colorpicker9">
+                                    <input type="text" name="boton_principal_busqueda" value={{ asset($boton_principal_busqueda) }} class="form-control">
+                                    <div class="input-group-append">
+                                      <span class="input-group-text"><i class="fas fa-square" style="color:{{ asset($boton_principal_busqueda) }}"></i></span>
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-3">
+                                <label>Color boton calificación:</label>
+                                <div class="input-group my-colorpicker10">
+                                  <input type="text" name="boton_calificacion" value={{ asset($boton_calificacion) }} class="form-control">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-square" style="color:{{ asset($boton_calificacion) }}"></i></span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <label>Color boton review:</label>
+                                <div class="input-group my-colorpicker11">
+                                  <input type="text" name="boton_review" value={{ asset($boton_review) }} class="form-control">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-square" style="color:{{ asset($boton_review) }}"></i></span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <label>Color boton lista:</label>
+                                <div class="input-group my-colorpicker12">
+                                  <input type="text" name="boton_lista" value={{ asset($boton_lista) }} class="form-control">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-square" style="color:{{ asset($boton_lista) }}"></i></span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <label>Color boton carrito:</label>
+                                <div class="input-group my-colorpicker13">
+                                  <input type="text" name="boton_carrito" value={{ asset($boton_carrito) }} class="form-control">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-square" style="color:{{ asset($boton_carrito) }}"></i></span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <label>Color boton nuevo:</label>
+                                <div class="input-group my-colorpicker14">
+                                  <input type="text" name="boton_nuevo" value={{ asset($boton_nuevo) }} class="form-control">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-square" style="color:{{ asset($boton_nuevo) }}"></i></span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <label>Color boton editar:</label>
+                                <div class="input-group my-colorpicker15">
+                                  <input type="text" name="boton_editar" value={{ asset($boton_editar) }} class="form-control">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-square" style="color:{{ asset($boton_editar) }}"></i></span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <label>Color boton editar:</label>
+                                <div class="input-group my-colorpicker16">
+                                  <input type="text" name="boton_eliminar" value={{ asset($boton_eliminar) }} class="form-control">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-square" style="color:{{ asset($boton_eliminar) }}"></i></span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <label>Color boton ver más:</label>
+                                <div class="input-group my-colorpicker17">
+                                  <input type="text" name="boton_vermas" value={{ asset($boton_vermas) }} class="form-control">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-square" style="color:{{ asset($boton_vermas) }}"></i></span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <label>Color boton actualizar:</label>
+                                <div class="input-group my-colorpicker18">
+                                  <input type="text" name="boton_actualizar" value={{ asset($boton_actualizar) }} class="form-control">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-square" style="color:{{ asset($boton_actualizar) }}"></i></span>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+                            <br>
+
+
                             <h4>Colores del panel de administración</h4>
                             <br>
                             <div class="row">
@@ -193,8 +293,7 @@ Configuración | {{ $sitio }}
                             <div class="row">
                               <div class="col-md-6">
                                   <input type="file" id="banner" name="banner" class="form-control">
-                                  <img id="previewBanner" width="200" height="200" src="#" alt=" ">
-                                <img src="{{ asset($banner) }}" width="200" alt="banner">
+                                  <img id="previewBanner" width="200" height="200" src="{{ asset($banner) }}" alt=" ">
                               </div>  
                             </div>
                             <br>
@@ -246,86 +345,133 @@ Configuración | {{ $sitio }}
 <script src="{{ asset('admin/dist/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') }}"></script>
 <script>
   $('.my-colorpicker1').colorpicker()
+  $('.my-colorpicker1').on('colorpickerChange', function(event) {
+    $('.my-colorpicker1 .fa-square').css('color', event.color.toString());
+  });
 
-$('.my-colorpicker1').on('colorpickerChange', function(event) {
-  $('.my-colorpicker1 .fa-square').css('color', event.color.toString());
-});
   $('.my-colorpicker2').colorpicker()
+  $('.my-colorpicker2').on('colorpickerChange', function(event) {
+    $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+  }); 
 
-$('.my-colorpicker2').on('colorpickerChange', function(event) {
-  $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
-});
   $('.my-colorpicker3').colorpicker()
+  $('.my-colorpicker3').on('colorpickerChange', function(event) {
+    $('.my-colorpicker3 .fa-square').css('color', event.color.toString());
+  });
 
-$('.my-colorpicker3').on('colorpickerChange', function(event) {
-  $('.my-colorpicker3 .fa-square').css('color', event.color.toString());
-});
   $('.my-colorpicker4').colorpicker()
+  $('.my-colorpicker4').on('colorpickerChange', function(event) {
+    $('.my-colorpicker4 .fa-square').css('color', event.color.toString());
+  });
 
-$('.my-colorpicker4').on('colorpickerChange', function(event) {
-  $('.my-colorpicker4 .fa-square').css('color', event.color.toString());
-});
   $('.my-colorpicker5').colorpicker()
+  $('.my-colorpicker5').on('colorpickerChange', function(event) {
+    $('.my-colorpicker5 .fa-square').css('color', event.color.toString());
+  });
 
-$('.my-colorpicker5').on('colorpickerChange', function(event) {
-  $('.my-colorpicker5 .fa-square').css('color', event.color.toString());
-});
   $('.my-colorpicker6').colorpicker()
+  $('.my-colorpicker6').on('colorpickerChange', function(event) {
+    $('.my-colorpicker6 .fa-square').css('color', event.color.toString());
+  });
 
-$('.my-colorpicker6').on('colorpickerChange', function(event) {
-  $('.my-colorpicker6 .fa-square').css('color', event.color.toString());
-});
   $('.my-colorpicker7').colorpicker()
+  $('.my-colorpicker7').on('colorpickerChange', function(event) {
+    $('.my-colorpicker7 .fa-square').css('color', event.color.toString());
+  });
 
-$('.my-colorpicker7').on('colorpickerChange', function(event) {
-  $('.my-colorpicker7 .fa-square').css('color', event.color.toString());
-});
   $('.my-colorpicker8').colorpicker()
+  $('.my-colorpicker8').on('colorpickerChange', function(event) {
+    $('.my-colorpicker8 .fa-square').css('color', event.color.toString());
+  });
 
-$('.my-colorpicker8').on('colorpickerChange', function(event) {
-  $('.my-colorpicker8 .fa-square').css('color', event.color.toString());
+
+  $('.my-colorpicker9').colorpicker()
+  $('.my-colorpicker9').on('colorpickerChange', function(event) {
+    $('.my-colorpicker9 .fa-square').css('color', event.color.toString());
+  });
+
+  $('.my-colorpicker10').colorpicker()
+  $('.my-colorpicker10').on('colorpickerChange', function(event) {
+    $('.my-colorpicker10 .fa-square').css('color', event.color.toString());
+    });
+
+  $('.my-colorpicker11').colorpicker()
+  $('.my-colorpicker11').on('colorpickerChange', function(event) {
+    $('.my-colorpicker11 .fa-square').css('color', event.color.toString());
+  });
+
+  $('.my-colorpicker12').colorpicker()
+  $('.my-colorpicker12').on('colorpickerChange', function(event) {
+    $('.my-colorpicker12 .fa-square').css('color', event.color.toString());
+  });
+
+  $('.my-colorpicker13').colorpicker()
+  $('.my-colorpicker13').on('colorpickerChange', function(event) {
+    $('.my-colorpicker13 .fa-square').css('color', event.color.toString());
+  });
+
+  $('.my-colorpicker14').colorpicker()
+  $('.my-colorpicker14').on('colorpickerChange', function(event) {
+    $('.my-colorpicker14 .fa-square').css('color', event.color.toString());
+  });
+
+  $('.my-colorpicker15').colorpicker()
+  $('.my-colorpicker15').on('colorpickerChange', function(event) {
+    $('.my-colorpicker15 .fa-square').css('color', event.color.toString());
+  });
+
+  $('.my-colorpicker16').colorpicker()
+  $('.my-colorpicker16').on('colorpickerChange', function(event) {
+    $('.my-colorpicker16 .fa-square').css('color', event.color.toString());
+  });
+
+  $('.my-colorpicker18').colorpicker()
+  $('.my-colorpicker18').on('colorpickerChange', function(event) {
+    $('.my-colorpicker18 .fa-square').css('color', event.color.toString());
+  });
+
+  $('.my-colorpicker17').colorpicker()
+  $('.my-colorpicker17').on('colorpickerChange', function(event) {
+    $('.my-colorpicker17 .fa-square').css('color', event.color.toString());
+  });
+
+const input = document.querySelector('#logoSitio');
+const preview = document.querySelector('#preview1');
+input.addEventListener('change', () => {
+  const file = input.files[0];
+  const reader = new FileReader();
+  
+  reader.addEventListener('load', () => {
+    preview.setAttribute('src', reader.result);
+  });
+  reader.readAsDataURL(file);
 });
-  const logoSitio = document.querySelector('#logoSitio');
-  const previewLogo = document.querySelector('#preview1');
 
-  logoSitio.addEventListener('change', () => {
-    var file = logoSitio.files[0];
-    var reader = new FileReader();
+const input1 = document.querySelector('#perfil');
+const preview1 = document.querySelector('#preview2');
 
-    reader.addEventListener('load', () => {
-      previewLogo.setAttribute('src', reader.result);
-    });
+input1.addEventListener('change', () => {
+  const file = input1.files[0];
+  const reader = new FileReader();
 
-    reader.readAsDataURL(file);
+  reader.addEventListener('load', () => {
+    preview1.setAttribute('src', reader.result);
   });
+  reader.readAsDataURL(file);
+});
 
-  var input = document.querySelector('#perfil');
-  var preview = document.querySelector('#preview2');
+const input2 = document.querySelector('#banner');
+const preview2 = document.querySelector('#previewBanner');
 
-  input.addEventListener('change', () => {
-    var file = input.files[0];
-    var reader = new FileReader();
+input2.addEventListener('change', () => {
+  const file = input2.files[0];
+  const reader = new FileReader();
 
-    reader.addEventListener('load', () => {
-      preview.setAttribute('src', reader.result);
-    });
-
-    reader.readAsDataURL(file);
+  reader.addEventListener('load', () => {
+    preview2.setAttribute('src', reader.result);
   });
-
-  const banner = document.querySelector('#banner');
-  const previewBanner = document.querySelector('#previewBanner');
-
-  banner.addEventListener('change', () => {
-    var file = banner.files[0];
-    var reader = new FileReader();
-
-    reader.addEventListener('load', () => {
-      previewBanner.setAttribute('src', reader.result);
-    });
-
-    reader.readAsDataURL(file);
-  });
+  reader.readAsDataURL(file);
+});
 
 </script>
 

@@ -150,17 +150,26 @@ Productos | {{ $sitio }}
   const input = document.querySelector('#image');
   const preview = document.querySelector('#preview');
 
+  // ocultar la imagen de vista previa al cargar la página
+  preview.setAttribute('src', '');
+  preview.style.display = 'none';
+
   input.addEventListener('change', () => {
-    const file = input.files[0];
-    const reader = new FileReader();
+    if (input.files && input.files[0]) { // comprobar si se ha seleccionado un archivo
+      const file = input.files[0];
+      const reader = new FileReader();
 
-    reader.addEventListener('load', () => {
-      preview.setAttribute('src', reader.result);
-    });
-
-    reader.readAsDataURL(file);
+      reader.addEventListener('load', () => {
+        preview.setAttribute('src', reader.result);
+      });
+      reader.readAsDataURL(file);
+      preview.style.display = 'block'; // mostrar la vista previa
+    } else {
+      preview.setAttribute('src', ''); // establecer el atributo src en vacío para ocultar la vista previa
+      preview.style.display = 'none'; // ocultar la vista previa
+    }
   });
-
+  
   let ingredienteCount = 1;
   document.getElementById('agregar-ingrediente').addEventListener('click', function() {
     ingredienteCount++;

@@ -30,6 +30,16 @@ class Configuration extends Model
         'texto_banner_dos',
         'texto_banner_tres',
         'texto_banner_cuatro',
+        'boton_principal_busqueda',
+        'boton_calificacion',
+        'boton_review',
+        'boton_lista',
+        'boton_carrito',
+        'boton_nuevo',
+        'boton_editar',
+        'boton_eliminar',
+        'boton_vermas',
+        'boton_actualizar',
         'banner'
     ];
 }

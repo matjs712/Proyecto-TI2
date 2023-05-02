@@ -35,6 +35,19 @@ class CreateConfigurationsTable extends Migration
             $table->string('texto_banner_dos')->default('Sales Gourmet');
             $table->string('texto_banner_tres')->default('Encuentra las variedades de nuestras exquisitas sales ');
             $table->string('texto_banner_cuatro')->default('Atrevete a darle un sabor unico a tu comida.');
+            
+            $table->string('boton_principal_busqueda')->default('#524656');
+            $table->string('boton_calificacion')->default('#e5ddcb');
+            $table->string('boton_review')->default('#343a40');
+            $table->string('boton_lista')->default('#ffffff');
+            $table->string('boton_carrito')->default('#ffffff');
+            $table->string('boton_nuevo')->default('#ffffff');
+            $table->string('boton_editar')->default('#0e74cd');
+            $table->string('boton_eliminar')->default('#373737');
+            $table->string('boton_vermas')->default('#0e74cd');
+            $table->string('boton_actualizar')->default('#373737');
+
+            
             $table->string('banner')->default(' ');
             $table->timestamps();
         });
