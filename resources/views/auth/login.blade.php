@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -69,5 +69,32 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
+<div class="container">
+        <div class = "design">
+            <div class="pill-1 rotate-45"></div>
+            <div class="pill-2 rotate-45"></div>
+            <div class="pill-3 rotate-45"></div>
+            <div class="pill-4 rotate-45"></div>
+        </div>
+        <div class="login">
+            <h3 class="title">Iniciar sesion</h3>
+            <div class="text-input">
+                <i class="fa-solid fa-user"></i>
+                <input type="email" placeholder="Correo electronico">
+            </div>
+            <div class="text-input">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" placeholder="Contraseña">
+                <i class="fa-solid fa-eye"></i>
+            </div>
+            <button class="login-btn">Iniciar Sesion</button>
+            <a href="#" class="forgot">¿Olvidaste tu contraseña?</a>
+            <div class="create">
+                <a href="">Resgistrarse</a>
+                <i class="ri-arrow-right-fill"></i>
+            </div>
+        </div>
+    </div>  
+
 @endsection

@@ -7,7 +7,7 @@ Categorias | {{ $sitio }}
     <div class="container">
         <h6 class="mb-0">
             <a href="{{ url('/') }}">Inicio</a> / 
-            <a href="{{ url('todo-categrorias') }}">Categorias</a>
+            <a href="{{ url('todo-categorias') }}">Categorias</a>
         </h6>
     </div>
 </div>
