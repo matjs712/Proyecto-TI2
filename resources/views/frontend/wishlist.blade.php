@@ -40,10 +40,10 @@ Lista | {{ $sitio }}
                                     @endif
                                 </div>
                                 <div class="col-md-2">
-                                    <button class="btn btn-success addCartBtn"><i class="fa fa-shopping-cart"></i>Añadir al carrito</button>
+                                    <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_principal_busqueda }}; color:white;" class="btn btn-success addCartBtn"><i class="fa fa-shopping-cart"></i>Añadir al carrito</button>
                                 </div>   
                                 <div class="col-md-2">
-                                    <button class="btn btn-danger remove-wishlist-item"><i class="fa fa-trash"></i> Remover</button>
+                                    <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_eliminar }}; color:white;" class="btn remove-wishlist-item"><i class="fa fa-trash"></i> Remover</button>
                                 </div>   
                             </div>
                     @endforeach
