@@ -4,6 +4,15 @@ Categorias | {{ $sitio }}
 @endsection
 
 @section('content')
+<div class="py-3 mb-1 border-bottom border-top">
+    <div class="container ml-3">
+        <h6 class="mb-0">
+            <a href="{{ url('dashboard') }}">Inicio</a> / 
+            <a href="{{ url('categorias') }}">Categorias</a> /
+            <a href="{{ url('edit-cat/'.$categoria->id) }}">Editar categoria</a>
+        </h6>
+    </div>
+</div>
 
 <div class="card">
     <div class="card-header">

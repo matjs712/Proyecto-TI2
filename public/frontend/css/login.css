@@ -134,6 +134,9 @@
 @media only screen and (max-width: 576px){
     .modal-dialog{ width: 95% !important; }
 } */
+html{
+    overflow-x: hidden;
+}
 #preloader{
     background:#ffffff url('../../images/preloader.gif') no-repeat center center;
     background-size: 30%;
