@@ -223,10 +223,7 @@ section{
   transition: all .50s ease;
   z-index: 1;
 }
-.btn-home:hover{
-  background: #444;
-  color: white !important;
-}
+
 .custom-shape-divider-bottom-1680324404 {
     position: absolute;
     bottom: 0;
