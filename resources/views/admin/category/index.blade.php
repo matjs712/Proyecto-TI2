@@ -9,7 +9,7 @@ Categorias | {{ $sitio }}
     <div class="card-header d-flex aling-items-center flex-wrap">
         <h4>Categorias</h4>
         @can('add categorias')
-            <a class="btn btn-warning ml-4" href="{{ url('/crear-categoria') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>    
+            <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_nuevo }}; color:white;" class="btn ml-4" href="{{ url('/crear-categoria') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>    
         @endcan
     </div>
     <div class="card-body">
@@ -45,12 +45,12 @@ Categorias | {{ $sitio }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
-                                    <a href="#" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modalCategoria" data-category-id="{{ $categoria->id }}">Ver más</a>
+                                    <a href="#" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_vermas }}; color:white;" class="btn mb-1" data-toggle="modal" data-target="#modalCategoria" data-category-id="{{ $categoria->id }}">Ver más</a>
                                     @can('edit categorias')
-                                        <a href="{{ url('edit-cat/'.$categoria->id) }}" class="btn mb-1 btn-primary"><i class="fas fa-edit"></i>Editar</a>
+                                        <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_editar }}; color:white;" href="{{ url('edit-cat/'.$categoria->id) }}" class="btn mb-1"><i class="fas fa-edit"></i>Editar</a>
                                     @endcan
                                     @can('destroy categorias')
-                                        <a href="{{ url('delete-cat/'.$categoria->id) }}" class="btn btn-danger text-white"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
+                                        <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_eliminar }}; color:white;" href="{{ url('delete-cat/'.$categoria->id) }}" class="btn"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
                                     @endcan
                                 </div>
                             </div>
