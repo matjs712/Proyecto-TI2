@@ -45,19 +45,19 @@ Mi Carrito | {{ $sitio }}
                             @endif
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-danger delete-cart-item"><i class="fa fa-trash"></i> Remover</button>
+                            <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_eliminar }}; color:white;" class="btn delete-cart-item"><i class="fa fa-trash"></i> Remover</button>
                         </div>
                     </div>    
                 @endforeach
             </div>
             <div class="card-footer d-flex justify-content-between align-items-center">
                 <h6>Total: {{ $total }}</h6>
-                <a href="{{ url('checkout') }}" class="btn btn-outline-success">Seguir al Checkout</a>
+                <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_principal_busqueda }}; color:white;" href="{{ url('checkout') }}" class="btn">Seguir al Checkout</a>
             </div>
             @else
                 <div class="card-body text-center">
                     <h2>Tu <i class="fa fa-shopping-cart" aria-hidden="true"></i> carrito esta vacio</h2>
-                    <a href="{{ url('/') }}" class="btn btn-outline-primary">Continua comprando</a>
+                    <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_principal_busqueda }}; color:white;" href="{{ url('/') }}" class="btn">Continua comprando</a>
                 </div>
             @endif
         </div>

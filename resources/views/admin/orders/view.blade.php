@@ -9,7 +9,7 @@ Ordenes | {{ $sitio }}
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header bg-primary">
-                    <a class="btn" href="{{ url('ordenes') }}"><i class="fa fa-backward" aria-hidden="true"></i> Volver</a>
+                    <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_nuevo }}; color:white;" class="btn" href="{{ url('ordenes') }}"><i class="fa fa-backward" aria-hidden="true"></i> Volver</a>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -67,7 +67,7 @@ Ordenes | {{ $sitio }}
                                         <option {{ $orders->status == '0'? 'selected': '' }} value="0">Pendiente</option>
                                         <option {{ $orders->status == '1'? 'selected': '' }} value="1">Completada</option>
                                     </select>
-                                    <button type="submit" class="btn btn-primary mt-3">Editar</button>
+                                    <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_editar }}; color:white;" type="submit" class="btn mt-3">Editar</button>
                                 </form>
                             </div>
 
