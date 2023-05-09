@@ -8,16 +8,20 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+
 
 class IngredienteController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('can:ver ingredientes')->only('index');
-        $this->middleware('can:add ingredientes')->only('create','store');
+        $this->middleware('can:add ingredientes')->only('create', 'store');
         $this->middleware('can:edit ingredientes')->only('edit', 'update');
         $this->middleware('can:destroy ingredientes')->only('destroy');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +31,7 @@ class IngredienteController extends Controller
     {
         logo_sitio();
         secciones();
-        
+
         $ingredientes = Ingrediente::all();
         return view('admin.ingrediente.index', compact('ingredientes'));
     }
@@ -41,7 +45,7 @@ class IngredienteController extends Controller
     {
         logo_sitio();
         secciones();
-        
+
         return view('admin.ingrediente.create');
     }
 
@@ -53,13 +57,44 @@ class IngredienteController extends Controller
      */
     public function store(Request $request)
     {
-        $ingrediente = new Ingrediente();
+        $rules = [
 
-        $ingrediente->name = $request->input('name');
-        $ingrediente->cantidad = $request->input('cantidad');
-        $ingrediente->save();
+            'name' => 'required|string|min:3',
+            'cantidad' => 'required|integer',
+        ];
 
-        return redirect('/ingredientes')->with('status', 'Ingrediente añadido exitosamente!.');
+        $messages = [
+
+            'required' => 'El campo es requerido.',
+            'min' => 'El campo debe tener al menos :min caracteres.',
+
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->passes()) {
+
+
+            try {
+                $ingrediente = new Ingrediente();
+
+                $ingrediente->name = $request->input('name');
+                $ingrediente->cantidad = $request->input('cantidad');
+                $ingrediente->save();
+
+                DB::commit();
+                return redirect('/ingredientes')->with('status', 'Ingrediente añadido exitosamente!.');
+            } catch (\Illuminate\Datebase\QueryException $e) {
+                DB::rollBack();
+                return back()->withErrors($validator)->withInput();
+
+            }
+
+
+        }
+        return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
+
+
     }
     /**
      * Show the form for editing the specified resource.
@@ -71,7 +106,7 @@ class IngredienteController extends Controller
     {
         logo_sitio();
         secciones();
-        
+
         $ingrediente = Ingrediente::find($id);
         return view('admin.ingrediente.edit', compact('ingrediente'));
     }
@@ -85,13 +120,45 @@ class IngredienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ingrediente = Ingrediente::find($id);
+        $rules = [
 
-        $ingrediente->name = $request->input('name');
-        $ingrediente->cantidad = $request->input('cantidad');
-        $ingrediente->update();
+            'name' => 'required|string|min:3',
+            'cantidad' => 'required|integer',
+        ];
 
-        return redirect('/ingredientes')->with('status', 'Ingrediente Editado exitosamente!.');
+        $messages = [
+
+            'required' => 'El campo es requerido.',
+            'min' => 'El campo debe tener al menos :min caracteres.',
+
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->passes()) {
+
+
+            try {
+                $ingrediente = Ingrediente::find($id);
+
+                $ingrediente->name = $request->input('name');
+                $ingrediente->cantidad = $request->input('cantidad');
+                $ingrediente->update();
+
+
+                DB::commit();
+                return redirect('/ingredientes')->with('status', 'Ingrediente Editado exitosamente!.');
+
+            } catch (\Illuminate\Datebase\QueryException $e) {
+                DB::rollBack();
+                return back()->withErrors($validator)->withInput();
+
+            }
+
+
+        }
+        return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
+
     }
     public function qty()
     {
@@ -109,6 +176,6 @@ class IngredienteController extends Controller
     {
         $ingrediente = Ingrediente::find($id);
         $ingrediente->delete();
-        return redirect('/ingredientes')->with('status','Ingrediente eliminado Exitosamente');
+        return redirect('/ingredientes')->with('status', 'Ingrediente eliminado Exitosamente');
     }
 }
