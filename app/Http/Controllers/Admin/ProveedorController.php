@@ -125,7 +125,7 @@ class ProveedorController extends Controller
         $rules = [
             'name' => 'required|date',
             'telefono' => 'required|numeric|digits:9',
-            'email' => 'required',
+            'email' => 'required|email',
 
         ];
 
@@ -133,8 +133,8 @@ class ProveedorController extends Controller
             'required' => 'El campo es requerido.',
             'digits' => 'El campo debe tener :digits caracteres.',
             'email.email' => 'Ingrese un Email valido.',
-            'numeric' => 'El campo debe ser de tipo numerico.'
-
+            'numeric' => 'El campo debe ser de tipo numerico.',
+            'email' => 'Ingrese un Email valido'
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->passes()) {
