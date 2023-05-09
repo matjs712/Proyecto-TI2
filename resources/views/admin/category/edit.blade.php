@@ -4,6 +4,15 @@ Categorias | {{ $sitio }}
 @endsection
 
 @section('content')
+<div class="py-3 mb-1 border-bottom border-top">
+    <div class="container ml-3">
+        <h6 class="mb-0">
+            <a href="{{ url('dashboard') }}">Inicio</a> / 
+            <a href="{{ url('categorias') }}">Categorias</a> /
+            <a href="{{ url('edit-cat/'.$categoria->id) }}">Editar categoria</a>
+        </h6>
+    </div>
+</div>
 
 <div class="card">
     <div class="card-header">
@@ -42,14 +51,9 @@ Categorias | {{ $sitio }}
             </div>
           </div>
           <div class="col-md-8 mt-2 mb-4">
-            @if ($categoria->image)
-              <div class="d-flex align-items-center flex-wrap">
-                <img src="{{ Storage::url('uploads/categorias/'.$categoria->image) }}" width="300" alt="imagen-categoria">
-              </div>
-            @endif
             <label for="image">Imagen</label>
             <input type="file" id="image" name="image" class="form-control">
-            <img id="preview" width="200" height="200" src="" alt=" ">
+            <img id="preview" width="200" height="200" src="{{ Storage::url('uploads/categorias/'.$categoria->image) }}" alt=" ">
             @error('image')
               <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -86,17 +90,24 @@ Categorias | {{ $sitio }}
 <script>
   const input = document.querySelector('#image');
   const preview = document.querySelector('#preview');
+  // ocultar la imagen de vista previa al cargar la página
+  preview.setAttribute('src', '');
+  preview.style.display = 'none';
 
   input.addEventListener('change', () => {
-    const file = input.files[0];
-    const reader = new FileReader();
+    if (input.files && input.files[0]) { // comprobar si se ha seleccionado un archivo
+      const file = input.files[0];
+      const reader = new FileReader();
 
-    reader.addEventListener('load', () => {
-      preview.setAttribute('src', reader.result);
-    });
-
-    reader.readAsDataURL(file);
+      reader.addEventListener('load', () => {
+        preview.setAttribute('src', reader.result);
+      });
+      reader.readAsDataURL(file);
+      preview.style.display = 'block'; // mostrar la vista previa
+    } else {
+      preview.setAttribute('src', ''); // establecer el atributo src en vacío para ocultar la vista previa
+      preview.style.display = 'none'; // ocultar la vista previa
+    }
   });
 </script>
-
 @endsection

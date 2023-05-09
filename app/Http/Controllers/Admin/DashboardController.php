@@ -114,8 +114,9 @@ class DashboardController extends Controller
         $logo_sitio->update();
 
         $banner = Configuration::first();
+
         if($request->hasFile('banner')){  
-            $path = 'banner/'.$banner->banner;
+            $path = storage_path('app/public/banner/'.$banner->banner);
 
             if(File::exists($path)){
                 File::delete($path); 
@@ -164,10 +165,23 @@ class DashboardController extends Controller
         $colores->color_principal = $request->color_principal;
         $colores->color_secundario = $request->color_secundario;
         $colores->color_barra_busqueda = $request->color_barra_busqueda;
+
         $colores->texto_banner_uno = $request->texto_banner_1;
         $colores->texto_banner_dos = $request->texto_banner_2;
         $colores->texto_banner_tres = $request->texto_banner_3;
         $colores->texto_banner_cuatro = $request->texto_banner_4;
+
+        $colores->boton_calificacion = $request->boton_calificacion;
+        $colores->boton_principal_busqueda = $request->boton_principal_busqueda;
+        $colores->boton_review = $request->boton_review;
+        $colores->boton_lista = $request->boton_lista;
+        $colores->boton_carrito = $request->boton_carrito;
+        $colores->boton_nuevo = $request->boton_nuevo;
+        $colores->boton_editar = $request->boton_editar;
+        $colores->boton_eliminar = $request->boton_eliminar;
+        $colores->boton_vermas = $request->boton_vermas;
+        $colores->boton_actualizar = $request->boton_actualizar;
+
         $colores->update();
     }
     

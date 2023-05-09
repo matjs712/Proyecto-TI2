@@ -4,11 +4,19 @@ Roles | {{ $sitio }}
 @endsection
 @section('content')
 
+<div class="py-3 mb-1 border-bottom border-top">
+    <div class="container ml-3">
+        <h6 class="mb-0">
+            <a href="{{ url('dashboard') }}">Inicio</a> / 
+            <a href="{{ url('roles') }}">Roles & Permisos</a>
+        </h6>
+    </div>
+</div>
 
 <div class="card">
     <div class="card-header d-flex aling-items-center flex-wrap">
         <h4>Roles & Permisos</h4>
-        <a class="btn btn-warning ml-4" href="{{ url('/add-roles') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_nuevo }}; color:white;" class="btn ml-4" href="{{ url('/add-roles') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
     </div>
     <div class="card-body">
         <table style="width: 100%;" class="table table-bordered" id="tablaRoles">
@@ -32,8 +40,8 @@ Roles | {{ $sitio }}
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
                                     {{-- <a href="{{ route('roles.show',$rol) }}" class="btn mb-1 btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Ver rol</a> --}}
-                                    <a href="{{ route('roles.edit', $rol) }}" class="btn mb-1 btn-success text-white"><i class="fas fa-edit"></i> Editar</a>
-                                    <a href="{{ url('delete-rol/'.$rol->id) }}" class="btn btn-danger text-white"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
+                                    <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_editar }}; color:white;" href="{{ route('roles.edit', $rol) }}" class="btn mb-1"><i class="fas fa-edit"></i> Permisos</a>
+                                    <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_eliminar }}; color:white;" href="{{ url('delete-rol/'.$rol->id) }}" class="btn"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
                                 </div>
                             </div>
                           </div>

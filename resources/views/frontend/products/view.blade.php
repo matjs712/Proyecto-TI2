@@ -52,11 +52,11 @@
                         <label class="badge bg-danger  text-white">Sin stock</label>
                         @endif
                         <div class="d-flex align-items-center flex-wrap">
-                            <button type="button" class="btn btn-naranjo mr-2" data-toggle="modal" data-target="#exampleModalCenter">
+                            <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_calificacion }}; color:white;" type="button" class="btn mr-2" data-toggle="modal" data-target="#exampleModalCenter">
                                 <i class="fa fa-star" aria-hidden="true"></i>
                                 Califica este producto
                             </button>
-                            <a href="{{ url('add-review/'.$producto->slug.'/userreview') }}" class="btn btn-azul"><i class="fa fa-star" aria-hidden="true"></i>Añadir Review</a>
+                            <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_review }}; color:white;" href="{{ url('add-review/'.$producto->slug.'/userreview') }}" class="btn"><i class="fa fa-star" aria-hidden="true"></i>Añadir Review</a>
                         </div>
                     </div>
                     <div class="row mt-2 align-items-center">
@@ -71,9 +71,9 @@
                         </div>
                         <div class="col-md-9">
                             <br>
-                            <button class="btn btn-azul me-3 float-start addToWishlist"><i class="fa-regular fa-heart"></i> Añadir a la lista</button>
+                            <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_lista }}; color:white;" class="btn me-3 float-start addToWishlist"><i class="fa-regular fa-heart"></i> Añadir a la lista</button>
                             @if ($producto->qty > 0)
-                            <button class="btn btn-red me-3 float-start addCartBtn"><i class="fa fa-cart-plus" aria-hidden="true"></i> Añadir al carrito</button>
+                            <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_carrito }}; color:white;" class="btn me-3 float-start addCartBtn"><i class="fa fa-cart-plus" aria-hidden="true"></i> Añadir al carrito</button>
                             @endif
                             
                         </div>

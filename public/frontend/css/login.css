@@ -134,6 +134,9 @@
 @media only screen and (max-width: 576px){
     .modal-dialog{ width: 95% !important; }
 } */
+html{
+    overflow-x: hidden;
+}
 #preloader{
     background:#ffffff url('../../images/preloader.gif') no-repeat center center;
     background-size: 30%;
@@ -220,10 +223,7 @@ section{
   transition: all .50s ease;
   z-index: 1;
 }
-.btn-home:hover{
-  background: #444;
-  color: white !important;
-}
+
 .custom-shape-divider-bottom-1680324404 {
     position: absolute;
     bottom: 0;

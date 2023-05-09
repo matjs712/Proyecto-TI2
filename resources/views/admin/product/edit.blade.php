@@ -4,6 +4,16 @@ Productos | {{ $sitio }}
 @endsection
 @section('content')
 
+<div class="py-3 mb-1 border-bottom border-top">
+    <div class="container ml-3">
+        <h6 class="mb-0">
+            <a href="{{ url('dashboard') }}">Inicio</a> / 
+            <a href="{{ url('productos') }}">Productos</a> /
+            <a href="{{ url('edit-prod/'.$producto->id) }}">Editar productos</a>
+        </h6>
+    </div>
+</div>
+
 <div class="card">
     <div class="card-header">
         <h4>Editar Producto</h4>
@@ -74,14 +84,9 @@ Productos | {{ $sitio }}
                   </div>
               </div> --}}
               <div class="col-md-12 mb-4">
-                  <div class="d-flex align-items-center flex-wrap">
-                    @if ($producto->image)
-                        <img src="{{Storage::url('uploads/productos/'.$producto->image)}}" width="300" alt="imagen-producto">
-                    @endif
-                  </div>
                   <label for="">Imagen</label>
                     <input type="file" id="image" name="image"  class="form-control">
-                    <img id="preview" width="200" height="200" src="" alt=" ">
+                    <img id="preview" width="200" height="200" src="{{Storage::url('uploads/productos/'.$producto->image)}}" alt=" ">
                 </div>
               <div class="col-md-6">
                   <div class="form-group">

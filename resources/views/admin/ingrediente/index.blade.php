@@ -4,12 +4,20 @@ Ingredientes | {{ $sitio }}
 @endsection
 @section('content')
 
+<div class="py-3 mb-1 border-bottom border-top">
+    <div class="container ml-3">
+        <h6 class="mb-0">
+            <a href="{{ url('dashboard') }}">Inicio</a> / 
+            <a href="{{ url('ingredientes') }}">Ingredientes</a>
+        </h6>
+    </div>
+</div>
 
 <div class="card">
     <div class="card-header d-flex aling-items-center flex-wrap">
         <h4>Ingredientes</h4>
         @can('add ingredientes')
-            <a class="btn btn-warning ml-4" href="{{ url('/crear-ingrediente') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+            <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_nuevo }}; color:white;" class="btn ml-4" href="{{ url('/crear-ingrediente') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
         @endcan
     </div>
     <div class="card-body">
@@ -35,12 +43,12 @@ Ingredientes | {{ $sitio }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
-                                    <button class="btn mb-1 btn-success"><i class="fas fa-edit"></i>Ver más</button>
+                                    <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_vermas }}; color:white;" class="btn mb-1"><i class="fas fa-edit"></i>Ver más</button>
                                     @can('edit ingredientes')
-                                        <a href="{{ url('edit-ing/'.$item->id) }}" class="btn mb-1 btn-primary"><i class="fas fa-edit"></i>Editar</a>
+                                        <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_editar }}; color:white;" href="{{ url('edit-ing/'.$item->id) }}" class="btn mb-1"><i class="fas fa-edit"></i>Editar</a>
                                     @endcan
                                     @can('destroy ingredientes')
-                                        <a href="{{ url('delete-ing/'.$item->id) }}" class="btn btn-danger text-white"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
+                                        <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_eliminar }}; color:white;" href="{{ url('delete-ing/'.$item->id) }}" class="btn"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
                                     @endcan
                                 </div>
                             </div>
