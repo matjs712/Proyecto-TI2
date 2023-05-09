@@ -2,7 +2,7 @@
   <div class="home-text">
     <h1>{{ $texto_1 }} <br>{{ $texto_2 }}</h1>
     <p>{{ $texto_3 }}<br>{{ $texto_4 }}</p>
-    <a class="btn btn-home" style="background-color: {{ $color_secundario }}" href="{{ url('todo-productos') }}">Elige tu producto</a>
+    <a class="btn btn-home" style="background-color: {{ $boton_principal_busqueda }}" href="{{ url('todo-productos') }}">Elige tu producto</a>
   </div>
   <div class="custom-shape-divider-bottom-1680324404">
     <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">

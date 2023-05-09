@@ -82,20 +82,26 @@
             <form class="" action="{{ route('login') }}" method="post">
                 @csrf
                 <h3 class="title">Iniciar sesion</h3>
+                {{-- @error('email', 'password') --}}
+                @error('email')
+                <div class="text-input is-invalid">
+                    <p>Correo o contraseña incorrecto. La contraseña debe tener al menos 8 carácteres</p>
+                </div>
+                @enderror
                 <div class="text-input">
                     <i class="fa-solid fa-user"></i>
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Correo electronico" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    <input id="email" type="email" class="form-control" name="email" placeholder="Correo electronico" value="{{ old('email') }}" required autocomplete="email" autofocus>
                     
-                    @error('email')
+                    {{-- @error('email')
                         <span class="" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror
+                    @enderror --}}
                 </div>
-                <div class="text-input">
-                    <i class="fa-solid fa-lock"></i>
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Contraseña">
-                    <i class="fa-solid fa-eye"></i>
+                <div class="text-input @error('password') is-invalid @enderror">
+                    <i class="fa-solid fa-lock" @error('password') style="color:red"@enderror></i>
+                    <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password" placeholder="Contraseña">
+                    @error('password') <i class="fa-sharp fa-solid fa-circle-exclamation" style="color:red"></i>@enderror
                 </div>
                 <button type="submit" class="login-btn">Iniciar Sesion</button>
                 

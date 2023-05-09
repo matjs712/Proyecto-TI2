@@ -168,3 +168,10 @@ a.forgot{
         display: block;
     }
 }
+.is-invalid{
+    font-size: 12px;
+    padding:10px;
+    color: rgb(144,36,32);
+    border: 1px solid rgb(236,203,208);
+    background-color: rgb(255,220,224);
+}

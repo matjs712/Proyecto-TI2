@@ -76,53 +76,43 @@
 </div> --}}
 
 <div class="container">
-        <div class = "design">
-            <div class="pill-1 rotate-45"></div>
-            <div class="pill-2 rotate-45"></div>
-            <div class="pill-3 rotate-45"></div>
-            <div class="pill-4 rotate-45"></div>
-        </div>
-        <div class="login">
-            <form action="{{ route('register') }}" method="post">
-                @csrf
-                <h3 class="title">{{__('Register')}}</h3>
-                <div class="text-input">
-                    <i class="fa-solid fa-user"></i>
-                    <input id="email" type="email" class="@error('email') is-invalid @enderror" name="email" placeholder="Correo electronico">
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+    <div class = "design">
+        <div class="pill-1 rotate-45"></div>
+        <div class="pill-2 rotate-45"></div>
+        <div class="pill-3 rotate-45"></div>
+        <div class="pill-4 rotate-45"></div>
+    </div>
+    <div class="login">
+        <form action="{{ route('register') }}" method="post">
+            @csrf
+            <h3 class="title">{{__('Register')}}</h3>
+            {{-- @error('password', 'email') --}}
+            @error('password')
+                <div class="text-input is-invalid">
+                    <p>Ingrese un correo valido.<br><br> Ambas contraseñas deben coincidir.</p>
                 </div>
-                <div class="text-input">
-                    <i class="fa-solid fa-lock"></i>
-                    <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password" placeholder="Contraseña">
-                    <i class="fa-solid fa-eye"></i>
-
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div> <div class="text-input">
-                    <i class="fa-solid fa-lock"></i>
-                    <input id="password-confirm" type="password" class="@error('password') is-invalid @enderror" name="password_confirmation" placeholder="Confirmar contraseña" required autocomplete="new-password">
-                    <i class="fa-solid fa-eye"></i>
-
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-                <button type="submit" class="login-btn">{{__('Register')}}</button>
-                
-            </form>    
-            <div class="create">
-                <a href={{route('login')}}>{{ __('Login') }}</a>
-                <i class="fa-solid fa-arrow-right"></i>
+            @enderror
+            <div class="text-input">
+                <i class="fa-solid fa-user"></i>
+                <input id="name" type="text" name="name" placeholder="Nombre">
             </div>
+            <div class="text-input">
+                <i class="fa-solid fa-envelope"></i>
+                <input id="email" type="email" name="email" placeholder="Correo electronico">
+            </div>
+            <div class="text-input">
+                <i class="fa-solid fa-lock"></i>
+                <input id="password" type="password" name="password" placeholder="Contraseña">
+            </div> 
+            <div class="text-input">
+                <input id="password-confirm" type="password" name="password_confirmation" placeholder="Confirmar contraseña" required autocomplete="new-password">
+            </div>
+            <button type="submit" class="login-btn">{{__('Register')}}</button>
+        </form>    
+        <div class="create">
+            <a href={{route('login')}}>{{ __('Login') }}</a>
+            <i class="fa-solid fa-arrow-right"></i>
         </div>
-    </div>  
+    </div>
+</div>  
 @endsection

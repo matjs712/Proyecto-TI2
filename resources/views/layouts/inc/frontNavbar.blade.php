@@ -14,7 +14,7 @@
             @csrf
             <div class="input-group">
               <input type="search" style="background-color:{{ $color_barra_busqueda }}" name="nameProduct" id="search_product" class="form-control" placeholder="¿Que estas buscando?">
-              <button type="submit" class="input-group-text search"  style="background-color: {{ $color_secundario }}"><i class="fa fa-search"  aria-hidden="true"></i></button>
+              <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" type="submit" class="input-group-text search"  style="background-color: {{ $boton_principal_busqueda }}; color:white;"><i class="fa fa-search"  aria-hidden="true"></i></button>
             </div>
           </form>
         </div>
