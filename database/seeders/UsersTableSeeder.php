@@ -41,8 +41,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'normal',
             'email' => 'normal@sales.cl',
             'password' => bcrypt('password'),
-            'role_as' => 0,
-        ]);
-      
+            'role_as' => 4,
+        ])->assignRole('usuario');;
     }
 }
