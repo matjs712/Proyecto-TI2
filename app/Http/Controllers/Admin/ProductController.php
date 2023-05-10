@@ -15,6 +15,7 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 
 class ProductController extends Controller
@@ -216,10 +217,11 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $products = Product::find($id);
         $rules = [
             'categoria' => 'required',
             'name' => 'required',
-            'slug' => 'required|unique:products',
+            'slug' => ['required', Rule::unique('products')->ignore($products->id)],
             'description' => 'required',
             'small_description' => 'required',
             'price' => 'required',
