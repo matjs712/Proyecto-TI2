@@ -1,113 +1,151 @@
 @extends('layouts.admin')
 @section('title')
-Productos | {{ $sitio }}
+    Productos | {{ $sitio }}
 @endsection
 @section('content')
-
-<div class="py-3 mb-1 border-bottom border-top">
-    <div class="container ml-3">
-        <h6 class="mb-0">
-            <a href="{{ url('dashboard') }}">Inicio</a> / 
-            <a href="{{ url('productos') }}">Productos</a> /
-            <a href="{{ url('edit-prod/'.$producto->id) }}">Editar productos</a>
-        </h6>
+    <div class="py-3 mb-1 border-bottom border-top">
+        <div class="container ml-3">
+            <h6 class="mb-0">
+                <a href="{{ url('dashboard') }}">Inicio</a> /
+                <a href="{{ url('productos') }}">Productos</a> /
+                <a href="{{ url('edit-prod/' . $producto->id) }}">Editar productos</a>
+            </h6>
+        </div>
     </div>
-</div>
 
-<div class="card">
-    <div class="card-header">
-        <h4>Editar Producto</h4>
-    </div>
-    <div class="card-body">
-        <form action="{{ url('update-prod/'.$producto->id) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="name">Categoría</label>
-                      <select name="categoria" class="form-control"id="">
-                        <option value="">Selecciona la categoría.</option>
-                        @foreach ($categorias as $cat)
-                            <option value="{{ $cat->id }}" {{ ($cat->id === $producto->cate_id) ? 'selected':'' }} >{{ $cat->name }}</option>                            
-                        @endforeach
-                      </select>
+    <div class="card">
+        <div class="card-header">
+            <h4>Editar Producto</h4>
+        </div>
+        <div class="card-body">
+            <form action="{{ url('update-prod/' . $producto->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Categoría</label>
+                            <select name="categoria" class="form-control"id="">
+                                <option value="">Selecciona la categoría.</option>
+                                @foreach ($categorias as $cat)
+                                    <option value="{{ $cat->id }}"
+                                        {{ $cat->id === $producto->cate_id ? 'selected' : '' }}>{{ $cat->name }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('categoria'))
+                                <span class="error text-danger" for="input-name">{{ $errors->first('categoria') }}</span>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="name">Nombre Producto</label>
-                      <input type="text" name="name" value="{{ $producto->name }}" class="form-control" placeholder="Poleras">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Nombre Producto</label>
+                            <input type="text" name="name" value="{{ $producto->name }}" class="form-control"
+                                placeholder="Poleras">
+                            @if ($errors->has('name'))
+                                <span class="error text-danger" for="input-name">{{ $errors->first('name') }}</span>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="name">Slug</label>
-                      <input type="text" name="slug" value="{{ $producto->slug }}" class="form-control" placeholder="Poleras">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Slug</label>
+                            <input type="text" name="slug" value="{{ $producto->slug }}" class="form-control"
+                                placeholder="Poleras">
+                            @if ($errors->has('slug'))
+                                <span class="error text-danger" for="input-name">{{ $errors->first('slug') }}</span>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="slug">Descripción pequeña</label>
-                      <input type="text" name="small_description" value="{{ $producto->small_description }}" class="form-control" placeholder="Poleras">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="slug">Descripción pequeña</label>
+                            <input type="text" name="small_description" value="{{ $producto->small_description }}"
+                                class="form-control" placeholder="Poleras">
+                            @if ($errors->has('small_description'))
+                                <span class="error text-danger"
+                                    for="input-name">{{ $errors->first('small_description') }}</span>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="descripcion">Descripción</label>
-                      <textarea type="text" rows="5" style="resize:none;" name="description" class="form-control" placeholder="Categoría dedicada solo a peloras de ...">{{ $producto->description }}</textarea>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="descripcion">Descripción</label>
+                            <textarea type="text" rows="5" style="resize:none;" name="description" class="form-control"
+                                placeholder="Categoría dedicada solo a peloras de ...">{{ $producto->description }}</textarea>
+                            @if ($errors->has('description'))
+                                <span class="error text-danger" for="input-name">{{ $errors->first('description') }}</span>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <div class="form-group">
-                      <label for="">Precio</label>
-                      <input type="number" name="price" value="{{ $producto->original_price }}" class="form-control">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="">Precio</label>
+                            <input type="number" name="price" value="{{ $producto->original_price }}"
+                                class="form-control">
+                            @if ($errors->has('price'))
+                                <span class="error text-danger" for="input-name">{{ $errors->first('price') }}</span>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <div class="form-group">
-                      <label for="">Precio en oferta</label>
-                      <input type="number" name="selling_price" value="{{ $producto->selling_price }}" class="form-control">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="">Precio en oferta</label>
+                            <input type="number" name="selling_price" value="{{ $producto->selling_price }}"
+                                class="form-control">
+                            @if ($errors->has('selling_price'))
+                                <span class="error text-danger"
+                                    for="input-name">{{ $errors->first('selling_price') }}</span>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <div class="form-group">
-                      <label for="">Cantidad</label>
-                      <input type="number" name="qty" value="{{ $producto->qty }}" class="form-control">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="">Cantidad</label>
+                            <input type="number" name="qty" value="{{ $producto->qty }}" class="form-control">
+                            @if ($errors->has('qty'))
+                                <span class="error text-danger" for="input-name">{{ $errors->first('qty') }}</span>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                
-                {{-- <div class="col-md-6">
+
+                    {{-- <div class="col-md-6">
                   <div class="form-group">
                     <label for="popular">Tax</label>
                     <input type="number" name="tax" value="{{ $producto->tax }}" class="form-control">
                   </div>
               </div> --}}
-              <div class="col-md-12 mb-4">
-                  <label for="">Imagen</label>
-                    <input type="file" id="image" name="image"  class="form-control">
-                    <img id="preview" width="200" height="200" src="{{Storage::url('uploads/productos/'.$producto->image)}}" alt=" ">
-                </div>
-              <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="estado">Estado</label>
-                    <input type="checkbox" name="status" {{ $producto->status == 1 ? "checked":"" }} class="form-control">
-                  </div>
-              </div>
-              <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="estado">Popular</label>
-                    <input type="checkbox" name="trending" {{ $producto->trending == 1 ? "checked":"" }} class="form-control">
-                  </div>
-              </div>
-                
-              {{-- <div class="col-md-6">
+                    <div class="col-md-12 mb-4">
+                        <label for="">Imagen</label>
+                        <input type="file" id="image" name="image" class="form-control">
+                        @if ($errors->has('image'))
+                            <span class="error text-danger" for="input-name">{{ $errors->first('image') }}</span>
+                        @endif
+                        <img id="preview" width="200" height="200"
+                            src="{{ Storage::url('uploads/productos/' . $producto->image) }}" alt=" ">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <input type="checkbox" name="status" {{ $producto->status == 1 ? 'checked' : '' }}
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="estado">Popular</label>
+                            <input type="checkbox" name="trending" {{ $producto->trending == 1 ? 'checked' : '' }}
+                                class="form-control">
+                        </div>
+                    </div>
+
+                    {{-- <div class="col-md-6">
                   <div class="form-group">
                     <label for="estado">Meta titulo</label>
                     <input type="text" name="meta_title" value="{{ $producto->meta_title }}" class="form-control">
                   </div>
               </div>
-                
+
               <div class="col-md-6">
                   <div class="form-group">
                     <label for="estado">Meta descripción</label>
@@ -122,32 +160,34 @@ Productos | {{ $sitio }}
               </div>
                  --}}
 
-                <div class="col-md-12">
-                  @foreach ($productoIngredientes as $index => $prodIng)
-                    <div class="form-group d-flex">
-                      <div class="col-md-3">
-                        <label>Ingrediente</label>
-                        <select class="form-control" name="ingrediente{{ $index + 1 }}">
-                          @foreach($ingredientes as $ingrediente)
-                            <option value="{{ $ingrediente->id }}" @if ($prodIng->id_ingrediente == $ingrediente->id) selected @endif>{{ $ingrediente->name }}</option>
-                          @endforeach
-                        </select>
-                      </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label>Cantidad</label>
-                          <input class="form-control" type="number" name="cantidad{{ $index + 1 }}" 
-                          value="{{ $prodIng->cantidad/$producto->qty }}">
-                        </div>
-                      </div>
-                    </div>
-                  @endforeach
-                    
-                    <div id="ingredientes-extra"></div>
+                    <div class="col-md-12">
+                        @foreach ($productoIngredientes as $index => $prodIng)
+                            <div class="form-group d-flex">
+                                <div class="col-md-3">
+                                    <label>Ingrediente</label>
+                                    <select class="form-control" name="ingrediente{{ $index + 1 }}">
+                                        @foreach ($ingredientes as $ingrediente)
+                                            <option value="{{ $ingrediente->id }}"
+                                                @if ($prodIng->id_ingrediente == $ingrediente->id) selected @endif>{{ $ingrediente->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Cantidad</label>
+                                        <input class="form-control" type="number" name="cantidad{{ $index + 1 }}"
+                                            value="{{ $prodIng->cantidad / $producto->qty }}">
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
 
-                  </div>
-                  <button type="button" class="btn btn-dark" id="agregar-ingrediente">Agregar ingrediente</button>
-  
+                        <div id="ingredientes-extra"></div>
+
+                    </div>
+                    <button type="button" class="btn btn-dark" id="agregar-ingrediente">Agregar ingrediente</button>
+
 
                 </div>
 
@@ -156,38 +196,38 @@ Productos | {{ $sitio }}
                     <button type="submit" class="btn btn-primary">Editar</button>
                 </div>
 
-            </div>
+        </div>
         </form>
     </div>
-</div>
-
+    </div>
 @endsection
 @section('after_scripts')
-<script>
-  const input = document.querySelector('#image');
-  const preview = document.querySelector('#preview');
+    <script>
+        const input = document.querySelector('#image');
+        const preview = document.querySelector('#preview');
 
-  input.addEventListener('change', () => {
-    const file = input.files[0];
-    const reader = new FileReader();
+        input.addEventListener('change', () => {
+            const file = input.files[0];
+            const reader = new FileReader();
 
-    reader.addEventListener('load', () => {
-      preview.setAttribute('src', reader.result);
-    });
+            reader.addEventListener('load', () => {
+                preview.setAttribute('src', reader.result);
+            });
 
-    reader.readAsDataURL(file);
-  });
+            reader.readAsDataURL(file);
+        });
 
-  let ingredienteCount = {{ $productoIngredientes->count() }}; // Inicializa con la cantidad de registros existentes en la tabla Registros + 1
-  document.getElementById('agregar-ingrediente').addEventListener('click', function() {
-      ingredienteCount++;
-      const div = document.createElement('div');
-      div.innerHTML = `
+        let ingredienteCount =
+            {{ $productoIngredientes->count() }}; // Inicializa con la cantidad de registros existentes en la tabla Registros + 1
+        document.getElementById('agregar-ingrediente').addEventListener('click', function() {
+            ingredienteCount++;
+            const div = document.createElement('div');
+            div.innerHTML = `
           <div class="form-group d-flex">
             <div class="col-md-3">
               <label for="ingrediente${ingredienteCount}">Ingrediente ${ingredienteCount}</label>
                 <select class="form-control" name="ingrediente${ingredienteCount}" id="ingrediente${ingredienteCount}">
-                    @foreach($ingredientes as $ingrediente)
+                    @foreach ($ingredientes as $ingrediente)
                         <option value="{{ $ingrediente->id }}">{{ $ingrediente->name }}</option>
                     @endforeach
                 </select>
@@ -198,8 +238,7 @@ Productos | {{ $sitio }}
               </div>
           </div>
       `;
-      document.getElementById('ingredientes-extra').appendChild(div);
-  });
-</script>
-
+            document.getElementById('ingredientes-extra').appendChild(div);
+        });
+    </script>
 @endsection
