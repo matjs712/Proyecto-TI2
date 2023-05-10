@@ -215,7 +215,7 @@ class ProductController extends Controller
         $rules = [
             'categoria' => 'required',
             'name' => 'required',
-            'slug' => 'required',
+            'slug' => 'required|unique:products',
             'description' => 'required',
             'small_description' => 'required',
             'price' => 'required',
@@ -228,7 +228,9 @@ class ProductController extends Controller
         $messages = [
             'required' => 'El campo es requerido.',
             'image' => 'El archivo debe ser una imagen.',
-            'mimes' => 'Solo se adminten los siguientes formatos :mimes.'
+            'mimes' => 'Solo se adminten los siguientes formatos :mimes.',
+            'slug.required' => 'El slug es obligatorio.',
+            'slug.unique' => 'El slug ya ha sido utilizado por otro producto.',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->passes()) {

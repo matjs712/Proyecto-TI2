@@ -51,6 +51,7 @@
                                 onmouseout="this.style.backgroundColor='transparent'"
                                 style="color: {{ $color_a_tag_sidebar }}" href="#" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
+
                                 <p>
                                     Productos
                                     <i class="right fas fa-angle-left"></i>
