@@ -99,7 +99,7 @@ $(document).ready(function(){
             },
             success: function (response){
                 loadWish();
-                swal(response.status);
+                Swal.fire(response.status);
             }
         });
     })

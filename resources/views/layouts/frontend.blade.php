@@ -81,7 +81,16 @@
 
 @if (session('status'))
   <script>
-    swal("{{ session('status')}}")
+    //swal("{{ session('status')}}")
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      timer: 2000,
+      timerProgressBar: true,
+      icon: 'success',
+      title: "{{ session('status')}}",
+      showConfirmButton: false,
+    })
   </script>
 @endif
 <script>
