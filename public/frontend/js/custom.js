@@ -1,5 +1,15 @@
 $(document).ready(function(){
-
+const sweet = (response) =>{
+    return Swal.fire({
+        toast: true,
+        position: 'bottom-end',
+        timer: 2000,
+        timerProgressBar: true,
+        icon: 'success',
+        title: `${response.status}`,
+        showConfirmButton: false,
+      })
+}
     loadCart();
     loadWish();
     getQTY();
@@ -55,7 +65,7 @@ $(document).ready(function(){
             },
             success: function (response){
                 loadCart();
-                swal(response.status);
+                sweet(response);
             }
         });
     })
@@ -99,7 +109,7 @@ $(document).ready(function(){
             },
             success: function (response){
                 loadWish();
-                Swal.fire(response.status);
+                sweet(response);
             }
         });
     })
@@ -143,7 +153,7 @@ $(document).ready(function(){
                 'product_id'  : prod_id,
             },
             success: function (response){
-                swal("", response.status, "success");
+                sweet(response);
                 setTimeout(function(){
                     window.location.reload();
                 }, 1000);
@@ -168,7 +178,7 @@ $(document).ready(function(){
                 'prod_id'  : prod_id,
             },
             success: function (response){
-                swal(response.status);
+                sweet(response);
                 setTimeout(function(){
                     window.location.reload();
                 }, 1000);
