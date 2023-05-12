@@ -34,7 +34,7 @@ Route::get('/categorias/{cate_slug}/{prod_slug}', [FrontendController::class, 'p
 
 // PRODUCTOS
 Route::get('/todo-productos', [FrontendController::class, 'productos']);
-Route::get('/ver-producto/{slug}', [FrontendController::class, 'viewProducto']);
+Route::get('/ver-producto/top{slug}', [FrontendController::class, 'viewProducto']);
 Route::get('product-list', [FrontendController::class, 'productList']);
 Route::post('searchproduct', [FrontendController::class, 'searchproduct']);
 Route::get('productos/sort-by', [FrontendController::class, 'filter'])->name('products.filter');

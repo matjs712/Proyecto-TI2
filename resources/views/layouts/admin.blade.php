@@ -65,7 +65,7 @@
   <script>
     Swal.fire({
       toast: true,
-      position: 'top-end',
+      position: 'bottom-end',
       timer: 2000,
       timerProgressBar: true,
       icon: 'success',
