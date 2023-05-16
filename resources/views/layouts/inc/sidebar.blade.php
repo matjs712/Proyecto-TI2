@@ -49,15 +49,13 @@
                         <li class="nav-item has-treeview">
                             <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                 onmouseout="this.style.backgroundColor='transparent'"
-                                style="color: {{ $color_a_tag_sidebar }}" href="#" class="nav-link">
+                                style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/productos') }}" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
-
                                 <p>
                                     Productos
-                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
+                            {{-- <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                         onmouseout="this.style.backgroundColor='transparent'"
@@ -78,7 +76,7 @@
                                         </a>
                                     </li>
                                 @endcan
-                            </ul>
+                            </ul> --}}
                         </li>
                     @endif
                 @endcan
@@ -103,14 +101,14 @@
                         <li class="nav-item has-treeview">
                             <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                 onmouseout="this.style.backgroundColor='transparent'"
-                                style="color: {{ $color_a_tag_sidebar }}" href="#" class="nav-link">
+                                style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/ingredientes') }}"
+                                class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
                                     Ingredientes
-                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
+                            {{-- <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                         onmouseout="this.style.backgroundColor='transparent'"
@@ -131,7 +129,7 @@
                                         </a>
                                     </li>
                                 @endcan
-                            </ul>
+                            </ul> --}}
                         </li>
                     @endif
                 @endcan
@@ -141,14 +139,14 @@
                         <li class="nav-item has-treeview">
                             <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                 onmouseout="this.style.backgroundColor='transparent'"
-                                style="color: {{ $color_a_tag_sidebar }}" href="#" class="nav-link">
+                                style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/proveedores') }}"
+                                class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
                                     Proveedores
-                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
+                            {{-- <ul class="nav nav-treeview">
                                 @can('ver proveedores')
                                     <li class="nav-item">
                                         <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
@@ -171,7 +169,7 @@
                                         </a>
                                     </li>
                                 @endcan
-                            </ul>
+                            </ul> --}}
                         </li>
                     @endif
                 @endcan
@@ -181,14 +179,13 @@
                         <li class="nav-item has-treeview">
                             <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                 onmouseout="this.style.backgroundColor='transparent'"
-                                style="color: {{ $color_a_tag_sidebar }}" href="#" class="nav-link">
+                                style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/registros') }}" class="nav-link">
                                 <i class="nav-icon fas fa-chart-pie"></i>
                                 <p>
                                     Registro
-                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
+                            {{-- <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                         onmouseout="this.style.backgroundColor='transparent'"
@@ -209,7 +206,7 @@
                                         </a>
                                     </li>
                                 @endcan
-                            </ul>
+                            </ul> --}}
                         </li>
                     @endif
                 @endcan
@@ -238,14 +235,13 @@
                                 <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                     onmouseout="this.style.backgroundColor='transparent'"
                                     style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('usuarios') ? $color_a_tag_hover : '' }}"
-                                    href="#" class="nav-link">
+                                    href="{{ url('/usuarios') }}" class="nav-link">
                                     <i class="fas fa-star"></i>
                                     <p>
                                         Usuarios
-                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
-                                <ul class="nav nav-treeview">
+                                {{-- <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                             onmouseout="this.style.backgroundColor='transparent'"
@@ -266,7 +262,7 @@
                                             </a>
                                         </li>
                                     @endcan
-                                </ul>
+                                </ul> --}}
                             </li>
                         @endif
                     @endcan
