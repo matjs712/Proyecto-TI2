@@ -9,6 +9,7 @@ use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\OrdenController;
 use App\Http\Controllers\Admin\PerfilController;
+use App\Http\Controllers\Admin\SellInPersonController;
 
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\CartController;
@@ -77,6 +78,9 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    Route::get('/dashboard',  'Admin\FrontendController@index')->name('dashboard');
    Route::get('/datos-graficos',  'Admin\FrontendController@ChartIngredientes');
     
+   Route::get('venta-presencial', 'Admin\SellInPersonController@index');
+   Route::get('agregar-producto', 'Admin\SellInPersonController@agregarProducto');
+
     // CATEGORIAS
     Route::get('categorias',        'Admin\CategoryController@index');
     Route::get('crear-categoria',   'Admin\CategoryController@create');
