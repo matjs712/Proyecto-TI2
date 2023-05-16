@@ -16,7 +16,7 @@
                                 <span class="float-start">${{ $producto->selling_price }}</span>
                                 <span class="float-end"><s>${{ $producto->original_price }}</s></span>
                             </div>
-                            </div>
+                        </div>
                     </a>
                 </div>
             @endforeach

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-Proveedores | {{ $sitio }}
+    Proveedores | {{ $sitio }}
 @endsection
 @section('content')
 
@@ -53,21 +53,15 @@ Proveedores | {{ $sitio }}
             </tbody>
         </table>
     </div>
-</div>
-
-
 @endsection
 
 @section('after_scripts')
-	
-<script>	
-    
-    $(document).ready(function(){
-        $('#tablaProveedores').DataTable({
-            responsive: true,
-            "language": spanishLanguage,
-        });
-    })
-</script>
-
+    <script>
+        $(document).ready(function() {
+            $('#tablaProveedores').DataTable({
+                responsive: true,
+                "language": spanishLanguage,
+            });
+        })
+    </script>
 @endsection

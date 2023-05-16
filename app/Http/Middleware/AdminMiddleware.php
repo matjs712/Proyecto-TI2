@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class AdminMiddleware
 {
@@ -17,20 +18,15 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::check())
-        {
-            if(Auth::user()->role_as == '1' || Auth::user()->role_as == '2' || Auth::user()->role_as == '3')
-            {
+        if (Auth::check()) {
+            $roles = Role::all()->pluck('id')->toArray();
+            if (in_array(Auth::user()->role_as, $roles)) {
                 return $next($request);
+            } else {
+                return redirect('/home')->with('status', 'Access Denied! You do not have the required permissions.');
             }
-            else
-            {
-                return redirect('/home')->with('status','Access Denied! as you are not as admin');
-            }
-        }
-        else
-        {
-            return redirect('/home')->with('status','Please Login First');
+        } else {
+            return redirect('/home')->with('status', 'Please Login First');
         }
     }
 }
