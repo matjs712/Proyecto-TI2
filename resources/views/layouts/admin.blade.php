@@ -64,8 +64,8 @@
     <script src="{{ asset('admin/js/idioma.js') }}"></script>
     <script src="{{ asset('frontend/js/custom.js') }}"></script>
     <script src="{{ asset('admin/js/myChart.js') }}"></script>
+    <script src="https://kit.fontawesome.com/d75291e766.js" crossorigin="anonymous"></script>
 
-    <script src="https://kit.fontawesome.com/f11abf7794.js" crossorigin="anonymous"></script>
     @yield('after_scripts')
 
     @if (session('status'))

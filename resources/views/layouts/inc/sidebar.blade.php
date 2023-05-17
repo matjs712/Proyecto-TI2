@@ -50,10 +50,8 @@
                             <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                 onmouseout="this.style.backgroundColor='transparent'"
                                 style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/productos') }}" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
-                                    Productos
-                                </p>
+                                <i class="fa-solid fa-cart-flatbed"></i>
+                                <p> &nbsp;Productos</p>
                             </a>
                             {{-- <ul class="nav nav-treeview">
                                 <li class="nav-item">
@@ -87,9 +85,9 @@
                                 onmouseout="this.style.backgroundColor='transparent'"
                                 style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('categorias') || Request::is('crear-categoria') || Request::is('edit-cat/*') ? $color_a_tag_hover : '' }}"
                                 href="{{ url('/categorias') }}" class="nav-link">
-                                <i class="fa fa-circle" aria-hidden="true"></i>
+                                <i class="fa-solid fa-cubes-stacked"></i>
                                 <p>
-                                    Categorías
+                                    &nbsp; Categorías
                                 </p>
                             </a>
                         </li>
@@ -103,9 +101,9 @@
                                 onmouseout="this.style.backgroundColor='transparent'"
                                 style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/ingredientes') }}"
                                 class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <i class="fa-solid fa-jar"></i>
                                 <p>
-                                    Ingredientes
+                                    &nbsp;Ingredientes
                                 </p>
                             </a>
                             {{-- <ul class="nav nav-treeview">
@@ -141,9 +139,9 @@
                                 onmouseout="this.style.backgroundColor='transparent'"
                                 style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/proveedores') }}"
                                 class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <i class="fa-solid fa-user-tie"></i>
                                 <p>
-                                    Proveedores
+                                    &nbsp;Proveedores
                                 </p>
                             </a>
                             {{-- <ul class="nav nav-treeview">
@@ -180,9 +178,9 @@
                             <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                 onmouseout="this.style.backgroundColor='transparent'"
                                 style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/registros') }}" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <i class="fa-regular fa-clipboard"></i>
                                 <p>
-                                    Registro
+                                    &nbsp;Registro
                                 </p>
                             </a>
                             {{-- <ul class="nav nav-treeview">
@@ -219,9 +217,9 @@
                                 onmouseout="this.style.backgroundColor='transparent'"
                                 style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('ordenes') ? $color_a_tag_hover : '' }}"
                                 href="{{ url('ordenes') }}" class="nav-link">
-                                <i class="fas fa-star"></i>
+                                <i class="fa-solid fa-calendar-day"></i>
                                 <p>
-                                    Ordenes
+                                    &nbsp;Ordenes
                                 </p>
                             </a>
                         </li>
@@ -236,9 +234,9 @@
                                     onmouseout="this.style.backgroundColor='transparent'"
                                     style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('usuarios') ? $color_a_tag_hover : '' }}"
                                     href="{{ url('/usuarios') }}" class="nav-link">
-                                    <i class="fas fa-star"></i>
+                                    <i class="fa-solid fa-users"></i>
                                     <p>
-                                        Usuarios
+                                        &nbsp; Usuarios
                                     </p>
                                 </a>
                                 {{-- <ul class="nav nav-treeview">
@@ -272,9 +270,9 @@
                                 onmouseout="this.style.backgroundColor='transparent'"
                                 style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('configuracion') ? $color_a_tag_hover : '' }}"
                                 href="{{ url('configuracion') }}" class="nav-link">
-                                <i class="fas fa-star"></i>
+                                <i class="fa-solid fa-screwdriver-wrench"></i>
                                 <p>
-                                    Configuración
+                                    &nbsp; Configuración
                                 </p>
                             </a>
                         </li>
@@ -285,9 +283,9 @@
                                         onmouseout="this.style.backgroundColor='transparent'"
                                         style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('roles') ? $color_a_tag_hover : '' }}"
                                         href="{{ url('roles') }}" class="nav-link">
-                                        <i class="fas fa-star"></i>
+                                        <i class="fa-solid fa-user-lock"></i>
                                         <p>
-                                            Roles & Permisos
+                                            &nbsp;Roles & Permisos
                                         </p>
                                     </a>
                                 </li>
