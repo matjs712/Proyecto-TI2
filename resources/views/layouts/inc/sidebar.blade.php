@@ -43,6 +43,7 @@
                     </li>
                 @endcan
                 <br>
+                <li class="nav-header" style="color: {{ $color_a_tag_sidebar }}">PRODUCTOS</li>
                 @can('ver productos')
 
                     @if ($productos)
@@ -264,6 +265,7 @@
                             </li>
                         @endif
                     @endcan
+                    <li class="nav-header" style="color: {{ $color_a_tag_sidebar }}">usuarios y configuraciones</li>
                     @can('ver configuracion')
                         <li class="nav-item">
                             <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
