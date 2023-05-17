@@ -7,12 +7,13 @@
   <link rel="icon" href="{{  asset($logo) }}">
   <title>@yield('title')</title>
 
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="{{ asset('admin/plugins/fontawesome-free/css/all.min.css') }}">
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css"/>
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{{ asset('admin/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css" />
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
   <!-- Theme style -->  
   <link rel="stylesheet" href="{{ asset('admin/dist/css/adminlte.min.css') }}">
@@ -21,26 +22,27 @@
   
   <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
-<body class="hold-transition sidebar-mini" >
-<div class="wrapper">
 
-@include('layouts.inc.adminNav')
-@include('layouts.inc.sidebar')
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
 
-  <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper" style="background-color: {{ $color_fondo_admin }}">
-        @yield('content')
-  </div>
-  <!-- /.content-wrapper -->
+        @include('layouts.inc.adminNav')
+        @include('layouts.inc.sidebar')
 
-  <aside class="control-sidebar control-sidebar-dark">
-    <div class="p-3">
-      <h5>Title</h5>
-      <p>Sidebar content</p>
-    </div>
-  </aside>
-  
-  @include('layouts.inc.adminFooter')
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" style="background-color: {{ $color_fondo_admin }}">
+            @yield('content')
+        </div>
+        <!-- /.content-wrapper -->
+
+        <aside class="control-sidebar control-sidebar-dark">
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+
+        @include('layouts.inc.adminFooter')
 
 </div>
 <!-- jQuery -->
@@ -79,4 +81,5 @@
 @endif
 
 </body>
+
 </html>

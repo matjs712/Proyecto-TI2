@@ -9,22 +9,25 @@ use App\Models\Ingrediente;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class RegistroController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('can:ver registros')->only('index');
-        $this->middleware('can:add registros')->only('create','store');
+        $this->middleware('can:add registros')->only('create', 'store');
         $this->middleware('can:edit registros')->only('edit', 'update');
         $this->middleware('can:destroy registros')->only('destroy');
     }
-    
+
 
     public function index()
     {
         logo_sitio();
         secciones();
-        
+
         $registros = Registro::all();
         return view('admin.registro.index', compact('registros'));
     }
@@ -38,10 +41,10 @@ class RegistroController extends Controller
     {
         logo_sitio();
         secciones();
-        
+
         $proveedores = Proveedor::all();
         $ingredientes = Ingrediente::all();
-        return view('admin.registro.create', compact('proveedores','ingredientes'));
+        return view('admin.registro.create', compact('proveedores', 'ingredientes'));
     }
 
     /**
@@ -52,20 +55,48 @@ class RegistroController extends Controller
      */
     public function store(Request $request)
     {
-        $registro = new Registro();
+        $rules = [
+            'fecha' => 'required|date',
+            'id_proveedor' => 'required',
+            'id_ingrediente' => 'required',
+            'cantidad' => 'required|integer',
 
-        $registro->fecha = $request->input('fecha');
-        $registro->id_proveedor = $request->input('id_proveedor');
-        $registro->id_ingrediente = $request->input('id_ingrediente');
-        $registro->cantidad = $request->input('cantidad');
-        $registro->save();
+        ];
 
-        $ingrediente = Ingrediente::find($request->input('id_ingrediente'));
-        $ingrediente->cantidad = $ingrediente->cantidad + $request->input('cantidad');
-        $ingrediente->save();
+        $messages = [
+            'required' => 'El campo es requerido.',
 
 
-        return redirect('/registros')->with('status', 'Registro añadido exitosamente!.');
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->passes()) {
+
+            try {
+                $registro = new Registro();
+
+                $registro->fecha = $request->input('fecha');
+                $registro->id_proveedor = $request->input('id_proveedor');
+                $registro->id_ingrediente = $request->input('id_ingrediente');
+                $registro->cantidad = $request->input('cantidad');
+                $registro->save();
+
+                $ingrediente = Ingrediente::find($request->input('id_ingrediente'));
+                $ingrediente->cantidad = $ingrediente->cantidad + $request->input('cantidad');
+                $ingrediente->save();
+
+                DB::commit();
+                return redirect('/registros')->with('status', 'Registro añadido exitosamente!.');
+
+
+
+            } catch (\Illuminate\Datebase\QueryException $e) {
+                DB::rollBack();
+                return back()->withErrors($validator)->withInput();
+
+            }
+
+        }
+        return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
 
     /**
@@ -78,11 +109,11 @@ class RegistroController extends Controller
     {
         logo_sitio();
         secciones();
-        
+
         $registro = Registro::find($id);
         $proveedores = Proveedor::all();
         $ingredientes = Ingrediente::all();
-        return view('admin.registro.edit', compact('registro','proveedores','ingredientes'));
+        return view('admin.registro.edit', compact('registro', 'proveedores', 'ingredientes'));
     }
 
     /**
@@ -94,26 +125,55 @@ class RegistroController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $registro = Registro::find($id);
-        
-        $ingrediente = Ingrediente::find($request->input('id_ingrediente'));
-        if($request->input('cantidad') < $registro->cantidad){
-            $ingrediente->decrement('cantidad', $registro->cantidad - $request->input('cantidad'));
-        } else if($request->input('cantidad') > $registro->cantidad){
-            $ingrediente->increment('cantidad', $request->input('cantidad') - $registro->cantidad);
+        $rules = [
+            'fecha' => 'required|date',
+            'id_proveedor' => 'required',
+            'id_ingrediente' => 'required',
+            'cantidad' => 'required|integer',
+
+        ];
+
+        $messages = [
+            'required' => 'El campo es requerido.',
+
+
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->passes()) {
+
+            try {
+
+                $registro = Registro::find($id);
+
+                $ingrediente = Ingrediente::find($request->input('id_ingrediente'));
+                if ($request->input('cantidad') < $registro->cantidad) {
+                    $ingrediente->decrement('cantidad', $registro->cantidad - $request->input('cantidad'));
+                } else if ($request->input('cantidad') > $registro->cantidad) {
+                    $ingrediente->increment('cantidad', $request->input('cantidad') - $registro->cantidad);
+                }
+
+                $ingrediente->save();
+
+                $registro->fecha = $request->input('fecha');
+                $registro->id_proveedor = $request->input('id_proveedor');
+                $registro->id_ingrediente = $request->input('id_ingrediente');
+                $registro->cantidad = $request->input('cantidad');
+
+                $registro->update();
+                DB::commit();
+                return redirect('/registros')->with('status', 'Registro Editado exitosamente!.');
+
+
+            } catch (\Illuminate\Datebase\QueryException $e) {
+                DB::rollBack();
+                return back()->withErrors($validator)->withInput();
+
+            }
+
         }
+        return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
 
-        $ingrediente->save();
-        
-        $registro->fecha = $request->input('fecha');
-        $registro->id_proveedor = $request->input('id_proveedor');
-        $registro->id_ingrediente = $request->input('id_ingrediente');
-        $registro->cantidad = $request->input('cantidad');
-
-        $registro->update();
-
-        return redirect('/registros')->with('status', 'Registro Editado exitosamente!.');
     }
 
     /**
@@ -131,6 +191,6 @@ class RegistroController extends Controller
         $ingrediente->cantidad = $ingrediente->cantidad - $registro->cantidad;
         $ingrediente->update();
 
-        return redirect('/registros')->with('status','Registro eliminado Exitosamente');
+        return redirect('/registros')->with('status', 'Registro eliminado Exitosamente');
     }
 }

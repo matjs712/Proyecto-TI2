@@ -49,11 +49,35 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        return Validator::make(
+            $data,
+            [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8'],
+                'password_confirmation' => ['required', 'min:8', 'max:50', 'same:password'],
+            ],
+            [
+                'name.required' => 'El nombre de usuario es obligatorio.',
+                'email.required' => 'EL email debe ser obligatorio.',
+                'password.required' => 'La contraseña debe ser obligatoria.',
+                'password_confirmation.required' => 'La confirmacion de contraseña debe ser obligatoria.',
+                'password.max' => 'La contraseña debe tener como maximo :max caracteres.',
+                'password.min' => 'La contraseña debe tener al menos :min caracteres.',
+                'password_confirmation.max' => 'La contraseña debe tener como maximo :max caracteres.',
+                'password_confirmation.min' => 'La contraseña debe tener al menos :min caracteres.',
+                'password_confirmation.same' => 'Las contraseñas no coinciden.'
+
+
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return redirect('register')
+                ->withErrors($validator)
+                ->withInput();
+        }
     }
 
     /**

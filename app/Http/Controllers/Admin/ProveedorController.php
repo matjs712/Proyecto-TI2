@@ -9,16 +9,19 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class ProveedorController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('can:ver proveedores')->only('index');
-        $this->middleware('can:add proveedores')->only('create','store');
+        $this->middleware('can:add proveedores')->only('create', 'store');
         $this->middleware('can:edit proveedores')->only('edit', 'update');
         $this->middleware('can:destroy proveedores')->only('destroy');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -54,14 +57,46 @@ class ProveedorController extends Controller
      */
     public function store(Request $request)
     {
-        $proveedor = new Proveedor();
+        $rules = [
+            'name' => 'required|date',
+            'telefono' => 'required|numeric|digits:9',
+            'email' => 'required',
 
-        $proveedor->name = $request->input('name');
-        $proveedor->telefono = $request->input('telefono');
-        $proveedor->email = $request->input('email');
-        $proveedor->save();
+        ];
 
-        return redirect('/proveedores')->with('status', 'Proveedor añadido exitosamente!.');
+        $messages = [
+            'required' => 'El campo es requerido.',
+            'digits' => 'El campo debe tener :digits caracteres.',
+            'email.email' => 'Ingrese un Email valido.',
+            'numeric' => 'El campo debe ser de tipo numerico.'
+
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->passes()) {
+
+            try {
+                $proveedor = new Proveedor();
+
+                $proveedor->name = $request->input('name');
+                $proveedor->telefono = $request->input('telefono');
+                $proveedor->email = $request->input('email');
+                $proveedor->save();
+
+
+
+                DB::commit();
+                return redirect('/proveedores')->with('status', 'Proveedor añadido exitosamente!.');
+
+
+
+            } catch (\Illuminate\Datebase\QueryException $e) {
+                DB::rollBack();
+                return back()->withErrors($validator)->withInput();
+
+            }
+
+        }
+        return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
     /**
      * Show the form for editing the specified resource.
@@ -73,7 +108,7 @@ class ProveedorController extends Controller
     {
         logo_sitio();
         secciones();
-        
+
         $proveedor = Proveedor::find($id);
         return view('admin.proveedor.edit', compact('proveedor'));
     }
@@ -87,14 +122,44 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $proveedor = Proveedor::find($id);
+        $rules = [
+            'name' => 'required|date',
+            'telefono' => 'required|numeric|digits:9',
+            'email' => 'required|email',
 
-        $proveedor->name = $request->input('name');
-        $proveedor->telefono = $request->input('telefono');
-        $proveedor->email = $request->input('email');
-        $proveedor->update();
+        ];
 
-        return redirect('/proveedores')->with('status', 'Proveedor Editado exitosamente!.');
+        $messages = [
+            'required' => 'El campo es requerido.',
+            'digits' => 'El campo debe tener :digits caracteres.',
+            'email.email' => 'Ingrese un Email valido.',
+            'numeric' => 'El campo debe ser de tipo numerico.',
+            'email' => 'Ingrese un Email valido'
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->passes()) {
+
+            try {
+                $proveedor = Proveedor::find($id);
+
+                $proveedor->name = $request->input('name');
+                $proveedor->telefono = $request->input('telefono');
+                $proveedor->email = $request->input('email');
+                $proveedor->update();
+
+
+                DB::commit();
+                return redirect('/proveedores')->with('status', 'Proveedor Editado exitosamente!.');
+
+
+            } catch (\Illuminate\Datebase\QueryException $e) {
+                DB::rollBack();
+                return back()->withErrors($validator)->withInput();
+
+            }
+
+        }
+        return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
 
     /**
@@ -107,6 +172,6 @@ class ProveedorController extends Controller
     {
         $proveedor = Proveedor::find($id);
         $proveedor->delete();
-        return redirect('/proveedores')->with('status','Proveedor eliminado Exitosamente');
+        return redirect('/proveedores')->with('status', 'Proveedor eliminado Exitosamente');
     }
 }
