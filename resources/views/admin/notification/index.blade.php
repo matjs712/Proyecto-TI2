@@ -37,25 +37,17 @@ Notificaciones | {{ $sitio }}
                                         <th>Detalle</th>
                                         <th>Fecha</th>
                                         <th>Hora</th>
-                                        <th>Estado</th>
-                                        <th>Vista</th>
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($notifications as $item)
                                         <tr>
+                                            <td>{{ $item->detalle }}</td>
                                             <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
-                                            <td>{{ $item->tracking_number }}</td>
-                                            <td>{{ $item->total_price }}</td>
+                                            <td>{{ date('H:i', strtotime($item->created_at)) }}</td>
                                             <td>
-                                                @if ($item->status == 0)
-                                                Pendiente
-                                                @elseif ($item->status == 1)
-                                                Visto
-                                            @endif
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-success" href="{{ MANDAR A HISTORIAL }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                                <a class="btn btn-success" href=""><i class="fa fa-search" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -69,16 +61,18 @@ Notificaciones | {{ $sitio }}
                                         <th>Detalle</th>
                                         <th>Fecha</th>
                                         <th>Hora</th>
-                                        <th>Estado</th>
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($ordersOld as $item)
+                                    @foreach ($notificationsOld as $item)
                                         <tr>
+                                        <td>{{ $item->detalle }}</td>
                                             <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
-                                            <td>{{ $item->tracking_number }}</td>
-                                            <td>{{ $item->total_price }}</td>
-                                            <td>{{ $item->status == '0' ? 'Pendiente': 'Visto'}}</td>
+                                            <td>{{ date('H:i', strtotime($item->created_at)) }}</td>
+                                            <td>
+                                                <a class="btn btn-success" href=""><i class="fa fa-search" aria-hidden="true"></i></a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
