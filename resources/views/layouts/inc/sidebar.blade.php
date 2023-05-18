@@ -35,27 +35,27 @@
                             onmouseout="this.style.backgroundColor='transparent'"
                             style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('dashboard') ? $color_a_tag_hover : '' }}"
                             href="{{ url('/dashboard') }}" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
+                            <i class="fa-solid fa-house"></i>
                             <p>
                                 Inicio
                             </p>
                         </a>
                     </li>
                 @endcan
-                <br>
-                @can('ver productos')
 
-                    @if ($productos)
-                        <li class="nav-item has-treeview">
-                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                onmouseout="this.style.backgroundColor='transparent'"
-                                style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/productos') }}" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
-                                    Productos
-                                </p>
-                            </a>
-                            {{-- <ul class="nav nav-treeview">
+                @can(['ver productos', 'ver categorias', 'ver ingredientes'])
+                    <li class="nav-header" style="color: {{ $color_a_tag_sidebar }}">PRODUCTOS & INGREDIENTES</li>
+                    @can('ver productos')
+
+                        @if ($productos)
+                            <li class="nav-item has-treeview">
+                                <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                                    onmouseout="this.style.backgroundColor='transparent'"
+                                    style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/productos') }}" class="nav-link">
+                                    <i class="fa-solid fa-cart-flatbed"></i>
+                                    <p> &nbsp;Productos</p>
+                                </a>
+                                {{-- <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                         onmouseout="this.style.backgroundColor='transparent'"
@@ -77,38 +77,38 @@
                                     </li>
                                 @endcan
                             </ul> --}}
-                        </li>
-                    @endif
-                @endcan
-                @can('ver categorias')
-                    @if ($categorias)
-                        <li class="nav-item">
-                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                onmouseout="this.style.backgroundColor='transparent'"
-                                style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('categorias') || Request::is('crear-categoria') || Request::is('edit-cat/*') ? $color_a_tag_hover : '' }}"
-                                href="{{ url('/categorias') }}" class="nav-link">
-                                <i class="fa fa-circle" aria-hidden="true"></i>
-                                <p>
-                                    Categorías
-                                </p>
-                            </a>
-                        </li>
-                    @endif
-                @endcan
+                            </li>
+                        @endif
+                    @endcan
+                    @can('ver categorias')
+                        @if ($categorias)
+                            <li class="nav-item">
+                                <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                                    onmouseout="this.style.backgroundColor='transparent'"
+                                    style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('categorias') || Request::is('crear-categoria') || Request::is('edit-cat/*') ? $color_a_tag_hover : '' }}"
+                                    href="{{ url('/categorias') }}" class="nav-link">
+                                    <i class="fa-solid fa-cubes-stacked"></i>
+                                    <p>
+                                        &nbsp; Categorías
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
+                    @endcan
 
-                @can('ver ingredientes')
-                    @if ($ingredientes)
-                        <li class="nav-item has-treeview">
-                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                onmouseout="this.style.backgroundColor='transparent'"
-                                style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/ingredientes') }}"
-                                class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
-                                    Ingredientes
-                                </p>
-                            </a>
-                            {{-- <ul class="nav nav-treeview">
+                    @can('ver ingredientes')
+                        @if ($ingredientes)
+                            <li class="nav-item has-treeview">
+                                <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                                    onmouseout="this.style.backgroundColor='transparent'"
+                                    style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/ingredientes') }}"
+                                    class="nav-link">
+                                    <i class="fa-solid fa-jar"></i>
+                                    <p>
+                                        &nbsp;Ingredientes
+                                    </p>
+                                </a>
+                                {{-- <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                         onmouseout="this.style.backgroundColor='transparent'"
@@ -130,23 +130,25 @@
                                     </li>
                                 @endcan
                             </ul> --}}
-                        </li>
-                    @endif
+                            </li>
+                        @endif
+                    @endcan
                 @endcan
-
-                @can('ver proveedores')
-                    @if ($proveedores)
-                        <li class="nav-item has-treeview">
-                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                onmouseout="this.style.backgroundColor='transparent'"
-                                style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/proveedores') }}"
-                                class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
-                                    Proveedores
-                                </p>
-                            </a>
-                            {{-- <ul class="nav nav-treeview">
+                @can(['ver proveedores', 'ver registros', 'ver ordenes'])
+                    <li class="nav-header" style="color: {{ $color_a_tag_sidebar }}">PROVEEDORES & ORDENES</li>
+                    @can('ver proveedores')
+                        @if ($proveedores)
+                            <li class="nav-item has-treeview">
+                                <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                                    onmouseout="this.style.backgroundColor='transparent'"
+                                    style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/proveedores') }}"
+                                    class="nav-link">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                    <p>
+                                        &nbsp;Proveedores
+                                    </p>
+                                </a>
+                                {{-- <ul class="nav nav-treeview">
                                 @can('ver proveedores')
                                     <li class="nav-item">
                                         <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
@@ -170,22 +172,22 @@
                                     </li>
                                 @endcan
                             </ul> --}}
-                        </li>
-                    @endif
-                @endcan
+                            </li>
+                        @endif
+                    @endcan
 
-                @can('ver registros')
-                    @if ($registros)
-                        <li class="nav-item has-treeview">
-                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                onmouseout="this.style.backgroundColor='transparent'"
-                                style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/registros') }}" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
-                                    Registro
-                                </p>
-                            </a>
-                            {{-- <ul class="nav nav-treeview">
+                    @can('ver registros')
+                        @if ($registros)
+                            <li class="nav-item has-treeview">
+                                <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                                    onmouseout="this.style.backgroundColor='transparent'"
+                                    style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/registros') }}" class="nav-link">
+                                    <i class="fa-regular fa-clipboard"></i>
+                                    <p>
+                                        &nbsp;Registro
+                                    </p>
+                                </a>
+                                {{-- <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                         onmouseout="this.style.backgroundColor='transparent'"
@@ -207,28 +209,29 @@
                                     </li>
                                 @endcan
                             </ul> --}}
-                        </li>
-                    @endif
+                            </li>
+                        @endif
+                    @endcan
+
+
+                    @can('ver ordenes')
+                        @if ($ordenes)
+                            <li class="nav-item">
+                                <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                                    onmouseout="this.style.backgroundColor='transparent'"
+                                    style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('ordenes') ? $color_a_tag_hover : '' }}"
+                                    href="{{ url('ordenes') }}" class="nav-link">
+                                    <i class="fa-solid fa-calendar-day"></i>
+                                    <p>
+                                        &nbsp;Ordenes
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
+                    @endcan
                 @endcan
-
-
-                @can('ver ordenes')
-                    @if ($ordenes)
-                        <li class="nav-item">
-                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                onmouseout="this.style.backgroundColor='transparent'"
-                                style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('ordenes') ? $color_a_tag_hover : '' }}"
-                                href="{{ url('ordenes') }}" class="nav-link">
-                                <i class="fas fa-star"></i>
-                                <p>
-                                    Ordenes
-                                </p>
-                            </a>
-                        </li>
-                    @endif
-                @endcan
-
-                @can(['ver usuarios', 'ver configuracion'])
+                @can(['ver usuarios', 'ver configuracion', 'ver roles'])
+                    <li class="nav-header" style="color: {{ $color_a_tag_sidebar }}">USUARIOS & CONFIGURACIÓN</li>
                     @can('ver usuarios')
                         @if ($usuarios)
                             <li class="nav-item">
@@ -236,9 +239,9 @@
                                     onmouseout="this.style.backgroundColor='transparent'"
                                     style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('usuarios') ? $color_a_tag_hover : '' }}"
                                     href="{{ url('/usuarios') }}" class="nav-link">
-                                    <i class="fas fa-star"></i>
+                                    <i class="fa-solid fa-users"></i>
                                     <p>
-                                        Usuarios
+                                        &nbsp; Usuarios
                                     </p>
                                 </a>
                                 {{-- <ul class="nav nav-treeview">
@@ -266,15 +269,16 @@
                             </li>
                         @endif
                     @endcan
+
                     @can('ver configuracion')
                         <li class="nav-item">
                             <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                 onmouseout="this.style.backgroundColor='transparent'"
                                 style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('configuracion') ? $color_a_tag_hover : '' }}"
                                 href="{{ url('configuracion') }}" class="nav-link">
-                                <i class="fas fa-star"></i>
+                                <i class="fa-solid fa-screwdriver-wrench"></i>
                                 <p>
-                                    Configuración
+                                    &nbsp; Configuración
                                 </p>
                             </a>
                         </li>
@@ -285,9 +289,9 @@
                                         onmouseout="this.style.backgroundColor='transparent'"
                                         style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('roles') ? $color_a_tag_hover : '' }}"
                                         href="{{ url('roles') }}" class="nav-link">
-                                        <i class="fas fa-star"></i>
+                                        <i class="fa-solid fa-user-lock"></i>
                                         <p>
-                                            Roles & Permisos
+                                            &nbsp;Roles & Permisos
                                         </p>
                                     </a>
                                 </li>

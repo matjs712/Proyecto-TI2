@@ -355,59 +355,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalInicio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-container" role="document">
-        <div class="modal-content p-2"
-            style="background-image: url('{{ Storage::url('popup/popup.jpg') }}'); background-position:center; background-size:cover ;height:70vh">
-            <div class="modal-header" style=" border:none;">
-                <div class="d-flex flex-column align-content-start">
-                    <h2 class="modal-title modal-titulo text-white" style="color:white;" id="exampleModalLongTitle">
-                        Ofertas de Apertura
-                    </h2>
-                    <p class="text-white" style="font-size: 18px">Cantidades limitadas.</p>
-                </div>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" style="color:black; font-weight: 800; font-size:3rem;">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <span class="text-white h4">Descuentos de <strong class="text-danger">30%</strong> en todos los
-                    productos!!</span>
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="countdown">
-                            <div class="container-day">
-                                <h3 class="day">Time</h3>
-                                <h3>Dias</h3>
-                            </div>
-                            <div class="container-hour">
-                                <h3 class="hour">Time</h3>
-                                <h3>horas</h3>
-                            </div>
-                            <div class="container-minute">
-                                <h3 class="minute">Time</h3>
-                                <h3>minutos</h3>
-                            </div>
-                            <div class="container-second">
-                                <h3 class="second">Time</h3>
-                                <h3>segundos</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a class="btn btn-home hide" href="{{ url('todo-productos') }}"
-                    style="background-color: {{ $boton_principal_busqueda }}; margin:20px 0 0 10px !important;left:0;"
-                    onmouseover="this.style.backgroundColor='transparent';
-                   this.style.border='1px solid {{ $boton_principal_busqueda }}';"
-                    onmouseout="this.style.backgroundColor='{{ $boton_principal_busqueda }}';
-                this.style.border='1px solid {{ $boton_principal_busqueda }}';">
-                    Comprar ahora<i class="ml-2 fas fa-arrow-alt-circle-right"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
 
 @section('after_scripts')
     <script>
