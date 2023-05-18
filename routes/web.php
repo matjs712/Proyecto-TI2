@@ -21,6 +21,8 @@ use App\Http\Controllers\Admin\IngredienteController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\WishlistController;
+use App\Http\Controllers\Admin\NotificationController;
+
 use App\Http\Controllers\Admin\RegistroController as AdminRegistroController;
 
 // FRONTEND ROUTES
@@ -78,7 +80,7 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    Route::get('/datos-graficos',  'Admin\FrontendController@ChartIngredientes');
    
     //NOTIFICAIONES
-    Route::get('/notificaciones',  'Admin\FrontendController@notificaciones');
+    Route::get('/notificaciones',  'Admin\NotificationController@index');
 
     // CATEGORIAS
     Route::get('categorias',        'Admin\CategoryController@index');
