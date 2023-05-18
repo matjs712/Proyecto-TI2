@@ -13,5 +13,6 @@ class Notification extends Model
         'id_usuario',
         'detalle',
         'tipo',
+        'status',
     ];
 }

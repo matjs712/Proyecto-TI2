@@ -18,6 +18,7 @@ class CreateNotificationsTable extends Migration
             $table->bigInteger('id_usuario');
             $table->string('detalle');
             $table->integer('tipo');
+            $table->integer('status');
             $table->timestamps();
         });
     }
