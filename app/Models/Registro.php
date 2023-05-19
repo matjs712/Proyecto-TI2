@@ -15,12 +15,15 @@ class Registro extends Model
         'id_proveedor',
         'id_ingrediente',
         'cantidad',
+        'factura',
     ];
 
-    public function proveedor(){
+    public function proveedor()
+    {
         return $this->belongsTo(Proveedor::class, 'id_proveedor', 'id');
     }
-    public function ingrediente(){
+    public function ingrediente()
+    {
         return $this->belongsTo(Ingrediente::class, 'id_ingrediente', 'id');
     }
 }
