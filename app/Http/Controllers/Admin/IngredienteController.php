@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
 
 class IngredienteController extends Controller
 {
@@ -81,6 +82,12 @@ class IngredienteController extends Controller
                 $ingrediente->name = $request->input('name');
                 $ingrediente->cantidad = $request->input('cantidad');
                 $ingrediente->save();
+
+                $notifications = new Notification();
+                $notifications->detalle = 'Ingrediente añadido: ' . $ingrediente->name;
+                $notifications->id_usuario = Auth::id();
+                $notifications->tipo = 0;
+                $notifications->save();
 
                 DB::commit();
                 return redirect('/ingredientes')->with('status', 'Ingrediente añadido exitosamente!.');
@@ -176,6 +183,13 @@ class IngredienteController extends Controller
     {
         $ingrediente = Ingrediente::find($id);
         $ingrediente->delete();
+        
+        $notifications = new Notification();
+        $notifications->detalle = 'Ingrediente eliminado: ' . $ingrediente->name;
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 2;
+        $notifications->save();
+
         return redirect('/ingredientes')->with('status', 'Ingrediente eliminado Exitosamente');
     }
 }

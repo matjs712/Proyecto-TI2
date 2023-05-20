@@ -373,6 +373,12 @@ class ProductController extends Controller
             }
         }
 
+        $notifications = new Notification();
+        $notifications->detalle = 'Producto eliminado: ' . $producto->name;
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 2;
+        $notifications->save();
+
         $producto->delete();
         return redirect('/productos')->with('status', 'Producto eliminado Exitosamente');
     }

@@ -11,6 +11,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
 
 class RegistroController extends Controller
 {
@@ -83,6 +85,12 @@ class RegistroController extends Controller
                 $ingrediente = Ingrediente::find($request->input('id_ingrediente'));
                 $ingrediente->cantidad = $ingrediente->cantidad + $request->input('cantidad');
                 $ingrediente->save();
+                
+                $notifications = new Notification();
+                $notifications->detalle = 'Se añadio ' . $ingrediente->cantidad . ' de '. $ingrediente->name . ' a nuestros registros';
+                $notifications->id_usuario = Auth::id();
+                $notifications->tipo = 0;
+                $notifications->save();
 
                 DB::commit();
                 return redirect('/registros')->with('status', 'Registro añadido exitosamente!.');
@@ -190,6 +198,12 @@ class RegistroController extends Controller
         $ingrediente = Ingrediente::find($registro->id_ingrediente);
         $ingrediente->cantidad = $ingrediente->cantidad - $registro->cantidad;
         $ingrediente->update();
+
+        $notifications = new Notification();
+        $notifications->detalle = 'Se elimino ' . $ingrediente->cantidad . ' de '. $ingrediente->name . ' de nuestros registros';
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 2;
+        $notifications->save();
 
         return redirect('/registros')->with('status', 'Registro eliminado Exitosamente');
     }

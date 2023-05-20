@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
+
 
 class ProveedorController extends Controller
 {
@@ -82,7 +85,11 @@ class ProveedorController extends Controller
                 $proveedor->email = $request->input('email');
                 $proveedor->save();
 
-
+                $notifications = new Notification();
+                $notifications->detalle = 'Se añadio al proveedor: ' . $proveedor->name;
+                $notifications->id_usuario = Auth::id();
+                $notifications->tipo = 0;
+                $notifications->save();
 
                 DB::commit();
                 return redirect('/proveedores')->with('status', 'Proveedor añadido exitosamente!.');
