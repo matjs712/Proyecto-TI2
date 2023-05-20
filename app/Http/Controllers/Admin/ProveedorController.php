@@ -58,7 +58,7 @@ class ProveedorController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|date',
+            'name' => 'required',
             'telefono' => 'required|numeric|digits:9',
             'email' => 'required',
 
@@ -123,7 +123,7 @@ class ProveedorController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'name' => 'required|date',
+            'name' => 'required',
             'telefono' => 'required|numeric|digits:9',
             'email' => 'required|email',
 
