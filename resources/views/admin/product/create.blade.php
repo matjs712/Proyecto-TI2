@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <label for="name">Nombre Producto</label>
                             <input type="text" name="name" class="form-control"
-                                placeholder="Poleras"value="{{ old('name') }}">
+                                placeholder="sal de mar"value="{{ old('name') }}">
                             @if ($errors->has('name'))
                                 <span class="error text-danger" for="input-name">{{ $errors->first('name') }}</span>
                             @endif
@@ -48,7 +48,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="name">Slug</label>
-                            <input type="text" name="slug" class="form-control" placeholder="Poleras"
+                            <input type="text" name="slug" class="form-control" placeholder="sal mar"
                                 value="{{ old('slug') }}">
                             @if ($errors->has('slug'))
                                 <span class="error text-danger" for="input-name">{{ $errors->first('slug') }}</span>
@@ -58,7 +58,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="slug">Descripción pequeña</label>
-                            <input type="text" name="small_description" class="form-control" placeholder="Poleras"
+                            <input type="text" name="small_description" class="form-control" placeholder="Sal de mar"
                                 value="{{ old('small_description') }}">
                             @if ($errors->has('small_description'))
                                 <span class="error text-danger"
@@ -70,7 +70,7 @@
                         <div class="form-group">
                             <label for="descripcion">Descripción</label>
                             <textarea type="text" rows="5" style="resize:none;" name="description" class="form-control"
-                                placeholder="Categoría dedicada solo a peloras de ..."value="{{ old('description') }}">{{ old('description') }}></textarea>
+                                placeholder="Exquisita sal de mar..."value="{{ old('description') }}">{{ old('description') }}</textarea>
                             @if ($errors->has('description'))
                                 <span class="error text-danger" for="input-name">{{ $errors->first('description') }}</span>
                             @endif
@@ -156,7 +156,7 @@
               </div>
                  --}}
                     <div class="col-md-12">
-                        <div class="form-group d-flex">
+                        {{-- <div class="form-group d-flex">
                             <div class="col-md-3">
                                 <label for="ingrediente1">Ingrediente 1</label>
                                 <select class="form-control" name="ingrediente1" id="ingrediente1">
@@ -171,10 +171,8 @@
                                 <input class="form-control" type="number" name="cantidad1" id="cantidad1"
                                     value="0">
                             </div>
-                        </div>
-
+                        </div> --}}
                         <div id="ingredientes-extra"></div>
-
                     </div>
                     <button type="button" class="btn btn-dark" id="agregar-ingrediente">Agregar ingrediente</button>
 
@@ -212,12 +210,12 @@
             }
         });
 
-        let ingredienteCount = 1;
+        let ingredienteCount = 0;
         document.getElementById('agregar-ingrediente').addEventListener('click', function() {
             ingredienteCount++;
             const div = document.createElement('div');
             div.innerHTML = `
-        <div class="form-group d-flex">
+        <div class="form-group d-flex align-items-end">
           <div class="col-md-3">
             <label for="ingrediente${ingredienteCount}">Ingrediente ${ingredienteCount}</label>
               <select class="form-control" name="ingrediente${ingredienteCount}" id="ingrediente${ingredienteCount}">
@@ -231,9 +229,16 @@
               <label for="ingrediente${ingredienteCount}">Cantidad </label>
               <input class="form-control" type="number" name="cantidad${ingredienteCount}" id="cantidad${ingredienteCount}" value="0">
             </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-danger btn-eliminar-ingrediente">Eliminar</button>
+            </div>
         </div>
     `;
             document.getElementById('ingredientes-extra').appendChild(div);
+            const btnEliminar = div.querySelector('.btn-eliminar-ingrediente');
+            btnEliminar.addEventListener('click', function() {
+                div.remove();
+            });
 
         });
     </script>

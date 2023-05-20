@@ -163,15 +163,10 @@ class ProductController extends Controller
 
                 DB::commit();
                 return redirect('/productos')->with('status', 'Producto añadido exitosamente!.');
-
-
-
             } catch (\Illuminate\Datebase\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
-
             }
-
         }
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
@@ -327,7 +322,6 @@ class ProductController extends Controller
                                 $productoIngrediente->update();
                                 $ingrediente->update();
                             }
-
                         }
                     }
                 }
@@ -335,15 +329,10 @@ class ProductController extends Controller
                 DB::commit();
 
                 return redirect('/productos')->with('status', 'Producto Editado exitosamente!.');
-
-
-
             } catch (\Illuminate\Datebase\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
-
             }
-
         }
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
@@ -357,6 +346,18 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $producto = Product::find($id);
+        $producto_ingredientes = ProductoIngrediente::all()->where('id_producto', $id);
+
+        if (count($producto_ingredientes) > 0) {
+            $cantidad = $producto->qty;
+
+            foreach ($producto_ingredientes as $producto_ingrediente) {
+                $ingrediente = Ingrediente::find($producto_ingrediente->id_ingrediente);
+                $ingrediente->cantidad += $producto_ingrediente->cantidad;
+                // dd($ingrediente->cantidad);
+                $ingrediente->update();
+            }
+        }
 
         if ($producto->image) {
             $path = storage_path('app/public/uploads/productos/' . $producto->image);
