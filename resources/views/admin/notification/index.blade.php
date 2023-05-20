@@ -57,7 +57,12 @@ Notificaciones | {{ $sitio }}
                                             <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                             <td>{{ date('H:i', strtotime($item->created_at)) }}</td>
                                             <td>
-                                                <a class="btn btn-success" href=""><i class="fa fa-search" aria-hidden="true"></i></a>
+                                                <form action="{{ url('update-notification/'.$item->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_editar }}; color:white;" type="submit" class="btn mt-3">Visto</button>
+
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -91,7 +96,11 @@ Notificaciones | {{ $sitio }}
                                             <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                             <td>{{ date('H:i', strtotime($item->created_at)) }}</td>
                                             <td>
-                                                <a class="btn btn-success" href=""><i class="fa fa-search" aria-hidden="true"></i></a>
+                                                <form action="{{ url('update-notification/'.$item->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_editar }}; color:white;" type="submit" class="btn mt-3">No visto</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -46,7 +46,7 @@
                             onmouseout="this.style.backgroundColor='transparent'"
                             style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('notificaciones') ? $color_a_tag_hover : '' }}"
                             href="{{ url('/notificaciones') }}" class="nav-link">
-                            <i class="fa-solid fa-house"></i>
+                            <i class="fa-solid fa-bell"></i>
                             <p>
                                 Notificaciones
                             </p>

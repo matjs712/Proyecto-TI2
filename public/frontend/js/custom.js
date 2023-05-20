@@ -45,22 +45,30 @@ $(document).ready(function () {
 
     function getQTY() {
         $.ajax({
-            method: "GET",
-            url: "/cantidad-ingredientes",
-            success: function (response) {
-                $('.qty-item').html('');
-                $('.qty-count').html('');
-                var count = 0;
-                $.each(response, function (key, value) {
-                    if (value==0) {
-                        count++;
-                        $('.qty-count').html(count);
-                        $('.qty-item').append('<a href="/notificaciones" class="dropdown-item"><div class="media"><div class="media-body"><span>' + key + '</span></div></div></a> ');
-                    }
-                });
-            }
+          method: "GET",
+          url: "/cantidad-ingredientes",
+          success: function (response) {
+            $('.qty-item').html('');
+            $('.qty-count').html('');
+            var count = 0;
+            $.each(response, function (key, value) {
+                count++;
+                $('.qty-count').html(count);
+                var color = 'black';
+                if (value == '1') {
+                  color = 'orange';
+                } else if(value == '2'){
+                  color = 'red';
+                }
+
+                var linkHTML = '<a href="/notificaciones" class="dropdown-item" style="color: ' + color + '"><div class="media"><div class="media-body"><span>' + key + '</span></div></div></a>';
+                $('.qty-item').append(linkHTML);
+              
+            });
+          }
         });
-    }
+      }
+      
 
     $('.addCartBtn').click(function (e) {
         e.preventDefault()

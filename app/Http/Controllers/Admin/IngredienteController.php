@@ -169,8 +169,8 @@ class IngredienteController extends Controller
     }
     
     public function qty(){
-        $notifications = Notification::latest()->pluck('status', 'detalle');
-        return response()->json($notifications );
+        $notifications = Notification::where('status', 0)->latest()->pluck('tipo', 'detalle')->take(10);
+        return response()->json($notifications);
     }
 
     /**

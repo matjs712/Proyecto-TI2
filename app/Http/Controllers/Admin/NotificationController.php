@@ -30,11 +30,15 @@ class NotificationController extends Controller
         return view('admin.notification.view', compact('notifications'));
     }
 
-    public function updateorder(Request $request, $id){
-        $notifications = Notification::find($id);
-        $notifications->status = $request->input('notification_status');
+
+    public function updatenotification($id){
+        $notifications = Notification::where('id',$id)->first();
+        if($notifications->status == 0){
+            $notifications->status = 1;
+        } else{
+            $notifications->status = 0;
+        }
         $notifications->update();
-        
-        return redirect('notificaciones')->with('status', 'Orden actualizada exitosamente.');
+        return redirect('notificaciones')->with('status', 'Notificación actualizada exitosamente.');
     }
 }
