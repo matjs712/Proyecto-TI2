@@ -11,6 +11,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\FileUploadController;
+use Intervention\Image\Facades\Image;
 
 class RegistroController extends Controller
 {
@@ -60,6 +62,7 @@ class RegistroController extends Controller
             'id_proveedor' => 'required',
             'id_ingrediente' => 'required',
             'cantidad' => 'required|integer',
+            'factura' => 'required',
 
         ];
 
@@ -73,6 +76,18 @@ class RegistroController extends Controller
 
             try {
                 $registro = new Registro();
+
+                if ($request->hasFile('factura')) {
+                    $file = $request->file('factura');
+                    $ext = $file->getClientOriginalExtension();
+                    $filename = time() . '.' . $ext;
+                    $factura = Image::make($file);
+                    $factura->resize(800, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->encode('jpg', 70);
+                    $factura->save(storage_path('app/public/uploads/facturas/' . $filename));
+                    $registro->factura = $filename;
+                }
 
                 $registro->fecha = $request->input('fecha');
                 $registro->id_proveedor = $request->input('id_proveedor');
@@ -113,7 +128,7 @@ class RegistroController extends Controller
         $registro = Registro::find($id);
         $proveedores = Proveedor::all();
         $ingredientes = Ingrediente::all();
-        return view('admin.registro.edit', compact('registro', 'proveedores', 'ingredientes'));
+        return view('admin.registro.edit', compact('registro', 'proveedores', 'ingredientes', 'factura'));
     }
 
     /**
@@ -130,6 +145,7 @@ class RegistroController extends Controller
             'id_proveedor' => 'required',
             'id_ingrediente' => 'required',
             'cantidad' => 'required|integer',
+
 
         ];
 
@@ -159,6 +175,7 @@ class RegistroController extends Controller
                 $registro->id_proveedor = $request->input('id_proveedor');
                 $registro->id_ingrediente = $request->input('id_ingrediente');
                 $registro->cantidad = $request->input('cantidad');
+                $registro->factura = $request->input('factura');
 
                 $registro->update();
                 DB::commit();
