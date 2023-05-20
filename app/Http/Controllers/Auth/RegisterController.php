@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
 
 class RegisterController extends Controller
 {
@@ -88,6 +90,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+        $notifications = new Notification();
+        $notifications->detalle = 'Se el nuevo usuario: ' . $data['name'];
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 0;
+        $notifications->save();
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

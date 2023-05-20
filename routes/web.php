@@ -21,6 +21,8 @@ use App\Http\Controllers\Admin\IngredienteController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\WishlistController;
+use App\Http\Controllers\Admin\NotificationController;
+
 use App\Http\Controllers\Admin\RegistroController as AdminRegistroController;
 
 // FRONTEND ROUTES
@@ -76,7 +78,12 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
  Route::middleware(['auth','isAdmin'])->group(function (){
    Route::get('/dashboard',  'Admin\FrontendController@index')->name('dashboard');
    Route::get('/datos-graficos',  'Admin\FrontendController@ChartIngredientes');
-    
+   
+    //NOTIFICAIONES
+    Route::get('/notificaciones',  'Admin\NotificationController@index');
+    Route::put('update-notification/{id}', [NotificationController::class, 'updatenotification']);
+    Route::get('notificationsajax', [NotificationController::class,'notificacionajax']);
+
     // CATEGORIAS
     Route::get('categorias',        'Admin\CategoryController@index');
     Route::get('crear-categoria',   'Admin\CategoryController@create');
@@ -103,7 +110,7 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
     Route::get('edit-ing/{id}',     [IngredienteController::class,'edit']);
     Route::put('update-ing/{id}',     [IngredienteController::class,'update']);
     Route::get('delete-ing/{id}',     [IngredienteController::class,'destroy']);
-    Route::get('cantidad-ingredientes', [IngredienteController::class,'qty']);
+   
     
     //  PROVEEDORES
     Route::get('proveedores',        'Admin\ProveedorController@index');

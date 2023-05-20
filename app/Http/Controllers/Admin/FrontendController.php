@@ -44,6 +44,8 @@ class FrontendController extends Controller
             "chart1" => $ingredientes,
             "chart2" => $registroProveedores
         ];
+
         return response()->json($data);
     }
+    
 }

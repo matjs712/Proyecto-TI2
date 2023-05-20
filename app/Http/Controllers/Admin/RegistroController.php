@@ -11,8 +11,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\FileUploadController;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
 
 class RegistroController extends Controller
+
 {
     public function __construct()
     {
@@ -60,6 +65,7 @@ class RegistroController extends Controller
             'id_proveedor' => 'required',
             'id_ingrediente' => 'required',
             'cantidad' => 'required|integer',
+            'factura' => 'required',
 
         ];
 
@@ -74,6 +80,18 @@ class RegistroController extends Controller
             try {
                 $registro = new Registro();
 
+                if ($request->hasFile('factura')) {
+                    $file = $request->file('factura');
+                    $ext = $file->getClientOriginalExtension();
+                    $filename = time() . '.' . $ext;
+                    $factura = Image::make($file);
+                    $factura->resize(800, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->encode('jpg', 70);
+                    $factura->save(storage_path('app/public/uploads/facturas/' . $filename));
+                    $registro->factura = $filename;
+                }
+
                 $registro->fecha = $request->input('fecha');
                 $registro->id_proveedor = $request->input('id_proveedor');
                 $registro->id_ingrediente = $request->input('id_ingrediente');
@@ -83,6 +101,12 @@ class RegistroController extends Controller
                 $ingrediente = Ingrediente::find($request->input('id_ingrediente'));
                 $ingrediente->cantidad = $ingrediente->cantidad + $request->input('cantidad');
                 $ingrediente->save();
+                
+                $notifications = new Notification();
+                $notifications->detalle = 'Se añadio ' . $ingrediente->cantidad . ' de '. $ingrediente->name . ' a nuestros registros';
+                $notifications->id_usuario = Auth::id();
+                $notifications->tipo = 0;
+                $notifications->save();
 
                 DB::commit();
                 return redirect('/registros')->with('status', 'Registro añadido exitosamente!.');
@@ -113,7 +137,7 @@ class RegistroController extends Controller
         $registro = Registro::find($id);
         $proveedores = Proveedor::all();
         $ingredientes = Ingrediente::all();
-        return view('admin.registro.edit', compact('registro', 'proveedores', 'ingredientes'));
+        return view('admin.registro.edit', compact('registro', 'proveedores', 'ingredientes', 'factura'));
     }
 
     /**
@@ -130,6 +154,7 @@ class RegistroController extends Controller
             'id_proveedor' => 'required',
             'id_ingrediente' => 'required',
             'cantidad' => 'required|integer',
+
 
         ];
 
@@ -159,6 +184,7 @@ class RegistroController extends Controller
                 $registro->id_proveedor = $request->input('id_proveedor');
                 $registro->id_ingrediente = $request->input('id_ingrediente');
                 $registro->cantidad = $request->input('cantidad');
+                $registro->factura = $request->input('factura');
 
                 $registro->update();
                 DB::commit();
@@ -190,6 +216,12 @@ class RegistroController extends Controller
         $ingrediente = Ingrediente::find($registro->id_ingrediente);
         $ingrediente->cantidad = $ingrediente->cantidad - $registro->cantidad;
         $ingrediente->update();
+
+        $notifications = new Notification();
+        $notifications->detalle = 'Se elimino ' . $ingrediente->cantidad . ' de '. $ingrediente->name . ' de nuestros registros';
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 2;
+        $notifications->save();
 
         return redirect('/registros')->with('status', 'Registro eliminado Exitosamente');
     }
