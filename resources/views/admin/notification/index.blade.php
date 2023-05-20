@@ -41,8 +41,18 @@ Notificaciones | {{ $sitio }}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($notifications as $item)
-                                        <tr>
+                                    @foreach ($notifications->sortByDesc('created_at') as $item)
+                                        @php
+                                            $color = '';
+                                            if ($item->tipo == 0) {
+                                                $color = 'black';
+                                            } elseif ($item->tipo == 1) {
+                                                $color = 'orange';
+                                            } else {
+                                                $color = 'red';
+                                            }
+                                        @endphp
+                                        <tr style="color: {{$color}};">
                                             <td>{{ $item->detalle }}</td>
                                             <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                             <td>{{ date('H:i', strtotime($item->created_at)) }}</td>
@@ -66,7 +76,17 @@ Notificaciones | {{ $sitio }}
                                 </thead>
                                 <tbody>
                                     @foreach ($notificationsOld as $item)
-                                        <tr>
+                                        @php
+                                            $color = '';
+                                            if ($item->tipo == 0) {
+                                                $color = 'black';
+                                            } elseif ($item->tipo == 1) {
+                                                $color = 'orange';
+                                            } else {
+                                                $color = 'red';
+                                            }
+                                        @endphp
+                                        <tr style="color: {{$color}};">
                                         <td>{{ $item->detalle }}</td>
                                             <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                             <td>{{ date('H:i', strtotime($item->created_at)) }}</td>
@@ -101,8 +121,10 @@ Notificaciones | {{ $sitio }}
         $('#tablaNotificaciones').DataTable({
             responsive: true,
             "language": spanishLanguage,
+            "order": [[ 3, "desc" ]]
         });
     })
 </script>
+
 
 @endsection

@@ -178,6 +178,13 @@ class ProveedorController extends Controller
     public function destroy($id)
     {
         $proveedor = Proveedor::find($id);
+
+        $notifications = new Notification();
+        $notifications->detalle = 'Se elimino al proveedor: ' . $proveedor->name;
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 2;
+        $notifications->save();
+
         $proveedor->delete();
         return redirect('/proveedores')->with('status', 'Proveedor eliminado Exitosamente');
     }

@@ -52,17 +52,15 @@ $(document).ready(function () {
                 $('.qty-count').html('');
                 var count = 0;
                 $.each(response, function (key, value) {
-                    if (value < 1000) {
+                    if (value==0) {
                         count++;
                         $('.qty-count').html(count);
-                        $('.qty-item').append('<a href="/ingredientes" class="dropdown-item"><div class="media"><div class="media-body"><span>Quedan ' + value + ' gramos de ' + key + '</span></div></div></a> ');
+                        $('.qty-item').append('<a href="/notificaciones" class="dropdown-item"><div class="media"><div class="media-body"><span>' + key + '</span></div></div></a> ');
                     }
                 });
             }
         });
     }
-
-
 
     $('.addCartBtn').click(function (e) {
         e.preventDefault()

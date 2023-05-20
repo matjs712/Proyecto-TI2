@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Notification;
 
 class DashboardController extends Controller
 {
@@ -140,7 +141,13 @@ class DashboardController extends Controller
         $colores = Configuration::first();
         $this->coloresUpdate($colores, $request);
         
-    
+
+        $notifications = new Notification();
+        $notifications->detalle = 'Se actualizo la información de sitio';
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 2;
+        $notifications->save();
+
         return redirect('/configuracion')->with('status', 'Información de sitio actualizada exitosamente.');
         
     }
@@ -231,7 +238,12 @@ class DashboardController extends Controller
             $admin->imagen = $filename;
         }
     
-    
+        $notifications = new Notification();
+        $notifications->detalle = 'Se actualizaron las credenciales de la cuenta';
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 2;
+        $notifications->save();
+
         // Guardar los cambios
         $admin->save();
     

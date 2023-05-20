@@ -167,10 +167,10 @@ class IngredienteController extends Controller
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
 
     }
-    public function qty()
-    {
-        $ingredientes = Ingrediente::all()->pluck('cantidad', 'name');
-        return response()->json($ingredientes);
+    
+    public function qty(){
+        $notifications = Notification::latest()->pluck('status', 'detalle');
+        return response()->json($notifications );
     }
 
     /**
