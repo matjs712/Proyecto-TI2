@@ -14,7 +14,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Transbank\Webpay\WebpayPlus\Transaction;
-
+use Illuminate\Support\Facades\Storage;
+use App\Models\Notification;
 
 class CheckoutController extends Controller
 {
@@ -175,7 +176,13 @@ class CheckoutController extends Controller
                 $prod->update();
             }
             $order->update();
-            
+
+            $notifications = new Notification();
+            $notifications->detalle = 'Se agrego la orden de serivicio: '. $order->id;
+            $notifications->id_usuario = Auth::id();
+            $notifications->tipo = 1;
+            $notifications->save();
+
             // if(Auth::user()->direccion1 == NULL){
             //     dd($request->input('lname'));
             //     $user = User::where('id', Auth::user()->id)->first();

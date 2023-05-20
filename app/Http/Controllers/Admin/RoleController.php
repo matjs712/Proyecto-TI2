@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
 
 class RoleController extends Controller
 {
@@ -54,6 +56,13 @@ class RoleController extends Controller
         ]);
         $role = Role::create(['name' => $request->name]);
         $role->permissions()->sync($request->permissions);
+
+        $notifications = new Notification();
+        $notifications->detalle = 'Rol añadido: ' . $role->name;
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 0;
+        $notifications->save();
+
         return redirect()->route('roles.edit',$role)->with('status','Rol creado exitosamente.');
     }
 
@@ -111,8 +120,16 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $rol = Role::find($id);
-        $rol->delete();
+        $role = Role::find($id);
+
+
+        $notifications = new Notification();
+        $notifications->detalle = 'Rol eliminado: ' . $role->name;
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 2;
+        $notifications->save();
+
+        $role->delete();
 
         return redirect('/roles')->with('status','Rol eliminado Exitosamente');
     }

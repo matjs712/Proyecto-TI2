@@ -7,6 +7,8 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
 
 class OrdenController extends Controller
 {
@@ -35,7 +37,19 @@ class OrdenController extends Controller
         $orders = Order::find($id);
         $orders->status = $request->input('orden_status');
         $orders->update();
-        
+
+        $notifications = new Notification();
+        $aux='Pendiente';
+        if ($orders->status == 1) {
+            $aux='Completada';
+        } elseif($orders->status == 2 ) {
+            $aux='Aprobado';
+        }
+        $notifications->detalle = 'Orden: ' . $orders->id.' puesta en '.$aux;
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 1;
+        $notifications->save();
+
         return redirect('ordenes')->with('status', 'Orden actualizada exitosamente.');
     }
 }

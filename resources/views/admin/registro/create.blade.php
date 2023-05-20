@@ -15,7 +15,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h4>Añadir Proveedor</h4>
+            <h4>Añadir Registro</h4>
         </div>
         <div class="card-body">
             <form action="{{ url('insert-registro') }}" method="POST" enctype="multipart/form-data">

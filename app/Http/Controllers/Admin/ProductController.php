@@ -6,6 +6,7 @@ use App\Models\Logo;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Ingrediente;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\ProductoIngrediente;
 use App\Http\Controllers\Controller;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 
 class ProductController extends Controller
@@ -160,6 +162,11 @@ class ProductController extends Controller
                     }
                 }
 
+                $notifications = new Notification();
+                $notifications->detalle = 'Producto añadido: ' . $producto->name;
+                $notifications->id_usuario = Auth::id();
+                $notifications->tipo = 0;
+                $notifications->save();
 
                 DB::commit();
                 return redirect('/productos')->with('status', 'Producto añadido exitosamente!.');
@@ -366,6 +373,12 @@ class ProductController extends Controller
                 File::delete($path);
             }
         }
+
+        $notifications = new Notification();
+        $notifications->detalle = 'Producto eliminado: ' . $producto->name;
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 2;
+        $notifications->save();
 
         $producto->delete();
         return redirect('/productos')->with('status', 'Producto eliminado Exitosamente');
