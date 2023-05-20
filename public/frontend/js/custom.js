@@ -46,7 +46,7 @@ $(document).ready(function () {
     function getQTY() {
         $.ajax({
           method: "GET",
-          url: "/cantidad-ingredientes",
+          url: "/notificationsajax",
           success: function (response) {
             $('.qty-item').html('');
             $('.qty-count').html('');
@@ -60,10 +60,8 @@ $(document).ready(function () {
                 } else if(value == '2'){
                   color = 'red';
                 }
-
                 var linkHTML = '<a href="/notificaciones" class="dropdown-item" style="color: ' + color + '"><div class="media"><div class="media-body"><span>' + key + '</span></div></div></a>';
                 $('.qty-item').append(linkHTML);
-              
             });
           }
         });

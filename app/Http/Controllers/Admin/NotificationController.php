@@ -30,6 +30,10 @@ class NotificationController extends Controller
         return view('admin.notification.view', compact('notifications'));
     }
 
+    public function notificacionajax(){
+        $notifications = Notification::where('status', 0)->latest()->pluck('tipo', 'detalle')->take(10);
+        return response()->json($notifications);
+    }
 
     public function updatenotification($id){
         $notifications = Notification::where('id',$id)->first();

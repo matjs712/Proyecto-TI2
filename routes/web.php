@@ -82,6 +82,7 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
     //NOTIFICAIONES
     Route::get('/notificaciones',  'Admin\NotificationController@index');
     Route::put('update-notification/{id}', [NotificationController::class, 'updatenotification']);
+    Route::get('notificationsajax', [NotificationController::class,'notificacionajax']);
 
     // CATEGORIAS
     Route::get('categorias',        'Admin\CategoryController@index');
@@ -109,7 +110,7 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
     Route::get('edit-ing/{id}',     [IngredienteController::class,'edit']);
     Route::put('update-ing/{id}',     [IngredienteController::class,'update']);
     Route::get('delete-ing/{id}',     [IngredienteController::class,'destroy']);
-    Route::get('cantidad-ingredientes', [IngredienteController::class,'qty']);
+   
     
     //  PROVEEDORES
     Route::get('proveedores',        'Admin\ProveedorController@index');

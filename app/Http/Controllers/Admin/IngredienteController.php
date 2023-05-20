@@ -168,10 +168,6 @@ class IngredienteController extends Controller
 
     }
     
-    public function qty(){
-        $notifications = Notification::where('status', 0)->latest()->pluck('tipo', 'detalle')->take(10);
-        return response()->json($notifications);
-    }
 
     /**
      * Remove the specified resource from storage.
