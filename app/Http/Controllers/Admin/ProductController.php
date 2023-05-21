@@ -309,6 +309,17 @@ class ProductController extends Controller
                 $producto->trending = $request->input('trending') == TRUE ? '1' : '0';
                 $producto->update();
 
+                if($producto->qty <= 2){
+                    $notifications = new Notification();
+                    $notifications->detalle = 'Producto: ' . $producto->name. 'en estado crítico, solo quedan '. $producto->qty;
+                    $notifications->id_usuario = Auth::id();
+                    $notifications->tipo = 2;
+                    $notifications->save();
+                }
+
+
+
+
                 // dd($ingredientesCount);
 
                 if ($ingredientesCount >= 1) {
@@ -338,12 +349,23 @@ class ProductController extends Controller
                             if ($productoIngrediente) {
                                 if ($cantidadRequerida < $productoIngrediente->cantidad) {
                                     $ingrediente->increment('cantidad', $productoIngrediente->cantidad - $cantidadRequerida);
+
                                 } else if ($cantidadRequerida > $productoIngrediente->cantidad) {
                                     $ingrediente->decrement('cantidad', $cantidadRequerida - $productoIngrediente->cantidad);
                                 }
+
                                 $productoIngrediente->id_ingrediente = $idIngrediente;
                                 $productoIngrediente->cantidad = $cantidadRequerida;
                                 $productoIngrediente->update();
+
+                                if($ingrediente->cantidad <= 1000){
+                                    $notifications = new Notification();
+                                    $notifications->detalle = 'Ingrediente: ' . $ingrediente->name. 'en estado crítico, solo quedan '. $ingrediente->cantidad;
+                                    $notifications->id_usuario = Auth::id();
+                                    $notifications->tipo = 2;
+                                    $notifications->save();
+                                }
+                
                                 $ingrediente->update();
                             }
                         }
