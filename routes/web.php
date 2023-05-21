@@ -35,7 +35,7 @@ Route::get('/categorias/{cate_slug}/{prod_slug}', [FrontendController::class, 'p
 
 // PRODUCTOS
 Route::get('/todo-productos', [FrontendController::class, 'productos']);
-Route::get('/ver-producto/top{slug}', [FrontendController::class, 'viewProducto']);
+Route::get('/ver-producto/{slug}', [FrontendController::class, 'viewProducto']);
 Route::get('product-list', [FrontendController::class, 'productList']);
 Route::post('searchproduct', [FrontendController::class, 'searchproduct']);
 Route::get('productos/sort-by', [FrontendController::class, 'filter'])->name('products.filter');
@@ -60,6 +60,8 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    Route::get('checkout',[CheckoutController::class, 'index']);
    // Route::post('place-order',[CheckoutController::class, 'placeorder']);
    Route::post('iniciar_compra',[CheckoutController::class, 'iniciar_compra']);
+   Route::post('iniciar_compra_presencial',[CheckoutController::class, 'iniciar_compra_presencial']);
+  
    Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
 
    Route::get('mis-ordenes',[UserController::class, 'index']);

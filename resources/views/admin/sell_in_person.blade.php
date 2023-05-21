@@ -30,7 +30,10 @@ Usuarios | {{ $sitio }}
                                 <p id="precio"></p>
                             </div>
                             <hr>
-                            <button style="width: 100%;" class="btn btn-primary pagoBtn">Ir al pago</button>
+                            <form id="form" action="{{ url('iniciar_compra_presencial') }}" method="POST">
+                                @csrf
+                                <button style="width: 100%;" class="btn btn-primary btnPagar">Ir al pago</button>
+                            </form>
                         </div>
                 </div>
             </div>
@@ -88,7 +91,9 @@ Usuarios | {{ $sitio }}
             $('#escanerModal').modal('hide');
         });
         */
+    agregarProducto(3);
     agregarProducto(1);
+    agregarProducto(2);
 
     });
     let productos = [];
@@ -143,9 +148,9 @@ Usuarios | {{ $sitio }}
             card.append(row);
             container.append(card);
         });
-
         $('#precio').html('$ ' + precio);
     }
+
     $('#productos-container').on('click', '.btn-danger', function () {
         let productId = $(this).closest('.card').attr('id');
         console.log(productId);
@@ -166,6 +171,52 @@ Usuarios | {{ $sitio }}
         console.log(productos);
         $('#precio').html('$ ' + precio);
     });
+
+    $('.btnPagar').click(function(e){
+        e.preventDefault();
+
+        let carrito = {};
+        productos.forEach( function(producto){
+            if(carrito[producto.id])
+                carrito[producto.id].cantidad++;
+            else
+            carrito[producto.id] = {
+                id: producto.id,
+                precio: producto.selling_price,
+                cantidad: 1
+            }
+        });
+
+
+        for (let producto in carrito) {
+            console.log(carrito[producto].id);
+            console.log(carrito[producto].cantidad);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            })
+            $.ajax({
+                method: "POST",
+                url: "/add-to-cart",
+                data: {
+                    'product_id': carrito[producto].id,
+                    'product_qty': carrito[producto].cantidad,
+                },
+                success: function (response) {
+                    console.log("correcto");
+                },
+                error: function (response){
+                    console.log(response);
+                    console.log("error");
+                }
+            });
+        }
+
+        let form = document.getElementById('form');
+
+        form.submit();
+    });    
 </script>
 
 @endsection()
