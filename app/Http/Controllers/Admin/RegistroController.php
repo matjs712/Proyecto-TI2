@@ -99,11 +99,12 @@ class RegistroController extends Controller
                 $registro->save();
 
                 $ingrediente = Ingrediente::find($request->input('id_ingrediente'));
-                $ingrediente->cantidad = $ingrediente->cantidad + $request->input('cantidad');
+                $cantidadagregada = $request->input('cantidad'); 
+                $ingrediente->cantidad = $ingrediente->cantidad + $cantidadagregada;
                 $ingrediente->save();
                 
                 $notifications = new Notification();
-                $notifications->detalle = 'Se añadio ' . $ingrediente->cantidad . ' de '. $ingrediente->name . ' a nuestros registros';
+                $notifications->detalle = 'Se añadio ' . $cantidadagregada . ' de '. $ingrediente->name . ' a nuestros registros';
                 $notifications->id_usuario = Auth::id();
                 $notifications->tipo = 0;
                 $notifications->save();

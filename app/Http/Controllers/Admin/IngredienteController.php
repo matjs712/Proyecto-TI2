@@ -151,8 +151,8 @@ class IngredienteController extends Controller
                 $ingrediente->name = $request->input('name');
                 $ingrediente->cantidad = $request->input('cantidad');
                 $ingrediente->update();
-                
-                if($ingrediente->cantidad <= 200){
+
+                if($ingrediente->cantidad <= 1000){
                     $notifications = new Notification();
                     $notifications->detalle = 'Ingrediente: ' . $ingrediente->name. 'en estado crítico, solo quedan '. $ingrediente->cantidad;
                     $notifications->id_usuario = Auth::id();
