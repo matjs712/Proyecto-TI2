@@ -15,7 +15,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h4>Añadir Proveedor</h4>
+            <h4>Añadir Registro</h4>
         </div>
         <div class="card-body">
             <form action="{{ url('insert-registro') }}" method="POST" enctype="multipart/form-data">
@@ -68,6 +68,15 @@
                                 <span class="error text-danger" for="input-name">{{ $errors->first('cantidad') }}</span>
                             @endif
                         </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <label for="">Facturas</label>
+                        {{-- <input type="file" name="image" class="form-control"> --}}
+                        <input type="file" id="factura" name="factura" class="form-control">
+                        @if ($errors->has('factura'))
+                            <span class="error text-danger" for="input-name">{{ $errors->first('factura') }}</span>
+                        @endif
+                        <img id="preview" width="200" height="200" src="" alt=" ">
                     </div>
 
                     <div class="col-md-12 mt-4">

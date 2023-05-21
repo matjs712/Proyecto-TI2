@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRegistrosTable extends Migration
+class CreateNotificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateRegistrosTable extends Migration
      */
     public function up()
     {
-        Schema::create('registros', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha');
-            $table->bigInteger('id_proveedor');
-            $table->bigInteger('id_ingrediente');
-            $table->integer('cantidad');
-            $table->string('factura');
+            $table->bigInteger('id_usuario');
+            $table->string('detalle');
+            $table->integer('tipo');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateRegistrosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('registros');
+        Schema::dropIfExists('notifications');
     }
 }

@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
 
 
 class CategoryController extends Controller
@@ -95,6 +97,13 @@ class CategoryController extends Controller
     $categoria->description = $request->input('description');
     $categoria->status = $request->input('status') == TRUE ? '1':'0';
     $categoria->popular = $request->input('status') == TRUE ? '1':'0';
+
+    $notifications = new Notification();
+    $notifications->detalle = 'Categoría añadida: ' . $categoria->name;
+    $notifications->id_usuario = Auth::id();
+    $notifications->tipo = 0;
+    $notifications->save();
+
     $categoria->save();
 
     return redirect('/categorias')->with('status', 'Categoría añadida exitosamente!.');
@@ -200,7 +209,14 @@ class CategoryController extends Controller
             }
         }
 
+        $notifications = new Notification();
+        $notifications->detalle = 'Categoría eliminada: ' . $categoria->name;
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 2;
+        $notifications->save();
+
         $categoria->delete();
+
         return redirect('/categorias')->with('status','Categoría eliminada Exitosamente');
     }
 }

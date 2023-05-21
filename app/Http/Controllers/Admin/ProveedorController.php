@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
+
 
 class ProveedorController extends Controller
 {
@@ -58,7 +61,7 @@ class ProveedorController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|date',
+            'name' => 'required',
             'telefono' => 'required|numeric|digits:9',
             'email' => 'required',
 
@@ -82,7 +85,11 @@ class ProveedorController extends Controller
                 $proveedor->email = $request->input('email');
                 $proveedor->save();
 
-
+                $notifications = new Notification();
+                $notifications->detalle = 'Se añadio al proveedor: ' . $proveedor->name;
+                $notifications->id_usuario = Auth::id();
+                $notifications->tipo = 0;
+                $notifications->save();
 
                 DB::commit();
                 return redirect('/proveedores')->with('status', 'Proveedor añadido exitosamente!.');
@@ -123,7 +130,7 @@ class ProveedorController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'name' => 'required|date',
+            'name' => 'required',
             'telefono' => 'required|numeric|digits:9',
             'email' => 'required|email',
 
@@ -171,6 +178,13 @@ class ProveedorController extends Controller
     public function destroy($id)
     {
         $proveedor = Proveedor::find($id);
+
+        $notifications = new Notification();
+        $notifications->detalle = 'Se elimino al proveedor: ' . $proveedor->name;
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 2;
+        $notifications->save();
+
         $proveedor->delete();
         return redirect('/proveedores')->with('status', 'Proveedor eliminado Exitosamente');
     }

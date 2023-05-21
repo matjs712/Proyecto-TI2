@@ -6,6 +6,7 @@ use App\Models\Logo;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Ingrediente;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\ProductoIngrediente;
 use App\Http\Controllers\Controller;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 
 class ProductController extends Controller
@@ -160,18 +162,18 @@ class ProductController extends Controller
                     }
                 }
 
+                $notifications = new Notification();
+                $notifications->detalle = 'Producto añadido: ' . $producto->name;
+                $notifications->id_usuario = Auth::id();
+                $notifications->tipo = 0;
+                $notifications->save();
 
                 DB::commit();
                 return redirect('/productos')->with('status', 'Producto añadido exitosamente!.');
-
-
-
             } catch (\Illuminate\Datebase\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
-
             }
-
         }
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
@@ -327,7 +329,6 @@ class ProductController extends Controller
                                 $productoIngrediente->update();
                                 $ingrediente->update();
                             }
-
                         }
                     }
                 }
@@ -335,15 +336,10 @@ class ProductController extends Controller
                 DB::commit();
 
                 return redirect('/productos')->with('status', 'Producto Editado exitosamente!.');
-
-
-
             } catch (\Illuminate\Datebase\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
-
             }
-
         }
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
@@ -357,6 +353,18 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $producto = Product::find($id);
+        $producto_ingredientes = ProductoIngrediente::all()->where('id_producto', $id);
+
+        if (count($producto_ingredientes) > 0) {
+            $cantidad = $producto->qty;
+
+            foreach ($producto_ingredientes as $producto_ingrediente) {
+                $ingrediente = Ingrediente::find($producto_ingrediente->id_ingrediente);
+                $ingrediente->cantidad += $producto_ingrediente->cantidad;
+                // dd($ingrediente->cantidad);
+                $ingrediente->update();
+            }
+        }
 
         if ($producto->image) {
             $path = storage_path('app/public/uploads/productos/' . $producto->image);
@@ -365,6 +373,12 @@ class ProductController extends Controller
                 File::delete($path);
             }
         }
+
+        $notifications = new Notification();
+        $notifications->detalle = 'Producto eliminado: ' . $producto->name;
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 2;
+        $notifications->save();
 
         $producto->delete();
         return redirect('/productos')->with('status', 'Producto eliminado Exitosamente');
