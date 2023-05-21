@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Notification;
+use App\Models\Ingrediente;
 
 class NotificationController extends Controller
 {
@@ -33,6 +34,11 @@ class NotificationController extends Controller
     public function notificacionajax(){
         $notifications = Notification::where('status', 0)->latest()->pluck('tipo', 'detalle')->take(10);
         return response()->json($notifications);
+    }
+
+    public function notificacioningredientes(){
+        $ingredientes = Ingrediente::where('cantidad', '<=', 500)->pluck('name', 'cantidad');
+        return response()->json($ingredientes);
     }
 
     public function updatenotification($id){

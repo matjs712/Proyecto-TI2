@@ -37,7 +37,7 @@ Notificaciones | {{ $sitio }}
                                         <th>Detalle</th>
                                         <th>Fecha</th>
                                         <th>Hora</th>
-                                        <th>Opciones</th>
+                                        <th>Visto</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,11 +57,10 @@ Notificaciones | {{ $sitio }}
                                             <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                             <td>{{ date('H:i', strtotime($item->created_at)) }}</td>
                                             <td>
-                                                <form action="{{ url('update-notification/'.$item->id) }}" method="POST">
+                                                <form class="d-flex align-items-start justify-content-center" action="{{ url('update-notification/'.$item->id) }}" method="POST">
                                                     @csrf
                                                     @method('PUT')
-                                                    <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_editar }}; color:white;" type="submit" class="btn mt-3">Visto</button>
-
+                                                    <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_editar }}; color:white;" type="submit" class="btn mt-3"><i class="fa-solid fa-check"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -76,7 +75,7 @@ Notificaciones | {{ $sitio }}
                                         <th>Detalle</th>
                                         <th>Fecha</th>
                                         <th>Hora</th>
-                                        <th>Opciones</th>
+                                        <th>No visto</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -96,10 +95,10 @@ Notificaciones | {{ $sitio }}
                                             <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                             <td>{{ date('H:i', strtotime($item->created_at)) }}</td>
                                             <td>
-                                                <form action="{{ url('update-notification/'.$item->id) }}" method="POST">
+                                                <form class="d-flex align-items-start justify-content-center" action="{{ url('update-notification/'.$item->id) }}" method="POST">
                                                     @csrf
                                                     @method('PUT')
-                                                    <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_editar }}; color:white;" type="submit" class="btn mt-3">No visto</button>
+                                                    <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_editar }}; color:white;" type="submit" class="btn mt-3"><i class="fa-solid fa-x"></i></button>
                                                 </form>
                                             </td>
                                         </tr>

@@ -83,6 +83,7 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
     Route::get('/notificaciones',  'Admin\NotificationController@index');
     Route::put('update-notification/{id}', [NotificationController::class, 'updatenotification']);
     Route::get('notificationsajax', [NotificationController::class,'notificacionajax']);
+    Route::get('notificationsingredientes', [NotificationController::class,'notificacioningredientes']);
 
     // CATEGORIAS
     Route::get('categorias',        'Admin\CategoryController@index');
