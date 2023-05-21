@@ -2,9 +2,9 @@
     <!-- Brand Logo -->
     <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
         onmouseout="this.style.backgroundColor='transparent'" style="color: {{ $color_a_tag_sidebar }}"
-        href="{{ url('/') }}" class="brand-link">
-        <img src="{{ asset($logo) }}" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">{{ $sitio }}</span>
+        href="{{ url('/') }}" class="brand-link d-flex align-items-center justify-content-center    ">
+        <img src="{{ asset($logo) }}" alt="Logo" class="brand-image elevation-3" style="opacity: .8">
+        {{-- <span class="brand-text font-weight-light">{{ $sitio }}</span> --}}
     </a>
 
     <!-- Sidebar -->
