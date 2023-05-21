@@ -6,13 +6,12 @@ Usuarios | {{ $sitio }}
 @section('content')
 <div class="container">
     
-        <div class="row">
+        <div class="row vh-100">
             <div class="col-md-7">
-                <div class="card">
-                    <div class="card-body">
+                <div class="card h-75">
+                    <div class="card-body h-100 d-flex flex-column">
                         <h6>Detalles</h6>
-                        <hr>
-                        <div id="productos-container">
+                        <div class="h-100" style="max-height:500px; overflow-y:auto; overflow-x:hidden" id="productos-container">
                             
                         </div>
                         <button id="btnMostrarModal" class="btn btn-primary" style="width: 100%">Escanear Producto</button>
@@ -93,6 +92,7 @@ Usuarios | {{ $sitio }}
 
     });
     let productos = [];
+    let precio;
     function agregarProducto(codigo) {
          $.ajaxSetup({
             headers: {
@@ -119,7 +119,7 @@ Usuarios | {{ $sitio }}
 
     function actualizarListaProductos(productos) {
         let container = $('#productos-container');
-        let precio = 0;
+        precio = 0;
         container.empty();
         productos.forEach(function (producto) {
             let card = $('<div>').addClass('card my-2').attr('id', producto.id).css('max-width', '640px');
@@ -151,23 +151,20 @@ Usuarios | {{ $sitio }}
         console.log(productId);
     // Buscar el índice del producto en el array
         let productIndex = productos.findIndex(function (producto) {
-            productos.forEach(function(producto){
-                if(producto.id === productId){
-                    return 1;
-                }
-            });
-            return -1;
+            return producto.id == productId;
         });
             console.log(productIndex);
     
     // Verificar si se encontró el índice y eliminar el producto del array
         if (productIndex !== -1) {
+            precio -= parseInt(productos[productIndex].selling_price);
             productos.splice(productIndex, 1);
         }
-    
+        
         // Eliminar el elemento de la vista
         $(this).closest('.card').remove();
         console.log(productos);
+        $('#precio').html('$ ' + precio);
     });
 </script>
 
