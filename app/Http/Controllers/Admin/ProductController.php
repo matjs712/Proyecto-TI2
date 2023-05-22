@@ -41,7 +41,9 @@ class ProductController extends Controller
         secciones();
 
         $productos = Product::all();
-        return view('admin.product.index', compact('productos'));
+        $categorias = Category::all();
+        $ingredientes = Ingrediente::all();
+        return view('admin.product.index', compact('productos', 'categorias', 'ingredientes'));
     }
 
     /**
@@ -84,16 +86,22 @@ class ProductController extends Controller
         ];
 
         $messages = [
-            'required' => 'El campo es requerido.',
-            'image' => 'El archivo debe ser una imagen.',
-            'mimes' => 'Solo se adminten los siguientes formatos :mimes.',
+            'categoria.required' => 'La categoría es obligatoria.',
+            'name.required' => 'El nombre es obligatorio.',
             'slug.required' => 'El slug es obligatorio.',
-            'slug.unique' => 'El slug ya ha sido utilizado por otro producto.',
-
-
+            'slug.unique' => 'El slug ya está en uso.',
+            'description.required' => 'La Descripción es obligatoria.',
+            'small_description.required' => 'La Descripción pequeña es obligatoria.',
+            'price.required' => 'El precio es obligatorio.',
+            'selling_price.required' => 'El precio en oferta es obligatorio.',
+            'image.required' => 'Debe seleccionar una imagen.',
+            'image.image' => 'El archivo debe ser una imagen.',
+            'image.mimes' => 'El archivo debe tener un formato de imagen válido (jpg, png).',
+            'qty.required' => 'La cantidad es obligatoria.',
         ];
+
         $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
 
             try {
                 $producto = new Product();
@@ -187,7 +195,7 @@ class ProductController extends Controller
 
                 DB::commit();
                 return redirect('/productos')->with('status', 'Producto añadido exitosamente!.');
-            } catch (\Illuminate\Datebase\QueryException $e) {
+            } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
             }
@@ -258,7 +266,7 @@ class ProductController extends Controller
             'slug.unique' => 'El slug ya ha sido utilizado por otro producto.',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
 
             try {
                 $producto = Product::find($id);
@@ -375,7 +383,7 @@ class ProductController extends Controller
                 DB::commit();
 
                 return redirect('/productos')->with('status', 'Producto Editado exitosamente!.');
-            } catch (\Illuminate\Datebase\QueryException $e) {
+            } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
             }

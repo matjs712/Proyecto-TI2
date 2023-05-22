@@ -73,7 +73,7 @@ class IngredienteController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
 
 
             try {
@@ -91,17 +91,12 @@ class IngredienteController extends Controller
 
                 DB::commit();
                 return redirect('/ingredientes')->with('status', 'Ingrediente añadido exitosamente!.');
-            } catch (\Illuminate\Datebase\QueryException $e) {
+            } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
-
             }
-
-
         }
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
-
-
     }
     /**
      * Show the form for editing the specified resource.
@@ -142,7 +137,7 @@ class IngredienteController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
 
 
             try {
@@ -162,19 +157,14 @@ class IngredienteController extends Controller
 
                 DB::commit();
                 return redirect('/ingredientes')->with('status', 'Ingrediente Editado exitosamente!.');
-
-            } catch (\Illuminate\Datebase\QueryException $e) {
+            } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
-
             }
-
-
         }
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
-
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -186,7 +176,7 @@ class IngredienteController extends Controller
     {
         $ingrediente = Ingrediente::find($id);
         $ingrediente->delete();
-        
+
         $notifications = new Notification();
         $notifications->detalle = 'Ingrediente eliminado: ' . $ingrediente->name;
         $notifications->id_usuario = Auth::id();
