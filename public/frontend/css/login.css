@@ -377,11 +377,7 @@ a:hover{
     transform: translateX(-50%);
     transition: all 1s;
 }
-.sho{
-    opacity: 1;
-    filter: blur(0);
-    transform: translateX(0);
-}
+
 
 @media(prefers-reduced-motion){
     .hide{
@@ -408,3 +404,11 @@ a:hover{
 .day,.hour,.minute,.second{
     font-size: 3rem;
 }
+  
+
+@media (max-width: 768px) {
+    .user-img {
+        width: 50px !important;
+    } 
+   
+  }

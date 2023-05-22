@@ -10,6 +10,8 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Notification;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
@@ -22,10 +24,10 @@ class RoleController extends Controller
     {
         logo_sitio();
         secciones();
-        
-        $roles = Role::all();
 
-        return view('admin.roles.index', compact('roles'));
+        $roles = Role::all();
+        $permissions = Permission::all();
+        return view('admin.roles.index', compact('roles', 'permissions'));
     }
 
     /**
@@ -40,7 +42,7 @@ class RoleController extends Controller
 
         $permissions = Permission::all();
 
-       return view('admin.roles.create', compact('permissions'));
+        return view('admin.roles.create', compact('permissions'));
     }
 
     /**
@@ -51,19 +53,37 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name'=>'required'
-        ]);
-        $role = Role::create(['name' => $request->name]);
-        $role->permissions()->sync($request->permissions);
+        $rules = [
 
-        $notifications = new Notification();
-        $notifications->detalle = 'Rol añadido: ' . $role->name;
-        $notifications->id_usuario = Auth::id();
-        $notifications->tipo = 0;
-        $notifications->save();
+            'name' => 'required|string|min:3',
+        ];
 
-        return redirect()->route('roles.edit',$role)->with('status','Rol creado exitosamente.');
+        $messages = [
+
+            'required' => 'El nombre del rol es requerido.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if (!$validator->fails()) {
+
+            try {
+                $role = Role::create(['name' => $request->name]);
+                $role->permissions()->sync($request->permissions);
+
+                $notifications = new Notification();
+                $notifications->detalle = 'Rol añadido: ' . $role->name;
+                $notifications->id_usuario = Auth::id();
+                $notifications->tipo = 0;
+                $notifications->save();
+
+                DB::commit();
+                return redirect('/roles')->with('status', 'Rol añadido exitosamente!.');
+            } catch (\Illuminate\Database\QueryException $e) {
+                DB::rollBack();
+                return back()->withErrors($validator)->withInput();
+            }
+        }
+        return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
 
     /**
@@ -76,7 +96,7 @@ class RoleController extends Controller
     {
         logo_sitio();
         secciones();
-        
+
         // dd($rol);
         return view('admin.roles.show');
     }
@@ -92,7 +112,7 @@ class RoleController extends Controller
         logo_sitio();
         secciones();
         $permissions = Permission::all();
-       return view('admin.roles.edit', compact('rol','permissions'));
+        return view('admin.roles.edit', compact('rol', 'permissions'));
     }
 
     /**
@@ -105,11 +125,11 @@ class RoleController extends Controller
     public function update(Request $request, Role $rol)
     {
         $request->validate([
-            'name'=>'required'
+            'name' => 'required'
         ]);
         $rol->update($request->all());
         $rol->permissions()->sync($request->permissions);
-        return redirect()->route('roles.edit',$rol)->with('status','Rol ha sido actualizado exitosamente.');
+        return redirect()->route('roles.edit', $rol)->with('status', 'Rol ha sido actualizado exitosamente.');
     }
 
     /**
@@ -131,6 +151,6 @@ class RoleController extends Controller
 
         $role->delete();
 
-        return redirect('/roles')->with('status','Rol eliminado Exitosamente');
+        return redirect('/roles')->with('status', 'Rol eliminado Exitosamente');
     }
 }

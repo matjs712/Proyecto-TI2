@@ -29,6 +29,14 @@ class RoleSeeder extends Seeder
             'name' => 'ver roles',
             'description' => 'Ver roles'
         ])->syncRoles([$admin]);
+        Permission::create([
+            'name' => 'add roles',
+            'description' => 'Añadir rol'
+        ])->syncRoles([$admin]);
+        Permission::create([
+            'name' => 'edit roles',
+            'description' => 'Editar rol'
+        ])->syncRoles([$admin]);
 
         Permission::create([
             'name' => 'ver productos',

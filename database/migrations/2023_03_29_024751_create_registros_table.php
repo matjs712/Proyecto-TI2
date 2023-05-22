@@ -19,7 +19,7 @@ class CreateRegistrosTable extends Migration
             $table->bigInteger('id_proveedor');
             $table->bigInteger('id_ingrediente');
             $table->integer('cantidad');
-            $table->string('factura');
+            $table->string('factura')->nullable();
             $table->timestamps();
         });
     }
