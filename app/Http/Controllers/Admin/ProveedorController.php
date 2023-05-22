@@ -75,7 +75,7 @@ class ProveedorController extends Controller
 
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
 
             try {
                 $proveedor = new Proveedor();
@@ -93,15 +93,10 @@ class ProveedorController extends Controller
 
                 DB::commit();
                 return redirect('/proveedores')->with('status', 'Proveedor añadido exitosamente!.');
-
-
-
-            } catch (\Illuminate\Datebase\QueryException $e) {
+            } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
-
             }
-
         }
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
@@ -144,7 +139,7 @@ class ProveedorController extends Controller
             'email' => 'Ingrese un Email valido'
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
 
             try {
                 $proveedor = Proveedor::find($id);
@@ -157,14 +152,10 @@ class ProveedorController extends Controller
 
                 DB::commit();
                 return redirect('/proveedores')->with('status', 'Proveedor Editado exitosamente!.');
-
-
-            } catch (\Illuminate\Datebase\QueryException $e) {
+            } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
-
             }
-
         }
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }

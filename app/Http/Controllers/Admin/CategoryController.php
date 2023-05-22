@@ -11,18 +11,21 @@ use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Models\Notification;
 
 
 class CategoryController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('can:ver categorias')->only('index');
-        $this->middleware('can:add categorias')->only('create','store');
+        $this->middleware('can:add categorias')->only('create', 'store');
         $this->middleware('can:edit categorias')->only('edit', 'update');
         $this->middleware('can:destroy categorias')->only('destroy');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +35,7 @@ class CategoryController extends Controller
     {
         logo_sitio();
         secciones();
-        
+
         $categorias = Category::all();
         return view('admin.category.index', compact('categorias'));
     }
@@ -46,7 +49,7 @@ class CategoryController extends Controller
     {
         logo_sitio();
         secciones();
-            
+
         return view('admin.category.create');
     }
 
@@ -57,57 +60,72 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-{
-    $request->validate([    
-            'name' => 'required|max:255',    
-            'slug' => 'required|unique:categorias|max:255',    
-            'description' => 'nullable|max:65535',    
-            'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',    
-            'status' => 'nullable',    
+    {
+
+
+        $rules = [
+            'name' => 'required|max:255',
+            'slug' => 'required|unique:categorias|max:255',
+            'description' => 'nullable|max:65535',
+            'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'status' => 'nullable',
             'popular' => 'nullable'
-        ], [    
-            'name.required' => 'El nombre de la categoría es obligatorio.',    
-            'name.max' => 'El nombre de la categoría no debe exceder los 255 caracteres.',    
-            'slug.required' => 'El slug es obligatorio.',    
-            'slug.unique' => 'El slug ya ha sido utilizado por otra categoría.',    
-            'slug.max' => 'El slug no debe exceder los 255 caracteres.',    
-            'description.max' => 'La descripción no debe exceder los 65535 caracteres.',    
-            'image.required' => 'La imagen es obligatoria.',    
-            'image.image' => 'El archivo seleccionado debe ser una imagen.',    
-            'image.mimes' => 'La imagen debe tener un formato válido (jpg, jpeg, png o gif).',    
-            'image.max' => 'La imagen no debe pesar más de 2MB.'
-        ]);
+        ];
+        $messages = [
+            'name.required' => 'El nombre de la categoría es requerido.',
+            'name.max' => 'El nombre de la categoría no puede exceder los 255 caracteres.',
+            'slug.required' => 'El slug de la categoría es requerido.',
+            'slug.unique' => 'El slug de la categoría ya está en uso.',
+            'slug.max' => 'El slug de la categoría no puede exceder los 255 caracteres.',
+            'description.max' => 'La descripción de la categoría no puede exceder los 65535 caracteres.',
+            'image.required' => 'La imagen de la categoría es requerida.',
+            'image.image' => 'El archivo seleccionado debe ser una imagen.',
+            'image.mimes' => 'El archivo seleccionado debe ser una imagen en formato JPG, JPEG, PNG o GIF.',
+            'image.max' => 'El tamaño de la imagen no puede exceder los 2048 KB.',
+        ];
 
 
-    $categoria = new Category();
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if (!$validator->fails()) {
+            try {
 
-    if($request->hasFile('image')){
-        $file = $request->file('image');
-        $ext = $file->getClientOriginalExtension();
-        $filename = time().'.'.$ext;
+                $categoria = new Category();
 
-        $image = Image::make($file);
-        $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
-        $image->save(storage_path('app/public/uploads/categorias/' . $filename));
-        $categoria->image = $filename;
+                if ($request->hasFile('image')) {
+                    $file = $request->file('image');
+                    $ext = $file->getClientOriginalExtension();
+                    $filename = time() . '.' . $ext;
+
+                    $image = Image::make($file);
+                    $image->resize(800, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->encode('jpg', 70);
+                    $image->save(storage_path('app/public/uploads/categorias/' . $filename));
+                    $categoria->image = $filename;
+                }
+
+                $categoria->name = $request->input('name');
+                $categoria->slug = $request->input('slug');
+                $categoria->description = $request->input('description');
+                $categoria->status = $request->input('status') == TRUE ? '1' : '0';
+                $categoria->popular = $request->input('status') == TRUE ? '1' : '0';
+
+                $notifications = new Notification();
+                $notifications->detalle = 'Categoría añadida: ' . $categoria->name;
+                $notifications->id_usuario = Auth::id();
+                $notifications->tipo = 0;
+                $notifications->save();
+
+                $categoria->save();
+                DB::commit();
+                return redirect('/categorias')->with('status', 'Categoría añadida exitosamente!.');
+            } catch (\Illuminate\Database\QueryException $e) {
+                DB::rollBack();
+                return back()->withErrors($validator)->withInput();
+            }
+        }
+        return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
-
-    $categoria->name = $request->input('name');
-    $categoria->slug = $request->input('slug');
-    $categoria->description = $request->input('description');
-    $categoria->status = $request->input('status') == TRUE ? '1':'0';
-    $categoria->popular = $request->input('status') == TRUE ? '1':'0';
-
-    $notifications = new Notification();
-    $notifications->detalle = 'Categoría añadida: ' . $categoria->name;
-    $notifications->id_usuario = Auth::id();
-    $notifications->tipo = 0;
-    $notifications->save();
-
-    $categoria->save();
-
-    return redirect('/categorias')->with('status', 'Categoría añadida exitosamente!.');
-}
 
     /**
      * Display the specified resource.
@@ -120,7 +138,7 @@ class CategoryController extends Controller
         $categoria = Category::findOrFail($id);
 
         return view('admin.category.show', compact('categoria'));
-   }
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -133,7 +151,7 @@ class CategoryController extends Controller
         $categoria = Category::find($id);
         logo_sitio();
         secciones();
-        
+
         return view('admin.category.edit', compact('categoria'));
     }
 
@@ -153,29 +171,31 @@ class CategoryController extends Controller
             'slug' => ['required', Rule::unique('categorias')->ignore($categoria->id)],
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'description' => ['nullable', 'string'],
-        ], [    
-            'name.required' => 'El nombre de la categoría es obligatorio.',    
-            'slug.required' => 'El slug es obligatorio.',    
-            'slug.unique' => 'El slug ya ha sido utilizado por otra categoría.',    
-            'description.max' => 'La descripción no debe exceder los 65535 caracteres.',    
-            'image.required' => 'La imagen es obligatoria.',    
-            'image.image' => 'El archivo seleccionado debe ser una imagen.',    
-            'image.mimes' => 'La imagen debe tener un formato válido (jpg, jpeg, png o gif).',    
+        ], [
+            'name.required' => 'El nombre de la categoría es obligatorio.',
+            'slug.required' => 'El slug es obligatorio.',
+            'slug.unique' => 'El slug ya ha sido utilizado por otra categoría.',
+            'description.max' => 'La descripción no debe exceder los 65535 caracteres.',
+            'image.required' => 'La imagen es obligatoria.',
+            'image.image' => 'El archivo seleccionado debe ser una imagen.',
+            'image.mimes' => 'La imagen debe tener un formato válido (jpg, jpeg, png o gif).',
             'image.max' => 'La imagen no debe pesar más de 2MB.'
         ]);
 
-        if($request->hasFile('image')){
-            $path = storage_path('app/public/uploads/categorias/'.$categoria->imagen);          
-            if(File::exists($path)){
-                File::delete($path); 
+        if ($request->hasFile('image')) {
+            $path = storage_path('app/public/uploads/categorias/' . $categoria->imagen);
+            if (File::exists($path)) {
+                File::delete($path);
             }
 
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
-            $filename = time().'.'.$ext;
-            
+            $filename = time() . '.' . $ext;
+
             $image = Image::make($file);
-            $image->resize(800, null, function ($constraint) {$constraint->aspectRatio();})->encode('jpg', 70);
+            $image->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->encode('jpg', 70);
             $image->save(storage_path('app/public/uploads/categorias/' . $filename));
             $categoria->image = $filename;
         }
@@ -183,12 +203,11 @@ class CategoryController extends Controller
         $categoria->name = $request->input('name');
         $categoria->slug = $request->input('slug');
         $categoria->description = $request->input('description');
-        $categoria->status = $request->input('status') == TRUE ? '1':'0';
-        $categoria->popular = $request->input('popular') == TRUE ? '1':'0';
+        $categoria->status = $request->input('status') == TRUE ? '1' : '0';
+        $categoria->popular = $request->input('popular') == TRUE ? '1' : '0';
         $categoria->update();
 
-        return redirect('/categorias')->with('status','Categoría actualizada exitosamente.');
-
+        return redirect('/categorias')->with('status', 'Categoría actualizada exitosamente.');
     }
 
     /**
@@ -201,11 +220,11 @@ class CategoryController extends Controller
     {
         $categoria = Category::find($id);
 
-        if($categoria->image){
-            $path = storage_path('app/public/uploads/categorias/'.$categoria->imagen);   
-            
-            if(File::exists($path)){
-                File::delete($path); 
+        if ($categoria->image) {
+            $path = storage_path('app/public/uploads/categorias/' . $categoria->imagen);
+
+            if (File::exists($path)) {
+                File::delete($path);
             }
         }
 
@@ -217,6 +236,6 @@ class CategoryController extends Controller
 
         $categoria->delete();
 
-        return redirect('/categorias')->with('status','Categoría eliminada Exitosamente');
+        return redirect('/categorias')->with('status', 'Categoría eliminada Exitosamente');
     }
 }

@@ -15,12 +15,44 @@
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-  <!-- Theme style -->  
-  <link rel="stylesheet" href="{{ asset('admin/dist/css/adminlte.min.css') }}">
-  
-  <link rel="stylesheet" href="{{ asset('admin/dist/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}">
-  
-  <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('admin/dist/css/adminlte.min.css') }}">
+
+    <link rel="stylesheet"
+        href="{{ asset('admin/dist/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/css/sidebar.css') }}">
+
+    <style>
+        .hide2 {
+            opacity: 0;
+            filter: blur(3px);
+            transition: all .6s;
+        }
+
+        .sho {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateX(0);
+        }
+
+        .modal .modal-dialog {
+            overflow-y: auto !important;
+            max-height: 90vh;
+        }
+
+        .custom-swal-bg {
+            background-color: #dc3545 !important;
+            color: white !important;
+        }
+
+        .custom-swal-success {
+            background-color: #07c443 !important;
+            color: white !important;
+        }
+    </style>
+    @yield('css_before')
+
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -94,26 +126,67 @@
     <script src="{{ asset('admin/dist/js/adminlte.min.js') }}"></script>
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
     <script src="{{ asset('admin/js/idioma.js') }}"></script>
-    <script src="{{ asset('frontend/js/custom.js') }}"></script>
     <script src="{{ asset('admin/js/myChart.js') }}"></script>
     <script src="https://kit.fontawesome.com/d75291e766.js" crossorigin="anonymous"></script>
-
+    <script src="{{ asset('frontend/js/custom.js') }}"></script>
     @yield('after_scripts')
-
+    <script>
+        $('body').addClass('layout-fixed');
+    </script>
     @if (session('status'))
         <script>
             Swal.fire({
                 toast: true,
-                position: 'top-end',
+                position: 'bottom-end',
                 timer: 2000,
                 timerProgressBar: true,
                 icon: 'success',
                 title: "{{ session('status') }}",
                 showConfirmButton: false,
-            })
+                customClass: {
+                    popup: 'custom-swal-success'
+                }
+            });
         </script>
     @endif
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'bottom-end',
+                timer: 3000,
+                timerProgressBar: true,
+                icon: 'warning',
+                title: "{{ session('error') }}",
+                background: 'danger',
+                showConfirmButton: false,
+                customClass: {
+                    popup: 'custom-swal-bg'
+                }
+            });
+        </script>
+    @endif
+    <script>
+        $(document).ready(function() {
+            // Detectar cambios en el estado del sidebar
+            $('.sidebar').on('collapsed.lte.treeview expanded.lte.treeview', function() {
+                toggleSidebarFooter();
+            });
 
+            // Función para ocultar o mostrar el sidebar-footer
+            function toggleSidebarFooter() {
+                var sidebarFooter = $('.sidebar-footer');
+                if ($('.sidebar').hasClass('sidebar-collapse')) {
+                    sidebarFooter.hide();
+                } else {
+                    sidebarFooter.show();
+                }
+            }
+
+            // Inicialmente ocultar o mostrar el sidebar-footer según el estado del sidebar
+            toggleSidebarFooter();
+        });
+    </script>
 </body>
 
 </html>

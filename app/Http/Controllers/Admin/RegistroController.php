@@ -32,9 +32,10 @@ class RegistroController extends Controller
     {
         logo_sitio();
         secciones();
-
+        $proveedores = Proveedor::all();
         $registros = Registro::all();
-        return view('admin.registro.index', compact('registros'));
+        $ingredientes = Ingrediente::all();
+        return view('admin.registro.index', compact('registros', 'proveedores', 'ingredientes'));
     }
 
     /**
@@ -75,7 +76,7 @@ class RegistroController extends Controller
 
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
 
             try {
                 $registro = new Registro();
@@ -99,26 +100,22 @@ class RegistroController extends Controller
                 $registro->save();
 
                 $ingrediente = Ingrediente::find($request->input('id_ingrediente'));
-                $ingrediente->cantidad = $ingrediente->cantidad + $request->input('cantidad');
+                $cantidadagregada = $request->input('cantidad');
+                $ingrediente->cantidad = $ingrediente->cantidad + $cantidadagregada;
                 $ingrediente->save();
-                
+
                 $notifications = new Notification();
-                $notifications->detalle = 'Se añadio ' . $ingrediente->cantidad . ' de '. $ingrediente->name . ' a nuestros registros';
+                $notifications->detalle = 'Se añadio ' . $ingrediente->cantidad . ' de ' . $ingrediente->name . ' a nuestros registros';
                 $notifications->id_usuario = Auth::id();
                 $notifications->tipo = 0;
                 $notifications->save();
 
                 DB::commit();
                 return redirect('/registros')->with('status', 'Registro añadido exitosamente!.');
-
-
-
-            } catch (\Illuminate\Datebase\QueryException $e) {
+            } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
-
             }
-
         }
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
@@ -165,7 +162,7 @@ class RegistroController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
 
             try {
 
@@ -189,17 +186,12 @@ class RegistroController extends Controller
                 $registro->update();
                 DB::commit();
                 return redirect('/registros')->with('status', 'Registro Editado exitosamente!.');
-
-
-            } catch (\Illuminate\Datebase\QueryException $e) {
+            } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
-
             }
-
         }
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
-
     }
 
     /**
@@ -218,7 +210,7 @@ class RegistroController extends Controller
         $ingrediente->update();
 
         $notifications = new Notification();
-        $notifications->detalle = 'Se elimino ' . $ingrediente->cantidad . ' de '. $ingrediente->name . ' de nuestros registros';
+        $notifications->detalle = 'Se elimino ' . $ingrediente->cantidad . ' de ' . $ingrediente->name . ' de nuestros registros';
         $notifications->id_usuario = Auth::id();
         $notifications->tipo = 2;
         $notifications->save();

@@ -8,20 +8,40 @@
     </a>
 
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" style="position: relative">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="{{ Storage::url('users/' . Auth::user()->imagen) }}" class="img-circle elevation-2"
-                    alt="User">
-            </div>
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex align-items-center" style="padding-bottom:0!important">
+            @if (Auth::user()->imagen)
+                <div class="image">
+                    <img src="{{ Storage::url('users/' . Auth::user()->imagen) }}" class="user-img elevation-2"
+                        style="width: 70px !important; border-radius:10px" alt="User">
+                </div>
+            @endif
+            <?php
+            $nombreUsuario = Auth::user()->name;
+            $palabras = explode(' ', $nombreUsuario);
+            $primerNombre = $palabras[0];
+            if (isset($palabras[1])) {
+                $segundoNombre = $palabras[1];
+            }
+            $roles = Auth::user()->getRoleNames();
+            $roleName = $roles->first();
+            ?>
             <div class="info">
-                <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                    onmouseout="this.style.backgroundColor='transparent'" style="color: {{ $color_a_tag_sidebar }}"
-                    href="#" class="d-block">{{ Auth::user()->name }}</a>
+                <span style="color: {{ $color_a_tag_sidebar }}" class="d-block">{{ $primerNombre }}
+                    @if (isset($segundoNombre))
+                        <strong>{{ $segundoNombre }}</strong>
+                    @endif
+                </span>
+                <span style="color: {{ $color_a_tag_sidebar }}" class="d-block">{{ $roleName }}</span>
+                <span style="color: {{ $color_a_tag_sidebar }}" class="d-flex align-items-center">
+                    <div style="width:5px;height:5px;border-radius:50%;background-color:greenyellow;" class="mr-2">
+                    </div>Online
+                </span>
+
             </div>
         </div>
-
+        <hr class="bg-white">
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -29,22 +49,11 @@
                 <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
 
-                @can('ver dashboard')
+                @can('ver notificaciones')
                     <li class="nav-item">
                         <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                             onmouseout="this.style.backgroundColor='transparent'"
-                            style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('dashboard') ? $color_a_tag_hover : '' }}"
-                            href="{{ url('/dashboard') }}" class="nav-link">
-                            <i class="fa-solid fa-house"></i>
-                            <p>
-                                Inicio
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                            onmouseout="this.style.backgroundColor='transparent'"
-                            style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('notificaciones') ? $color_a_tag_hover : '' }}"
+                            style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('notificaciones') ? $color_a_tag_hover : '' }};"
                             href="{{ url('/notificaciones') }}" class="nav-link">
                             <i class="fa-solid fa-bell"></i>
                             <p>
@@ -53,262 +62,153 @@
                         </a>
                     </li>
                 @endcan
+                @if (auth()->user()->hasPermissionTo('ver productos') ||
+                        auth()->user()->hasPermissionTo('ver categorias') ||
+                        auth()->user()->hasPermissionTo('ver ingredientes'))
+                    <li class="nav-header" style="color: {{ $color_a_tag_sidebar }}">
+                        PRODUCTOS & INGREDIENTES
+                    </li>
+                @endif
 
-                @can(['ver productos', 'ver categorias', 'ver ingredientes'])
-                    <li class="nav-header" style="color: {{ $color_a_tag_sidebar }}">PRODUCTOS & INGREDIENTES</li>
-                    @can('ver productos')
 
-                        @if ($productos)
-                            <li class="nav-item has-treeview">
-                                <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                    onmouseout="this.style.backgroundColor='transparent'"
-                                    style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/productos') }}" class="nav-link">
-                                    <i class="fa-solid fa-cart-flatbed"></i>
-                                    <p> &nbsp;Productos</p>
-                                </a>
-                                {{-- <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                        onmouseout="this.style.backgroundColor='transparent'"
-                                        style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('productos') ? $color_a_tag_hover : '' }}"
-                                        href="{{ url('/productos') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Ver todos</p>
-                                    </a>
-                                </li>
-                                @can('add productos')
-                                    <li class="nav-item">
-                                        <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                            onmouseout="this.style.backgroundColor='transparent'"
-                                            style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('crear-producto') || Request::is('edit-prod/*') ? $color_a_tag_hover : '' }}"
-                                            href="{{ url('/crear-producto') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Ingresar</p>
-                                        </a>
-                                    </li>
-                                @endcan
-                            </ul> --}}
-                            </li>
-                        @endif
-                    @endcan
-                    @can('ver categorias')
-                        @if ($categorias)
-                            <li class="nav-item">
-                                <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                    onmouseout="this.style.backgroundColor='transparent'"
-                                    style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('categorias') || Request::is('crear-categoria') || Request::is('edit-cat/*') ? $color_a_tag_hover : '' }}"
-                                    href="{{ url('/categorias') }}" class="nav-link">
-                                    <i class="fa-solid fa-cubes-stacked"></i>
-                                    <p>
-                                        &nbsp; Categorías
-                                    </p>
-                                </a>
-                            </li>
-                        @endif
-                    @endcan
-
-                    @can('ver ingredientes')
-                        @if ($ingredientes)
-                            <li class="nav-item has-treeview">
-                                <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                    onmouseout="this.style.backgroundColor='transparent'"
-                                    style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/ingredientes') }}"
-                                    class="nav-link">
-                                    <i class="fa-solid fa-jar"></i>
-                                    <p>
-                                        &nbsp;Ingredientes
-                                    </p>
-                                </a>
-                                {{-- <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                        onmouseout="this.style.backgroundColor='transparent'"
-                                        style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('ingredientes') ? $color_a_tag_hover : '' }}"
-                                        href="{{ url('/ingredientes') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Ver todos</p>
-                                    </a>
-                                </li>
-                                @can('add ingredientes')
-                                    <li class="nav-item">
-                                        <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                            onmouseout="this.style.backgroundColor='transparent'"
-                                            style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('crear-ingrediente') || Request::is('edit-ing/*') ? $color_a_tag_hover : '' }}"
-                                            href="{{ url('/crear-ingrediente') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Ingresar</p>
-                                        </a>
-                                    </li>
-                                @endcan
-                            </ul> --}}
-                            </li>
-                        @endif
-                    @endcan
+                @can('ver productos')
+                    @if ($productos)
+                        <li class="nav-item has-treeview">
+                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                                onmouseout="this.style.backgroundColor='transparent'"
+                                style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/productos') }}" class="nav-link">
+                                <i class="fa-solid fa-cart-flatbed"></i>
+                                <p>Productos</p>
+                            </a>
+                        </li>
+                    @endif
                 @endcan
-                @can(['ver proveedores', 'ver registros', 'ver ordenes'])
-                    <li class="nav-header" style="color: {{ $color_a_tag_sidebar }}">PROVEEDORES & ORDENES</li>
-                    @can('ver proveedores')
-                        @if ($proveedores)
-                            <li class="nav-item has-treeview">
-                                <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                    onmouseout="this.style.backgroundColor='transparent'"
-                                    style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/proveedores') }}"
-                                    class="nav-link">
-                                    <i class="fa-solid fa-user-tie"></i>
-                                    <p>
-                                        &nbsp;Proveedores
-                                    </p>
-                                </a>
-                                {{-- <ul class="nav nav-treeview">
-                                @can('ver proveedores')
-                                    <li class="nav-item">
-                                        <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                            onmouseout="this.style.backgroundColor='transparent'"
-                                            style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('proveedores') ? $color_a_tag_hover : '' }}"
-                                            href="{{ url('/proveedores') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Ver todos</p>
-                                        </a>
-                                    </li>
-                                @endcan
-                                @can('add proveedores')
-                                    <li class="nav-item">
-                                        <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                            onmouseout="this.style.backgroundColor='transparent'"
-                                            style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('crear-proveedor') || Request::is('edit-prov/*') ? $color_a_tag_hover : '' }}"
-                                            href="{{ url('/crear-proveedor') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Ingresar</p>
-                                        </a>
-                                    </li>
-                                @endcan
-                            </ul> --}}
-                            </li>
-                        @endif
-                    @endcan
-
-                    @can('ver registros')
-                        @if ($registros)
-                            <li class="nav-item has-treeview">
-                                <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                    onmouseout="this.style.backgroundColor='transparent'"
-                                    style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/registros') }}" class="nav-link">
-                                    <i class="fa-regular fa-clipboard"></i>
-                                    <p>
-                                        &nbsp;Registro
-                                    </p>
-                                </a>
-                                {{-- <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                        onmouseout="this.style.backgroundColor='transparent'"
-                                        style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('registro') ? $color_a_tag_hover : '' }}"
-                                        href="{{ url('/registros') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Ver todos</p>
-                                    </a>
-                                </li>
-                                @can('add registros')
-                                    <li class="nav-item">
-                                        <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                            onmouseout="this.style.backgroundColor='transparent'"
-                                            style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('crear-registro') || Request::is('edit-reg/*') ? $color_a_tag_hover : '' }}"
-                                            href="{{ url('/crear-registro') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Ingresar</p>
-                                        </a>
-                                    </li>
-                                @endcan
-                            </ul> --}}
-                            </li>
-                        @endif
-                    @endcan
-
-
-                    @can('ver ordenes')
-                        @if ($ordenes)
-                            <li class="nav-item">
-                                <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                    onmouseout="this.style.backgroundColor='transparent'"
-                                    style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('ordenes') ? $color_a_tag_hover : '' }}"
-                                    href="{{ url('ordenes') }}" class="nav-link">
-                                    <i class="fa-solid fa-calendar-day"></i>
-                                    <p>
-                                        &nbsp;Ordenes
-                                    </p>
-                                </a>
-                            </li>
-                        @endif
-                    @endcan
-                @endcan
-                @can(['ver usuarios', 'ver configuracion', 'ver roles'])
-                    <li class="nav-header" style="color: {{ $color_a_tag_sidebar }}">USUARIOS & CONFIGURACIÓN</li>
-                    @can('ver usuarios')
-                        @if ($usuarios)
-                            <li class="nav-item">
-                                <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                    onmouseout="this.style.backgroundColor='transparent'"
-                                    style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('usuarios') ? $color_a_tag_hover : '' }}"
-                                    href="{{ url('/usuarios') }}" class="nav-link">
-                                    <i class="fa-solid fa-users"></i>
-                                    <p>
-                                        &nbsp; Usuarios
-                                    </p>
-                                </a>
-                                {{-- <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                            onmouseout="this.style.backgroundColor='transparent'"
-                                            style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('usuarios') ? $color_a_tag_hover : '' }}"
-                                            href="{{ url('/usuarios') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Ver todos</p>
-                                        </a>
-                                    </li>
-                                    @can('add usuarios')
-                                        <li class="nav-item">
-                                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                                onmouseout="this.style.backgroundColor='transparent'"
-                                                style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('add-usuario') || Request::is('edit-reg/*') ? $color_a_tag_hover : '' }}"
-                                                href="{{ url('/add-usuario') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Ingresar</p>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                </ul> --}}
-                            </li>
-                        @endif
-                    @endcan
-
-                    @can('ver configuracion')
+                @can('ver categorias')
+                    @if ($categorias)
                         <li class="nav-item">
                             <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                 onmouseout="this.style.backgroundColor='transparent'"
-                                style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('configuracion') ? $color_a_tag_hover : '' }}"
-                                href="{{ url('configuracion') }}" class="nav-link">
-                                <i class="fa-solid fa-screwdriver-wrench"></i>
+                                style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('categorias') || Request::is('crear-categoria') || Request::is('edit-cat/*') ? $color_a_tag_hover : '' }}"
+                                href="{{ url('/categorias') }}" class="nav-link">
+                                <i class="fa-solid fa-cubes-stacked"></i>
+                                <p>Categorías</p>
+                            </a>
+                        </li>
+                    @endif
+                @endcan
+
+                @can('ver ingredientes')
+                    @if ($ingredientes)
+                        <li class="nav-item has-treeview">
+                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                                onmouseout="this.style.backgroundColor='transparent'"
+                                style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/ingredientes') }}"
+                                class="nav-link">
+                                <i class="fa-solid fa-jar"></i>
                                 <p>
-                                    &nbsp; Configuración
+                                    Ingredientes
                                 </p>
                             </a>
                         </li>
-                        @can('ver roles')
-                            @if ($roles_permisos)
-                                <li class="nav-item">
-                                    <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                                        onmouseout="this.style.backgroundColor='transparent'"
-                                        style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('roles') ? $color_a_tag_hover : '' }}"
-                                        href="{{ url('roles') }}" class="nav-link">
-                                        <i class="fa-solid fa-user-lock"></i>
-                                        <p>
-                                            &nbsp;Roles & Permisos
-                                        </p>
-                                    </a>
-                                </li>
-                            @endif
-                        @endcan
-                    @endcan
+                    @endif
+                @endcan
+                @if (auth()->user()->hasPermissionTo('ver proveedores') ||
+                        auth()->user()->hasPermissionTo('ver registros') ||
+                        auth()->user()->hasPermissionTo('ver ordenes'))
+                    <li class="nav-header" style="color: {{ $color_a_tag_sidebar }}">PROVEEDORES & ORDENES</li>
+                @endif
+                @can('ver proveedores')
+                    @if ($proveedores)
+                        <li class="nav-item has-treeview">
+                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                                onmouseout="this.style.backgroundColor='transparent'"
+                                style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/proveedores') }}"
+                                class="nav-link">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <p>
+                                    Proveedores
+                                </p>
+                            </a>
+                        </li>
+                    @endif
+                @endcan
+                @can('ver registros')
+                    @if ($registros)
+                        <li class="nav-item has-treeview">
+                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                                onmouseout="this.style.backgroundColor='transparent'"
+                                style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/registros') }}" class="nav-link">
+                                <i class="fa-regular fa-clipboard"></i>
+                                <p>
+                                    Registro
+                                </p>
+                            </a>
+                        </li>
+                    @endif
+                @endcan
+                @can('ver ordenes')
+                    @if ($ordenes)
+                        <li class="nav-item">
+                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                                onmouseout="this.style.backgroundColor='transparent'"
+                                style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('ordenes') ? $color_a_tag_hover : '' }}"
+                                href="{{ url('ordenes') }}" class="nav-link">
+                                <i class="fa-solid fa-calendar-day"></i>
+                                <p>
+                                    Ordenes
+                                </p>
+                            </a>
+                        </li>
+                    @endif
+                @endcan
+                @if (auth()->user()->hasPermissionTo('ver usuarios') ||
+                        auth()->user()->hasPermissionTo('ver configuracion') ||
+                        auth()->user()->hasPermissionTo('ver roles'))
+                    <li class="nav-header" style="color: {{ $color_a_tag_sidebar }}">USUARIOS & CONFIGURACIÓN</li>
+                @endif
+                @can('ver usuarios')
+                    @if ($usuarios)
+                        <li class="nav-item">
+                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                                onmouseout="this.style.backgroundColor='transparent'"
+                                style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('usuarios') ? $color_a_tag_hover : '' }}"
+                                href="{{ url('/usuarios') }}" class="nav-link">
+                                <i class="fa-solid fa-users"></i>
+                                <p>
+                                    Usuarios
+                                </p>
+                            </a>
+                        </li>
+                    @endif
+                @endcan
+
+                @can('ver configuracion')
+                    <li class="nav-item">
+                        <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                            onmouseout="this.style.backgroundColor='transparent'"
+                            style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('configuracion') ? $color_a_tag_hover : '' }}"
+                            href="{{ url('configuracion') }}" class="nav-link">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                            <p>
+                                Configuración
+                            </p>
+                        </a>
+                    </li>
+                @endcan
+                @can('ver roles')
+                    @if ($roles_permisos)
+                        <li class="nav-item">
+                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                                onmouseout="this.style.backgroundColor='transparent'"
+                                style="color: {{ $color_a_tag_sidebar }}; background-color:{{ Request::is('roles') ? $color_a_tag_hover : '' }}"
+                                href="{{ url('roles') }}" class="nav-link">
+                                <i class="fa-solid fa-user-lock"></i>
+                                <p>
+                                    Roles & Permisos
+                                </p>
+                            </a>
+                        </li>
+                    @endif
                 @endcan
                 @can('ver perfil')
                     <li class="nav-item">
@@ -323,7 +223,7 @@
                         </a>
                     </li>
                 @endcan
-                <li class="nav-item mt-3">
+                {{-- <li class="nav-item mt-3">
                     <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                         onmouseout="this.style.backgroundColor='transparent'"
                         style="color: {{ $color_a_tag_sidebar }}" class="nav-link" href="{{ route('logout') }}"
@@ -334,11 +234,16 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
-                </li>
+                </li> --}}
 
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
     </div>
+
     <!-- /.sidebar -->
+    <div class="slimScrollBar" style="background: grey; opacity: 0.4; border-radius: 7px;">
+    </div>
+    <div class="slimScrollRail" style=" border-radius: 7px; background: blue; opacity: 0.2; ">
+    </div>
 </aside>

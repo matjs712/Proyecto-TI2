@@ -52,7 +52,6 @@ const sweet = (response) =>{
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     })
-
     function getQTY() {
         $.ajax({
           method: "GET",
@@ -61,22 +60,34 @@ const sweet = (response) =>{
             $('.qty-item').html('');
             $('.qty-count').html('');
             var count = 0;
+            var remainingCount = 0;
+            console.log(response);
             $.each(response, function (key, value) {
+              if (key === '+') {
+                remainingCount = value;
+              } else {
                 count++;
-                $('.qty-count').html(count);
                 var color = 'black';
                 if (value == '1') {
                   color = 'orange';
-                } else if(value == '2'){
+                } else if (value == '2') {
                   color = 'red';
                 }
                 var linkHTML = '<a href="/notificaciones" class="dropdown-item" style="color: ' + color + '"><div class="media"><div class="media-body"><span>' + key + '</span></div></div></a>';
                 $('.qty-item').append(linkHTML);
+              }
             });
+      
+            if (remainingCount > 0) {
+                
+              var remainingText = '<a href="/notificaciones" class="dropdown-item text-primary" ><div class="media"><div class="media-body"><span>' + '+' + remainingCount + ' notificaciones restantes'  + '</span></div></div></a>';
+              $('.qty-item').append('<div>' + remainingText + '</div>');
+            }
+      
+            $('.qty-count').html(count);
           }
         });
       }
-      
 
     $('.addCartBtn').click(function (e) {
         e.preventDefault()
@@ -255,6 +266,8 @@ window.addEventListener('load', () => {
     });
     const hiddenElements = document.querySelectorAll('.hide');
     hiddenElements.forEach((el) => observer.observe(el));
+    const hiddenElements2 = document.querySelectorAll('.hide2');
+    hiddenElements2.forEach((el) => observer.observe(el));
 });
 
 // $(window).on('scroll', function() { //funcion para cuando se haga scroll aparezca el modal
@@ -279,31 +292,29 @@ window.addEventListener('load', () => {
 });
 
 
-const countdown = () =>{
-    const countDate = new Date('june 3, 2023 22:00:00').getTime();
-    const now = new Date().getTime();
-    const gap = countDate - now;
+// const countdown = () =>{
+//     const countDate = new Date('june 3, 2023 22:00:00').getTime();
+//     const now = new Date().getTime();
+//     const gap = countDate - now;
 
-    const second = 1000;
-    const minute = second * 60;
-    const hour = minute * 60;
-    const day = hour * 24;
+//     const second = 1000;
+//     const minute = second * 60;
+//     const hour = minute * 60;
+//     const day = hour * 24;
 
-    const textDay = Math.floor(gap / day);
-    const textHour = Math.floor((gap % day) / hour);
-    const textMinute = Math.floor((gap % hour) / minute);
-    const textSecond = Math.floor((gap % minute) / second);
+//     const textDay = Math.floor(gap / day);
+//     const textHour = Math.floor((gap % day) / hour);
+//     const textMinute = Math.floor((gap % hour) / minute);
+//     const textSecond = Math.floor((gap % minute) / second);
 
-    document.querySelector('.day').innerText = textDay;
-    document.querySelector('.hour').innerText = textHour;
-    document.querySelector('.minute').innerText = textMinute;
-    document.querySelector('.second').innerText = textSecond;
+//     document.querySelector('.day').innerText = textDay;
+//     document.querySelector('.hour').innerText = textHour;
+//     document.querySelector('.minute').innerText = textMinute;
+//     document.querySelector('.second').innerText = textSecond;
 
-    // if(gap < 10000){
-    //     // Hacer algo
-    // }
-
-
-}
-setInterval(() => countdown(), 1000);
+//     // if(gap < 10000){
+//     //     // Hacer algo
+//     // }
+// }
+// setInterval(() => countdown(), 1000);
 
