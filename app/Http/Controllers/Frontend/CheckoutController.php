@@ -216,7 +216,7 @@ class CheckoutController extends Controller
             $order->update();
 
             $notifications = new Notification();
-            $notifications->detalle = 'Se agrego la orden de serivicio: '. $order->id;
+            $notifications->detalle = 'Se agrego la orden de servicio: '. $order->id;
             $notifications->id_usuario = Auth::id();
             $notifications->tipo = 1;
             $notifications->save();

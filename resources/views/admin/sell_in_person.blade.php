@@ -4,6 +4,25 @@ Usuarios | {{ $sitio }}
 @endsection
 
 @section('content')
+
+<style>
+    
+    #video {
+  position: relative;
+}
+
+#video video {
+  position: relative;
+  z-index: 1;
+}
+
+#video canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+</style>
 <div class="container">
     
         <div class="row vh-100">
@@ -21,7 +40,6 @@ Usuarios | {{ $sitio }}
             
             <div class="col-md-5">
                 <div class="card">
-                    
                         <div class="card-body">
                             <h6>Orden</h6>
                             <hr>
@@ -30,10 +48,13 @@ Usuarios | {{ $sitio }}
                                 <p id="precio"></p>
                             </div>
                             <hr>
-                            <form id="form" action="{{ url('iniciar_compra_presencial') }}" method="POST">
-                                @csrf
-                                <button style="width: 100%;" class="btn btn-primary btnPagar">Ir al pago</button>
-                            </form>
+                            <select id="metodoPago" class="form-select" aria-label="Default select">
+                                <option hidden selected>Metodo de pago</option>
+                                <option value="1">Efectivo</option>
+                                <option value="2">WebPay</option>
+                              </select>
+                              <hr>
+                            <button style="width: 100%;" class="btn btn-primary btnPagar">Ir al pago</button>
                         </div>
                 </div>
             </div>
@@ -43,17 +64,34 @@ Usuarios | {{ $sitio }}
 
 <!-- Modal de escaneo -->
 <div id="escanerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="escanerModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+    <div class="modal-dialog">
+        <div class="modal-content overflow-hidden">
             <div class="modal-header">
                 <h5 class="modal-title" id="escanerModalLabel">Escanear producto</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div id="video" style="width: 100%;"></div>
+            <div class="modal-body d-flex justify-content-center align-items-center w-100 h-75 overflow-hidden">
+                <div class="" id="video"></div>
             </div>
+
+        </div>
+    </div>
+</div>
+<div id="qrModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content h-100">
+            <div class="modal-header">
+                <h5 class="modal-title" id="qrModalLabel">Realizar pago</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex justify-content-center">
+                <canvas style="height: 300px; width: 300px" id="qr"></canvas>
+            </div>
+
         </div>
     </div>
 </div>
@@ -63,37 +101,42 @@ Usuarios | {{ $sitio }}
 <script>
     
     $('#btnMostrarModal').on('click', function () {
-        /*
+        let codigoLeido = false;
         Quagga.init({
             inputStream: {
                 name: "Live",
                 type: "LiveStream",
+                constraints:{
+                    width: 480,
+                    height: 360,
+                },
                 target: document.querySelector('#video')
             },
+            // frequency: 10,
             decoder: {
-                readers: ["ean_reader"] // Puedes agregar otros tipos de lectores según tus necesidades
+                readers: ["code_128_reader"] // Puedes agregar otros tipos de lectores según tus necesidades
             }
         }, function (err) {
             if (err) {
                 console.error(err);
                 return;
             }
-
+            
             Quagga.start();
             $('#escanerModal').modal('show');
         });
 
         Quagga.onDetected(function (result) {
-            var code = result.codeResult.code;
-            console.log(code);
-            agregarProducto(code);
-            Quagga.stop();
-            $('#escanerModal').modal('hide');
+            if(!codigoLeido){
+                codigoLeido = true;
+                let code = result.codeResult.code;
+                console.log(code);
+                Quagga.stop();
+                agregarProducto(code);
+                $('#escanerModal').modal('hide');
+            }
         });
-        */
-    agregarProducto(3);
-    agregarProducto(1);
-    agregarProducto(2);
+        
 
     });
     let productos = [];
@@ -149,8 +192,17 @@ Usuarios | {{ $sitio }}
             container.append(card);
         });
         $('#precio').html('$ ' + precio);
+        document.getElementById('productos-container').scrollTop = document.getElementById('productos-container').scrollHeight;
     }
 
+    $('#metodoPago').on('change', function(){
+        let valor = $(this).val();
+        if(valor == 1) 
+            $('.btnPagar').html("Completar pago");
+        else
+            $('.btnPagar').html("Obtener QR");
+    });
+    
     $('#productos-container').on('click', '.btn-danger', function () {
         let productId = $(this).closest('.card').attr('id');
         console.log(productId);
@@ -158,7 +210,7 @@ Usuarios | {{ $sitio }}
         let productIndex = productos.findIndex(function (producto) {
             return producto.id == productId;
         });
-            console.log(productIndex);
+        // console.log(productIndex);
     
     // Verificar si se encontró el índice y eliminar el producto del array
         if (productIndex !== -1) {
@@ -204,18 +256,94 @@ Usuarios | {{ $sitio }}
                     'product_qty': carrito[producto].cantidad,
                 },
                 success: function (response) {
-                    console.log("correcto");
+                    console.log(response);
                 },
                 error: function (response){
                     console.log(response);
-                    console.log("error");
                 }
             });
         }
 
-        let form = document.getElementById('form');
+        // let form = document.getElementById('form');
+        // form.submit();
+        let metodoPago = document.getElementById('metodoPago').value;
 
-        form.submit();
+        console.log(metodoPago)
+        if(metodoPago == 2){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            })
+            let qrContainer = document.getElementById('qr');
+            $.ajax({
+                method: "POST",
+                url: "/iniciar-compra-presencial",
+                success: function (response) {
+
+                    $('#qrModal').modal('show');
+                    let qr = new QRious({
+                        element: qrContainer,
+                        value: response,
+                        size: 200
+                    });
+                    $('#qr').html(qr);
+                    console.log(response);
+                },
+                error: function (response){
+                    console.log(response);
+                }
+            });
+        }
+        else{
+            Swal.fire({
+                title: 'Estas seguro?',
+                text: "La orden estará pagada!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#28A745',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, confirmar!',
+                customClass:{
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    })
+                    $.ajax({
+                        method: "POST",
+                        url: "/completar-pago",
+                        success: function (response) {
+                            Swal.fire({
+                                toast: true,
+                                position: 'bottom-end',
+                                timer: 1100,
+                                timerProgressBar: true,
+                                icon: 'success',
+                                title: "Pago realizado con exito",
+                                showConfirmButton: false,
+                                customClass: {
+                                    popup: 'custom-swal-success'
+                                }
+                            }),
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1200);
+                        },
+                        error: function (response){
+                            console.log(response);
+                        }
+                    });
+                    
+                }
+            })
+            
+        }
     });    
 </script>
 

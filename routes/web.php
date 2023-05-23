@@ -63,7 +63,7 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    Route::get('checkout',[CheckoutController::class, 'index']);
    // Route::post('place-order',[CheckoutController::class, 'placeorder']);
    Route::post('iniciar_compra',[CheckoutController::class, 'iniciar_compra']);
-   Route::post('iniciar_compra_presencial',[CheckoutController::class, 'iniciar_compra_presencial']);
+   Route::post('iniciar-compra-presencial',[CheckoutController::class, 'iniciar_compra_presencial']);
   
    Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
 
@@ -83,8 +83,11 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    Route::get('/dashboard',  'Admin\FrontendController@index')->name('dashboard');
    Route::get('/datos-graficos',  'Admin\FrontendController@ChartIngredientes');
     
+   //VENTA PRESENCIAL
    Route::get('venta-presencial', 'Admin\SellInPersonController@index');
    Route::get('agregar-producto', 'Admin\SellInPersonController@agregarProducto');
+   Route::post('completar-pago',[SellInPersonController::class, 'completar_pago']);
+
    
     //NOTIFICAIONES
     Route::get('/notificaciones',  'Admin\NotificationController@index');
