@@ -5,11 +5,11 @@
     </div>
     <div class="col-md-12 d-flex">
         <div class="col-md-6"><strong>Proveedor:</strong></div>
-        <div class="col-md-6">{{ $registros->id_proveedor }}</div>
+        <div class="col-md-6">{{ $registros->proveedor->name }}</div>
     </div>
     <div class="col-md-12 d-flex">
         <div class="col-md-6"><strong>Ingrediente:</strong></div>
-        <div class="col-md-6">{{ $registros->id_ingrediente }}</div>
+        <div class="col-md-6">{{ $registros->ingrediente->name }}</div>
     </div>
 
     <div class="col-md-12 d-flex">

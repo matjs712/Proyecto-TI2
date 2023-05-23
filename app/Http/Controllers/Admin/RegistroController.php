@@ -124,6 +124,13 @@ class RegistroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function show($id)
+    {
+        $registros = Registro::findOrFail($id);
+
+        return view('admin.registros.show', compact('registros'));
+    }
+
     public function edit($id)
     {
         logo_sitio();

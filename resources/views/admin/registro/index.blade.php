@@ -43,10 +43,10 @@
                             <td>{{ $registros->ingrediente->name }}</td>
                             <td><span class="badge badge-primary">{{ $registros->cantidad }}</span></td>
                             <td>
-                                @if ($registros->factura)
-                                    <img width="100" src="{{ Storage::url('uploads/facturas/' . $registros->factura) }}"
-                                        alt="factura-registro">
-                                @endif
+
+                                <img width="100" src="{{ Storage::url('uploads/facturas/' . $registros->factura) }}"
+                                    alt="factura-registro">
+
                             </td>
                             <td>
                                 <div class="dropdown text-center">
@@ -89,7 +89,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Detalles del Registro</h5>
+                    <h5 class="modal-title" id="modalLabel">Detalles del Registro Compra</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
