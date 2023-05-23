@@ -29,6 +29,14 @@ class RoleSeeder extends Seeder
             'name' => 'ver roles',
             'description' => 'Ver roles'
         ])->syncRoles([$admin]);
+        Permission::create([
+            'name' => 'add roles',
+            'description' => 'Añadir rol'
+        ])->syncRoles([$admin]);
+        Permission::create([
+            'name' => 'edit roles',
+            'description' => 'Editar rol'
+        ])->syncRoles([$admin]);
 
         Permission::create([
             'name' => 'ver productos',
@@ -161,5 +169,10 @@ class RoleSeeder extends Seeder
             'name' => 'ver perfil',
             'description' => 'Ver perfil'
         ])->syncRoles([$chef, $nutricionista]);
+
+        Permission::create([
+            'name' => 'ver notificaciones',
+            'description' => 'Ver notificaciones'
+        ])->syncRoles([$admin, $nutricionista, $chef]);
     }
 }

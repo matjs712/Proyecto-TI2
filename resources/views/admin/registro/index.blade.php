@@ -3,26 +3,24 @@
     Registros | {{ $sitio }}
 @endsection
 @section('content')
-    <div class="py-3 mb-1 border-bottom border-top">
-        <div class="container ml-3">
-            <h6 class="mb-0">
-                <a href="{{ url('dashboard') }}">Inicio</a> /
-                <a href="{{ url('registros') }}">Registros</a>
-            </h6>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header d-flex aling-items-center flex-wrap">
-            <h4>Registros</h4>
-            @can('add registros')
-                <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
-                    style="background-color: {{ $boton_nuevo }}; color:white;" class="btn ml-4"
-                    href="{{ url('/crear-registro') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
-            @endcan
-        </div>
+    <div class="card hide2">
         <div class="card-body">
-            <table style="width: 100%;" class="table table-bordered" id="tablaRegistros">
+            <div class="mb-4 d-flex align-items-center justify-content-between" style="width: 100%">
+                <h2>Registros</h2>
+                <div class="container">
+                    <h6 class="mb-0 d-flex align-items-center justify-content-end">
+                        <a href="{{ url('dashboard') }}" class="mr-2">Inicio</a> /
+                        <a href="{{ url('registros') }}" class="ml-2">Registros</a>
+                    </h6>
+                </div>
+            </div>
+            <div class="d-flex aling-items-center flex-wrap">
+                @can('add registros')
+                    <?php $urlCrearRegistro = url('/crear-registro'); ?>
+                @endcan
+
+            </div>
+            <table style="width: 100%;" class="table table-bordered table-hover" id="tablaRegistros">
                 <thead style="background-color:#343a40; color:white;">
                     <tr class="text-center">
                         <th>Id</th>
@@ -30,24 +28,17 @@
                         <th>Proveedor</th>
                         <th>Ingrediente</th>
                         <th>Cantidad</th>
-                        <th>Factura</th>
                         <th>Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($registros as $registros)
+                    @foreach ($registros as $item)
                         <tr class="text-center">
-                            <td scope="row">{{ $registros->id }}</td>
-                            <td>{{ $registros->fecha }}</td>
-                            <td>{{ $registros->proveedor->name }}</td>
-                            <td>{{ $registros->ingrediente->name }}</td>
-                            <td><span class="badge badge-primary">{{ $registros->cantidad }}</span></td>
-                            <td>
-
-                                <img width="100" src="{{ Storage::url('uploads/facturas/' . $registros->factura) }}"
-                                    alt="factura-registro">
-
-                            </td>
+                            <td scope="row">{{ $item->id }}</td>
+                            <td>{{ $item->fecha }}</td>
+                            <td>{{ $item->proveedor->name }}</td>
+                            <td>{{ $item->ingrediente->name }}</td>
+                            <td><span class="badge badge-primary">{{ $item->cantidad }}</span></td>
                             <td>
                                 <div class="dropdown text-center">
                                     <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -56,21 +47,20 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
-                                            <a href="#" onmouseover="this.style.opacity='0.9'"
+                                            <button onmouseover="this.style.opacity='0.9'"
                                                 onmouseout="this.style.opacity='1'"
                                                 style="background-color: {{ $boton_vermas }}; color:white;"
-                                                class="btn mb-1" data-toggle="modal" data-target="#modalRegistro"
-                                                data-registros-id="{{ $registros->id }}">Ver más</a>
+                                                class="btn mb-1"><i class="fas fa-edit"></i>Ver más</button>
                                             @can('edit registros')
                                                 <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
                                                     style="background-color: {{ $boton_editar }}; color:white;"
-                                                    href="{{ url('edit-reg/' . $registros->id) }}" class="btn mb-1"><i
+                                                    href="{{ url('edit-reg/' . $item->id) }}" class="btn mb-1"><i
                                                         class="fas fa-edit"></i>Editar</a>
                                             @endcan
                                             @can('destroy registros')
                                                 <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
                                                     style="background-color: {{ $boton_eliminar }}; color:white;"
-                                                    href="{{ url('delete-reg/' . $registros->id) }}" class="btn"><i
+                                                    href="{{ url('delete-reg/' . $item->id) }}" class="btn"><i
                                                         class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
                                             @endcan
                                         </div>
@@ -84,21 +74,90 @@
         </div>
     </div>
 
-
-    <div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <!-- Modal -->
+    <div class="modal fade" id="agregarRegistroModal" tabindex="-1" role="dialog"
+        aria-labelledby="agregarRegistroModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Detalles del Registro Compra</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="agregarRegistroModalLabel">Agregar Registro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- Aquí se agregará el contenido del registro mediante AJAX -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <!-- Formulario de agregar registro -->
+                    <form action="{{ url('insert-registro') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="">Fecha</label>
+                                    <input type="date" name="fecha" class="form-control" value="{{ old('fecha') }}">
+                                    @if ($errors->has('fecha'))
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('fecha') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Proveedor</label>
+                                    <select name="id_proveedor" class="form-control"id="">
+                                        <option value="">Selecciona el proveedor.</option>
+                                        @foreach ($proveedores as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('id_proveedor'))
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('id_proveedor') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Ingredientes</label>
+                                    <select name="id_ingrediente" class="form-control"id="">
+                                        <option value="">Selecciona el ingrediente.</option>
+                                        @foreach ($ingredientes as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('id_ingrediente'))
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('id_ingrediente') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="">Cantidad</label>
+                                    <input type="number" name="cantidad" class="form-control"
+                                        value="{{ old('cantidad') }}">
+                                    @if ($errors->has('cantidad'))
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('cantidad') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <label for="">Facturas</label>
+                                {{-- <input type="file" name="image" class="form-control"> --}}
+                                <input type="file" id="image" name="factura" class="form-control">
+                                @if ($errors->has('factura'))
+                                    <span class="error text-danger"
+                                        for="input-name">{{ $errors->first('factura') }}</span>
+                                @endif
+                                <img id="preview" width="200" height="200" src="" alt=" ">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Crear</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

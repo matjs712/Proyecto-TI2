@@ -6,6 +6,7 @@ use App\Models\Logo;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Ingrediente;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\ProductoIngrediente;
 use App\Http\Controllers\Controller;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 
 class ProductController extends Controller
@@ -39,7 +41,9 @@ class ProductController extends Controller
         secciones();
 
         $productos = Product::all();
-        return view('admin.product.index', compact('productos'));
+        $categorias = Category::all();
+        $ingredientes = Ingrediente::all();
+        return view('admin.product.index', compact('productos', 'categorias', 'ingredientes'));
     }
 
     /**
@@ -82,16 +86,22 @@ class ProductController extends Controller
         ];
 
         $messages = [
-            'required' => 'El campo es requerido.',
-            'image' => 'El archivo debe ser una imagen.',
-            'mimes' => 'Solo se adminten los siguientes formatos :mimes.',
+            'categoria.required' => 'La categoría es obligatoria.',
+            'name.required' => 'El nombre es obligatorio.',
             'slug.required' => 'El slug es obligatorio.',
-            'slug.unique' => 'El slug ya ha sido utilizado por otro producto.',
-
-
+            'slug.unique' => 'El slug ya está en uso.',
+            'description.required' => 'La Descripción es obligatoria.',
+            'small_description.required' => 'La Descripción pequeña es obligatoria.',
+            'price.required' => 'El precio es obligatorio.',
+            'selling_price.required' => 'El precio en oferta es obligatorio.',
+            'image.required' => 'Debe seleccionar una imagen.',
+            'image.image' => 'El archivo debe ser una imagen.',
+            'image.mimes' => 'El archivo debe tener un formato de imagen válido (jpg, png).',
+            'qty.required' => 'La cantidad es obligatoria.',
         ];
+
         $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
 
             try {
                 $producto = new Product();
@@ -155,15 +165,37 @@ class ProductController extends Controller
 
                             $ingrediente = Ingrediente::find($idIngrediente);
                             $ingrediente->cantidad = $ingrediente->cantidad - $cantidadRequerida;
+                            
+                            if($ingrediente->cantidad <= 1000){
+                                $notifications = new Notification();
+                                $notifications->detalle = 'Ingrediente: ' . $ingrediente->name. 'en estado crítico, solo quedan '. $ingrediente->cantidad;
+                                $notifications->id_usuario = Auth::id();
+                                $notifications->tipo = 2;
+                                $notifications->save();
+                            }
+
+                            if($producto->qty <= 2){
+                                $notifications = new Notification();
+                                $notifications->detalle = 'Producto: ' . $producto->name. 'en estado crítico, solo quedan '. $producto->qty;
+                                $notifications->id_usuario = Auth::id();
+                                $notifications->tipo = 2;
+                                $notifications->save();
+                            }
+
                             $ingrediente->update();
                         }
                     }
                 }
 
+                $notifications = new Notification();
+                $notifications->detalle = 'Producto añadido: ' . $producto->name;
+                $notifications->id_usuario = Auth::id();
+                $notifications->tipo = 0;
+                $notifications->save();
 
                 DB::commit();
                 return redirect('/productos')->with('status', 'Producto añadido exitosamente!.');
-            } catch (\Illuminate\Datebase\QueryException $e) {
+            } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
             }
@@ -234,7 +266,7 @@ class ProductController extends Controller
             'slug.unique' => 'El slug ya ha sido utilizado por otro producto.',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
 
             try {
                 $producto = Product::find($id);
@@ -285,6 +317,17 @@ class ProductController extends Controller
                 $producto->trending = $request->input('trending') == TRUE ? '1' : '0';
                 $producto->update();
 
+                if($producto->qty <= 2){
+                    $notifications = new Notification();
+                    $notifications->detalle = 'Producto: ' . $producto->name. 'en estado crítico, solo quedan '. $producto->qty;
+                    $notifications->id_usuario = Auth::id();
+                    $notifications->tipo = 2;
+                    $notifications->save();
+                }
+
+
+
+
                 // dd($ingredientesCount);
 
                 if ($ingredientesCount >= 1) {
@@ -314,12 +357,23 @@ class ProductController extends Controller
                             if ($productoIngrediente) {
                                 if ($cantidadRequerida < $productoIngrediente->cantidad) {
                                     $ingrediente->increment('cantidad', $productoIngrediente->cantidad - $cantidadRequerida);
+
                                 } else if ($cantidadRequerida > $productoIngrediente->cantidad) {
                                     $ingrediente->decrement('cantidad', $cantidadRequerida - $productoIngrediente->cantidad);
                                 }
+
                                 $productoIngrediente->id_ingrediente = $idIngrediente;
                                 $productoIngrediente->cantidad = $cantidadRequerida;
                                 $productoIngrediente->update();
+
+                                if($ingrediente->cantidad <= 1000){
+                                    $notifications = new Notification();
+                                    $notifications->detalle = 'Ingrediente: ' . $ingrediente->name. 'en estado crítico, solo quedan '. $ingrediente->cantidad;
+                                    $notifications->id_usuario = Auth::id();
+                                    $notifications->tipo = 2;
+                                    $notifications->save();
+                                }
+                
                                 $ingrediente->update();
                             }
                         }
@@ -329,7 +383,7 @@ class ProductController extends Controller
                 DB::commit();
 
                 return redirect('/productos')->with('status', 'Producto Editado exitosamente!.');
-            } catch (\Illuminate\Datebase\QueryException $e) {
+            } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
             }
@@ -366,6 +420,12 @@ class ProductController extends Controller
                 File::delete($path);
             }
         }
+
+        $notifications = new Notification();
+        $notifications->detalle = 'Producto eliminado: ' . $producto->name;
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 2;
+        $notifications->save();
 
         $producto->delete();
         return redirect('/productos')->with('status', 'Producto eliminado Exitosamente');

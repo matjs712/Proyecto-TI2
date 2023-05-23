@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
+
 
 class ProveedorController extends Controller
 {
@@ -72,7 +75,7 @@ class ProveedorController extends Controller
 
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
 
             try {
                 $proveedor = new Proveedor();
@@ -82,19 +85,18 @@ class ProveedorController extends Controller
                 $proveedor->email = $request->input('email');
                 $proveedor->save();
 
-
+                $notifications = new Notification();
+                $notifications->detalle = 'Se añadio al proveedor: ' . $proveedor->name;
+                $notifications->id_usuario = Auth::id();
+                $notifications->tipo = 0;
+                $notifications->save();
 
                 DB::commit();
                 return redirect('/proveedores')->with('status', 'Proveedor añadido exitosamente!.');
-
-
-
-            } catch (\Illuminate\Datebase\QueryException $e) {
+            } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
-
             }
-
         }
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
@@ -137,7 +139,7 @@ class ProveedorController extends Controller
             'email' => 'Ingrese un Email valido'
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
 
             try {
                 $proveedor = Proveedor::find($id);
@@ -150,14 +152,10 @@ class ProveedorController extends Controller
 
                 DB::commit();
                 return redirect('/proveedores')->with('status', 'Proveedor Editado exitosamente!.');
-
-
-            } catch (\Illuminate\Datebase\QueryException $e) {
+            } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
-
             }
-
         }
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
@@ -171,6 +169,13 @@ class ProveedorController extends Controller
     public function destroy($id)
     {
         $proveedor = Proveedor::find($id);
+
+        $notifications = new Notification();
+        $notifications->detalle = 'Se elimino al proveedor: ' . $proveedor->name;
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 2;
+        $notifications->save();
+
         $proveedor->delete();
         return redirect('/proveedores')->with('status', 'Proveedor eliminado Exitosamente');
     }

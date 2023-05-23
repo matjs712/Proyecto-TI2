@@ -3,25 +3,32 @@
     Categorias | {{ $sitio }}
 @endsection
 @section('content')
-    <div class="py-3 mb-1 border-bottom border-top">
-        <div class="container ml-3">
-            <h6 class="mb-0">
-                <a href="{{ url('dashboard') }}">Inicio</a> /
-                <a href="{{ url('categorias') }}">Categorias</a>
-            </h6>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header d-flex aling-items-center flex-wrap">
+    <div class="card hide2">
+        {{-- <div class="card-header d-flex aling-items-center flex-wrap">
             <h4>Categorias</h4>
             @can('add categorias')
                 <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
                     style="background-color: {{ $boton_nuevo }}; color:white;" class="btn ml-4"
                     href="{{ url('/crear-categoria') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
             @endcan
-        </div>
+        </div> --}}
         <div class="card-body">
-            <table style="width: 100%;" class="table table-bordered" id="tablaCategorias">
+            <div class="mb-4 d-flex align-items-center justify-content-between" style="width: 100%">
+                <h2>Categorías</h2>
+                <div class="container">
+                    <h6 class="mb-0 d-flex align-items-center justify-content-end">
+                        <a href="{{ url('dashboard') }}" class="mr-2">Inicio</a> /
+                        <a href="{{ url('categorias') }}" class="ml-2">Categorías</a>
+                    </h6>
+                </div>
+            </div>
+            <div class="d-flex aling-items-center flex-wrap">
+                @can('add categorias')
+                    <?php $urlCrearCategoria = url('/crear-categoria'); ?>
+                @endcan
+
+            </div>
+            <table style="width: 100%;" class="table table-bordered table-hover" id="tablaCategorias">
                 <thead style="background-color:#343a40; color:white;">
                     <tr class="text-center">
                         <th>Id</th>
@@ -40,7 +47,7 @@
                             <td scope="row">{{ $categoria->id }}</td>
                             <td>{{ $categoria->name }}</td>
                             <td>{{ $categoria->slug }}</td>
-                            <td>{{ $categoria->description }}</td>
+                            <td>{{ Str::substr($categoria->description, 0, 80) }}...</td>
                             <td>{!! $categoria->status == 1
                                 ? '<span class="badge badge-success">Visible</span>'
                                 : '<span class="badge badge-danger">No visible</span>' !!}</td>
@@ -61,8 +68,8 @@
                                         <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
                                             <a href="#" onmouseover="this.style.opacity='0.9'"
                                                 onmouseout="this.style.opacity='1'"
-                                                style="background-color: {{ $boton_vermas }}; color:white;"
-                                                class="btn mb-1" data-toggle="modal" data-target="#modalCategoria"
+                                                style="background-color: {{ $boton_vermas }}; color:white;" class="btn mb-1"
+                                                data-toggle="modal" data-target="#modalCategoria"
                                                 data-category-id="{{ $categoria->id }}">Ver más</a>
                                             @can('edit categorias')
                                                 <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
@@ -106,6 +113,92 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="categoryModalLabel">Crear Categoría</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url('insert-category') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Nombre Categoría</label>
+                                    <input type="text" name="name"
+                                        class="form-control @error('name') is-invalid @enderror" placeholder="Sales"
+                                        value="{{ old('name') }}">
+                                    @error('name')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="slug">Slug</label>
+                                    <input type="text" name="slug"
+                                        class="form-control @error('slug') is-invalid @enderror" placeholder="sales"
+                                        value="{{ old('slug') }}">
+                                    @error('slug')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="descripcion">Descripción</label>
+                                    <textarea type="text" rows="5" style="resize:none;" name="description"
+                                        class="form-control @error('description') is-invalid @enderror" placeholder="Sales de mar...">{{ old('description') }}</textarea>
+                                    @error('description')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <label for="">Imagen</label>
+                                <input type="file" id="image" name="image" class="form-control">
+                                <img id="preview" width="200" height="200" src="" alt=" ">
+                                @error('image')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="estado">Visibilidad</label>
+                                    <input type="checkbox" name="status"
+                                        class="form-control @error('status') is-invalid @enderror"
+                                        {{ old('status') ? 'checked' : '' }}>
+                                    @error('status')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="popular">Popular</label>
+                                    <input type="checkbox" name="popular"
+                                        class="form-control @error('popular') is-invalid @enderror"
+                                        {{ old('popular') ? 'checked' : '' }}>
+                                    @error('popular')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mt-4">
+                                <button type="submit" class="btn btn-primary">Crear</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('after_scripts')
@@ -113,7 +206,13 @@
         $(document).ready(function() {
             $('#tablaCategorias').DataTable({
                 responsive: true,
-                "language": spanishLanguage,
+                language: spanishLanguage,
+                initComplete: function() {
+                    @if (isset($urlCrearCategoria))
+                        $('<button onmouseover="this.style.opacity=\'0.9\'" onmouseout="this.style.opacity=\'1\'" style="background-color: {{ $boton_nuevo }}; color:white;" class="btn ml-4"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryModal"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Agregar categoría</button>')
+                            .appendTo('.dataTables_length');
+                    @endif
+                }
             });
 
             $('#modalCategoria').on('show.bs.modal', function(event) {

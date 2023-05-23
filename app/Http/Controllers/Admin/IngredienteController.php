@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
 
 class IngredienteController extends Controller
 {
@@ -72,7 +73,7 @@ class IngredienteController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
 
 
             try {
@@ -82,19 +83,20 @@ class IngredienteController extends Controller
                 $ingrediente->cantidad = $request->input('cantidad');
                 $ingrediente->save();
 
+                $notifications = new Notification();
+                $notifications->detalle = 'Ingrediente añadido: ' . $ingrediente->name;
+                $notifications->id_usuario = Auth::id();
+                $notifications->tipo = 0;
+                $notifications->save();
+
                 DB::commit();
                 return redirect('/ingredientes')->with('status', 'Ingrediente añadido exitosamente!.');
-            } catch (\Illuminate\Datebase\QueryException $e) {
+            } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
-
             }
-
-
         }
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
-
-
     }
     /**
      * Show the form for editing the specified resource.
@@ -135,7 +137,7 @@ class IngredienteController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->passes()) {
+        if (!$validator->fails()) {
 
 
             try {
@@ -145,26 +147,24 @@ class IngredienteController extends Controller
                 $ingrediente->cantidad = $request->input('cantidad');
                 $ingrediente->update();
 
+                if($ingrediente->cantidad <= 1000){
+                    $notifications = new Notification();
+                    $notifications->detalle = 'Ingrediente: ' . $ingrediente->name. 'en estado crítico, solo quedan '. $ingrediente->cantidad;
+                    $notifications->id_usuario = Auth::id();
+                    $notifications->tipo = 2;
+                    $notifications->save();
+                }
 
                 DB::commit();
                 return redirect('/ingredientes')->with('status', 'Ingrediente Editado exitosamente!.');
-
-            } catch (\Illuminate\Datebase\QueryException $e) {
+            } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
                 return back()->withErrors($validator)->withInput();
-
             }
-
-
         }
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
+    }
 
-    }
-    public function qty()
-    {
-        $ingredientes = Ingrediente::all()->pluck('cantidad', 'name');
-        return response()->json($ingredientes);
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -176,6 +176,13 @@ class IngredienteController extends Controller
     {
         $ingrediente = Ingrediente::find($id);
         $ingrediente->delete();
+
+        $notifications = new Notification();
+        $notifications->detalle = 'Ingrediente eliminado: ' . $ingrediente->name;
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 2;
+        $notifications->save();
+
         return redirect('/ingredientes')->with('status', 'Ingrediente eliminado Exitosamente');
     }
 }
