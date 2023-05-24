@@ -79,7 +79,24 @@
             </table>
         </div>
     </div>
-
+    <div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Detalles del registro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Aquí se agregará el contenido del registro mediante AJAX -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="agregarRegistroModal" tabindex="-1" role="dialog"
         aria-labelledby="agregarRegistroModalLabel" aria-hidden="true">
@@ -99,7 +116,8 @@
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <label for="">Fecha</label>
-                                    <input type="date" name="fecha" class="form-control" value="{{ old('fecha') }}">
+                                    <input type="date" name="fecha" class="form-control"
+                                        value="{{ old('fecha') }}">
                                     @if ($errors->has('fecha'))
                                         <span class="error text-danger"
                                             for="input-name">{{ $errors->first('fecha') }}</span>
@@ -176,6 +194,12 @@
             $('#tablaRegistros').DataTable({
                 responsive: true,
                 "language": spanishLanguage,
+                initComplete: function() {
+                    @if (isset($urlCrearRegistro))
+                        $('<button onmouseover="this.style.opacity=\'0.9\'" onmouseout="this.style.opacity=\'1\'" style="background-color: {{ $boton_nuevo }}; color:white;" class="btn ml-4"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarRegistroModal"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Agregar Registro</button>')
+                            .appendTo('.dataTables_length');
+                    @endif
+                }
             });
 
             $('#modalRegistro').on('show.bs.modal', function(event) {
