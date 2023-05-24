@@ -169,36 +169,30 @@
         $(document).ready(function() {
             $('#tablaRegistros').DataTable({
                 responsive: true,
-                language: spanishLanguage,
-                initComplete: function() {
-                    @if (isset($urlCrearRegistro))
-                        $('<button onmouseover="this.style.opacity=\'0.9\'" onmouseout="this.style.opacity=\'1\'" style="background-color: {{ $boton_nuevo }}; color:white;" class="btn ml-4"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarRegistroModal"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Agregar registro</button>')
-                            .appendTo('.dataTables_length');
-                    @endif
-                }
+                "language": spanishLanguage,
+            });
+
+            $('#modalRegistro').on('show.bs.modal', function(event) {
+                // Obtén el botón que abrió el modal
+                var button = $(event.relatedTarget);
+
+                // Obtén el ID del registro que se está editando
+                var registroId = button.data('registros-id');
+
+                // Realiza una petición AJAX para obtener el contenido del registro
+                $.ajax({
+                    url: '/modal-registros/' + registroId,
+                    type: 'GET',
+                    success: function(data) {
+                        // Actualiza el contenido del modal con el contenido del registro
+                        $('#modalRegistro .modal-body').html(data);
+                    },
+                    error: function() {
+                        // Muestra un mensaje de error si la petición AJAX falla
+                        alert('Ocurrió un error al cargar el registro.');
+                    }
+                });
             });
         })
-        const input = document.querySelector('#image');
-        const preview = document.querySelector('#preview');
-
-        // ocultar la imagen de vista previa al cargar la página
-        preview.setAttribute('src', '');
-        preview.style.display = 'none';
-
-        input.addEventListener('change', () => {
-            if (input.files && input.files[0]) { // comprobar si se ha seleccionado un archivo
-                const file = input.files[0];
-                const reader = new FileReader();
-
-                reader.addEventListener('load', () => {
-                    preview.setAttribute('src', reader.result);
-                });
-                reader.readAsDataURL(file);
-                preview.style.display = 'block'; // mostrar la vista previa
-            } else {
-                preview.setAttribute('src', ''); // establecer el atributo src en vacío para ocultar la vista previa
-                preview.style.display = 'none'; // ocultar la vista previa
-            }
-        });
     </script>
 @endsection
