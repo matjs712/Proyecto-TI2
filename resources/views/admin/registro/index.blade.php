@@ -28,6 +28,7 @@
                         <th>Proveedor</th>
                         <th>Ingrediente</th>
                         <th>Cantidad</th>
+                        <th>Factura</th>
                         <th>Opciones</th>
                     </tr>
                 </thead>
@@ -40,6 +41,10 @@
                             <td>{{ $item->ingrediente->name }}</td>
                             <td><span class="badge badge-primary">{{ $item->cantidad }}</span></td>
                             <td>
+                                <img width="100" src="{{ Storage::url('uploads/facturas/' . $item->factura) }}"
+                                    alt="factura-image">
+                            </td>
+                            <td>
                                 <div class="dropdown text-center">
                                     <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,10 +52,11 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
-                                            <button onmouseover="this.style.opacity='0.9'"
+                                            <a href="#" onmouseover="this.style.opacity='0.9'"
                                                 onmouseout="this.style.opacity='1'"
-                                                style="background-color: {{ $boton_vermas }}; color:white;"
-                                                class="btn mb-1"><i class="fas fa-edit"></i>Ver más</button>
+                                                style="background-color: {{ $boton_vermas }}; color:white;" class="btn mb-1"
+                                                data-toggle="modal" data-target="#modalRegistro"
+                                                data-registros-id="{{ $item->id }}">Ver más</a>
                                             @can('edit registros')
                                                 <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
                                                     style="background-color: {{ $boton_editar }}; color:white;"
