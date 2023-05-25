@@ -92,8 +92,8 @@ class RegisterController extends Controller
     {
 
         $notifications = new Notification();
-        $notifications->detalle = 'Se el nuevo usuario: ' . $data['name'];
-        $notifications->id_usuario = Auth::id();
+        $notifications->detalle = 'Se unido el nuevo usuario: ' . $data['name'];
+        $notifications->id_usuario = 1;
         $notifications->tipo = 0;
         $notifications->save();
 
