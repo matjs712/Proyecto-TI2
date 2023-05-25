@@ -41,8 +41,12 @@
                             <td>{{ $item->ingrediente->name }}</td>
                             <td><span class="badge badge-primary">{{ $item->cantidad }}</span></td>
                             <td>
-                                <img width="100" src="{{ Storage::url('uploads/facturas/' . $item->factura) }}"
-                                    alt="factura-image">
+                                @if (pathinfo($item->factura, PATHINFO_EXTENSION) == 'pdf')
+                                    <i class="fa-solid fa-file-pdf"></i>
+                                @else
+                                    <img width="100" src="{{ Storage::url('uploads/facturas/' . $item->factura) }}"
+                                        alt="factura-image">
+                                @endif
                             </td>
                             <td>
                                 <div class="dropdown text-center">
@@ -236,12 +240,15 @@
                 var imagenUrl = $('#imagen-cargada').attr('src');
                 console.log(imagenUrl);
 
-                var a = document.createElement('a');
-                a.href = imagenUrl;
-                a.download = '';
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
+                if (imagenUrl.replace('/storage/uploads/facturas/', '').length != 0) {
+                    var a = document.createElement('a');
+                    a.href = imagenUrl;
+                    a.download = '';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                }
+
             });
         });
     </script>
