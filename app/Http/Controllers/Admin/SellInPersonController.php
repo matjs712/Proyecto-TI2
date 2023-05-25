@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\View;
 use Transbank\Webpay\WebpayPlus\Transaction;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Notification;
+use TCPDF;
 
 class SellInPersonController extends Controller
 {
@@ -74,6 +75,33 @@ class SellInPersonController extends Controller
         $notifications->id_usuario = Auth::id();
         $notifications->tipo = 1;
         $notifications->save();
+
+        self::generatePDF($order);
         
+    }
+
+    
+    public function generatePDF($order)
+    {
+           // Crear una instancia de TCPDF
+        $pdf = new TCPDF();
+
+        // Establecer la configuración del PDF
+        $pdf->SetCreator('Mi Aplicación');
+        $pdf->SetAuthor('Autor');
+        $pdf->SetTitle('Título del PDF');
+        $pdf->SetSubject('Asunto');
+
+        // Agregar una nueva página al PDF
+        $pdf->AddPage();
+
+        // Definir el contenido HTML
+        $html = view('admin.orders.pdf.comprobante', compact('order'))->render();
+
+        // Escribir el contenido HTML en el PDF
+        $pdf->writeHTML($html, true, false, true, false, '');
+
+        // Generar el PDF y guardarlo en una ruta específica
+        $pdf->Output(storage_path('app/public/pdf/example.pdf'), 'F');
     }
 }

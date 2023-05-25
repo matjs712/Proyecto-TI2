@@ -299,10 +299,8 @@
             $('#modal').on('show.bs.modal', function(event) {
                 // Obtén el botón que abrió el modal
                 var button = $(event.relatedTarget);
-
                 // Obtén el ID del registro que se está editando
                 var registroId = button.data('product-id');
-
                 // Realiza una petición AJAX para obtener el contenido del registro
                 $.ajax({
                     url: '/modal-productos/' + registroId,

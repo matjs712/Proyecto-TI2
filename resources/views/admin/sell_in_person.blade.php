@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-Usuarios | {{ $sitio }}
+Venta Presencial | {{ $sitio }}
 @endsection
 
 @section('content')
@@ -23,6 +23,7 @@ Usuarios | {{ $sitio }}
   z-index: 0;
 }
 </style>
+
 <div class="container">
     
         <div class="row vh-100">
@@ -79,6 +80,7 @@ Usuarios | {{ $sitio }}
         </div>
     </div>
 </div>
+{{-- Modal pago QR --}}
 <div id="qrModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content h-100">
@@ -95,6 +97,23 @@ Usuarios | {{ $sitio }}
         </div>
     </div>
 </div>
+{{-- Comprobante de pago --}}
+<div id="pdf" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content h-100">
+            <div class="modal-header">
+                <h5 class="modal-title" id="qrModalLabel">Realizar pago</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex justify-content-center">
+                <embed src="{{ asset('storage/pdf/example.pdf') }}" width="100%" height="500" type="application/pdf">
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @endsection()
 @section('after_scripts')
@@ -225,6 +244,8 @@ Usuarios | {{ $sitio }}
     });
 
     $('.btnPagar').click(function(e){
+
+        
         e.preventDefault();
 
         let carrito = {};
@@ -330,10 +351,10 @@ Usuarios | {{ $sitio }}
                                 customClass: {
                                     popup: 'custom-swal-success'
                                 }
-                            }),
-                            setTimeout(function() {
-                                location.reload();
-                            }, 1200);
+                            })
+                            // setTimeout(function() {
+                            //     location.reload();
+                            // }, 1200);
                         },
                         error: function (response){
                             console.log(response);
@@ -342,8 +363,8 @@ Usuarios | {{ $sitio }}
                     
                 }
             })
-            
         }
+        
     });    
 </script>
 
