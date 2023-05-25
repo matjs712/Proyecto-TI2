@@ -4,12 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seguimiento pedido {{ $orders->tracking_number }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            text-align: center; /* Centra el contenido del tbody */
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
 </head>
-<body style="font-family: Arial, sans-serif;">
+<body>
 
-    <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ccc;">
+    <div class="container">
 
-        <h1 style="text-align: center;">Seguimiento del pedido</h1>
+        <h1>Seguimiento del pedido</h1>
 
         <p><strong>Número de seguimiento:</strong> {{ $orders->tracking_number }}</p>
         
@@ -30,7 +58,7 @@
 
         <h2>Detalles del pedido:</h2>
 
-        <table class="table table-bordered" style="width: 100%;">
+        <table>
             <thead>
                 <tr>
                     <th>Producto</th>
@@ -58,9 +86,5 @@
         Si tiene alguna pregunta o consulta, póngase en contacto con nosotros a través de nuestra página web.
         </p>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
