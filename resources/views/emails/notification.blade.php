@@ -9,7 +9,7 @@
 
     <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ccc;">
 
-        <h1 style="text-align: center;">Seguimiento pedido</h1>
+        <h1 style="text-align: center;">Seguimiento del pedido</h1>
 
         <p><strong>Número de seguimiento:</strong> {{ $orders->tracking_number }}</p>
         
@@ -19,9 +19,9 @@
             if ($orders->status  == 0) {
                 $status = 'Pendiente';
             } elseif ($orders->status == 1) {
-                $status = 'Aprobada';
+                $status = 'Aprobado';
             } else {
-                $status = 'Completada';
+                $status = 'Completado';
             }
         @endphp
         {{ $status }}</p>
@@ -53,6 +53,10 @@
                 @endforeach
             </tbody>
         </table>
+        <p style="font-size: 12px; margin-top: 20px;">
+        Esta es una respuesta automática. Por favor, no responda a este correo.
+        Si tiene alguna pregunta o consulta, póngase en contacto con nosotros a través de nuestra página web.
+        </p>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
