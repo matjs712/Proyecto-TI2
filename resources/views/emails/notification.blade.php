@@ -12,9 +12,7 @@
         <h1 style="text-align: center;">Seguimiento pedido</h1>
 
         <p><strong>Número de seguimiento:</strong> {{ $orders->tracking_number }}</p>
-
-        <p><strong>Número de seguimiento:</strong> {{ $orders->tracking_number }}</p>
-
+        
         <p><strong>Estado del pedido:</strong> 
         @php
             $status = '';
