@@ -139,13 +139,12 @@ class CheckoutController extends Controller
             $total += $prod->products->selling_price * $prod->prod_qty;
         }
         $order->total_price = $total;
-
         $order->save();
 
         $url_to_pay = self::start_web_pay_plus_transaction( $order);
-        return $url_to_pay;
-
+        return redirect($url_to_pay);
     }
+
 
     public function start_web_pay_plus_transaction($order){
         $transaction = (new Transaction)->create(
