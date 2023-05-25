@@ -13,13 +13,26 @@
 
         <p><strong>Número de seguimiento:</strong> {{ $orders->tracking_number }}</p>
 
-        <p><strong>Estado del pedido:</strong> {{ $orders->status }}</p>
+        <p><strong>Número de seguimiento:</strong> {{ $orders->tracking_number }}</p>
 
-        <p><strong>Monto pedido:</strong> ${{ $orders->total_price }}</p>
+        <p><strong>Estado del pedido:</strong> 
+        @php
+            $status = '';
+            if ($orders->status  == 0) {
+                $status = 'Pendiente';
+            } elseif ($orders->status == 1) {
+                $status = 'Aprobada';
+            } else {
+                $status = 'Completada';
+            }
+        @endphp
+        {{ $status }}</p>
+
+        <p><strong>Valor total del pedido:</strong> ${{ $orders->total_price }}</p>
 
         <h2>Detalles del pedido:</h2>
 
-        <table style="width: 100%;">
+        <table class="table table-bordered" style="width: 100%;">
             <thead>
                 <tr>
                     <th>Producto</th>
@@ -31,7 +44,10 @@
             <tbody>
                 @foreach($orderItem as $item)
                     <tr>
-                        <td>{{ $item->prod_id }}</td>
+                        @php
+                        $product = App\Models\Product::where('id', $item->prod_id)->first();
+                        @endphp
+                        <td>{{ $product->name }}</td>
                         <td>{{ $item->qty }}</td>
                         <td>${{ $item->price }}</td>
                         <td>${{ $item->price * $item->qty }}</td>
@@ -40,5 +56,9 @@
             </tbody>
         </table>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
