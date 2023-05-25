@@ -53,7 +53,7 @@ class OrdenController extends Controller
         $notifications->save();
 
         $correo = new NotificacionEmail($orders);
-        Mail::to($order->email)->send($correo);
+        Mail::to($orders->email)->send($correo);
 
         return redirect('ordenes')->with('status', 'Orden actualizada exitosamente.');
     }

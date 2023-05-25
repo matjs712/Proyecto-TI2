@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 
 class NotificacionEmail extends Mailable
 {
