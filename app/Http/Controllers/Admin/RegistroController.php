@@ -7,17 +7,20 @@ use App\Models\Registro;
 use App\Models\Proveedor;
 use App\Models\Ingrediente;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\FileUploadController;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Support\Facades\Auth;
 use App\Models\Notification;
 
 class RegistroController extends Controller
-
 {
     public function __construct()
     {
@@ -85,11 +88,17 @@ class RegistroController extends Controller
                     $file = $request->file('factura');
                     $ext = $file->getClientOriginalExtension();
                     $filename = time() . '.' . $ext;
-                    $factura = Image::make($file);
-                    $factura->resize(800, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->encode('jpg', 70);
-                    $factura->save(storage_path('app/public/uploads/facturas/' . $filename));
+
+                    if ($ext == 'pdf') {
+                        $file->move(storage_path('app/public/uploads/facturas/'), $filename);
+                    } else {
+                        $factura = Image::make($file);
+                        $factura->resize(800, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })->encode('jpg', 70);
+                        $factura->save(storage_path('app/public/uploads/facturas/' . $filename));
+                    }
+
                     $registro->factura = $filename;
                 }
 
@@ -126,6 +135,14 @@ class RegistroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function show($id)
+    {
+        $registros = Registro::findOrFail($id);
+
+
+        return view('admin.registro.show', compact('registros'));
+    }
+
     public function edit($id)
     {
         logo_sitio();
@@ -134,7 +151,7 @@ class RegistroController extends Controller
         $registro = Registro::find($id);
         $proveedores = Proveedor::all();
         $ingredientes = Ingrediente::all();
-        return view('admin.registro.edit', compact('registro', 'proveedores', 'ingredientes', 'factura'));
+        return view('admin.registro.edit', compact('registro', 'proveedores', 'ingredientes'));
     }
 
     /**
@@ -151,6 +168,7 @@ class RegistroController extends Controller
             'id_proveedor' => 'required',
             'id_ingrediente' => 'required',
             'cantidad' => 'required|integer',
+            'factura' => 'required'
 
 
         ];
@@ -168,6 +186,30 @@ class RegistroController extends Controller
 
                 $registro = Registro::find($id);
 
+                if ($request->hasFile('factura')) {
+                    $path = storage_path('app/public/uploads/facturas/' . $registro->factura);
+                    if (File::exists($path)) {
+                        File::delete($path);
+                    }
+
+                    $file = $request->file('factura');
+                    $ext = $file->getClientOriginalExtension();
+                    $filename = time() . '.' . $ext;
+
+                    if ($ext == 'pdf') {
+                        $file->move(storage_path('app/public/uploads/facturas/'), $filename);
+                    } else {
+                        $factura = Image::make($file);
+                        $factura->resize(800, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })->encode('jpg', 70);
+                        $factura->save(storage_path('app/public/uploads/facturas/' . $filename));
+                    }
+                    $registro->factura = $filename;
+                }
+
+
+
                 $ingrediente = Ingrediente::find($request->input('id_ingrediente'));
                 if ($request->input('cantidad') < $registro->cantidad) {
                     $ingrediente->decrement('cantidad', $registro->cantidad - $request->input('cantidad'));
@@ -181,7 +223,7 @@ class RegistroController extends Controller
                 $registro->id_proveedor = $request->input('id_proveedor');
                 $registro->id_ingrediente = $request->input('id_ingrediente');
                 $registro->cantidad = $request->input('cantidad');
-                $registro->factura = $request->input('factura');
+
 
                 $registro->update();
                 DB::commit();
@@ -209,6 +251,14 @@ class RegistroController extends Controller
         $ingrediente->cantidad = $ingrediente->cantidad - $registro->cantidad;
         $ingrediente->update();
 
+
+        if ($registro->factura) {
+            $path = storage_path('app/public/uploads/facturas/' . $registro->factura);
+
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+        }
         $notifications = new Notification();
         $notifications->detalle = 'Se elimino ' . $ingrediente->cantidad . ' de ' . $ingrediente->name . ' de nuestros registros';
         $notifications->id_usuario = Auth::id();

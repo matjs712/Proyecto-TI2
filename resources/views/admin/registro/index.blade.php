@@ -28,6 +28,7 @@
                         <th>Proveedor</th>
                         <th>Ingrediente</th>
                         <th>Cantidad</th>
+                        <th>Factura</th>
                         <th>Opciones</th>
                     </tr>
                 </thead>
@@ -40,6 +41,10 @@
                             <td>{{ $item->ingrediente->name }}</td>
                             <td><span class="badge badge-primary">{{ $item->cantidad }}</span></td>
                             <td>
+                                <img width="100" src="{{ Storage::url('uploads/facturas/' . $item->factura) }}"
+                                    alt="factura-image">
+                            </td>
+                            <td>
                                 <div class="dropdown text-center">
                                     <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,10 +52,12 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
-                                            <button onmouseover="this.style.opacity='0.9'"
+                                            <a href="#" onmouseover="this.style.opacity='0.9'"
                                                 onmouseout="this.style.opacity='1'"
-                                                style="background-color: {{ $boton_vermas }}; color:white;"
-                                                class="btn mb-1"><i class="fas fa-edit"></i>Ver más</button>
+                                                style="background-color: {{ $boton_vermas }}; color:white;" class="btn mb-1"
+                                                data-toggle="modal" data-target="#modalRegistro"
+                                                data-registros-id="{{ $item->id }}">Ver más</a>
+
                                             @can('edit registros')
                                                 <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
                                                     style="background-color: {{ $boton_editar }}; color:white;"
@@ -73,7 +80,26 @@
             </table>
         </div>
     </div>
-
+    <div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Detalles del registro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Aquí se agregará el contenido del registro mediante AJAX -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button id="btn-descargar" class="btn btn-primary">Descargar
+                        Factura</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="agregarRegistroModal" tabindex="-1" role="dialog"
         aria-labelledby="agregarRegistroModalLabel" aria-hidden="true">
@@ -93,7 +119,8 @@
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <label for="">Fecha</label>
-                                    <input type="date" name="fecha" class="form-control" value="{{ old('fecha') }}">
+                                    <input type="date" name="fecha" class="form-control"
+                                        value="{{ old('fecha') }}">
                                     @if ($errors->has('fecha'))
                                         <span class="error text-danger"
                                             for="input-name">{{ $errors->first('fecha') }}</span>
@@ -169,36 +196,53 @@
         $(document).ready(function() {
             $('#tablaRegistros').DataTable({
                 responsive: true,
-                language: spanishLanguage,
+                "language": spanishLanguage,
                 initComplete: function() {
                     @if (isset($urlCrearRegistro))
-                        $('<button onmouseover="this.style.opacity=\'0.9\'" onmouseout="this.style.opacity=\'1\'" style="background-color: {{ $boton_nuevo }}; color:white;" class="btn ml-4"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarRegistroModal"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Agregar registro</button>')
+                        $('<button onmouseover="this.style.opacity=\'0.9\'" onmouseout="this.style.opacity=\'1\'" style="background-color: {{ $boton_nuevo }}; color:white;" class="btn ml-4"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarRegistroModal"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Agregar Registro</button>')
                             .appendTo('.dataTables_length');
                     @endif
                 }
             });
-        })
-        const input = document.querySelector('#image');
-        const preview = document.querySelector('#preview');
 
-        // ocultar la imagen de vista previa al cargar la página
-        preview.setAttribute('src', '');
-        preview.style.display = 'none';
+            $('#modalRegistro').on('show.bs.modal', function(event) {
+                // Obtén el botón que abrió el modal
+                var button = $(event.relatedTarget);
 
-        input.addEventListener('change', () => {
-            if (input.files && input.files[0]) { // comprobar si se ha seleccionado un archivo
-                const file = input.files[0];
-                const reader = new FileReader();
+                // Obtén el ID del registro que se está editando
+                var registroId = button.data('registros-id');
+                // Realiza una petición AJAX para obtener el contenido del registro
+                $.ajax({
+                    url: '/modal-registros/' + registroId,
+                    type: 'GET',
+                    success: function(data) {
 
-                reader.addEventListener('load', () => {
-                    preview.setAttribute('src', reader.result);
+                        // Actualiza el contenido del modal con el contenido del registro
+                        $('#modalRegistro .modal-body').html(data);
+
+                    },
+                    error: function(data) {
+                        // Muestra un mensaje de error si la petición AJAX falla
+
+                        alert('Ocurrió un error al cargar el registro.');
+                    }
                 });
-                reader.readAsDataURL(file);
-                preview.style.display = 'block'; // mostrar la vista previa
-            } else {
-                preview.setAttribute('src', ''); // establecer el atributo src en vacío para ocultar la vista previa
-                preview.style.display = 'none'; // ocultar la vista previa
-            }
+            });
+        })
+
+
+        $(document).ready(function() {
+            $('#btn-descargar').click(function() {
+                var imagenUrl = $('#imagen-cargada').attr('src');
+                console.log(imagenUrl);
+
+                var a = document.createElement('a');
+                a.href = imagenUrl;
+                a.download = '';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            });
         });
     </script>
 @endsection

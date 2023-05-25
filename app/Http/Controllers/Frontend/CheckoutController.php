@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\View;
 use Transbank\Webpay\WebpayPlus\Transaction;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Notification;
+use App\Mail\NotificacionEmail;
+use Illuminate\Support\Facades\Mail;
+
 
 class CheckoutController extends Controller
 {
@@ -136,9 +139,45 @@ class CheckoutController extends Controller
             $total += $prod->products->selling_price * $prod->prod_qty;
         }
         $order->total_price = $total;
-
         $order->save();
 
+        $url_to_pay = self::start_web_pay_plus_transaction( $order);
+        return redirect($url_to_pay);
+    }
+
+    public function iniciar_compra_presencial(Request $request){
+        $order              = new Order();
+        $order->user_id     = Auth::id();
+        $order->lname       = "presencial";
+        $order->email       = "presencial";
+        $order->fname       = "presencial";
+        $order->telefono    = "presencial";
+        $order->direccion1  = "presencial";
+        $order->direccion2  = "presencial";
+        $order->region      = "presencial";
+        $order->ciudad      = "presencial";
+        $order->comuna      = "presencial";
+        $order->tracking_number      = 'SALES'.rand(1111,9999);
+
+        $user = User::where('id', Auth::user()->id)->first();
+        // $user->name       = $request->input('fname');
+        // $user->lname       = $request->input('lname');
+        // $user->telefono    = $request->input('telefono');
+        // $user->direccion1  = $request->input('direccion1');
+        // $user->direccion2  = $request->input('direccion2');
+        // $user->region      = $request->input('region');
+        // $user->ciudad      = $request->input('ciudad');
+        // $user->comuna      = $request->input('comuna'); 
+        // $user->update();           
+        
+        $total = 0;
+        $cartItems_total = Cart::where('user_id', Auth::id())->get();
+        foreach($cartItems_total as $prod){
+            $total += $prod->products->selling_price * $prod->prod_qty;
+        }
+        $order->total_price = $total;
+
+        $order->save();
         $url_to_pay = self::start_web_pay_plus_transaction( $order);
         return $url_to_pay;
 
@@ -180,6 +219,7 @@ class CheckoutController extends Controller
         $url_to_pay = self::start_web_pay_plus_transaction( $order);
         return $url_to_pay;
 
+        return redirect($url_to_pay);
     }
 
     public function start_web_pay_plus_transaction($order){
@@ -190,7 +230,6 @@ class CheckoutController extends Controller
             route('confirmar_pago')
         );
         $url = $transaction->getUrl().'?token_ws='.$transaction->getToken();
-        
         return $url;
     }
 
@@ -220,6 +259,8 @@ class CheckoutController extends Controller
             $notifications->id_usuario = Auth::id();
             $notifications->tipo = 1;
             $notifications->save();
+            $correo = new NotificacionEmail($order);
+            Mail::to($order->email)->send($correo);
 
             // if(Auth::user()->direccion1 == NULL){
             //     dd($request->input('lname'));

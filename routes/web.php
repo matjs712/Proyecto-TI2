@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Mail;
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\RegistroController;
+use App\Http\Controllers\Admin\RegistroController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\OrdenController;
 use App\Http\Controllers\Admin\PerfilController;
@@ -24,6 +25,8 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Admin\NotificationController;
+
+use App\Http\Mail\NotificationEmail;
 
 use App\Http\Controllers\Admin\RegistroController as AdminRegistroController;
 
@@ -114,37 +117,38 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
     Route::get('delete-prod/{id}',     [ProductController::class,'destroy']);
     Route::get('/modal-productos/{id}', 'Admin\ProductController@show');
 
-    
-    //  INGREDIENTES
-    Route::get('ingredientes',        'Admin\IngredienteController@index');
-    Route::get('crear-ingrediente',   'Admin\IngredienteController@create');
-    Route::post('insert-ingrediente',  'Admin\IngredienteController@store');
-    Route::get('edit-ing/{id}',     [IngredienteController::class,'edit']);
-    Route::put('update-ing/{id}',     [IngredienteController::class,'update']);
-    Route::get('delete-ing/{id}',     [IngredienteController::class,'destroy']);
-   
-    
-    //  PROVEEDORES
-    Route::get('proveedores',        'Admin\ProveedorController@index');
-    Route::get('crear-proveedor',   'Admin\ProveedorController@create');
-    Route::post('insert-proveedor',  'Admin\ProveedorController@store');
-    Route::get('edit-prov/{id}',     [ProveedorController::class,'edit']);
-    Route::put('update-prov/{id}',     [ProveedorController::class,'update']);
-    Route::get('delete-prov/{id}',     [ProveedorController::class,'destroy']);
-    
-    //  REGISTROS
-    Route::get('registros',        'Admin\RegistroController@index');
-    Route::get('crear-registro',   'Admin\RegistroController@create');
-    Route::post('insert-registro',  'Admin\RegistroController@store');
-    Route::get('edit-reg/{id}',     [AdminRegistroController::class,'edit']);
-    Route::put('update-reg/{id}',     [AdminRegistroController::class,'update']);
-    Route::get('delete-reg/{id}',     [AdminRegistroController::class,'destroy']);
 
-   //  ORDENES
+    //  INGREDIENTES
+    Route::get('ingredientes', 'Admin\IngredienteController@index');
+    Route::get('crear-ingrediente', 'Admin\IngredienteController@create');
+    Route::post('insert-ingrediente', 'Admin\IngredienteController@store');
+    Route::get('edit-ing/{id}', [IngredienteController::class, 'edit']);
+    Route::put('update-ing/{id}', [IngredienteController::class, 'update']);
+    Route::get('delete-ing/{id}', [IngredienteController::class, 'destroy']);
+    Route::get('cantidad-ingredientes', [IngredienteController::class, 'qty']);
+
+    //  PROVEEDORES
+    Route::get('proveedores', 'Admin\ProveedorController@index');
+    Route::get('crear-proveedor', 'Admin\ProveedorController@create');
+    Route::post('insert-proveedor', 'Admin\ProveedorController@store');
+    Route::get('edit-prov/{id}', [ProveedorController::class, 'edit']);
+    Route::put('update-prov/{id}', [ProveedorController::class, 'update']);
+    Route::get('delete-prov/{id}', [ProveedorController::class, 'destroy']);
+
+    //  REGISTROS
+    Route::get('registros', 'Admin\RegistroController@index');
+    Route::get('crear-registro', 'Admin\RegistroController@create');
+    Route::post('insert-registro', 'Admin\RegistroController@store');
+    Route::get('edit-reg/{id}', [AdminRegistroController::class, 'edit']);
+    Route::put('update-reg/{id}', [AdminRegistroController::class, 'update']);
+    Route::get('delete-reg/{id}', [AdminRegistroController::class, 'destroy']);
+    Route::get('/modal-registros/{id}', 'Admin\RegistroController@show');
+
+    //  ORDENES
     Route::get('ordenes', [OrdenController::class, 'index']);
     Route::get('admin/ver-orden/{id}', [OrdenController::class, 'view']);
     Route::put('update-order/{id}', [OrdenController::class, 'updateorder']);
-   
+
     //  USUARIOS
     Route::get('usuarios', [DashboardController::class, 'index']);
     Route::get('add-usuario', [DashboardController::class, 'create']);
@@ -154,22 +158,23 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
     Route::get('ver-usuario/{id}', [DashboardController::class, 'view']);
     Route::get('delete-usuario/{id}', [DashboardController::class, 'destroy']);
 
-   //  CONFIGURACIÓN
-   Route::get('configuracion', [DashboardController::class, 'configuracion']);
-   Route::put('update-general',     [DashboardController::class,'updateConfiguracion']);
-   Route::put('update-admin',     [DashboardController::class,'updateCredenciales']);
+    //  CONFIGURACIÓN
+    Route::get('configuracion', [DashboardController::class, 'configuracion']);
+    Route::put('update-general', [DashboardController::class, 'updateConfiguracion']);
+    Route::put('update-admin', [DashboardController::class, 'updateCredenciales']);
 
-   //ROLES Y PERMISOS
-   Route::get('roles', [RoleController::class, 'index']);
-   Route::get('add-roles', [RoleController::class, 'create']);
-   Route::post('store-roles', [RoleController::class, 'store'])->name('roles.store');;
-   Route::get('roles/{rol}/show', [RoleController::class, 'show'])->name('roles.show');
-   Route::get('roles/{rol}/edit', [RoleController::class, 'edit'])->name('roles.edit');
-   Route::put('roles/{rol}', [RoleController::class, 'update'])->name('roles.update');
-   Route::get('delete-rol/{id}', [RoleController::class, 'destroy']);
+    //ROLES Y PERMISOS
+    Route::get('roles', [RoleController::class, 'index']);
+    Route::get('add-roles', [RoleController::class, 'create']);
+    Route::post('store-roles', [RoleController::class, 'store'])->name('roles.store');
+    ;
+    Route::get('roles/{rol}/show', [RoleController::class, 'show'])->name('roles.show');
+    Route::get('roles/{rol}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::put('roles/{rol}', [RoleController::class, 'update'])->name('roles.update');
+    Route::get('delete-rol/{id}', [RoleController::class, 'destroy']);
 
-   //PERFIL
-   Route::get('perfil', [PerfilController::class, 'index']);
-   Route::put('update-perfil-general/{id}', [PerfilController::class, 'update']);
-   Route::put('update-credenciales-perfil/{id}', [PerfilController::class, 'updateCredential']);
- });
+    //PERFIL
+    Route::get('perfil', [PerfilController::class, 'index']);
+    Route::put('update-perfil-general/{id}', [PerfilController::class, 'update']);
+    Route::put('update-credenciales-perfil/{id}', [PerfilController::class, 'updateCredential']);
+});

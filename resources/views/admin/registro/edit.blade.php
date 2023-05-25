@@ -75,6 +75,15 @@
                             @endif
                         </div>
                     </div>
+                    <div class="col-md-12 mb-4">
+                        <label for="">Factura</label>
+                        <input type="file" id="factura" name="factura" class="form-control">
+                        @if ($errors->has('factura'))
+                            <span class="error text-danger" for="input-name">{{ $errors->first('factura') }}</span>
+                        @endif
+                        <img id="preview" width="200" height="200"
+                            src="{{ Storage::url('uploads/facturas/' . $registro->factura) }}" alt=" ">
+                    </div>
 
                     <div class="col-md-12 mt-4">
                         <button type="submit" class="btn btn-primary">Editar</button>
