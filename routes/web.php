@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\RegistroController;
+use App\Http\Controllers\Admin\RegistroController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\OrdenController;
 use App\Http\Controllers\Admin\PerfilController;
@@ -126,7 +126,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('edit-reg/{id}', [AdminRegistroController::class, 'edit']);
     Route::put('update-reg/{id}', [AdminRegistroController::class, 'update']);
     Route::get('delete-reg/{id}', [AdminRegistroController::class, 'destroy']);
-    Route::get('modal-registros/{id}', 'Admin\RegistroController@show');
+    Route::get('/modal-registros/{id}', 'Admin\RegistroController@show');
 
     //  ORDENES
     Route::get('ordenes', [OrdenController::class, 'index']);

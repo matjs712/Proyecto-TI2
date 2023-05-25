@@ -88,11 +88,17 @@ class RegistroController extends Controller
                     $file = $request->file('factura');
                     $ext = $file->getClientOriginalExtension();
                     $filename = time() . '.' . $ext;
-                    $factura = Image::make($file);
-                    $factura->resize(800, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->encode('jpg', 70);
-                    $factura->save(storage_path('app/public/uploads/facturas/' . $filename));
+
+                    if ($ext == 'pdf') {
+                        $file->move(storage_path('app/public/uploads/facturas/'), $filename);
+                    } else {
+                        $factura = Image::make($file);
+                        $factura->resize(800, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })->encode('jpg', 70);
+                        $factura->save(storage_path('app/public/uploads/facturas/' . $filename));
+                    }
+
                     $registro->factura = $filename;
                 }
 
@@ -133,7 +139,8 @@ class RegistroController extends Controller
     {
         $registros = Registro::findOrFail($id);
 
-        return view('admin.registros.show', compact('registros'));
+
+        return view('admin.registro.show', compact('registros'));
     }
 
     public function edit($id)
@@ -189,11 +196,15 @@ class RegistroController extends Controller
                     $ext = $file->getClientOriginalExtension();
                     $filename = time() . '.' . $ext;
 
-                    $factura = Image::make($file);
-                    $factura->resize(800, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->encode('jpg', 70);
-                    $factura->save(storage_path('app/public/uploads/facturas/' . $filename));
+                    if ($ext == 'pdf') {
+                        $file->move(storage_path('app/public/uploads/facturas/'), $filename);
+                    } else {
+                        $factura = Image::make($file);
+                        $factura->resize(800, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })->encode('jpg', 70);
+                        $factura->save(storage_path('app/public/uploads/facturas/' . $filename));
+                    }
                     $registro->factura = $filename;
                 }
 

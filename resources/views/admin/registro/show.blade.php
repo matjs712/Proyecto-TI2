@@ -20,7 +20,8 @@
     <div class="col-md-12 d-flex">
         <div class="col-md-6"><strong>Factura:</strong></div>
         <div class="col-md-6">
-            <img src="{{ Storage::url('uploads/facturas/' . $registros->factura) }}" width="100" alt="">
+            <img id="imagen-cargada" src="{{ Storage::url('uploads/facturas/' . $registros->factura) }}" width="100"
+                alt="">
         </div>
     </div>
 
