@@ -57,6 +57,7 @@
                                                 style="background-color: {{ $boton_vermas }}; color:white;" class="btn mb-1"
                                                 data-toggle="modal" data-target="#modalRegistro"
                                                 data-registros-id="{{ $item->id }}">Ver más</a>
+
                                             @can('edit registros')
                                                 <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
                                                     style="background-color: {{ $boton_editar }}; color:white;"
@@ -93,6 +94,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button id="btn-descargar" class="btn btn-primary">Descargar
+                        Factura</button>
                 </div>
             </div>
         </div>
@@ -208,21 +211,38 @@
 
                 // Obtén el ID del registro que se está editando
                 var registroId = button.data('registros-id');
-
                 // Realiza una petición AJAX para obtener el contenido del registro
                 $.ajax({
                     url: '/modal-registros/' + registroId,
                     type: 'GET',
                     success: function(data) {
+
                         // Actualiza el contenido del modal con el contenido del registro
                         $('#modalRegistro .modal-body').html(data);
+
                     },
-                    error: function() {
+                    error: function(data) {
                         // Muestra un mensaje de error si la petición AJAX falla
+
                         alert('Ocurrió un error al cargar el registro.');
                     }
                 });
             });
         })
+
+
+        $(document).ready(function() {
+            $('#btn-descargar').click(function() {
+                var imagenUrl = $('#imagen-cargada').attr('src');
+                console.log(imagenUrl);
+
+                var a = document.createElement('a');
+                a.href = imagenUrl;
+                a.download = '';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            });
+        });
     </script>
 @endsection

@@ -133,7 +133,7 @@ class RegistroController extends Controller
     {
         $registros = Registro::findOrFail($id);
 
-        return view('admin.registros.show', compact('registros'));
+        return view('admin.registro.show', compact('registros'));
     }
 
     public function edit($id)
