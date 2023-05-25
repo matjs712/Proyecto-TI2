@@ -155,7 +155,6 @@ class CheckoutController extends Controller
             route('confirmar_pago')
         );
         $url = $transaction->getUrl().'?token_ws='.$transaction->getToken();
-        
         return $url;
     }
 
