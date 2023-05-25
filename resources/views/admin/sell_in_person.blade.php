@@ -352,6 +352,35 @@ Venta Presencial | {{ $sitio }}
                                     popup: 'custom-swal-success'
                                 }
                             })
+                            Swal.fire({
+                                title: 'Pago realizado con exito!',
+                                text: "Deseas recibir el comprobante por correo?",
+                                input: 'email',
+                                icon: 'success',
+                                showCancelButton: true,
+                                confirmButtonColor: '#28A745',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Si, enviar!',
+                                cancelButtonText: 'No, salir.',
+                                customClass:{
+                                    confirmButton: 'btn btn-success',
+                                    cancelButton: 'btn btn-danger'
+                                },
+                                inputValidator: (email) => {
+                                    if (!email.includes('@')) {
+                                    return 'Ingrese un correo electronico valido.';
+                                    }
+                                },
+                                allowOutsideClick: () => !Swal.isLoading()
+                                }).then((result) => {
+                                if (result.isConfirmed) {
+                                    Swal.fire({
+                                    title: '¡Correo enviado con exito!',
+                                    text: 'se ah enviado la boleta.',
+                                    icon: 'success'
+                                    });
+                                }
+                            })
                             // setTimeout(function() {
                             //     location.reload();
                             // }, 1200);
