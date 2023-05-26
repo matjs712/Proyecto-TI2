@@ -45,11 +45,11 @@
         @php
             $status = '';
             if ($orders->status  == 0) {
-                $status = 'Pendiente';
+                $status = 'Pendiente de pago';
             } elseif ($orders->status == 1) {
-                $status = 'Aprobado';
-            } else {
                 $status = 'Completado';
+            } else {
+                $status = 'Pago aprobado';
             }
         @endphp
         {{ $status }}</p>

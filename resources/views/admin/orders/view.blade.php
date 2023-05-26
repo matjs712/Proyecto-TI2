@@ -69,9 +69,9 @@ Ordenes | {{ $sitio }}
                                     @method('PUT')
                                     <label>Estado de la orden</label>
                                     <select name="orden_status" class="form-control">
-                                        <option {{ $orders->status == '2'? 'selected': '' }} value="2">Aprobada</option>
-                                        <option {{ $orders->status == '0'? 'selected': '' }} value="0">Pendiente</option>
-                                        <option {{ $orders->status == '1'? 'selected': '' }} value="1">Completada</option>
+                                        <option {{ $orders->status == '2'? 'selected': '' }} value="2">Pago aprobado</option>
+                                        <option {{ $orders->status == '0'? 'selected': '' }} value="0">Pendiente de pago</option>
+                                        <option {{ $orders->status == '1'? 'selected': '' }} value="1">Completado</option>
                                     </select>
                                     <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_editar }}; color:white;" type="submit" class="btn mt-3">Editar</button>
                                 </form>

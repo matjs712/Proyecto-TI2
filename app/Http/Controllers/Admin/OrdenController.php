@@ -41,11 +41,11 @@ class OrdenController extends Controller
         $orders->update();
 
         $notifications = new Notification();
-        $aux='Pendiente';
+        $aux='Pendiente de pago';
         if ($orders->status == 1) {
-            $aux='Completada';
+            $aux='Completado';
         } elseif($orders->status == 2 ) {
-            $aux='Aprobado';
+            $aux='Pago aprobado';
         }
         $notifications->detalle = 'Orden: ' . $orders->id.' puesta en '.$aux;
         $notifications->id_usuario = Auth::id();

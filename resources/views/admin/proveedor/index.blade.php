@@ -50,10 +50,7 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <div class="d-flex pl-2 flex-column align-items-start justify-content-center">
-                                            <button onmouseover="this.style.opacity='0.9'"
-                                                onmouseout="this.style.opacity='1'"
-                                                style="background-color: {{ $boton_vermas }}; color:white;"
-                                                class="btn mb-1"><i class="fas fa-edit"></i>Ver más</button>
+
                                             @can('edit proveedores')
                                                 <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
                                                     style="background-color: {{ $boton_editar }}; color:white;"
