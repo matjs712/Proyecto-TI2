@@ -301,13 +301,13 @@ Venta Presencial | {{ $sitio }}
                 method: "POST",
                 url: "/iniciar-compra-presencial",
                 success: function (response) {
-
                     $('#qrModal').modal('show');
                     let qr = new QRious({
                         element: qrContainer,
                         value: response,
                         size: 200
                     });
+
                     $('#qr').html(qr);
                     console.log(response);
                 },
@@ -384,6 +384,7 @@ Venta Presencial | {{ $sitio }}
                                         url: '/enviar-correo',
                                         data:{ email: result.value },
                                         success: function(response){
+                                            console.log(result.value);
                                             Swal.fire({
                                                 title: '¡Correo enviado con exito!',
                                                 text: 'se ah enviado la boleta.',
@@ -395,10 +396,14 @@ Venta Presencial | {{ $sitio }}
                                         }
                                     });
                                 }
+                                willClose: () => {
+                                    setTimeout(function() {
+                                        location.reload();
+                                    }, 1200);
+                                }
                             })
-                            // setTimeout(function() {
-                            //     location.reload();
-                            // }, 1200);
+                            
+                            
                         },
                         error: function (response){
                             console.log(response);

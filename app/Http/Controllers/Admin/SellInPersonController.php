@@ -113,5 +113,6 @@ class SellInPersonController extends Controller
         $correo = new NotificacionEmail($order);
         Mail::to($request->input('email'))->send($correo);
         return $request->input('email');
+        
     }
 }
