@@ -51,11 +51,11 @@
                                                 <td>{{ $item->total_price }}</td>
                                                 <td>
                                                     @if ($item->status == 0)
-                                                        Pendiente
+                                                        Pendiente de pago
                                                     @elseif ($item->status == 1)
                                                         Completado
                                                     @elseif ($item->status == 2)
-                                                        Aprobada
+                                                        Pago aprobado
                                                     @endif
                                                 </td>
                                                 <td>

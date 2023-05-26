@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\View;
 use Transbank\Webpay\WebpayPlus\Transaction;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Notification;
+use App\Mail\NotificacionEmail;
+use Illuminate\Support\Facades\Mail;
+
 
 class CheckoutController extends Controller
 {
@@ -136,13 +139,12 @@ class CheckoutController extends Controller
             $total += $prod->products->selling_price * $prod->prod_qty;
         }
         $order->total_price = $total;
-
         $order->save();
 
         $url_to_pay = self::start_web_pay_plus_transaction( $order);
-        return $url_to_pay;
-
+        return redirect($url_to_pay);
     }
+
 
     public function start_web_pay_plus_transaction($order){
         $transaction = (new Transaction)->create(
@@ -152,7 +154,6 @@ class CheckoutController extends Controller
             route('confirmar_pago')
         );
         $url = $transaction->getUrl().'?token_ws='.$transaction->getToken();
-        
         return $url;
     }
 
@@ -182,6 +183,8 @@ class CheckoutController extends Controller
             $notifications->id_usuario = Auth::id();
             $notifications->tipo = 1;
             $notifications->save();
+            $correo = new NotificacionEmail($order);
+            Mail::to($order->email)->send($correo);
 
             // if(Auth::user()->direccion1 == NULL){
             //     dd($request->input('lname'));
