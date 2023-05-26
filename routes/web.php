@@ -82,7 +82,7 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
 });
 
 // ADMIN ROUTES
- Route::middleware(['auth','isAdmin'])->group(function (){
+Route::middleware(['auth','isAdmin'])->group(function (){
    Route::get('/dashboard',  'Admin\FrontendController@index')->name('dashboard');
    Route::get('/datos-graficos',  'Admin\FrontendController@ChartIngredientes');
     
@@ -92,8 +92,6 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    Route::post('completar-pago',[SellInPersonController::class, 'completar_pago']);
    Route::post('generar-pdf',[SellInPersonController::class, 'generatePDF']);
    Route::post('enviar-correo',[SellInPersonController::class, 'enviar_email']);
-
-
    
     //NOTIFICAIONES
     Route::get('/notificaciones',  'Admin\NotificationController@index');
