@@ -17,7 +17,7 @@ class CreateIngredientesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('medida');
-            $table->integer('cantidad')->nullable()->default(0);
+            $table->float('cantidad')->nullable()->default(0);
             $table->timestamps();
         });
     }

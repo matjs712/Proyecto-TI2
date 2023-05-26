@@ -28,6 +28,7 @@
                         <th>Proveedor</th>
                         <th>Ingrediente</th>
                         <th>Cantidad</th>
+                        <th>Medida</th>   
                         <th>Factura</th>
                         <th>Opciones</th>
                     </tr>
@@ -40,6 +41,7 @@
                             <td>{{ $item->proveedor->name }}</td>
                             <td>{{ $item->ingrediente->name }}</td>
                             <td><span class="badge badge-primary">{{ $item->cantidad }}</span></td>
+                            <td>{{ $item->medida }}</td>
                             <td>
                                 @if (pathinfo($item->factura, PATHINFO_EXTENSION) == 'pdf')
                                     <i class="fa-solid fa-file-pdf"></i>
@@ -169,6 +171,18 @@
                                     @if ($errors->has('cantidad'))
                                         <span class="error text-danger"
                                             for="input-name">{{ $errors->first('cantidad') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="medida">Medida</label>
+                                    <select name="medida" class="form-control">
+                                        <option value="gr" {{ old('medida') == 'gramos' ? 'selected' : '' }}>Gramos</option>
+                                        <option value="kg" {{ old('medida') == 'kilogramos' ? 'selected' : '' }}>Kilogramos</option>
+                                    </select>
+                                    @if ($errors->has('medida'))
+                                        <span class="error text-danger" for="input-name">{{ $errors->first('medida') }}</span>
                                     @endif
                                 </div>
                             </div>

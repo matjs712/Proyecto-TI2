@@ -82,7 +82,6 @@ class ProductController extends Controller
             'selling_price' => 'required',
             'image' => 'required|image|mimes:jpg,png',
             'qty' => 'required',
-
         ];
 
         $messages = [
@@ -109,11 +108,17 @@ class ProductController extends Controller
                 $ingredientesCount = count(preg_grep('/^ingrediente/', array_keys($request->all())));
                 $ingredienteFaltante = '';
 
+                //COMPROBAR QUE HAY INGREDIENTES SUFICIENTES PARA CREAR EL PRODUCTO
                 if ($ingredientesCount >= 1) {
                     if ($request->ingrediente1 != '') {
                         for ($i = 1; $i <= $ingredientesCount; $i++) {
                             $idIngrediente = $request->input('ingrediente' . $i);
-                            $cantidadRequerida = $request->input('cantidad' . $i) * $request->qty;
+                            $medida = $request->input('medida' . $i);
+                            if($medida == 'kilogramos'){
+                                $cantidadRequerida = $request->input('cantidad' . $i) * $request->qty * 1000;
+                            } else{
+                                $cantidadRequerida = $request->input('cantidad' . $i) * $request->qty;
+                            }
                             $ingrediente = $ingredientes->firstWhere('id', $idIngrediente);
                             if (!$ingrediente || $cantidadRequerida > $ingrediente->cantidad) {
                                 $ingredienteFaltante = $ingrediente->name;
@@ -122,6 +127,7 @@ class ProductController extends Controller
                         }
                     }
                 }
+
 
                 if ($request->hasFile('image')) {
                     $file = $request->file('image');
@@ -151,11 +157,18 @@ class ProductController extends Controller
                 // $producto->meta_keywords = $request->input('meta_keywords');
                 $producto->save();
 
+
                 if ($ingredientesCount >= 1) {
                     if ($request->ingrediente1 != '') {
                         for ($i = 1; $i <= $ingredientesCount; $i++) {
                             $idIngrediente = $request->input('ingrediente' . $i);
-                            $cantidadRequerida = $request->input('cantidad' . $i) * $request->qty;
+
+                            $medida = $request->input('medida' . $i);
+                            if($medida == 'kilogramos'){
+                                $cantidadRequerida = $request->input('cantidad' . $i) * $request->qty * 1000;
+                            } else{
+                                $cantidadRequerida = $request->input('cantidad' . $i) * $request->qty;
+                            }
 
                             $productoIngrediente = new ProductoIngrediente();
                             $productoIngrediente->id_producto = $producto->id;
@@ -169,7 +182,7 @@ class ProductController extends Controller
                             if($ingrediente->cantidad <= 1000){
                                 $notifications = new Notification();
                                 $notifications->detalle = 'Ingrediente: ' . $ingrediente->name. 'en estado crítico, solo quedan '. $ingrediente->cantidad;
-                                $notifications->id_usuario = Auth::id();
+                                $notifications->id_usuario = 1;
                                 $notifications->tipo = 2;
                                 $notifications->save();
                             }
@@ -177,7 +190,7 @@ class ProductController extends Controller
                             if($producto->qty <= 2){
                                 $notifications = new Notification();
                                 $notifications->detalle = 'Producto: ' . $producto->name. 'en estado crítico, solo quedan '. $producto->qty;
-                                $notifications->id_usuario = Auth::id();
+                                $notifications->id_usuario = 1;
                                 $notifications->tipo = 2;
                                 $notifications->save();
                             }
@@ -189,7 +202,7 @@ class ProductController extends Controller
 
                 $notifications = new Notification();
                 $notifications->detalle = 'Producto añadido: ' . $producto->name;
-                $notifications->id_usuario = Auth::id();
+                $notifications->id_usuario = 1;
                 $notifications->tipo = 0;
                 $notifications->save();
 
@@ -277,7 +290,14 @@ class ProductController extends Controller
                     if ($request->ingrediente1 != '') {
                         for ($i = 1; $i <= $ingredientesCount; $i++) {
                             $idIngrediente = $request->input('ingrediente' . $i);
-                            $cantidadRequerida = $request->input('cantidad' . $i) * $request->qty;
+
+                            $medida = $request->input('medida' . $i);
+                            if($medida == 'kilogramos'){
+                                $cantidadRequerida = $request->input('cantidad' . $i) * $request->qty * 1000;
+                            } else{
+                                $cantidadRequerida = $request->input('cantidad' . $i) * $request->qty;
+                            }
+
                             $ingrediente = Ingrediente::find($idIngrediente);
                             if (!$ingrediente || $cantidadRequerida > $ingrediente->cantidad) {
                                 $ingredienteFaltante = $ingrediente->name;
@@ -320,7 +340,7 @@ class ProductController extends Controller
                 if($producto->qty <= 2){
                     $notifications = new Notification();
                     $notifications->detalle = 'Producto: ' . $producto->name. 'en estado crítico, solo quedan '. $producto->qty;
-                    $notifications->id_usuario = Auth::id();
+                    $notifications->id_usuario = 1;
                     $notifications->tipo = 2;
                     $notifications->save();
                 }
@@ -334,7 +354,12 @@ class ProductController extends Controller
                     if ($request->ingrediente1 != '') {
                         for ($i = 1; $i <= $ingredientesCount; $i++) {
                             $idIngrediente = $request->input('ingrediente' . $i);
-                            $cantidadRequerida = $request->input('cantidad' . $i) * $request->qty;
+                            $medida = $request->input('medida' . $i);
+                            if($medida == 'kilogramos'){
+                                $cantidadRequerida = $request->input('cantidad' . $i) * $request->qty * 1000;
+                            } else{
+                                $cantidadRequerida = $request->input('cantidad' . $i) * $request->qty;
+                            }
                             $ingrediente = Ingrediente::find($idIngrediente);
                             // dd($ingrediente);
 
@@ -369,7 +394,7 @@ class ProductController extends Controller
                                 if($ingrediente->cantidad <= 1000){
                                     $notifications = new Notification();
                                     $notifications->detalle = 'Ingrediente: ' . $ingrediente->name. 'en estado crítico, solo quedan '. $ingrediente->cantidad;
-                                    $notifications->id_usuario = Auth::id();
+                                    $notifications->id_usuario = 1;
                                     $notifications->tipo = 2;
                                     $notifications->save();
                                 }
@@ -423,7 +448,7 @@ class ProductController extends Controller
 
         $notifications = new Notification();
         $notifications->detalle = 'Producto eliminado: ' . $producto->name;
-        $notifications->id_usuario = Auth::id();
+        $notifications->id_usuario = 1;
         $notifications->tipo = 2;
         $notifications->save();
 

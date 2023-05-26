@@ -68,7 +68,8 @@ class RegistroController extends Controller
             'fecha' => 'required|date',
             'id_proveedor' => 'required',
             'id_ingrediente' => 'required',
-            'cantidad' => 'required|integer',
+            'cantidad' => 'required',
+            'medida' => 'required',
             'factura' => 'required',
 
         ];
@@ -105,17 +106,25 @@ class RegistroController extends Controller
                 $registro->fecha = $request->input('fecha');
                 $registro->id_proveedor = $request->input('id_proveedor');
                 $registro->id_ingrediente = $request->input('id_ingrediente');
-                $registro->cantidad = $request->input('cantidad');
+
+                $registro->medida = $request->input('medida');
+                if($medida == 'kilogramos'){
+                    $registro->cantidad = $request->input('cantidad') * 1000;
+                } else{
+                    $registro->cantidad = $request->input('cantidad');
+                }
+                $registro->medida = 'gramos';
+
                 $registro->save();
 
                 $ingrediente = Ingrediente::find($request->input('id_ingrediente'));
-                $cantidadagregada = $request->input('cantidad');
+                $cantidadagregada = $registro->cantidad;
                 $ingrediente->cantidad = $ingrediente->cantidad + $cantidadagregada;
                 $ingrediente->save();
 
                 $notifications = new Notification();
                 $notifications->detalle = 'Se añadio ' . $ingrediente->cantidad . ' de ' . $ingrediente->name . ' a nuestros registros';
-                $notifications->id_usuario = Auth::id();
+                $notifications->id_usuario = 1;
                 $notifications->tipo = 0;
                 $notifications->save();
 
@@ -168,6 +177,7 @@ class RegistroController extends Controller
             'id_proveedor' => 'required',
             'id_ingrediente' => 'required',
             'cantidad' => 'required|integer',
+            'medida' => 'required',
             'factura' => 'required'
 
 
@@ -211,10 +221,20 @@ class RegistroController extends Controller
 
 
                 $ingrediente = Ingrediente::find($request->input('id_ingrediente'));
-                if ($request->input('cantidad') < $registro->cantidad) {
-                    $ingrediente->decrement('cantidad', $registro->cantidad - $request->input('cantidad'));
-                } else if ($request->input('cantidad') > $registro->cantidad) {
-                    $ingrediente->increment('cantidad', $request->input('cantidad') - $registro->cantidad);
+
+
+                $registro->medida = $request->input('medida');
+                if($medida == 'kilogramos'){
+                    $nuevaCantidad = $request->input('cantidad') * 1000;
+                } else{
+                    $nuevaCantidad = $request->input('cantidad');
+                }
+
+                
+                if ($nuevaCantidad < $registro->cantidad) {
+                    $ingrediente->decrement('cantidad', $registro->cantidad - $nuevaCantidad);
+                } else if ($nuevaCantidad > $registro->cantidad) {
+                    $ingrediente->increment('cantidad', $nuevaCantidad - $registro->cantidad);
                 }
 
                 $ingrediente->save();
@@ -222,8 +242,8 @@ class RegistroController extends Controller
                 $registro->fecha = $request->input('fecha');
                 $registro->id_proveedor = $request->input('id_proveedor');
                 $registro->id_ingrediente = $request->input('id_ingrediente');
-                $registro->cantidad = $request->input('cantidad');
-
+                $registro->cantidad = $nuevaCantidad;
+                $registro->medida = 'gramos';
 
                 $registro->update();
                 DB::commit();
@@ -261,7 +281,7 @@ class RegistroController extends Controller
         }
         $notifications = new Notification();
         $notifications->detalle = 'Se elimino ' . $ingrediente->cantidad . ' de ' . $ingrediente->name . ' de nuestros registros';
-        $notifications->id_usuario = Auth::id();
+        $notifications->id_usuario = 1;
         $notifications->tipo = 2;
         $notifications->save();
 
