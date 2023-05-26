@@ -4,7 +4,6 @@ $.ajax({
     type: "GET",
     dataType: "json",
     success: function (data) {
-        console.log(data);
         labels = [];
         values = [];
         for(var i = 0; i < data.chart1.length; i++){

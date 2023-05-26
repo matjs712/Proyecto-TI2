@@ -24,6 +24,7 @@ Ordenes | {{ $sitio }}
                             <label>Teléfono</label>
                             <div class="border p-2">{{ $orders->telefono }}</div>
                             <label>Información de entrega</label>
+                            @if($orders->fname != 'No aplica')
                             <div class="border p-2">
                                 {{ $orders->direccion1 }}
                                 {{ $orders->direccion2 }}
@@ -31,6 +32,11 @@ Ordenes | {{ $sitio }}
                                 {{ $orders->ciudad }}
                                 {{ $orders->comuna }}
                             </div>
+                            @else
+                                <div class="border p-2">
+                                    {{ $orders->direccion1 }}                                    
+                                </div>
+                            @endif
                         </div>
                         <div class="col-md-6">
                             <table class="table table-bordered">

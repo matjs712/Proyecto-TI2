@@ -40,6 +40,9 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
+        <li class="nav-item">
+          <a class="btn btn-outline-primary" href="{{ url('/venta-presencial') }}">Venta Presencial</a>
+        </li>
         <li class="nav-item dropdown">
             <a class="nav-link qty-button" style="font-size: 1.3rem;" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>

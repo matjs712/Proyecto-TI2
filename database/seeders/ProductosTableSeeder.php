@@ -14,7 +14,8 @@ class ProductosTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    {  
+
         DB::table('products')->insert([
             [
                 'cate_id' => 1,
@@ -28,7 +29,7 @@ class ProductosTableSeeder extends Seeder
                 // 'tax' => '18',
                 'status' => 1,
                 'trending' => 1,
-                'image' => Storage::url('images/products/sal-ajo.jpeg'),
+                'image' => 'sal-ajo.jpeg',
                 // 'meta_title' => 'pantalones',
                 // 'meta_description' => 'Pantalones increibles',
                 // 'meta_keywords' => 'Pantalones, Pantalones negros, Cargos',
@@ -43,7 +44,7 @@ class ProductosTableSeeder extends Seeder
                 'qty' => '4',
                 'status' => 1,
                 'trending' => 0,
-                'image' => Storage::url('images/products/sal-merken.png'),
+                'image' => 'sal-merken.png',
             ],[
                 'cate_id' => 1,
                 'name' => 'Sal de tomate',
@@ -56,7 +57,7 @@ class ProductosTableSeeder extends Seeder
                 // 'tax' => '18',
                 'status' => 1,
                 'trending' => 1,
-                'image' => 'a',
+                'image' => 'sal-tomate.png',
             ]
         ]);
     }

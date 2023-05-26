@@ -104,6 +104,25 @@
         })
     </script>
 
+@if (session('status'))
+  <script>
+    Swal.fire({
+      toast: true,
+      position: 'bottom-end',
+      timer: 2000,
+      timerProgressBar: true,
+      icon: 'success',
+      title: "{{ session('status')}}",
+      showConfirmButton: false,
+    })
+  </script>
+@endif
+<script>
+  
+  var loader = document.getElementById('preloader');
+  window.addEventListener("load", function (){
+    loader.style.display = "none";
+  }) 
 
 </body>
 

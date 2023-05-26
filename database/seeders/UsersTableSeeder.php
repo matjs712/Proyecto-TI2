@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
 
         User::create([
             'name' => 'John Doe',
-            'imagen' => Storage::url('images/admin/perfil.jpg'),
+            'imagen' => 'admin-user.jpg',
             'email' => 'administrador@sales.cl',
             'password' => bcrypt('password'),
             'role_as' => 1,

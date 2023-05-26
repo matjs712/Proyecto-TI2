@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\RegistroController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\OrdenController;
 use App\Http\Controllers\Admin\PerfilController;
+use App\Http\Controllers\Admin\SellInPersonController;
+
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\UserController;
@@ -59,38 +61,52 @@ Route::get('load-wish-data', [WishListController::class, 'wishCount']);
 Route::post('add-to-wishlist', [WishlistController::class, 'add']);
 Route::post('delete-wishlist-item', [WishlistController::class, 'destroy']);
 
+Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
+   Route::get('carrito', [CartController::class, 'viewCart']);
+   Route::get('checkout',[CheckoutController::class, 'index']);
+   // Route::post('place-order',[CheckoutController::class, 'placeorder']);
+   Route::post('iniciar_compra',[CheckoutController::class, 'iniciar_compra']);
+   Route::post('iniciar-compra-presencial',[CheckoutController::class, 'iniciar_compra_presencial']);
+  
+   Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
 
-
-Route::middleware(['auth'])->group(function () { //solo usuarios autenticados
-    Route::get('carrito', [CartController::class, 'viewCart']);
-    Route::get('checkout', [CheckoutController::class, 'index']);
-    // Route::post('place-order',[CheckoutController::class, 'placeorder']);
-    Route::post('iniciar_compra', [CheckoutController::class, 'iniciar_compra']);
-    Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
-    Route::get('mis-ordenes', [UserController::class, 'index']);
-    Route::get('ver-orden/{id}', [UserController::class, 'view']);
-    Route::get('wishlist', [WishlistController::class, 'index']);
-    
-
-    Route::post('add-rating', [RatingController::class, 'add']);
-    Route::get('add-review/{product_slug}/userreview', [ReviewController::class, 'add']);
-    Route::post('add-review', [ReviewController::class, 'create']);
-    Route::get('edit-review/{product_slug}/userreview', [ReviewController::class, 'edit']);
-    Route::put('update-review', [ReviewController::class, 'update']);
+   Route::get('mis-ordenes',[UserController::class, 'index']);
+   Route::get('ver-orden/{id}', [UserController::class, 'view']);
+   Route::get('wishlist', [WishlistController::class, 'index']);
+   
+   Route::post('add-rating', [RatingController::class, 'add']);
+   Route::get('add-review/{product_slug}/userreview', [ReviewController::class, 'add']);
+   Route::post('add-review', [ReviewController::class, 'create']);
+   Route::get('edit-review/{product_slug}/userreview', [ReviewController::class, 'edit']);
+   Route::put('update-review', [ReviewController::class, 'update']);
 });
 
 // ADMIN ROUTES
-    Route::middleware(['auth', 'isAdmin'])->group(function () {
-    Route::get('/dashboard', 'Admin\FrontendController@index')->name('dashboard');
-    Route::get('/datos-graficos', 'Admin\FrontendController@ChartIngredientes');
+ Route::middleware(['auth','isAdmin'])->group(function (){
+   Route::get('/dashboard',  'Admin\FrontendController@index')->name('dashboard');
+   Route::get('/datos-graficos',  'Admin\FrontendController@ChartIngredientes');
+    
+   //VENTA PRESENCIAL
+   Route::get('venta-presencial', 'Admin\SellInPersonController@index');
+   Route::get('agregar-producto', 'Admin\SellInPersonController@agregarProducto');
+   Route::post('completar-pago',[SellInPersonController::class, 'completar_pago']);
+   Route::post('generar-pdf',[SellInPersonController::class, 'generatePDF']);
+   Route::post('enviar-correo',[SellInPersonController::class, 'enviar_email']);
+
+
+   
+    //NOTIFICAIONES
+    Route::get('/notificaciones',  'Admin\NotificationController@index');
+    Route::put('update-notification/{id}', [NotificationController::class, 'updatenotification']);
+    Route::get('notificationsajax', [NotificationController::class,'notificacionajax']);
 
     // CATEGORIAS
-    Route::get('categorias', 'Admin\CategoryController@index');
-    Route::get('crear-categoria', 'Admin\CategoryController@create');
-    Route::post('insert-category', 'Admin\CategoryController@store');
-    Route::get('edit-cat/{id}', [CategoryController::class, 'edit']);
-    Route::put('update-cat/{id}', [CategoryController::class, 'update']);
-    Route::get('delete-cat/{id}', [CategoryController::class, 'destroy']);
+    Route::get('categorias',        'Admin\CategoryController@index');
+    Route::get('crear-categoria',   'Admin\CategoryController@create');
+    Route::post('insert-category',  'Admin\CategoryController@store');
+    Route::get('edit-cat/{id}',     [CategoryController::class,'edit']);
+    Route::put('update-cat/{id}',     [CategoryController::class,'update']);
+    Route::get('delete-cat/{id}',     [CategoryController::class,'destroy']);
     Route::get('modal-categorias/{id}', 'Admin\CategoryController@show');
 
     //NOTIFICAIONES
@@ -99,12 +115,12 @@ Route::middleware(['auth'])->group(function () { //solo usuarios autenticados
     Route::get('notificationsajax', [NotificationController::class,'notificacionajax']);
     
     // PRODUCTOS
-    Route::get('productos', 'Admin\ProductController@index');
-    Route::get('crear-producto', 'Admin\ProductController@create');
-    Route::post('insert-producto', 'Admin\ProductController@store');
-    Route::get('edit-prod/{id}', [ProductController::class, 'edit']);
-    Route::put('update-prod/{id}', [ProductController::class, 'update']);
-    Route::get('delete-prod/{id}', [ProductController::class, 'destroy']);
+    Route::get('productos',        'Admin\ProductController@index');
+    Route::get('crear-producto',   'Admin\ProductController@create');
+    Route::post('insert-producto',  'Admin\ProductController@store');
+    Route::get('edit-prod/{id}',     [ProductController::class,'edit']);
+    Route::put('update-prod/{id}',     [ProductController::class,'update']);
+    Route::get('delete-prod/{id}',     [ProductController::class,'destroy']);
     Route::get('/modal-productos/{id}', 'Admin\ProductController@show');
 
 
