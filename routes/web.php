@@ -70,6 +70,7 @@ Route::middleware(['auth'])->group(function () { //solo usuarios autenticados
     Route::get('mis-ordenes', [UserController::class, 'index']);
     Route::get('ver-orden/{id}', [UserController::class, 'view']);
     Route::get('wishlist', [WishlistController::class, 'index']);
+    
 
     Route::post('add-rating', [RatingController::class, 'add']);
     Route::get('add-review/{product_slug}/userreview', [ReviewController::class, 'add']);
@@ -79,7 +80,7 @@ Route::middleware(['auth'])->group(function () { //solo usuarios autenticados
 });
 
 // ADMIN ROUTES
-Route::middleware(['auth', 'isAdmin'])->group(function () {
+    Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', 'Admin\FrontendController@index')->name('dashboard');
     Route::get('/datos-graficos', 'Admin\FrontendController@ChartIngredientes');
 
