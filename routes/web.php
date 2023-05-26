@@ -93,6 +93,11 @@ Route::middleware(['auth'])->group(function () { //solo usuarios autenticados
     Route::get('delete-cat/{id}', [CategoryController::class, 'destroy']);
     Route::get('modal-categorias/{id}', 'Admin\CategoryController@show');
 
+    //NOTIFICAIONES
+    Route::get('/notificaciones',  'Admin\NotificationController@index');
+    Route::put('update-notification/{id}', [NotificationController::class, 'updatenotification']);
+    Route::get('notificationsajax', [NotificationController::class,'notificacionajax']);
+    
     // PRODUCTOS
     Route::get('productos', 'Admin\ProductController@index');
     Route::get('crear-producto', 'Admin\ProductController@create');
