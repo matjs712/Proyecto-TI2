@@ -11,6 +11,7 @@ class Ingrediente extends Model
     protected $table = 'ingredientes';
     protected $fillable = [
         'name',
+        'medida',
         'cantidad',
     ];
 }

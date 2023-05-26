@@ -62,6 +62,7 @@ class IngredienteController extends Controller
 
             'name' => 'required|string|min:3',
             'cantidad' => 'required|integer',
+            'medida' => 'required',
         ];
 
         $messages = [
@@ -81,6 +82,8 @@ class IngredienteController extends Controller
 
                 $ingrediente->name = $request->input('name');
                 $ingrediente->cantidad = $request->input('cantidad');
+                $ingrediente->medida = $request->input('medida');
+
                 $ingrediente->save();
 
                 $notifications = new Notification();
@@ -126,6 +129,7 @@ class IngredienteController extends Controller
 
             'name' => 'required|string|min:3',
             'cantidad' => 'required|integer',
+            'medida' => 'required',
         ];
 
         $messages = [
@@ -145,11 +149,12 @@ class IngredienteController extends Controller
 
                 $ingrediente->name = $request->input('name');
                 $ingrediente->cantidad = $request->input('cantidad');
+                $ingrediente->medida = $request->input('medida');
                 $ingrediente->update();
 
                 if($ingrediente->cantidad <= 1000){
                     $notifications = new Notification();
-                    $notifications->detalle = 'Ingrediente: ' . $ingrediente->name. ' en estado crítico, solo quedan '. $ingrediente->cantidad;
+                    $notifications->detalle = 'Ingrediente: ' . $ingrediente->name. ' en estado crítico, solo quedan '. $ingrediente->cantidad.' '.$ingrediente->medida;
                     $notifications->id_usuario = Auth::id();
                     $notifications->tipo = 2;
                     $notifications->save();
