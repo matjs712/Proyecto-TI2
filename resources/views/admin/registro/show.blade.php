@@ -21,9 +21,8 @@
         <div class="col-md-6"><strong>Factura:</strong></div>
         <div class="col-md-6">
             @if (pathinfo($registros->factura, PATHINFO_EXTENSION) == 'pdf')
-                <iframe hidden id="imagen-cargada" width="100"
-                    src="{{ Storage::url('uploads/facturas/' . $registros->factura) }}" frameborder="0"></iframe>
-                <i class="fa-solid fa-file-pdf"></i>
+                <iframe style="overflow:hidden" scrolling="no" id="imagen-cargada" width="100"
+                    src="{{ Storage::url('uploads/facturas/' . $registros->factura) }}" frameborder="5"></iframe>
             @else
                 <img id="imagen-cargada" width="100"
                     src="{{ Storage::url('uploads/facturas/' . $registros->factura) }}" alt="factura-image">

@@ -44,8 +44,7 @@
                                 @if (pathinfo($item->factura, PATHINFO_EXTENSION) == 'pdf')
                                     <i class="fa-solid fa-file-pdf"></i>
                                 @else
-                                    <img width="100" src="{{ Storage::url('uploads/facturas/' . $item->factura) }}"
-                                        alt="factura-image">
+                                    <i class="fa-solid fa-image"></i>
                                 @endif
                             </td>
                             <td>
