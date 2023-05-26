@@ -171,13 +171,12 @@
                             </div>
                             <div class="col-md-12 mb-4">
                                 <label for="">Facturas</label>
-                                {{-- <input type="file" name="image" class="form-control"> --}}
                                 <input type="file" id="image" name="factura" class="form-control">
                                 @if ($errors->has('factura'))
                                     <span class="error text-danger"
                                         for="input-name">{{ $errors->first('factura') }}</span>
                                 @endif
-                                <img id="preview" width="200" height="200" src="" alt=" ">
+                                <img id="preview" width="200" height="200" src="" alt="">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -193,6 +192,18 @@
 
 @section('after_scripts')
     <script>
+        const input = document.querySelector('#image');
+        const preview = document.querySelector('#preview');
+        input.addEventListener('change', () => {
+            const file = input.files[0];
+            const reader = new FileReader();
+
+            reader.addEventListener('load', () => {
+                preview.setAttribute('src', reader.result);
+            });
+            reader.readAsDataURL(file);
+        });
+        
         $(document).ready(function() {
             $('#tablaRegistros').DataTable({
                 responsive: true,
