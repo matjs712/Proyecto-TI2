@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\View;
 use Transbank\Webpay\WebpayPlus\Transaction;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Notification;
+use App\Mail\NotificacionEmail;
+use Illuminate\Support\Facades\Mail;
 use TCPDF;
 
 class SellInPersonController extends Controller
@@ -76,7 +78,6 @@ class SellInPersonController extends Controller
         $notifications->tipo = 1;
         $notifications->save();
 
-        self::generatePDF($order);
         
     }
 
@@ -103,5 +104,14 @@ class SellInPersonController extends Controller
 
         // Generar el PDF y guardarlo en una ruta específica
         $pdf->Output(storage_path('app/public/pdf/example.pdf'), 'F');
+    }
+
+    public function enviar_email(Request $request){
+        $order = Order::where('user_id', Auth::id())->first();
+        
+        self::generatePDF($order);
+        $correo = new NotificacionEmail($order);
+        Mail::to($request->input('email'))->send($correo);
+        return $request->input('email');
     }
 }

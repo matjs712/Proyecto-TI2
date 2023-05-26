@@ -374,10 +374,25 @@ Venta Presencial | {{ $sitio }}
                                 allowOutsideClick: () => !Swal.isLoading()
                                 }).then((result) => {
                                 if (result.isConfirmed) {
-                                    Swal.fire({
-                                    title: '¡Correo enviado con exito!',
-                                    text: 'se ah enviado la boleta.',
-                                    icon: 'success'
+                                    $.ajaxSetup({
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        }
+                                    }),
+                                    $.ajax({
+                                        method: 'POST',
+                                        url: '/enviar-correo',
+                                        data:{ email: result.value },
+                                        success: function(response){
+                                            Swal.fire({
+                                                title: '¡Correo enviado con exito!',
+                                                text: 'se ah enviado la boleta.',
+                                                icon: 'success'
+                                            });
+                                        },
+                                        error: function(response){
+                                            console.log(response);
+                                        }
                                     });
                                 }
                             })

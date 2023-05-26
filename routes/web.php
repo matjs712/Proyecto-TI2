@@ -91,6 +91,7 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    Route::get('agregar-producto', 'Admin\SellInPersonController@agregarProducto');
    Route::post('completar-pago',[SellInPersonController::class, 'completar_pago']);
    Route::post('generar-pdf',[SellInPersonController::class, 'generatePDF']);
+   Route::post('enviar-correo',[SellInPersonController::class, 'enviar_email']);
 
 
    
