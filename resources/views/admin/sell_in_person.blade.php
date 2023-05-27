@@ -49,13 +49,13 @@ Venta Presencial | {{ $sitio }}
                                 <p id="precio"></p>
                             </div>
                             <hr>
-                            <select id="metodoPago" class="form-select" aria-label="Default select">
+                            <select class="form-select w-100 p-1" id="metodoPago"  aria-label="Default select">
                                 <option hidden selected>Metodo de pago</option>
                                 <option value="1">Efectivo</option>
                                 <option value="2">WebPay</option>
                               </select>
                               <hr>
-                            <button style="width: 100%;" class="btn btn-primary btnPagar">Ir al pago</button>
+                            <button style="width: 100%;" class="btn btn-primary btnPagar">Seleccione metodo de pago</button>
                         </div>
                 </div>
             </div>
@@ -90,8 +90,9 @@ Venta Presencial | {{ $sitio }}
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body d-flex justify-content-center">
-                <canvas style="height: 300px; width: 300px" id="qr"></canvas>
+            <div class="modal-body justify-content-center">
+                <canvas class="row m-auto" style="height: 300px; width: 300px" id="qr"></canvas>
+                <button id="completarPago" class="row btn btn-primary w-100 mt-4">Completar pago</button>
             </div>
 
         </div>
@@ -149,7 +150,6 @@ Venta Presencial | {{ $sitio }}
             if(!codigoLeido){
                 codigoLeido = true;
                 let code = result.codeResult.code;
-                console.log(code);
                 Quagga.stop();
                 agregarProducto(code);
                 $('#escanerModal').modal('hide');
@@ -175,7 +175,6 @@ Venta Presencial | {{ $sitio }}
             success: function (codigo) {
                 //obtenerProductosEscaneados();
                 productos.push(codigo);
-                console.log(productos);
                 actualizarListaProductos(productos);
             },
             error: function (e) {
@@ -239,7 +238,6 @@ Venta Presencial | {{ $sitio }}
         
         // Eliminar el elemento de la vista
         $(this).closest('.card').remove();
-        console.log(productos);
         $('#precio').html('$ ' + precio);
     });
 
@@ -285,136 +283,221 @@ Venta Presencial | {{ $sitio }}
             });
         }
 
-        // let form = document.getElementById('form');
-        // form.submit();
         let metodoPago = document.getElementById('metodoPago').value;
+        if(Object.keys(carrito).length > 0){
+            if(metodoPago == 2){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                })
+                let qrContainer = document.getElementById('qr');
+                $.ajax({
+                    method: "POST",
+                    url: "/iniciar-compra-presencial",
+                    success: function (response) {
+                        $('#qrModal').modal('show');
+                        let qr = new QRious({
+                            element: qrContainer,
+                            value: response,
+                            size: 200
+                        });
 
-        console.log(metodoPago)
-        if(metodoPago == 2){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            })
-            let qrContainer = document.getElementById('qr');
-            $.ajax({
-                method: "POST",
-                url: "/iniciar-compra-presencial",
-                success: function (response) {
-                    $('#qrModal').modal('show');
-                    let qr = new QRious({
-                        element: qrContainer,
-                        value: response,
-                        size: 200
-                    });
+                        $('#qr').html(qr);
+                        console.log(response);
+                    },
+                    error: function (response){
+                        console.log(response);
+                    }
+                });
 
-                    $('#qr').html(qr);
-                    console.log(response);
-                },
-                error: function (response){
-                    console.log(response);
-                }
-            });
+                
+
+            }
+            else if(metodoPago == 1){
+                Swal.fire({
+                    title: 'Estas seguro?',
+                    text: "La orden estará pagada!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#28A745',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, confirmar!',
+                    customClass:{
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        })
+                        $.ajax({
+                            method: "POST",
+                            url: "/completar-pago",
+                            success: function (response) {
+                                Swal.fire({
+                                    toast: true,
+                                    position: 'bottom-end',
+                                    timer: 1100,
+                                    timerProgressBar: true,
+                                    icon: 'success',
+                                    title: "Pago realizado con exito",
+                                    showConfirmButton: false,
+                                    customClass: {
+                                        popup: 'custom-swal-success'
+                                    }
+                                })
+                                Swal.fire({
+                                    title: 'Pago realizado con exito!',
+                                    text: "Deseas recibir el comprobante por correo?",
+                                    input: 'email',
+                                    icon: 'success',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#28A745',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Si, enviar!',
+                                    cancelButtonText: 'No, salir.',
+                                    customClass:{
+                                        confirmButton: 'btn btn-success',
+                                        cancelButton: 'btn btn-danger'
+                                    },
+                                    inputValidator: (email) => {
+                                        if (!email.includes('@')) {
+                                        return 'Ingrese un correo electronico valido.';
+                                        }
+                                    },
+                                    allowOutsideClick: () => !Swal.isLoading()
+                                    }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $.ajaxSetup({
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                            }
+                                        }),
+                                        $.ajax({
+                                            method: 'POST',
+                                            url: '/enviar-correo',
+                                            data:{ email: result.value },
+                                            success: function(response){
+                                                console.log(result.value);
+                                                Swal.fire({
+                                                    title: '¡Correo enviado con exito!',
+                                                    text: 'se ah enviado la boleta.',
+                                                    icon: 'success'
+                                                });
+                                            },
+                                            error: function(response){
+                                                console.log(response);
+                                            }
+                                        });
+                                    }
+                                    
+                                }).then(() => {
+                                    setTimeout(function() {
+                                        location.reload();
+                                    }, 500);
+                                });
+                            },
+                            error: function (response){
+                                console.log(response);
+                            }
+                        });
+                        
+                    }
+                })
+            }
         }
         else{
             Swal.fire({
-                title: 'Estas seguro?',
-                text: "La orden estará pagada!",
+                toast: true,
+                position: 'bottom-end',
+                timer: 1100,
+                timerProgressBar: true,
                 icon: 'warning',
+                title: "Agregue algo al carrito",
+                showConfirmButton: false,
+                customClass: {
+                }
+            })
+        }
+        
+    });
+    
+    $('#completarPago').click( function(e){
+        Swal.fire({
+            title: 'Estas seguro?',
+            text: "La orden estará pagada!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#28A745',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, confirmar!',
+            customClass:{
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+        }).then((result) => {
+            Swal.fire({
+                title: 'Pago realizado con exito!',
+                text: "Deseas recibir el comprobante por correo?",
+                input: 'email',
+                icon: 'success',
                 showCancelButton: true,
                 confirmButtonColor: '#28A745',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, confirmar!',
+                confirmButtonText: 'Si, enviar!',
+                cancelButtonText: 'No, salir.',
                 customClass:{
                     confirmButton: 'btn btn-success',
                     cancelButton: 'btn btn-danger'
                 },
-            }).then((result) => {
+                inputValidator: (email) => {
+                    if (!email.includes('@')) {
+                    return 'Ingrese un correo electronico valido.';
+                    }
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
-                    })
+                    }),
                     $.ajax({
-                        method: "POST",
-                        url: "/completar-pago",
-                        success: function (response) {
+                        method: 'POST',
+                        url: '/enviar-correo',
+                        data:{ email: result.value },
+                        success: function(response){
+                            console.log(result.value);
                             Swal.fire({
-                                toast: true,
-                                position: 'bottom-end',
-                                timer: 1100,
-                                timerProgressBar: true,
-                                icon: 'success',
-                                title: "Pago realizado con exito",
-                                showConfirmButton: false,
-                                customClass: {
-                                    popup: 'custom-swal-success'
-                                }
-                            })
-                            Swal.fire({
-                                title: 'Pago realizado con exito!',
-                                text: "Deseas recibir el comprobante por correo?",
-                                input: 'email',
-                                icon: 'success',
-                                showCancelButton: true,
-                                confirmButtonColor: '#28A745',
-                                cancelButtonColor: '#d33',
-                                confirmButtonText: 'Si, enviar!',
-                                cancelButtonText: 'No, salir.',
-                                customClass:{
-                                    confirmButton: 'btn btn-success',
-                                    cancelButton: 'btn btn-danger'
-                                },
-                                inputValidator: (email) => {
-                                    if (!email.includes('@')) {
-                                    return 'Ingrese un correo electronico valido.';
-                                    }
-                                },
-                                allowOutsideClick: () => !Swal.isLoading()
-                                }).then((result) => {
-                                if (result.isConfirmed) {
-                                    $.ajaxSetup({
-                                        headers: {
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                        }
-                                    }),
-                                    $.ajax({
-                                        method: 'POST',
-                                        url: '/enviar-correo',
-                                        data:{ email: result.value },
-                                        success: function(response){
-                                            console.log(result.value);
-                                            Swal.fire({
-                                                title: '¡Correo enviado con exito!',
-                                                text: 'se ah enviado la boleta.',
-                                                icon: 'success'
-                                            });
-                                        },
-                                        error: function(response){
-                                            console.log(response);
-                                        }
-                                    });
-                                }
-                                willClose: () => {
-                                    setTimeout(function() {
-                                        location.reload();
-                                    }, 1200);
-                                }
-                            })
-                            
-                            
+                                title: '¡Correo enviado con exito!',
+                                text: 'se ah enviado la boleta.',
+                                icon: 'success'
+                            });
                         },
-                        error: function (response){
+                        error: function(response){
                             console.log(response);
                         }
                     });
-                    
                 }
-            })
-        }
-        
-    });    
+                
+            }).then(() => {
+                location.reload();
+            });
+        });
+    });
+
 </script>
+@if(session('pago'))
+    <script>
+        setTimeout(function() {
+            location.reload();
+        }, 500);
+    </script>
+@endif
 
 @endsection()

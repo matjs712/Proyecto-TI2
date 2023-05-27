@@ -65,9 +65,7 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
    Route::get('carrito', [CartController::class, 'viewCart']);
    Route::get('checkout',[CheckoutController::class, 'index']);
    // Route::post('place-order',[CheckoutController::class, 'placeorder']);
-   Route::post('iniciar_compra',[CheckoutController::class, 'iniciar_compra']);
-   Route::post('iniciar-compra-presencial',[CheckoutController::class, 'iniciar_compra_presencial']);
-  
+   Route::post('iniciar_compra',[CheckoutController::class, 'iniciar_compra']);  
    Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
 
    Route::get('mis-ordenes',[UserController::class, 'index']);
@@ -92,6 +90,10 @@ Route::middleware(['auth','isAdmin'])->group(function (){
    Route::post('completar-pago',[SellInPersonController::class, 'completar_pago']);
    Route::post('generar-pdf',[SellInPersonController::class, 'generatePDF']);
    Route::post('enviar-correo',[SellInPersonController::class, 'enviar_email']);
+   Route::post('iniciar-compra-presencial',[SellInPersonController::class, 'iniciar_compra_presencial']);
+   Route::any('confirmar_pago_qr', [SellInPersonController::class, 'confirmar_pago'])->name('confirmar_pago_qr');
+
+
    
     //NOTIFICAIONES
     Route::get('/notificaciones',  'Admin\NotificationController@index');

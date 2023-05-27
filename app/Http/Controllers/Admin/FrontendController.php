@@ -26,8 +26,8 @@ class FrontendController extends Controller
     {
         logo_sitio();
         secciones();
-        session()->flash('status', 'Bienvenido ' . Auth::user()->name);
-        return view('admin.index', ['status' => 'Bienvenido ' . Auth::user()->name]);
+        session()->flash('logged', 'Bienvenido ' . Auth::user()->name);
+        return view('admin.index')->with('isLogged');
     }
 
     public function ChartIngredientes()

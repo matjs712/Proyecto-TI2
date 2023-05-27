@@ -101,8 +101,8 @@
     <script>
         $('body').addClass('layout-fixed');
     </script>
-    @if (session('status'))
 
+    @if (session('status'))
         <script>
             Swal.fire({
                 toast: true,
@@ -117,6 +117,25 @@
                 }
             });
         </script>
+    @endif
+    @if (session('isLogged') == 1)
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'bottom-end',
+                timer: 2000,
+                timerProgressBar: true,
+                icon: 'success',
+                title: "{{ session('logged') }}",
+                showConfirmButton: false,
+                customClass: {
+                    popup: 'custom-swal-success'
+                }
+            });
+        </script>
+        @php
+            session()->forget('logged');
+        @endphp
     @endif
     @if (session('error'))
         <script>
