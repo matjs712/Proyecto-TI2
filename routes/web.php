@@ -83,6 +83,14 @@ Route::middleware(['auth'])->group(function(){ //solo usuarios autenticados
 Route::middleware(['auth','isAdmin'])->group(function (){
    Route::get('/dashboard',  'Admin\FrontendController@index')->name('dashboard');
    Route::get('/datos-graficos',  'Admin\FrontendController@ChartIngredientes');
+   Route::get('/usuarios-nuevos',  'Admin\FrontendController@UsuariosNuevos');
+   Route::get('/productos-comprados',  'Admin\FrontendController@ProductosComprados');
+   Route::get('/ordenes-nuevas',  'Admin\FrontendController@OrdenesNuevas');
+   Route::get('/ingresos-mes',  'Admin\FrontendController@IngresosMes');
+   Route::get('/ventas-mes',  'Admin\FrontendController@VentasMes');
+   Route::get('/ingresos-diarios',  'Admin\FrontendController@IngresosDiarios');
+   Route::get('/productos-top',  'Admin\FrontendController@ProductosTop');
+
     
    //VENTA PRESENCIAL
    Route::get('venta-presencial', 'Admin\SellInPersonController@index');
