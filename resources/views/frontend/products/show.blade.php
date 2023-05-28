@@ -9,7 +9,8 @@
             <h6 class="mb-0">
                 <a href="{{ url('/') }}">Inicio</a> /
                 {{-- <a href="{{ url('ver-categoria/'.$producto->category->slug) }}">{{ $producto->category->name }}</a> /  --}}
-                <a href="{{ url('categorias/' . $producto->category->slug . '/' . $producto->slug) }}">{{ $producto->name }}</a>
+                <a
+                    href="{{ url('categorias/' . $producto->category->slug . '/' . $producto->slug) }}">{{ $producto->name }}</a>
             </h6>
         </div>
     </div>
@@ -59,8 +60,8 @@
                                     <i class="fa fa-star" aria-hidden="true"></i>
                                     Califica este producto
                                 </button>
-                                <a href="{{ url('add-review/' . $producto->slug . '/userreview') }}" class="btn btn-azul"><i
-                                        class="fa fa-star" aria-hidden="true"></i>Añadir Review</a>
+                                <a href="{{ url('add-review/' . $producto->slug . '/userreview') }}"
+                                    class="btn btn-azul"><i class="fa fa-star" aria-hidden="true"></i>Añadir Review</a>
                             </div>
                         </div>
                         <div class="row mt-2 align-items-center">

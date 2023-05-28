@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
     {
 
         User::create([
+            // 'id' => 1,
             'name' => 'John Doe',
             'imagen' => 'admin-user.jpg',
             'email' => 'administrador@sales.cl',
@@ -26,18 +27,21 @@ class UsersTableSeeder extends Seeder
             'role_as' => 1,
         ])->assignRole('admin');
         User::create([
+            // 'id' => 2,
             'name' => 'nutricionista',
             'email' => 'nutricionista@sales.cl',
             'password' => bcrypt('password'),
             'role_as' => 2,
         ])->assignRole('nutricionista');
         User::create([
+            // 'id' => 3,
             'name' => 'chef',
             'email' => 'chef@sales.cl',
             'password' => bcrypt('password'),
             'role_as' => 3,
         ])->assignRole('chef');
         User::create([
+            // 'id' => 4,
             'name' => 'normal',
             'email' => 'normal@sales.cl',
             'password' => bcrypt('password'),

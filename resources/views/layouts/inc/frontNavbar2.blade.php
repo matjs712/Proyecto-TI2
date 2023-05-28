@@ -72,16 +72,6 @@
                     @endif
                 </div>
             @else
-                <li class="nav-item">
-                    <a class="nav-link text-dark mr-2" href="{{ url('carrito') }}"><i class="fas fa-shopping-bag    "></i>
-                        <span class="badge badge-pill text-dark cart-count" style="background: #cf4647">0</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark mr-2" href="{{ url('wishlist') }}"><i class="fas fa-heart    "></i>
-                        <span class="badge badge-pill text-dark wish-count" style="background: #a7c5bd">0</span>
-                    </a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -113,6 +103,19 @@
                     </div>
                 </li>
             @endguest
+            @if (Auth::check() || session()->has('guest_id'))
+                <li class="nav-item">
+                    <a class="nav-link text-dark mr-2" href="{{ url('carrito') }}"><i
+                            class="fas fa-shopping-bag    "></i>
+                        <span class="badge badge-pill text-dark cart-count" style="background: #cf4647">0</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark mr-2" href="{{ url('wishlist') }}"><i class="fas fa-heart    "></i>
+                        <span class="badge badge-pill text-dark wish-count" style="background: #a7c5bd">0</span>
+                    </a>
+                </li>
+            @endif
         </ul>
     </div>
 

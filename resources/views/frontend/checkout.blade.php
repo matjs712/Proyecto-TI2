@@ -1,18 +1,18 @@
 @extends('layouts.front')
 @section('title')
-Checkout | {{ $sitio }}
+    Checkout | {{ $sitio }}
 @endsection
 @section('content')
 
-<div class="py-3 mb-4 shadow-sm migaja border-top">
-    <div class="container">
-        <h6 class="mb-0">
-            <a href="{{ url('/') }}">Inicio</a> / 
-            <a href="{{ url('/carrito') }}">Mi Carrito</a>/
-            <a href="{{ url('/checkout') }}">Checkout</a>
-        </h6>
+    <div class="py-3 mb-4 shadow-sm migaja border-top">
+        <div class="container">
+            <h6 class="mb-0">
+                <a href="{{ url('/') }}">Inicio</a> /
+                <a href="{{ url('/carrito') }}">Mi Carrito</a>/
+                <a href="{{ url('/checkout') }}">Checkout</a>
+            </h6>
+        </div>
     </div>
-</div>
 
     <div class="container">
         <form action="{{ url('iniciar_compra') }}" method="POST">
@@ -26,47 +26,65 @@ Checkout | {{ $sitio }}
                             <div class="row checkout-form">
                                 <div class="col-md-6">
                                     <label for="firstName">Primer nombre</label>
-                                    <input type="text" name="fname" value="{{ Auth::user()->name }}" class="fname form-control" placeholder="Juan">
+                                    <input type="text" name="fname"
+                                        value="{{ Auth::check() ? Auth::user()->name : '' }}" class="fname form-control"
+                                        placeholder="Juan">
                                     <span style="color:red" id="fname_error"></span>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="lastName">Apellido</label>
-                                    <input type="text" name="lname" value="{{ Auth::user()->lname }}" class="lname form-control" placeholder="Aguirre">
+                                    <input type="text" name="lname"
+                                        value="{{ Auth::check() ? Auth::user()->lname : '' }}" class="lname form-control"
+                                        placeholder="Aguirre">
                                     <span style="color:red" id="lname_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Email</label>
-                                    <input type="text" name="email" value="{{ Auth::user()->email }}" class="email form-control" placeholder="email@gmail.com">
+                                    <input type="text" name="email"
+                                        value="{{ Auth::check() ? Auth::user()->email : '' }}" class="email form-control"
+                                        placeholder="email@gmail.com">
                                     <span style="color:red" id="email_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Numero de teléfono</label>
-                                    <input type="text" name="telefono" value="{{ Auth::user()->telefono }}" class="phone form-control" placeholder="9 12345678">
+                                    <input type="text" name="telefono"
+                                        value="{{ Auth::check() ? Auth::user()->telefono : '' }}" class="phone form-control"
+                                        placeholder="9 12345678">
                                     <span style="color:red" id="phone_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Dirección 1</label>
-                                    <input type="text" name="direccion1" value="{{ Auth::user()->direccion1 }}" class="direccion1 form-control" placeholder="Calle fantasia 123">
+                                    <input type="text" name="direccion1"
+                                        value="{{ Auth::check() ? Auth::user()->direccion1 : '' }}"
+                                        class="direccion1 form-control" placeholder="Calle fantasia 123">
                                     <span style="color:red" id="direccion1_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Direccion 2</label>
-                                    <input type="text" name="direccion2" value="{{ Auth::user()->direccion2 }}" class="direccion2 form-control" placeholder="Calle fantasia 123">
+                                    <input type="text" name="direccion2"
+                                        value="{{ Auth::check() ? Auth::user()->direccion2 : '' }}"
+                                        class="direccion2 form-control" placeholder="Calle fantasia 123">
                                     <span style="color:red" id="direccion2_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Región</label>
-                                    <input type="text" name="region" value="{{ Auth::user()->region }}" class="region form-control" placeholder="Metropolitana">
+                                    <input type="text" name="region"
+                                        value="{{ Auth::check() ? Auth::user()->region : '' }}" class="region form-control"
+                                        placeholder="Metropolitana">
                                     <span style="color:red" id="region_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Ciudad</label>
-                                    <input type="text" name="ciudad" value="{{ Auth::user()->ciudad }}" class="ciudad form-control" placeholder="Metropolitana">
+                                    <input type="text" name="ciudad"
+                                        value="{{ Auth::check() ? Auth::user()->ciudad : '' }}" class="ciudad form-control"
+                                        placeholder="Metropolitana">
                                     <span style="color:red" id="ciudad_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Comuna</label>
-                                    <input type="text" name="comuna" value="{{ Auth::user()->comuna }}" class="comuna form-control" placeholder="Providencia">
+                                    <input type="text" name="comuna"
+                                        value="{{ Auth::check() ? Auth::user()->comuna : '' }}" class="comuna form-control"
+                                        placeholder="Providencia">
                                     <span style="color:red" id="comuna_error"></span>
                                 </div>
                             </div>
@@ -92,7 +110,7 @@ Checkout | {{ $sitio }}
                                             <tr>
                                                 <td>{{ $item->products->name }}</td>
                                                 <td>{{ $item->prod_qty }}</td>
-                                                <td>{{ ($item->products->selling_price)*($item->prod_qty) }}</td>
+                                                <td>{{ $item->products->selling_price * $item->prod_qty }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -102,9 +120,10 @@ Checkout | {{ $sitio }}
                                 {{-- <button id="payButton" onclick="pay()">Pagar</button> --}}
 
                             </div>
-                            @else
+                        @else
                             <div class="card-body text-center">
-                                <h2>No hay productos añadidos al carrito <i class="fa fa-shopping-cart" aria-hidden="true"></i></h2>
+                                <h2>No hay productos añadidos al carrito <i class="fa fa-shopping-cart"
+                                        aria-hidden="true"></i></h2>
                                 <a href="{{ url('/') }}" class="btn btn-outline-primary">Continua comprando</a>
                             </div>
                         @endif
