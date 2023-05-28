@@ -108,6 +108,18 @@
                             @endif
                         </div>
                     </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="medida">Medida</label>
+                            <select name="medida" class="form-control">
+                                <option value="gr" {{ old('medida') == 'gramos' ? 'selected' : '' }}>Gramos</option>
+                                <option value="kg" {{ old('medida') == 'kilogramos' ? 'selected' : '' }}>Kilogramos</option>
+                            </select>
+                            @if ($errors->has('medida'))
+                                <span class="error text-danger" for="input-name">{{ $errors->first('medida') }}</span>
+                            @endif
+                        </div>
+                    </div>
 
                     {{-- <div class="col-md-6">
                   <div class="form-group">

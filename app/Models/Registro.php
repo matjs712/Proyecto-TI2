@@ -15,6 +15,7 @@ class Registro extends Model
         'id_proveedor',
         'id_ingrediente',
         'cantidad',
+        'medida',
         'factura',
     ];
 
