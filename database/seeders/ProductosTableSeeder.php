@@ -29,7 +29,7 @@ class ProductosTableSeeder extends Seeder
                 // 'tax' => '18',
                 'status' => 1,
                 'trending' => 1,
-                'image' => 'sal-ajo.jpeg',
+                'image' => 'sal-merken.png',
                 // 'meta_title' => 'pantalones',
                 // 'meta_description' => 'Pantalones increibles',
                 // 'meta_keywords' => 'Pantalones, Pantalones negros, Cargos',

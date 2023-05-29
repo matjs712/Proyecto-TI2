@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 
-    <div class="py-3 mb-4 shadow-sm migaja border-top">
+    <div class="py-1 mb-4 shadow-sm border-top" style="background-color: {{ $color_secundario }}">
         <div class="container">
             <h6 class="mb-0">
                 <a href="{{ url('/') }}">Inicio</a> /

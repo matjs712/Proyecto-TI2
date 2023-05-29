@@ -1,20 +1,22 @@
 @extends('layouts.front')
 @section('title')
-Reseñas | {{ $sitio }}
+    Reseñas | {{ $sitio }}
 @endsection
 @section('content')
-
-<div class="py-3 mb-4 shadow-sm border-top migaja">
-    <div class="container">
-        <h6 class="mb-0">
-            <a href="{{ url('/') }}">Inicio</a> / 
-            <a href="{{ url('ver-categoria/'.$review->products->category->slug) }}">{{ $review->products->category->name }}</a> / 
-            <a href="{{ url('categorias/'.$review->products->category->slug.'/'.$review->products->slug) }}">{{ $review->products->name }}</a>
-        </h6>
+    <div class="py-1 mb-4 shadow-sm border-top" style="background-color: {{ $color_secundario }}">
+        <div class="container">
+            <h6 class="mb-0">
+                <a href="{{ url('/') }}">Inicio</a> /
+                <a
+                    href="{{ url('ver-categoria/' . $review->products->category->slug) }}">{{ $review->products->category->name }}</a>
+                /
+                <a
+                    href="{{ url('categorias/' . $review->products->category->slug . '/' . $review->products->slug) }}">{{ $review->products->name }}</a>
+            </h6>
+        </div>
     </div>
-</div>
 
-<div class="container"></div>
+    <div class="container"></div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -33,6 +35,5 @@ Reseñas | {{ $sitio }}
             </div>
         </div>
     </div>
-</div>
-
+    </div>
 @endsection

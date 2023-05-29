@@ -243,10 +243,6 @@ a:hover{
 .custom-shape-divider-bottom-1680362032 .shape-fill {
     fill: #a7c5bd;
 }
-
-.migaja{
-    background-color: #8cab94;
-}
 .dropdown-item:hover{
     color: #281b24 !important;
     background-color: #f4f4f4 !important;
@@ -376,6 +372,12 @@ a:hover{
     filter: blur(5px);
     transform: translateX(-50%);
     transition: all 1s;
+}
+.sho{
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateX(0%);
+    /* transition: all 1s; */
 }
 
 

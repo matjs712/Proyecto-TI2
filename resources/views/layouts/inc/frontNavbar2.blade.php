@@ -31,21 +31,12 @@
                                     style="color: {{ $boton_principal_busqueda }}; background-color:transparent;"
                                     id="search-bar"><i class="fa fa-search" aria-hidden="true"></i></button>
 
-                                <input type="search" style="border-bottom:1.5px solid {{ $color_barra_busqueda }};"
-                                    onfocus="this.style.borderBottom='1.5px solid {{ $color_barra_busqueda }}';"
+                                <input type="search"
+                                    style="border-bottom:1.5px solid black; background-color: {{ $color_barra_busqueda }}"
+                                    onfocus="this.style.borderBottom='1.5px solid black';"
                                     onfocus="this.style.boxShadow = 'none'; this.style.outline = 'none';"
                                     name="nameProduct" id="search_product"
                                     class="form-control d-flex align-items-center" placeholder="Busca un producto">
-
-                                {{-- <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
-                                    type="submit" class="input-group-text search search-submit"
-                                    style="color: {{ $boton_principal_busqueda }}; background-color:transparent; display:none;"><i
-                                        class="fa fa-search" aria-hidden="true"></i></button> --}}
-
-                                {{-- <span onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
-                                    class="input-group-text search" id="buttonSearch"
-                                    style="color: {{ $boton_principal_busqueda }}; background-color:transparent;"><i
-                                        class="fa fa-search" aria-hidden="true"></i></span> --}}
                             </div>
                         </form>
                     </div>
