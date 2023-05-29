@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Cache;
 
 class FrontendController extends Controller
 {
@@ -24,6 +25,7 @@ class FrontendController extends Controller
     {
         logo_sitio();
         secciones();
+        Cache::increment('contador-visitas');
         $banners = Category::all();
         $productos = Product::where('trending','1')->take('5')->get();
         $categorias = Category::where('popular','1')->take('5')->get();

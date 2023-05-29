@@ -224,8 +224,11 @@ class FrontendController extends Controller
         $jsonData = [];
 
         foreach ($groupedProducts as $idProduct => $sellProduct) {
+            $product = Product::where('id', $idProduct)->first();
+            $productName = $product->name;
             $jsonData[] = [
                 'id' => $idProduct,
+                'name' => $productName,
                 'total' => $sellProduct
             ];
         }
