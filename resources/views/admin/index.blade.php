@@ -58,7 +58,7 @@ Home | {{ $sitio }}
                         Ingresos por mes
                     </div>
                     <div class="card-body p-0">
-                        <canvas id="line-chart"></canvas>
+                        <canvas class="p-2" id="line-chart"></canvas>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@ Home | {{ $sitio }}
                         Total de ventas
                     </div>
                     <div class="card-body p-0">
-                        <canvas id="line-sell-month"></canvas>
+                        <canvas class="p-2" id="line-sell-month"></canvas>
                         
                     </div>
                 </div>
@@ -172,15 +172,39 @@ $(document).ready(function(){
         method: 'GET',
         url:'/ingresos-mes',
         success: function(response){
-            var canvas = document.getElementById('line-chart');
-            var ctx = canvas.getContext('2d');
+            let ordenes = {};
+            for (let i = 1; i <= 12; i++) {
+                ordenes[i] = 0;
+            }
+            let canvas = document.getElementById('line-chart');
+            let ctx = canvas.getContext('2d');
 
+            JSON.parse(response).forEach(function(venta){
+                let mes = parseInt(venta.fecha);
+                console.log("mes: " + mes);
+                //if(mes == new Date().getMonth() + 1){
+                    if(ordenes[mes] > 0)
+                        ordenes[mes] += venta.total;
+                    else 
+                        ordenes[mes] = venta.total;
+                //}
+            });
+            let labels = []; 
+            let datos = [];
+            for(let mes in ordenes){
+                labels.push(mes);
+                datos.push(ordenes[mes]);
+            }
+            console.log('meses='+labels);
+            console.log("Ordenes: ");
+            console.log(ordenes);
             // Define los datos del gráfico
-            var data = {
-            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
+
+            let data = {
+            labels: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
             datasets: [{
-                label: 'Ingresos por mes',
-                data: [50, 30, 60, 40, 70],
+                label: 'Ventas por mes',
+                data: datos,
                  backgroundColor: 'rgba(0, 123, 255, 0.5)',
                 borderColor: 'rgba(0, 123, 255, 1)', // Color de la línea
             }]
@@ -189,9 +213,16 @@ $(document).ready(function(){
             // Configura las opciones del gráfico
             var options = {
                 responsive: true,
-                scales: {
+                
+                legend: {
+                    display: false,
+                },
+                scales: {  
+                    xAxes: [{
+                        display: false,
+                    }],                
                     y: {
-                    beginAtZero: true
+                        beginAtZero: false,
                     }
                 }
             };
@@ -215,20 +246,22 @@ $(document).ready(function(){
         method: 'GET',
         url:'/ventas-mes',
         success: function(response){
-            let ordenes = {};  
+            let ordenes = {};
+            for (let i = 1; i <= 12; i++) {
+                ordenes[i] = 0;
+            }
             let canvas = document.getElementById('line-sell-month');
             let ctx = canvas.getContext('2d');
 
-            console.log("dias: " + dias);
             JSON.parse(response).forEach(function(venta){
                 let mes = parseInt(venta.fecha);
                 console.log("mes: " + mes);
-                if(mes == new Date().getMonth() + 1){
-                    if(ordenes.hasOwnProperty(mes))
+                //if(mes == new Date().getMonth() + 1){
+                    if(ordenes[mes] > 0)
                         ordenes[mes] += venta.total;
                     else 
                         ordenes[mes] = venta.total;
-                }
+                //}
             });
             let labels = []; 
             let datos = [];
@@ -236,11 +269,13 @@ $(document).ready(function(){
                 labels.push(mes);
                 datos.push(ordenes[mes]);
             }
+            console.log('meses='+labels);
             console.log("Ordenes: ");
             console.log(ordenes);
             // Define los datos del gráfico
+
             let data = {
-            labels: labels,
+            labels: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
             datasets: [{
                 label: 'Ventas por mes',
                 data: datos,
@@ -252,10 +287,16 @@ $(document).ready(function(){
             // Configura las opciones del gráfico
             var options = {
                 responsive: true,
-                scales: {
+                
+                legend: {
+                    display: false,
+                },
+                scales: {  
+                    xAxes: [{
+                        display: false,
+                    }],                
                     y: {
-                    
-                    beginAtZero: false
+                        beginAtZero: false,
                     }
                 }
             };
