@@ -46,7 +46,7 @@ Home | {{ $sitio }}
                     </div>
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <i class="fa-solid fa-chart-line fa-2xl" style="color: #3bc43d;"></i>
-                        <div class="bg-green rounded-pill w-50 text-center ml-auto">{{ Cache::get('contador-visitas', 0) }}</div>
+                        <div class="bg-green rounded-pill w-25 text-center ml-auto">{{ Cache::get('contador-visitas', 0) }}</div>
                     </div>
                 </div>
             </div>
@@ -120,7 +120,7 @@ $(document).ready(function(){
             JSON.parse(response).forEach(function(usuario){
                 usuariosNuevos += usuario.usuarios;
             });
-            $('.new-users').append($('<div>').addClass('bg-green rounded-pill w-50 text-center ml-auto').text(usuariosNuevos));
+            $('.new-users').append($('<div>').addClass('bg-green rounded-pill w-25 text-center ml-auto').text(usuariosNuevos));
             
             console.log('usuarios nuevos: ');
             console.log(JSON.parse(response));
@@ -140,7 +140,7 @@ $(document).ready(function(){
                     productosComprados += parseInt(cantidad.count);
                 });
             });
-            $('.sell-products').append($('<div>').addClass('bg-green rounded-pill w-50 text-center ml-auto').text(productosComprados));
+            $('.sell-products').append($('<div>').addClass('bg-green rounded-pill w-25 text-center ml-auto').text(productosComprados));
             
             console.log('productos comprados: ')
             console.log(JSON.parse(response));
@@ -158,7 +158,7 @@ $(document).ready(function(){
             JSON.parse(response).forEach(function(orden){
                 ordenesNuevas += orden.ordenes;
             });
-            $('.new-orders').append($('<div>').addClass('bg-green rounded-pill w-50 text-center ml-auto').text(ordenesNuevas));
+            $('.new-orders').append($('<div>').addClass('bg-green rounded-pill w-25 text-center ml-auto').text(ordenesNuevas));
             
             console.log('ordenes nuevas: ')
             console.log(JSON.parse(response));
@@ -179,7 +179,7 @@ $(document).ready(function(){
             var data = {
             labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
             datasets: [{
-                label: 'Ventas',
+                label: 'Ingresos por mes',
                 data: [50, 30, 60, 40, 70],
                  backgroundColor: 'rgba(0, 123, 255, 0.5)',
                 borderColor: 'rgba(0, 123, 255, 1)', // Color de la línea
@@ -215,15 +215,41 @@ $(document).ready(function(){
         method: 'GET',
         url:'/ventas-mes',
         success: function(response){
-            var canvas = document.getElementById('line-sell-month');
-            var ctx = canvas.getContext('2d');
+            let ordenes = {};  
+            let canvas = document.getElementById('line-sell-month');
+            let ctx = canvas.getContext('2d');
 
+            var diasEnMes = new Date(new Date().getFullYear() , new Date().getMonth() + 1 , 0).getDate();
+            var dias = [];
+
+            for (var dia = 1; dia <= diasEnMes; dia++) {
+                dias.push(dia);
+            }
+            console.log("dias: " + dias);
+            JSON.parse(response).forEach(function(venta){
+                let mes = parseInt(venta.fecha);
+                console.log("mes: " + mes);
+                if(mes == new Date().getMonth() + 1){
+                    if(ordenes.hasOwnProperty(mes))
+                        ordenes[mes] += venta.total;
+                    else 
+                        ordenes[mes] = venta.total;
+                }
+            });
+            let labels = []; 
+            let datos = [];
+            for(let mes in ordenes){
+                labels.push(mes);
+                datos.push(ordenes[mes]);
+            }
+            console.log("Ordenes: ");
+            console.log(ordenes);
             // Define los datos del gráfico
-            var data = {
-            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
+            let data = {
+            labels: dias,
             datasets: [{
-                label: 'Ventas',
-                data: [50, 30, 60, 40, 70],
+                label: 'Ventas por mes',
+                data: datos,
                  backgroundColor: 'rgba(0, 123, 255, 0.5)',
                 borderColor: 'rgba(0, 123, 255, 1)', // Color de la línea
             }]
@@ -234,7 +260,8 @@ $(document).ready(function(){
                 responsive: true,
                 scales: {
                     y: {
-                    beginAtZero: true
+                    
+                    beginAtZero: false
                     }
                 }
             };
@@ -261,11 +288,12 @@ $(document).ready(function(){
             var canvas = document.getElementById('line-sell-daily');
             var ctx = canvas.getContext('2d');
 
+            
             // Define los datos del gráfico
             var data = {
-            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
+            labels: ['', '', '', '', ''],
             datasets: [{
-                label: 'Ventas',
+                label: '',
                 data: [50, 30, 60, 40, 70],
                  backgroundColor: 'rgba(0, 123, 255, 0.5)',
                 borderColor: 'rgba(0, 123, 255, 1)', // Color de la línea
@@ -301,10 +329,13 @@ $(document).ready(function(){
         method: 'GET',
         url:'/productos-top',
         success: function(response){
-            JSON.parse(response).forEach(function(orden){
-                $('.top-products').append($('<div>').addClass('w-100 text-left pb-2 pt-3 border-bottom').text(orden.name));
-            });
-            
+            if(JSON.parse(response)){
+                JSON.parse(response).forEach(function(orden){
+                        $('.top-products').append($('<div>').addClass('w-100 text-left pb-2 pt-3 border-bottom').text(orden.name));
+                    });
+                }
+            else
+                $('.top-products').append($('<div>').addClass('w-100 text-left pb-2 pt-3 border-bottom').text("no se han vendido productos."));
             console.log('Productos top: ')
             console.log(JSON.parse(response));
         },
