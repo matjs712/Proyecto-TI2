@@ -69,24 +69,30 @@
 <br>
 <div class="row">
     <div class="col-md-12 d-flex">
-        <div class="col-md-4"><strong>Ingredientes:</strong></div>
-        <div class="col-md-4"><strong>Cantidad x u</strong></div>
-        <div class="col-md-4"><strong>Cantidad Total</strong></div>
+        <div class="col-md-3"><strong>Ingredientes:</strong></div>
+        <div class="col-md-3"><strong>Cantidad x u</strong></div>
+        <div class="col-md-3"><strong>Cantidad Total</strong></div>
+        <div class="col-md-3"><strong>Unidad de medida</strong></div>
     </div>
     <div class="col-md-12 d-flex">
-        <div class="col-md-4 d-flex flex-column">
+        <div class="col-md-3 d-flex flex-column">
             @foreach ($producto->ingredientes as $ing)
             <span>{{ $ing->name }}</span>
             @endforeach
         </div>
-        <div class="col-md-4 d-flex flex-column">
+        <div class="col-md-3 d-flex flex-column">
             @foreach ($productoIngrediente as $ing)
-            <span>{{ $ing->cantidad / 2 }} gr</span>
+            <span>{{ $ing->cantidad / 2 }} </span>
             @endforeach
         </div>
-        <div class="col-md-4 d-flex flex-column">
+        <div class="col-md-3 d-flex flex-column">
             @foreach ($productoIngrediente as $ing)
-            <span>{{ $ing->cantidad}} gr</span>
+            <span>{{ $ing->cantidad}} </span>
+            @endforeach
+        </div>
+        <div class="col-md-3 d-flex flex-column">
+            @foreach ($producto->ingredientes as $ing)
+            <span>{{ $ing->medida }}</span>
             @endforeach
         </div>
     </div>
