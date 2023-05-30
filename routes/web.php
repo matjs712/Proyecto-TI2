@@ -181,10 +181,11 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::put('update-credenciales-perfil/{id}', [PerfilController::class, 'updateCredential']);
 
     //RECETAS
-    Route::get('receta', 'Admin\RecipeController@index');
+    Route::get('recetas', 'Admin\RecipeController@index');
     Route::get('crear-receta', 'Admin\RecipeController@create');
     Route::post('insert-receta', 'Admin\RecipeController@store');
     Route::get('edit-receta/{id}', [RecipeController::class, 'edit']);
     Route::put('update-receta/{id}', [RecipeController::class, 'update']);
     Route::get('delete-receta/{id}', [RecipeController::class, 'destroy']);
+    Route::get('/modal-recetas/{id}', 'Admin\RecipeController@show');
 });
