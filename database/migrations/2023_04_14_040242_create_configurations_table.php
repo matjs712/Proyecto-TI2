@@ -23,32 +23,32 @@ class CreateConfigurationsTable extends Migration
             $table->integer('ordenes')->default(1);
             $table->integer('usuarios')->default(1);
             $table->integer('roles_permisos')->default(1);
-            $table->string('color_principal')->default('#524656');
-            $table->string('color_secundario')->default('#e5ddcb');
-            $table->string('color_barra_lateral')->default('#343a40');
-            $table->string('color_fondo_admin')->default('#ffffff');
-            $table->string('color_barra_horizontal')->default('#ffffff');
-            $table->string('color_a_tag_sidebar')->default('#ffffff');
-            $table->string('color_a_tag_hover')->default('#0e74cd');
-            $table->string('color_barra_busqueda')->default('#373737');
-            $table->string('texto_banner_uno')->default('Lo mejor en');
-            $table->string('texto_banner_dos')->default('Sales Gourmet');
-            $table->string('texto_banner_tres')->default('Encuentra las variedades de nuestras exquisitas sales ');
-            $table->string('texto_banner_cuatro')->default('Atrevete a darle un sabor unico a tu comida.');
-            
-            $table->string('boton_principal_busqueda')->default('#524656');
-            $table->string('boton_calificacion')->default('#e5ddcb');
-            $table->string('boton_review')->default('#343a40');
-            $table->string('boton_lista')->default('#ffffff');
-            $table->string('boton_carrito')->default('#ffffff');
-            $table->string('boton_nuevo')->default('#ffffff');
-            $table->string('boton_editar')->default('#0e74cd');
-            $table->string('boton_eliminar')->default('#373737');
-            $table->string('boton_vermas')->default('#0e74cd');
-            $table->string('boton_actualizar')->default('#373737');
+            $table->string('color_principal');
+            $table->string('color_secundario');
+            $table->string('color_barra_lateral');
+            $table->string('color_fondo_admin');
+            $table->string('color_barra_horizontal');
+            $table->string('color_a_tag_sidebar');
+            $table->string('color_a_tag_hover');
+            $table->string('color_barra_busqueda');
+            $table->string('texto_banner_uno');
+            $table->string('texto_banner_dos');
+            $table->string('texto_banner_tres');
+            $table->string('texto_banner_cuatro');
 
-            
-            $table->string('banner')->default(' ');
+            $table->string('boton_principal_busqueda');
+            $table->string('boton_calificacion');
+            $table->string('boton_review');
+            $table->string('boton_lista');
+            $table->string('boton_carrito');
+            $table->string('boton_nuevo');
+            $table->string('boton_editar');
+            $table->string('boton_eliminar');
+            $table->string('boton_vermas');
+            $table->string('boton_actualizar');
+
+
+            $table->string('banner');
             $table->timestamps();
         });
     }

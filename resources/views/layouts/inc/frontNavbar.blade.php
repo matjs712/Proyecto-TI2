@@ -31,8 +31,9 @@
                                     style="color: {{ $boton_principal_busqueda }}; background-color:transparent;"
                                     id="search-bar"><i class="fa fa-search" aria-hidden="true"></i></button>
 
-                                <input type="search" style="border-bottom:1.5px solid {{ $color_barra_busqueda }};"
-                                    onfocus="this.style.borderBottom='1.5px solid {{ $color_barra_busqueda }}';"
+                                <input type="search"
+                                    style="border-bottom:1.5px solid black; background-color: {{ $color_barra_busqueda }}"
+                                    onfocus="this.style.borderBottom='1.5px solid black';"
                                     onfocus="this.style.boxShadow = 'none'; this.style.outline = 'none';"
                                     name="nameProduct" id="search_product"
                                     class="form-control d-flex align-items-center" placeholder="Busca un producto">
@@ -72,16 +73,6 @@
                     @endif
                 </div>
             @else
-                <li class="nav-item">
-                    <a class="nav-link text-dark mr-2" href="{{ url('carrito') }}"><i class="fas fa-shopping-bag    "></i>
-                        <span class="badge badge-pill text-dark cart-count" style="background: #cf4647">0</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark mr-2" href="{{ url('wishlist') }}"><i class="fas fa-heart    "></i>
-                        <span class="badge badge-pill text-dark wish-count" style="background: #a7c5bd">0</span>
-                    </a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -113,6 +104,19 @@
                     </div>
                 </li>
             @endguest
+            @if (Auth::check() || session()->has('guest_id'))
+                <li class="nav-item">
+                    <a class="nav-link text-dark mr-2" href="{{ url('carrito') }}"><i
+                            class="fas fa-shopping-bag    "></i>
+                        <span class="badge badge-pill text-dark cart-count" style="background: #cf4647">0</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark mr-2" href="{{ url('wishlist') }}"><i class="fas fa-heart    "></i>
+                        <span class="badge badge-pill text-dark wish-count" style="background: #a7c5bd">0</span>
+                    </a>
+                </li>
+            @endif
         </ul>
     </div>
 
@@ -378,19 +382,19 @@
                     <div class="col-md-8">
                         <div class="countdown">
                             <div class="container-day">
-                                <h3 class="day">Time</h3>
+                                <h3 class="dayy">Time</h3>
                                 <h3>Dias</h3>
                             </div>
                             <div class="container-hour">
-                                <h3 class="hour">Time</h3>
+                                <h3 class="hourr">Time</h3>
                                 <h3>horas</h3>
                             </div>
                             <div class="container-minute">
-                                <h3 class="minute">Time</h3>
+                                <h3 class="minutee">Time</h3>
                                 <h3>minutos</h3>
                             </div>
                             <div class="container-second">
-                                <h3 class="second">Time</h3>
+                                <h3 class="secondd">Time</h3>
                                 <h3>segundos</h3>
                             </div>
                         </div>
@@ -408,6 +412,7 @@
         </div>
     </div>
 </div>
+
 
 @section('after_scripts')
     <script>

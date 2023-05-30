@@ -1,17 +1,16 @@
 @extends('layouts.front')
 @section('title')
-Mis pedidos | {{ $sitio }}
+    Mis pedidos | {{ $sitio }}
 @endsection
 @section('content')
-
-<div class="py-3 mb-4 shadow-sm migaja border-top">
-    <div class="container">
-        <h6 class="mb-0">
-            <a href="{{ url('/') }}">Inicio</a> / 
-            <a href="{{ url('mis-ordenes') }}">Mis Pedidos</a>
-        </h6>
+    <div class="py-1 mb-4 shadow-sm border-top" style="background-color: {{ $color_secundario }}">
+        <div class="container">
+            <h6 class="mb-0">
+                <a href="{{ url('/') }}">Inicio</a> /
+                <a href="{{ url('mis-ordenes') }}">Mis Pedidos</a>
+            </h6>
+        </div>
     </div>
-</div>
 
     <div class="container">
         <div class="row">
@@ -40,14 +39,15 @@ Mis pedidos | {{ $sitio }}
                                         <td>
                                             @if ($item->status == 0)
                                                 Pendiente
-                                                @elseif ($item->status == 1)
+                                            @elseif ($item->status == 1)
                                                 Completado
-                                                @elseif ($item->status == 2)
+                                            @elseif ($item->status == 2)
                                                 Aprobada
                                             @endif
                                         </td>
                                         <td>
-                                            <a class="btn btn-success" href="{{ url('ver-orden/'.$item->id) }}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                            <a class="btn btn-success" href="{{ url('ver-orden/' . $item->id) }}"><i
+                                                    class="fa fa-search" aria-hidden="true"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -58,5 +58,4 @@ Mis pedidos | {{ $sitio }}
             </div>
         </div>
     </div>
-
 @endsection

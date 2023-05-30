@@ -1,28 +1,30 @@
 @extends('layouts.front')
 @section('title')
-Lista | {{ $sitio }}
+    Lista | {{ $sitio }}
 @endsection
 @section('content')
 
-<div class="py-3 mb-4 shadow-sm migaja border-top">
-    <div class="container">
-        <h6 class="mb-0">
-            <a href="{{ url('/') }}">Inicio</a> / 
-            <a href="{{ url('/wishlist') }}">Lista</a>
-        </h6>
+    <div class="py-1 mb-4 shadow-sm border-top" style="background-color: {{ $color_secundario }}">
+        <div class="container">
+            <h6 class="mb-0">
+                <a href="{{ url('/') }}">Inicio</a> /
+                <a href="{{ url('/wishlist') }}">Lista</a>
+            </h6>
+        </div>
     </div>
-</div>
 
 
     <div class="container my-5">
         <div class="card shadow">
             <div class="card-body">
                 @if ($wishlist->count() > 0)
-                <div class="row prod_data my-4">
-                    @foreach ($wishlist as $item)
+                    <div class="row prod_data my-4">
+                        @foreach ($wishlist as $item)
                             <div class="d-flex align-content-center m-2 col-md-12">
                                 <div class="col-md-2">
-                                    <img width="100" src="{{ Storage::url('uploads/productos/'.$item->products->image) }}" alt="{{ $item->products->name }}">
+                                    <img width="100"
+                                        src="{{ Storage::url('uploads/productos/' . $item->products->image) }}"
+                                        alt="{{ $item->products->name }}">
                                 </div>
                                 <div class="col-md-2">
                                     <h6><b>{{ $item->products->name }}</b></h6>
@@ -34,22 +36,28 @@ Lista | {{ $sitio }}
                                     <input hidden class="prod_id" type="text" value="{{ $item->prod_id }}">
                                     @if ($item->products->qty >= $item->prod_qty)
                                         <h6>Disponible</h6>
-                                        <input type="text" name="qty" class="form-control qty-input text-center" hidden value="1">
+                                        <input type="text" name="qty" class="form-control qty-input text-center"
+                                            hidden value="1">
                                     @else
-                                    <h6>Fuera de stock</h6>
+                                        <h6>Fuera de stock</h6>
                                     @endif
                                 </div>
                                 <div class="col-md-2">
-                                    <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_principal_busqueda }}; color:white;" class="btn btn-success addCartBtn"><i class="fa fa-shopping-cart"></i>Añadir al carrito</button>
-                                </div>   
+                                    <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
+                                        style="background-color: {{ $boton_principal_busqueda }}; color:white;"
+                                        class="btn btn-success addCartBtn"><i class="fa fa-shopping-cart"></i>Añadir al
+                                        carrito</button>
+                                </div>
                                 <div class="col-md-2">
-                                    <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" style="background-color: {{ $boton_eliminar }}; color:white;" class="btn remove-wishlist-item"><i class="fa fa-trash"></i> Remover</button>
-                                </div>   
+                                    <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
+                                        style="background-color: {{ $boton_eliminar }}; color:white;"
+                                        class="btn remove-wishlist-item"><i class="fa fa-trash"></i> Remover</button>
+                                </div>
                             </div>
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
                 @else
-                    <h2>La lista esta vacia  <i class="fa fa-shopping-cart" aria-hidden="true"></i> </h2>
+                    <h2>La lista esta vacia <i class="fa fa-shopping-cart" aria-hidden="true"></i> </h2>
                     <a href="{{ url('/') }}" class="btn btn-outline-primary">Continua comprando</a>
                 @endif
             </div>
