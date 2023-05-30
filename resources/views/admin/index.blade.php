@@ -219,12 +219,6 @@ $(document).ready(function(){
             let canvas = document.getElementById('line-sell-month');
             let ctx = canvas.getContext('2d');
 
-            var diasEnMes = new Date(new Date().getFullYear() , new Date().getMonth() + 1 , 0).getDate();
-            var dias = [];
-
-            for (var dia = 1; dia <= diasEnMes; dia++) {
-                dias.push(dia);
-            }
             console.log("dias: " + dias);
             JSON.parse(response).forEach(function(venta){
                 let mes = parseInt(venta.fecha);
@@ -246,7 +240,7 @@ $(document).ready(function(){
             console.log(ordenes);
             // Define los datos del gráfico
             let data = {
-            labels: dias,
+            labels: labels,
             datasets: [{
                 label: 'Ventas por mes',
                 data: datos,
@@ -285,39 +279,9 @@ $(document).ready(function(){
         method: 'GET',
         url:'/ingresos-diarios',
         success: function(response){
-            var canvas = document.getElementById('line-sell-daily');
-            var ctx = canvas.getContext('2d');
-
-            
-            // Define los datos del gráfico
-            var data = {
-            labels: ['', '', '', '', ''],
-            datasets: [{
-                label: '',
-                data: [50, 30, 60, 40, 70],
-                 backgroundColor: 'rgba(0, 123, 255, 0.5)',
-                borderColor: 'rgba(0, 123, 255, 1)', // Color de la línea
-            }]
-            };
-
-            // Configura las opciones del gráfico
-            var options = {
-                responsive: true,
-                scales: {
-                    y: {
-                    beginAtZero: true
-                    }
-                }
-            };
-
-            // Crea el gráfico de líneas
-            var lineChart = new Chart(ctx, {
-            type: 'line',
-            data: data,
-            options: options
-            });
+           
             // $('.sell-products').append($('<div>').text('Producto: ' + JSON.parse(response)[0].productos));
-            console.log('ingresos diarias: ')
+            console.log('ingresos diarios: ')
             console.log(JSON.parse(response));
         },
         error: function(response){
