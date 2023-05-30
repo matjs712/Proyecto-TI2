@@ -61,7 +61,7 @@ class IngredienteController extends Controller
         $rules = [
 
             'name' => 'required|string|min:3',
-            'cantidad' => 'required|integer',
+            'cantidad' => 'required|numeric',
             'medida' => 'required',
         ];
 
@@ -69,6 +69,7 @@ class IngredienteController extends Controller
 
             'required' => 'El campo es requerido.',
             'min' => 'El campo debe tener al menos :min caracteres.',
+            'numeric' => 'El campo debe ser númerico',
 
         ];
 
@@ -81,9 +82,13 @@ class IngredienteController extends Controller
                 $ingrediente = new Ingrediente();
 
                 $ingrediente->name = $request->input('name');
-                $ingrediente->cantidad = $request->input('cantidad');
                 $ingrediente->medida = $request->input('medida');
-
+                if($ingrediente->medida == 'kilogramos'){
+                    $ingrediente->cantidad = $request->input('cantidad')*1000;
+                } else {
+                    $ingrediente->cantidad = $request->input('cantidad')*1000;
+                }
+                $ingrediente->medida = 'gramos';
                 $ingrediente->save();
 
                 $notifications = new Notification();
@@ -128,7 +133,7 @@ class IngredienteController extends Controller
         $rules = [
 
             'name' => 'required|string|min:3',
-            'cantidad' => 'required|integer',
+            'cantidad' => 'required',
             'medida' => 'required',
         ];
 
@@ -148,8 +153,13 @@ class IngredienteController extends Controller
                 $ingrediente = Ingrediente::find($id);
 
                 $ingrediente->name = $request->input('name');
-                $ingrediente->cantidad = $request->input('cantidad');
                 $ingrediente->medida = $request->input('medida');
+                if($ingrediente->medida == 'kilogramos'){
+                    $ingrediente->cantidad = $request->input('cantidad')*1000;
+                } else {
+                    $ingrediente->cantidad = $request->input('cantidad')*1000;
+                }
+                $ingrediente->medida = 'gramos';
                 $ingrediente->update();
 
                 if($ingrediente->cantidad <= 1000){

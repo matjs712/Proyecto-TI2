@@ -38,7 +38,8 @@
             @foreach ($productos as $producto)
                 <div class="card text-left card-slider" style="position: relative;">
                     @if ($producto->trending == '1')
-                        <label style="font-size: 16px; position:absolute; top:5%; background:{{ $color_secundario }};"
+                        <label
+                            style="font-size: 16px; position:absolute; top:5%; background:{{ $boton_principal_busqueda }};"
                             class="text-white float-end badge trending_tag">Popular</label>
                     @endif
                     <img style="background-color: {{ $color_principal }}"

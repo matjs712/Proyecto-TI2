@@ -3,21 +3,20 @@
     Productos | {{ $sitio }}
 @endsection
 @section('content')
-    <div class="py-3 mb-1 border-bottom border-top">
-        <div class="container ml-3">
-            <h6 class="mb-0">
-                <a href="{{ url('dashboard') }}">Inicio</a> /
-                <a href="{{ url('productos') }}">Productos</a> /
-                <a href="{{ url('edit-prod/' . $producto->id) }}">Editar productos</a>
-            </h6>
-        </div>
-    </div>
-
     <div class="card">
-        <div class="card-header">
-            <h4>Editar Producto</h4>
-        </div>
         <div class="card-body">
+            <div class="mb-4 d-flex align-items-center justify-content-between" style="width: 100%">
+                <h2>Productos</h2>
+                <div class="container">
+                    <h6 class="mb-0 d-flex align-items-center justify-content-end">
+                        <a href="{{ url('dashboard') }}" class="mr-2">Inicio</a> /
+                        <a href="{{ url('productos') }}" class="mx-2">Productos</a> /
+                        <a href="#" class="ml-2">Editar producto</a>
+                    </h6>
+                </div>
+            </div>
+
+
             <form action="{{ url('update-prod/' . $producto->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -108,6 +107,19 @@
                             @endif
                         </div>
                     </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="medida">Medida</label>
+                            <select name="medida" class="form-control">
+                                <option value="gr" {{ old('medida') == 'gramos' ? 'selected' : '' }}>Gramos</option>
+                                <option value="kg" {{ old('medida') == 'kilogramos' ? 'selected' : '' }}>Kilogramos
+                                </option>
+                            </select>
+                            @if ($errors->has('medida'))
+                                <span class="error text-danger" for="input-name">{{ $errors->first('medida') }}</span>
+                            @endif
+                        </div>
+                    </div>
 
                     {{-- <div class="col-md-6">
                   <div class="form-group">
@@ -162,7 +174,7 @@
 
                     <div class="col-md-12">
                         @foreach ($productoIngredientes as $index => $prodIng)
-                            <div class="form-group d-flex">
+                            <div class="form-group d-flex align-items-end">
                                 <div class="col-md-3">
                                     <label>Ingrediente</label>
                                     <select class="form-control" name="ingrediente{{ $index + 1 }}">
@@ -174,11 +186,13 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Cantidad</label>
-                                        <input class="form-control" type="number" name="cantidad{{ $index + 1 }}"
-                                            value="{{ $prodIng->cantidad / $producto->qty }}">
-                                    </div>
+                                    <label>Cantidad</label>
+                                    <input class="form-control" type="number" name="cantidad{{ $index + 1 }}"
+                                        value="{{ $prodIng->cantidad / $producto->qty }}">
+                                </div>
+                                <div class="col-md-3 d-flex align-items-bottom">
+                                    <button type="button"
+                                        class="btn btn-danger btn-eliminar-ingrediente">Eliminar</button>
                                 </div>
                             </div>
                         @endforeach
@@ -223,22 +237,39 @@
             ingredienteCount++;
             const div = document.createElement('div');
             div.innerHTML = `
-          <div class="form-group d-flex">
+        <div class="form-group d-flex">
             <div class="col-md-3">
-              <label for="ingrediente${ingredienteCount}">Ingrediente ${ingredienteCount}</label>
+                <label for="ingrediente${ingredienteCount}">Ingrediente ${ingredienteCount}</label>
                 <select class="form-control" name="ingrediente${ingredienteCount}" id="ingrediente${ingredienteCount}">
                     @foreach ($ingredientes as $ingrediente)
                         <option value="{{ $ingrediente->id }}">{{ $ingrediente->name }}</option>
                     @endforeach
                 </select>
-              </div>
-              <div class="col-md-3">
+            </div>
+            <div class="col-md-3">
                 <label for="ingrediente${ingredienteCount}">Cantidad </label>
                 <input class="form-control" type="number" name="cantidad${ingredienteCount}" id="cantidad${ingredienteCount}" value="1">
-              </div>
-          </div>
-      `;
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-danger btn-eliminar-ingrediente">Eliminar</button>
+            </div>
+        </div>
+    `;
             document.getElementById('ingredientes-extra').appendChild(div);
+            const btnEliminar = div.querySelector('.btn-eliminar-ingrediente');
+            btnEliminar.addEventListener('click', function() {
+                div.remove();
+            });
+        });
+
+        const btnEliminarIngredientes = document.querySelectorAll('.btn-eliminar-ingrediente');
+        btnEliminarIngredientes.forEach(function(btnEliminar) {
+            btnEliminar.addEventListener('click', function() {
+                const div = btnEliminar.closest('.form-group');
+                if (div) {
+                    div.remove();
+                }
+            });
         });
     </script>
 @endsection

@@ -18,6 +18,11 @@
     </div>
 
     <div class="col-md-12 d-flex">
+        <div class="col-md-6"><strong>Medida:</strong></div>
+        <div class="col-md-6">{{ $registros->medida }}</div>
+    </div>
+
+    <div class="col-md-12 d-flex">
         <div class="col-md-6"><strong>Factura:</strong></div>
         <div class="col-md-6">
             @if (pathinfo($registros->factura, PATHINFO_EXTENSION) == 'pdf')

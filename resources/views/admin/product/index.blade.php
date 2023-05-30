@@ -38,8 +38,9 @@
                         <th>Id</th>
                         <th>Categoria</th>
                         <th>Nombre</th>
+                        <th>Cantidad</th>
                         <th>Precio</th>
-                        <th>Precio de oferta</th>
+                        <th>Estado</th>
                         <th>Imagen</th>
                         <th>Opciones</th>
                     </tr>
@@ -50,14 +51,19 @@
                             <td scope="row">{{ $product->id }}</td>
                             <td>{{ $product->category->name }}</td>
                             <td>{{ $product->name }}</td>
+                            <td>{{ $product->qty }}</td>
                             <td><span class="badge badge-primary">{{ $product->original_price }}</span></td>
-                            <td><span class="badge badge-success">{{ $product->selling_price }}</span></td>
-                            {{-- <td>{!! ($product->status == 0)? '<span class="badge badge-success">Visible</span>' : '<span class="badge badge-danger">No visible</span>' !!}</td> --}}
+                            <td>{!! $product->status == 0
+                                ? '<span class="badge badge-danger">No visible</span>'
+                                : '<span class="badge badge-success">Visible</span>' !!}</td>
                             <td>
-                                @if ($product->image)
+                                @if (Storage::exists('uploads/productos/' . $product->image))
                                     <img src="{{ Storage::url('uploads/productos/' . $product->image) }}" width="150"
-                                        alt="imagen-producto">
+                                        alt="">
+                                @else
+                                    <i class="fas fa-image" style="font-size: 30px;"></i>
                                 @endif
+
                             </td>
                             <td>
                                 <div class="dropdown text-center">
@@ -316,5 +322,45 @@
                 });
             });
         })
+        let ingredienteCount = 0;
+        document.getElementById('agregar-ingrediente').addEventListener('click', function() {
+            ingredienteCount++;
+            const div = document.createElement('div');
+            div.innerHTML = `
+        <div class="form-group d-flex align-items-end">
+          <div class="col-md-3">
+            <label for="ingrediente${ingredienteCount}">Ingrediente ${ingredienteCount}</label>
+              <select class="form-control" name="ingrediente${ingredienteCount}" id="ingrediente${ingredienteCount}">
+                <option value="">Seleccione un ingrediente</option>
+                  @foreach ($ingredientes as $ingrediente)
+                      <option value="{{ $ingrediente->id }}">{{ $ingrediente->name }}</option>
+                  @endforeach
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="ingrediente${ingredienteCount}">Cantidad </label>
+              <input class="form-control" type="number" name="cantidad${ingredienteCount}" id="cantidad${ingredienteCount}" value="0">
+            </div>
+            <div class="col-md-3">
+              <label for="ingrediente${ingredienteCount}">Medida </label>
+              <select name="medida" class="form-control">
+                    <option value="gr" {{ old('medida') == 'gramos' ? 'selected' : '' }}>Gramos</option>
+                    <option value="kg" {{ old('medida') == 'kilogramos' ? 'selected' : '' }}>Kilogramos</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-danger btn-eliminar-ingrediente">Eliminar</button>
+            </div>
+        </div>
+    `;
+            document.getElementById('ingredientes-extra').appendChild(div);
+            const btnEliminar = div.querySelector('.btn-eliminar-ingrediente');
+            btnEliminar.addEventListener('click', function() {
+                div.remove();
+            });
+
+        });
+    </script>
+
     </script>
 @endsection

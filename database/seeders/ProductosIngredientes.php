@@ -17,18 +17,23 @@ class ProductosIngredientes extends Seeder
         DB::table('producto_ingredientes')->insert([
             [
                 'id_producto' => 1,
-                'id_ingrediente'=>4,
-                'cantidad'=>100,
+                'id_ingrediente' => 4,
+                'cantidad' => 100,
             ],
             [
                 'id_producto' => 1,
-                'id_ingrediente'=>2,
-                'cantidad'=>50,
+                'id_ingrediente' => 2,
+                'cantidad' => 50,
+            ],
+            [
+                'id_producto' => 1,
+                'id_ingrediente' => 3,
+                'cantidad' => 100,
             ],
             [
                 'id_producto' => 3,
-                'id_ingrediente'=>3,
-                'cantidad'=>50,
+                'id_ingrediente' => 3,
+                'cantidad' => 50,
             ]
         ]);
     }

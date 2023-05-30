@@ -1,44 +1,43 @@
 @extends('layouts.admin')
 @section('title')
-Venta Presencial | {{ $sitio }}
+    Venta Presencial | {{ $sitio }}
 @endsection
 
 @section('content')
+    <style>
+        #video {
+            position: relative;
+        }
 
-<style>
-    
-    #video {
-  position: relative;
-}
+        #video video {
+            position: relative;
+            z-index: 1;
+        }
 
-#video video {
-  position: relative;
-  z-index: 1;
-}
+        #video canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+    </style>
 
-#video canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-</style>
+    <div class="container">
 
-<div class="container">
-    
         <div class="row vh-100">
             <div class="col-md-7">
                 <div class="card h-75">
                     <div class="card-body h-100 d-flex flex-column">
                         <h6>Detalles</h6>
-                        <div class="h-100" style="max-height:500px; overflow-y:auto; overflow-x:hidden" id="productos-container">
-                            
+                        <div class="h-100" style="max-height:500px; overflow-y:auto; overflow-x:hidden"
+                            id="productos-container">
+
                         </div>
                         <button id="btnMostrarModal" class="btn btn-primary" style="width: 100%">Escanear Producto</button>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-5">
                 <div class="card">
                         <div class="card-body">
@@ -57,26 +56,17 @@ Venta Presencial | {{ $sitio }}
                               <hr>
                             <button style="width: 100%;" class="btn btn-primary btnPagar">Seleccione metodo de pago</button>
                         </div>
+                        <hr>
+                        <select id="metodoPago" class="form-select" aria-label="Default select">
+                            <option hidden selected>Metodo de pago</option>
+                            <option value="1">Efectivo</option>
+                            <option value="2">WebPay</option>
+                        </select>
+                        <hr>
+                        <button style="width: 100%;" class="btn btn-primary btnPagar">Ir al pago</button>
+                    </div>
                 </div>
             </div>
-        </div>
-</div>
-
-
-<!-- Modal de escaneo -->
-<div id="escanerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="escanerModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content overflow-hidden">
-            <div class="modal-header">
-                <h5 class="modal-title" id="escanerModalLabel">Escanear producto</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body d-flex justify-content-center align-items-center w-100 h-75 overflow-hidden">
-                <div class="" id="video"></div>
-            </div>
-
         </div>
     </div>
 </div>
@@ -95,56 +85,105 @@ Venta Presencial | {{ $sitio }}
                 <button id="completarPago" class="row btn btn-primary w-100 mt-4">Completar pago</button>
             </div>
 
+
+    <!-- Modal de escaneo -->
+    <div id="escanerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="escanerModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content overflow-hidden">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="escanerModalLabel">Escanear producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body d-flex justify-content-center align-items-center w-100 h-75 overflow-hidden">
+                    <div class="" id="video"></div>
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
-{{-- Comprobante de pago --}}
-<div id="pdf" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content h-100">
-            <div class="modal-header">
-                <h5 class="modal-title" id="qrModalLabel">Realizar pago</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body d-flex justify-content-center">
-                <embed src="{{ asset('storage/pdf/example.pdf') }}" width="100%" height="500" type="application/pdf">
+    {{-- Modal pago QR --}}
+    <div id="qrModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content h-100">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="qrModalLabel">Realizar pago</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    <canvas style="height: 300px; width: 300px" id="qr"></canvas>
+                </div>
+
             </div>
         </div>
     </div>
-</div>
-
-
+    {{-- Comprobante de pago --}}
+    <div id="pdf" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content h-100">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="qrModalLabel">Realizar pago</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    <embed src="{{ asset('storage/pdf/example.pdf') }}" width="100%" height="500"
+                        type="application/pdf">
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection()
 @section('after_scripts')
-<script>
-    
-    $('#btnMostrarModal').on('click', function () {
-        let codigoLeido = false;
-        Quagga.init({
-            inputStream: {
-                name: "Live",
-                type: "LiveStream",
-                constraints:{
-                    width: 480,
-                    height: 360,
+    <script>
+        $('#btnMostrarModal').on('click', function() {
+            let codigoLeido = false;
+            Quagga.init({
+                inputStream: {
+                    name: "Live",
+                    type: "LiveStream",
+                    constraints: {
+                        width: 480,
+                        height: 360,
+                    },
+                    target: document.querySelector('#video')
                 },
-                target: document.querySelector('#video')
-            },
-            // frequency: 10,
-            decoder: {
-                readers: ["code_128_reader"] // Puedes agregar otros tipos de lectores según tus necesidades
-            }
-        }, function (err) {
-            if (err) {
-                console.error(err);
-                return;
-            }
-            
-            Quagga.start();
-            $('#escanerModal').modal('show');
+                // frequency: 10,
+                decoder: {
+                    readers: [
+                        "code_128_reader"
+                    ] // Puedes agregar otros tipos de lectores según tus necesidades
+                }
+            }, function(err) {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+
+                Quagga.start();
+                $('#escanerModal').modal('show');
+            });
+
+            Quagga.onDetected(function(result) {
+                if (!codigoLeido) {
+                    codigoLeido = true;
+                    let code = result.codeResult.code;
+                    console.log(code);
+                    Quagga.stop();
+                    agregarProducto(code);
+                    $('#escanerModal').modal('hide');
+                }
+            });
+
+
         });
+        let productos = [];
+        let precio;
 
         Quagga.onDetected(function (result) {
             if(!codigoLeido){
@@ -268,17 +307,19 @@ Venta Presencial | {{ $sitio }}
                 }
             })
             $.ajax({
-                method: "POST",
-                url: "/add-to-cart",
+                url: "agregar-producto",
+                method: 'GET',
                 data: {
-                    'product_id': carrito[producto].id,
-                    'product_qty': carrito[producto].cantidad,
+                    codigo: codigo
                 },
-                success: function (response) {
-                    console.log(response);
+                success: function(codigo) {
+                    //obtenerProductosEscaneados();
+                    productos.push(codigo);
+                    console.log(productos);
+                    actualizarListaProductos(productos);
                 },
-                error: function (response){
-                    console.log(response);
+                error: function(e) {
+                    console.log(e);
                 }
             });
         }
@@ -500,4 +541,10 @@ Venta Presencial | {{ $sitio }}
     </script>
 @endif
 
+                    }
+                })
+            }
+
+        });
+    </script>
 @endsection()
