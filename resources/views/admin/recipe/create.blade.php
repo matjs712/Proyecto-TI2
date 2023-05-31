@@ -45,8 +45,7 @@
                         <div class="form-group">
                             <label for="descripcion">Descripción</label>
                             <textarea type="text" rows="5" style="resize:none;" name="description"
-                                class="form-control @error('description') is-invalid @enderror"
-                                placeholder="Categoría dedicada solo a peloras de ...">{{ old('description') }}</textarea>
+                                class="form-control @error('description') is-invalid @enderror" placeholder="descripcion de la receta...">{{ old('description') }}</textarea>
                             @error('description')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
