@@ -25,6 +25,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'administrador@sales.cl',
             'password' => bcrypt('password'),
             'role_as' => 1,
+            'imagen' => 'hasbu.jpg',
         ])->assignRole('admin');
         User::create([
             // 'id' => 2,

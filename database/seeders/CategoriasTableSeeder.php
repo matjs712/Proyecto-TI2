@@ -17,7 +17,7 @@ class CategoriasTableSeeder extends Seeder
      */
 
 
-     
+
     public function run()
     {
 
@@ -28,10 +28,15 @@ class CategoriasTableSeeder extends Seeder
                 'description' => 'Frascos de sal gourmet. Exquisitas variedades .',
                 'status' => 1,
                 'popular' => 1,
-                'image' =>  Storage::url('images/categories/logo.png'),
-                // 'meta_title' => 'Frascos de sal',
-                // 'meta_description' => 'Frascos de sal',
-                // 'meta_keywords' => 'Sal, Sal gourmet, Sal premium',
+                'image' => '1685480330.jpg',
+            ],
+            [
+                'name' => 'Sacos',
+                'slug' => 'sacos',
+                'description' => 'Sacos de sal.',
+                'status' => 1,
+                'popular' => 1,
+                'image' =>  '1685484259.jpg'
             ]
         ]);
     }
