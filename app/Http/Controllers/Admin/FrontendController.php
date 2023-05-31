@@ -99,7 +99,7 @@ class FrontendController extends Controller
                     'count' => $count
                 ];
             }
-        
+
             $jsonData[] = [
                 'fecha' => $date,
                 'productos' => $productData
@@ -134,16 +134,16 @@ class FrontendController extends Controller
     public function IngresosMes(){
         $orders = Order::Select('id','total_price', 'created_at')->get();
         $groupedOrders = [];
-        
+
         foreach ($orders as $order) {
             $date = substr($order->created_at, 5, 2);
 
             if (!isset($groupedOrders[$date])) {
                 $groupedOrders[$date] = 0;
             }
-            
+
                 $groupedOrders[$date] += $order->total_price;
-            
+
         }
 
         $jsonData = [];
@@ -159,16 +159,16 @@ class FrontendController extends Controller
     public function VentasMes(){
         $sellProducts = OrderItem::Select('id', 'qty', 'created_at')->get();
         $groupedProducts = [];
-        
+
         foreach ($sellProducts as $sellProduct) {
             $date = substr($sellProduct->created_at, 5, 2);
 
             if (!isset($groupedProducts[$date])) {
                 $groupedProducts[$date] = 0;
             }
-            
+
                 $groupedProducts[$date] += $sellProduct->qty;
-            
+
         }
 
         $jsonData = [];
@@ -184,17 +184,15 @@ class FrontendController extends Controller
     public function IngresosDiarios(){
         $orders = Order::Select('id','total_price', 'created_at')->get();
         $groupedOrders = [];
-        
+
         foreach ($orders as $order) {
-            $date = substr($order->created_at, 0, 10);
-            
-            if($date == date("Y-m-d")){
+            $date = substr($order->created_at, 10, 11);
+
                 if (!isset($groupedOrders[$date])) {
                     $groupedOrders[$date] = 0;
                 }
-            
+
                 $groupedOrders[$date] += $order->total_price;
-            }
         }
 
         $jsonData = [];
@@ -210,15 +208,15 @@ class FrontendController extends Controller
     public function ProductosTop(){
         $sellProducts = OrderItem::Select('prod_id', 'qty', 'created_at')->get();
         $groupedProducts = [];
-        
+
         foreach ($sellProducts as $sellProduct) {
             $id = $sellProduct->prod_id;
             if (!isset($groupedProducts[$id])) {
                 $groupedProducts[$id] = 0;
             }
-            
+
             $groupedProducts[$id] += $sellProduct->qty;
-            
+
         }
 
         $jsonData = [];
@@ -235,8 +233,8 @@ class FrontendController extends Controller
         usort($jsonData, function ($a, $b) {
             return $b['total'] - $a['total'];
         });
-        
+
         return json_encode($jsonData);
     }
-    
+
 }
