@@ -91,7 +91,7 @@
                             <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
                                 onmouseout="this.style.backgroundColor='transparent'"
                                 style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/recetas') }}" class="nav-link">
-                                <i class="fa-solid fa-cart-flatbed"></i>
+                                <i class="fa-solid fa-list-ul"></i>
                                 <p>Recetas</p>
                             </a>
                         </li>
