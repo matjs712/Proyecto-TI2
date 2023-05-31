@@ -56,6 +56,24 @@ class RoleSeeder extends Seeder
         ])->syncRoles([$admin]);
 
         Permission::create([
+            'name' => 'ver recetas',
+            'description' => 'Ver receta'
+        ])->syncRoles([$admin, $chef]);
+        Permission::create([
+            'name' => 'add recetas',
+            'description' => 'Añadir receta'
+        ])->syncRoles([$admin, $chef]);
+        Permission::create([
+            'name' => 'edit recetas',
+            'description' => 'Editar receta'
+        ])->syncRoles([$admin, $chef]);
+        Permission::create([
+            'name' => 'destroy recetas',
+            'description' => 'Eliminar receta'
+        ])->syncRoles([$admin, $chef]);
+
+
+        Permission::create([
             'name' => 'ver categorias',
             'description' => 'Ver categorías'
         ])->syncRoles([$admin]);

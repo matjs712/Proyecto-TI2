@@ -18,23 +18,23 @@ class IngredientesTableSeeder extends Seeder
         DB::table('ingredientes')->insert([
             [
                 'name' => 'Sal',
-                'medida'=> 'gramos',
-                'cantidad' => 2000,
+                'medida' => 'gramos',
+                'cantidad' => 10000,
             ],
             [
                 'name' => 'Merquen',
-                'medida'=> 'gramos',
-                'cantidad' => 2500,
+                'medida' => 'gramos',
+                'cantidad' => 21500,
             ],
             [
                 'name' => 'Tomate seco',
-                'medida'=> 'gramos',
-                'cantidad' => 3000,
+                'medida' => 'gramos',
+                'cantidad' => 30000,
             ],
             [
                 'name' => 'Ajo',
-                'medida'=> 'gramos',
-                'cantidad' => 1500,
+                'medida' => 'gramos',
+                'cantidad' => 10500,
             ],
         ]);
     }

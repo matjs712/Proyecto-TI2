@@ -5,18 +5,15 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <div class="mb-4 d-flex align-items-center justify-content-between" style="width: 100%">
+            <div class="mb-4 d-flex align-items-center justify-content-between" style="width: 100%; flex-wrap:wrap">
                 <h2>Productos</h2>
-                <div class="container">
-                    <h6 class="mb-0 d-flex align-items-center justify-content-end">
-                        <a href="{{ url('dashboard') }}" class="mr-2">Inicio</a> /
-                        <a href="{{ url('productos') }}" class="mx-2">Productos</a> /
-                        <a href="#" class="ml-2">Editar producto</a>
-                    </h6>
-                </div>
+
+                <h6 class="mb-0 d-flex align-items-center justify-content-end">
+                    <a href="{{ url('dashboard') }}" class="mr-2">Inicio</a> /
+                    <a href="{{ url('productos') }}" class="mx-2">Productos</a> /
+                    <a href="#" class="ml-2">Editar producto</a>
+                </h6>
             </div>
-
-
             <form action="{{ url('update-prod/' . $producto->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -120,13 +117,6 @@
                             @endif
                         </div>
                     </div>
-
-                    {{-- <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="popular">Tax</label>
-                    <input type="number" name="tax" value="{{ $producto->tax }}" class="form-control">
-                  </div>
-              </div> --}}
                     <div class="col-md-12 mb-4">
                         <label for="">Imagen</label>
                         <input type="file" id="image" name="image" class="form-control">
@@ -150,28 +140,6 @@
                                 class="form-control">
                         </div>
                     </div>
-
-                    {{-- <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="estado">Meta titulo</label>
-                    <input type="text" name="meta_title" value="{{ $producto->meta_title }}" class="form-control">
-                  </div>
-              </div>
-
-              <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="estado">Meta descripción</label>
-                    <input type="text" name="meta_description" value="{{ $producto->meta_description }}" class="form-control">
-                  </div>
-              </div>
-              <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="estado">Meta palabras claves</label>
-                    <input type="text" name="meta_keywords" value="{{ $producto->meta_keywords }}" class="form-control">
-                  </div>
-              </div>
-                 --}}
-
                     <div class="col-md-12">
                         @foreach ($productoIngredientes as $index => $prodIng)
                             <div class="form-group d-flex align-items-end">

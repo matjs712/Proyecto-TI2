@@ -9,8 +9,10 @@
 
 @section('trending')
     @include('layouts.inc.trending')
+    @include('layouts.inc.about-us')
+    @include('layouts.inc.contact')
 @endsection
 
-@section('trending_cat')
+{{-- @section('trending_cat')
     @include('layouts.inc.trending_cat')
-@endsection
+@endsection --}}

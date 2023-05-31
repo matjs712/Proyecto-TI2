@@ -3,59 +3,36 @@
     Categorias | {{ $sitio }}
 @endsection
 @section('content')
-    <div class="py-1 mb-4 shadow-sm border-top" style="background-color: {{ $color_secundario }}">
-        <div class="container">
+    <div class="py-3 mb-4 shadow-sm border-top" style="background-color: {{ $color_secundario }}; opacity:.6">
+        <div class="container" style="color:white">
             <h6 class="mb-0">
-                <a href="{{ url('/') }}">Inicio</a> /
-                <a href="{{ url('todo-categorias') }}">Categorias</a>
+                <a style="color:white" href="{{ url('/') }}">Inicio</a> /
+                <a style="color:white" href="{{ url('todo-categorias') }}">Categorías</a>
             </h6>
         </div>
     </div>
     <br>
     <div class="container">
-        {{-- <div class="row">
-        <div class="col-md-12">
-            <h2>Filtrar productos</h2>
-            <div class="d-flex align-items-center flex-wrap">
-                <div class="form-group mr-4">
-                    <select name="sort_by" id="sort_by" class="form-control">
-                      <option value="">Ordenar por precio</option>
-                      <option value="precio_alto">Precio más alto</option>
-                      <option value="precio_bajo">Precio más bajo</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <select name="sort_by" id="sort_by" class="form-control">
-                      <option value="">Ordenar por categoría</option>
-                      @foreach ($categorias as $item)
-                      <option value="{{ $item->slug }}">{{ $item->name }}</option>
-                      @endforeach
-                    </select>
-                  </div> 
-            </div>
-        </div>
-    </div> --}}
         <div class="row">
             <div class="col-md-12">
                 <div class="search-result">
                     @if ($categorias->count() >= 1)
                         <div class="row">
                             @foreach ($categorias as $item)
-                                <div class="col-md-4 mb-4">
-                                    <div class="card card-filter text-left" style="position: relative;">
-                                        @if ($item->trending == '1')
-                                            <label
-                                                style="z-index:100;font-size: 16px; position:absolute; top:5%; background:#cf4647;"
-                                                class="text-white float-end badge trending_tag">Popular</label>
-                                        @endif
-                                        <img src="{{ Storage::url('uploads/categorias/' . $item->image) }}" alt="">
-                                        <div class="card-body bg-white text-center">
-                                            <a href="{{ url('ver-categoria/' . $item->slug) }}">
-                                                <h4 class="card-title">{{ $item->name }}</h4>
-                                            </a>
-                                            <p class="card-text">{{ $item->description }}</p>
+                                <div class="col-md-6 mb-4 p-0 category-container hide"
+                                    style="position:relative;background-image: url('{{ Storage::url('uploads/categorias/' . $item->image) }}'); height:300px; background-size:cover; background-repeat:no-repeat">
+                                    <a href="{{ url('ver-categoria/' . $item->slug) }}" style="text-decoration: none">
+                                        <div
+                                            style="height: 100%;width:100%;position:absolute;background-color:rgba(0, 0, 0, 0.2);">
+                                            <div style="width: 100%; height:100%"
+                                                class="text-center d-flex justify-content-center align-items-center">
+                                                <h2 class="text-white p-1 m-0"
+                                                    style="border-radius:10px;font-style: bold; font-weight:900;background-color:{{ $boton_principal_busqueda }}; width:30%">
+                                                    {{ $item->name }}
+                                                </h2>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
                             @endforeach
                         </div>

@@ -7,12 +7,10 @@
         <div class="card-body">
             <div class="mb-4 d-flex align-items-center justify-content-between" style="width: 100%">
                 <h2>Proveedores</h2>
-                <div class="container">
-                    <h6 class="mb-0 d-flex align-items-center justify-content-end">
-                        <a href="{{ url('dashboard') }}" class="mr-2">Inicio</a> /
-                        <a href="{{ url('proveedores') }}" class="ml-2">Proveedores</a>
-                    </h6>
-                </div>
+                <h6 class="mb-0 d-flex align-items-center justify-content-end">
+                    <a href="{{ url('dashboard') }}" class="mr-2">Inicio</a> /
+                    <a href="{{ url('proveedores') }}" class="ml-2">Proveedores</a>
+                </h6>
             </div>
             <div class="d-flex aling-items-center flex-wrap">
                 {{-- @can('add productos')

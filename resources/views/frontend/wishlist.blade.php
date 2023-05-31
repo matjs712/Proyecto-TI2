@@ -3,16 +3,14 @@
     Lista | {{ $sitio }}
 @endsection
 @section('content')
-
-    <div class="py-1 mb-4 shadow-sm border-top" style="background-color: {{ $color_secundario }}">
-        <div class="container">
+    <div class="py-3 shadow-sm border-top" style="background-color: {{ $color_secundario }}; opacity:.6">
+        <div class="container" style="color:white">
             <h6 class="mb-0">
-                <a href="{{ url('/') }}">Inicio</a> /
-                <a href="{{ url('/wishlist') }}">Lista</a>
+                <a class="text-white" href="{{ url('/') }}">Inicio</a> /
+                <a class="text-white" href="{{ url('/wishlist') }}">Lista</a>
             </h6>
         </div>
     </div>
-
 
     <div class="container my-5">
         <div class="card shadow">
@@ -57,8 +55,10 @@
                         @endforeach
                     </div>
                 @else
-                    <h2>La lista esta vacia <i class="fa fa-shopping-cart" aria-hidden="true"></i> </h2>
-                    <a href="{{ url('/') }}" class="btn btn-outline-primary">Continua comprando</a>
+                    <div class="card-body text-center">
+                        <h2>La lista esta vacia <i class="fa fa-shopping-cart" aria-hidden="true"></i> </h2>
+                        <a href="{{ url('/') }}" class="btn btn-outline-primary">Continua comprando</a>
+                    </div>
                 @endif
             </div>
         </div>
