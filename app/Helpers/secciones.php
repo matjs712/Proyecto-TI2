@@ -9,6 +9,7 @@ function secciones()
     $categorias = false;
     $proveedores = false;
     $recetas = false;
+    $nutricionales = false;
     $registros = false;
     $ordenes = false;
     $usuarios = false;
@@ -18,6 +19,7 @@ function secciones()
     $categoriasFront = false;
     $proveedoresFront = false;
     $recetasFront = false;
+    $nutricionalesFront = false;
     $registrosFront = false;
     $ordenesFront = false;
     $usuariosFront = false;
@@ -36,6 +38,10 @@ function secciones()
     if ($configurations->recetas == 1) {
         $recetas = true;
         $recetasFront = true;
+    }
+    if ($configurations->nutricionales == 1) {
+        $nutricionales = true;
+        $nutricionalesFront = true;
     }
     if ($configurations->categorias == 1) {
         $categorias = true;
@@ -69,6 +75,7 @@ function secciones()
         'categorias' => $categorias,
         'proveedores' => $proveedores,
         'recetas' => $recetas,
+        'nutricionales' => $nutricionales,
         'registros' => $registros,
         'ordenes' => $ordenes,
         'usuarios' => $usuarios,
@@ -78,6 +85,7 @@ function secciones()
         'categoriasFront' => $categoriasFront,
         'proveedoresFront' => $proveedoresFront,
         'recetasFront' => $recetasFront,
+        'nutricionalesFront' => $nutricionalesFront,
         'registrosFront' => $registrosFront,
         'ordenesFront' => $ordenesFront,
         'usuariosFront' => $usuariosFront,

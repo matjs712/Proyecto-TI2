@@ -6,11 +6,11 @@ use App\Models\Logo;
 use App\Models\Nutricional;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class NutritionalController extends Controller
 {
@@ -26,6 +26,7 @@ class NutritionalController extends Controller
     {
         logo_sitio();
         secciones();
+
         $nutricionales = Nutricional::all();
         $productos = Product::all();
 
@@ -87,8 +88,7 @@ class NutritionalController extends Controller
     public function show($id)
     {
         $nutricional = Nutricional::findOrFail($id);
-        $Nutritional = Nutricional::where('id_producto', $producto->id)->get();
-        return view('admin.info_nutricional.show', compact('nutricional', 'producto'));
+        return view('admin.info_nutricional.show', compact('nutricional'));
     }
 
     public function edit($id)
@@ -102,4 +102,54 @@ class NutritionalController extends Controller
         return view('admin.info_nutricional.edit', compact('nutricional', 'producto'));
     }
 
+    public function update(Request $request, $id)
+    {
+
+        $rules = [
+            'categoria' => 'required',
+
+
+        ];
+
+        $messages = [
+            'required' => 'El campo es requerido.',
+
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if (!$validator->fails()) {
+            try {
+                $nutricional = Nutricional::find($id);
+
+                $nutricional->id_producto = $request->input('producto');
+                $nutricional->valor_energetico = $request->input('valor_energetico');
+                $nutricional->grasa_saturada = $request->input('grasa_saturada');
+                $nutricional->grasa_total = $request->input('grasa_total');
+                $nutricional->sal = $request->input('sal');
+                $nutricional->yodo = $request->input('yodo');
+                $nutricional->azucar = $request->input('azucar');
+                $nutricional->proteina = $request->input('proteina');
+
+                $nutricional->update();
+
+                DB::commit();
+
+                return redirect('/nutricionales')->with('status', 'Informacion nutricional Editado exitosamente!.');
+            } catch (\Illuminate\Database\QueryException $e) {
+                DB::rollBack();
+                return back()->withErrors($validator)->withInput();
+            }
+        }
+        return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
+    }
+
+    public function destroy($id)
+    {
+        $nutricional = Nutricional::find($id);
+
+
+
+
+        $nutricional->delete();
+        return redirect('/nutricionales')->with('status', 'Infromacion Nutricional eliminada Exitosamente');
+    }
 }

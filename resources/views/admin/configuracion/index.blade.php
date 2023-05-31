@@ -59,9 +59,14 @@
                                                 <label for="productos">Productos</label>
                                             </div>
                                             <div>
-                                                <input type="checkbox" id="tecetas" name="recetas"
+                                                <input type="checkbox" id="recetas" name="recetas"
                                                     {{ $recetas ? 'checked' : '' }} value="recetas">
                                                 <label for="recetas">Recetas</label>
+                                            </div>
+                                            <div>
+                                                <input type="checkbox" id="nutricionales" name="nutricionales"
+                                                    {{ $nutricionales ? 'checked' : '' }} value="nutricionales">
+                                                <label for="nutricionales">Informacion nutricional</label>
                                             </div>
                                             <div>
                                                 <input type="checkbox" id="categorias" name="categorias"

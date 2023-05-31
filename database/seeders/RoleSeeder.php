@@ -72,6 +72,23 @@ class RoleSeeder extends Seeder
             'description' => 'Eliminar receta'
         ])->syncRoles([$admin, $chef]);
 
+        Permission::create([
+            'name' => 'ver nutricionales',
+            'description' => 'Ver nutricional'
+        ])->syncRoles([$admin, $nutricionista]);
+        Permission::create([
+            'name' => 'add nutricionales',
+            'description' => 'Añadir nutricional'
+        ])->syncRoles([$admin, $nutricionista]);
+        Permission::create([
+            'name' => 'edit nutricionales',
+            'description' => 'Editar nutricional'
+        ])->syncRoles([$admin, $nutricionista]);
+        Permission::create([
+            'name' => 'destroy nutricionales',
+            'description' => 'Eliminar nutricional'
+        ])->syncRoles([$admin, $nutricionista]);
+
 
         Permission::create([
             'name' => 'ver categorias',
