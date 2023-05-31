@@ -66,7 +66,7 @@
                                             <div>
                                                 <input type="checkbox" id="nutricionales" name="nutricionales"
                                                     {{ $nutricionales ? 'checked' : '' }} value="nutricionales">
-                                                <label for="nutricionales">Informacion nutricional</label>
+                                                <label for="nutricionales">Informacion Nutricional</label>
                                             </div>
                                             <div>
                                                 <input type="checkbox" id="categorias" name="categorias"

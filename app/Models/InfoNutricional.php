@@ -21,4 +21,8 @@ class InfoNutricional extends Model
         'proteina',
 
     ];
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'id_producto', 'id');
+    }
 }

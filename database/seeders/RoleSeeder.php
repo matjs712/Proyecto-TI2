@@ -41,7 +41,7 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'ver productos',
             'description' => 'Ver productos'
-        ])->syncRoles([$admin]);
+        ])->syncRoles([$admin, $nutricionista]);
         Permission::create([
             'name' => 'add productos',
             'description' => 'Añadir producto'
@@ -110,7 +110,7 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'ver ingredientes',
             'description' => 'Ver ingredientes'
-        ])->syncRoles([$admin, $chef]);
+        ])->syncRoles([$admin, $chef, $nutricionista]);
         Permission::create([
             'name' => 'add ingredientes',
             'description' => 'Añadir ingredientes'

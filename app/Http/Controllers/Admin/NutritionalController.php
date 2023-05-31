@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Logo;
-use App\Models\Nutricional;
+use App\Models\InfoNutricional;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -27,7 +27,7 @@ class NutritionalController extends Controller
         logo_sitio();
         secciones();
 
-        $nutricionales = Nutricional::all();
+        $nutricionales = InfoNutricional::all();
         $productos = Product::all();
 
         return view('admin.info_nutricional.index', compact('nutricionales', 'productos'));
@@ -45,7 +45,7 @@ class NutritionalController extends Controller
         //AQUI VA LA VALIDACIÒN DEL FORMULARIO
         // dd($request);
         $rules = [
-            'producto' => 'required',
+
 
 
         ];
@@ -59,10 +59,9 @@ class NutritionalController extends Controller
         if (!$validator->fails()) {
 
             try {
-                $nutricional = new Nutricional();
+                $nutricional = new InfoNutricional();
 
-
-                $nutricional->id_producto = $request->input('producto');
+                $nutricional->id_producto = $request->input('id_producto');
                 $nutricional->valor_energetico = $request->input('valor_energetico');
                 $nutricional->grasa_saturada = $request->input('grasa_saturada');
                 $nutricional->grasa_total = $request->input('grasa_total');
@@ -87,7 +86,7 @@ class NutritionalController extends Controller
 
     public function show($id)
     {
-        $nutricional = Nutricional::findOrFail($id);
+        $nutricional = InfoNutricional::findOrFail($id);
         return view('admin.info_nutricional.show', compact('nutricional'));
     }
 
@@ -96,7 +95,7 @@ class NutritionalController extends Controller
         logo_sitio();
         secciones();
 
-        $nutricional = Nutricional::find($id);
+        $nutricional = InfoNutricional::find($id);
         $producto = Product::all();
 
         return view('admin.info_nutricional.edit', compact('nutricional', 'producto'));
@@ -106,7 +105,7 @@ class NutritionalController extends Controller
     {
 
         $rules = [
-            'categoria' => 'required',
+
 
 
         ];
@@ -118,9 +117,9 @@ class NutritionalController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
         if (!$validator->fails()) {
             try {
-                $nutricional = Nutricional::find($id);
+                $nutricional = InfoNutricional::find($id);
 
-                $nutricional->id_producto = $request->input('producto');
+                $nutricional->id_producto = $request->input('id_producto');
                 $nutricional->valor_energetico = $request->input('valor_energetico');
                 $nutricional->grasa_saturada = $request->input('grasa_saturada');
                 $nutricional->grasa_total = $request->input('grasa_total');
@@ -144,7 +143,7 @@ class NutritionalController extends Controller
 
     public function destroy($id)
     {
-        $nutricional = Nutricional::find($id);
+        $nutricional = InfoNutricional::find($id);
 
 
 
