@@ -40,7 +40,7 @@ class ProductosTableSeeder extends Seeder
                 'qty' => '4',
                 'status' => 1,
                 'trending' => 0,
-                'image' => 'sal-merken.png',
+                'image' => 'sal2.png',
             ], [
                 'cate_id' => 1,
                 'name' => 'Sal de tomate',

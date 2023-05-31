@@ -48,12 +48,12 @@
                                 ? '<span class="badge badge-danger">No visible</span>'
                                 : '<span class="badge badge-success">Visible</span>' !!}</td>
                             <td>
-                                @if (Storage::exists('uploads/productos/' . $product->image))
-                                    <img src="{{ Storage::url('uploads/productos/' . $product->image) }}" width="150"
-                                        alt="">
-                                @else
+                                {{-- @if (Storage::exists('uploads/productos/' . $product->image)) --}}
+                                <img src="{{ Storage::url('uploads/productos/' . $product->image) }}" width="100"
+                                    alt="">
+                                {{-- @else
                                     <i class="fas fa-image" style="font-size: 30px;"></i>
-                                @endif
+                                @endif --}}
 
                             </td>
                             <td>
