@@ -4,22 +4,13 @@
 @endsection
 @section('content')
     <div class="card hide2">
-        {{-- <div class="card-header d-flex aling-items-center flex-wrap">
-            @can('add productos')
-            <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
-            style="background-color: {{ $boton_nuevo }}; color:white;" class="btn ml-4"
-            href="{{ url('/crear-producto') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
-            @endcan
-        </div> --}}
         <div class="card-body">
-            <div class="mb-4 d-flex align-items-center justify-content-between" style="width: 100%">
+            <div class="mb-4 d-flex align-items-center justify-content-between" style="width: 100%; flex-wrap:wrap">
                 <h2>Productos</h2>
-                <div class="container">
-                    <h6 class="mb-0 d-flex align-items-center justify-content-end">
-                        <a href="{{ url('dashboard') }}" class="mr-2">Inicio</a> /
-                        <a href="{{ url('productos') }}" class="ml-2">Productos</a>
-                    </h6>
-                </div>
+                <h6 class="mb-0 d-flex align-items-center justify-content-end">
+                    <a href="{{ url('dashboard') }}" class="mr-2">Inicio</a> /
+                    <a href="{{ url('productos') }}" class="ml-2">Productos</a>
+                </h6>
             </div>
             <div class="d-flex aling-items-center flex-wrap">
                 {{-- @can('add productos')

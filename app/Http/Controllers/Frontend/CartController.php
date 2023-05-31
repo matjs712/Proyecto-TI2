@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Logo;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Category;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -35,10 +36,8 @@ class CartController extends Controller
                 $cartItems = Cart::where('user_id', $guest_id)->get();
             }
         }
-
         return view('frontend.cart', compact('cartItems'));
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -160,7 +159,6 @@ class CartController extends Controller
             }
         }
     }
-
 
     function cartCount()
     {

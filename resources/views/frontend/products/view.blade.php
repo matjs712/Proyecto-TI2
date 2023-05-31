@@ -3,149 +3,158 @@
     {{ $producto->name }} | {{ $sitio }}
 @endsection
 @section('content')
-
-    <div class="py-1 mb-4 shadow-sm border-top" style="background-color: {{ $color_secundario }}">
-        <div class="container">
+    <div class="py-3 shadow-sm border-top" style="background-color: {{ $color_secundario }}; opacity:.6">
+        <div class="container" style="color:white">
             <h6 class="mb-0">
-                <a href="{{ url('/') }}">Inicio</a> /
-                <a href="{{ url('ver-categoria/' . $producto->category->slug) }}">{{ $producto->category->name }}</a> /
-                <a
+                <a href="{{ url('/') }}" class="text-white">Inicio</a> /
+                <a class="text-white"
                     href="{{ url('categorias/' . $producto->category->slug . '/' . $producto->slug) }}">{{ $producto->name }}</a>
             </h6>
         </div>
     </div>
+    <br>
 
     <div class="container">
         <div class="card shadow prod_data">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4 border-right">
+                    <div class="col-md-6 border-right" style="position: relative">
+                        @if ($producto->trending == '1')
+                            <label style="font-size: 16px;position:absolute; top:5%;left:0"
+                                class="float-end badge text-white bg-danger trending_tag">Tendencia</label>
+                        @endif
                         <img style="width: 100%;" src="{{ Storage::url('uploads/productos/' . $producto->image) }}"
                             alt="{{ $producto->name }}">
                     </div>
-                    <div class="col-md-8">
-                        <h2 class="mb-0 d-flex justify-content-between align-items-center">
-                            <span>{{ $producto->name }}</span>
-                            @if ($producto->trending == '1')
-                                <label style="font-size: 16px;"
-                                    class="text-white float-end badge bg-danger trending_tag">Tendencia</label>
-                            @endif
-                        </h2>
-                        <hr>
-                        <label style="mb-3">Precio original: <s>${{ $producto->original_price }}</s></label>
-                        <label style="fw-bold"><strong>Oferta: ${{ $producto->selling_price }}</strong></label>
-                        @php $rate_number = number_format($rating_value) @endphp
-                        <div class="rating">
-                            @for ($i = 1; $i <= $rate_number; $i++)
-                                <i class="fa fa-star gold" aria-hidden="true"></i>
-                            @endfor
-                            @for ($j = $rate_number + 1; $j <= 5; $j++)
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            @endfor
-                            <span>{{ $rating->count() }} Calificaciones</span>
-                        </div>
-                        <p class="mt-3">
-                            {!! $producto->small_description !!}
-                        </p>
-                        <hr>
-                        <div class="d-flex align-items-center justify-content-between flex-wrap">
-                            @if ($producto->qty > 0)
-                                <label class="badge bg-success text-white">En stock</label>
-                            @else
-                                <label class="badge bg-danger  text-white">Sin stock</label>
-                            @endif
-                            <div class="d-flex align-items-center flex-wrap">
-                                <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
-                                    style="background-color: {{ $boton_calificacion }}; color:white;" type="button"
-                                    class="btn mr-2" data-toggle="modal" data-target="#exampleModalCenter">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    Califica este producto
-                                </button>
-                                <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
-                                    style="background-color: {{ $boton_review }}; color:white;"
-                                    href="{{ url('add-review/' . $producto->slug . '/userreview') }}" class="btn"><i
-                                        class="fa fa-star" aria-hidden="true"></i>Añadir Review</a>
+                    <div class="col-md-6">
+                        <h1 class="pt-3 mb-0 d-flex justify-content-between align-items-center">
+                            <span style="font-weight:900">{{ $producto->name }}</span>
+                        </h1>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <a href="{{ url('ver-categoria/' . $producto->category->slug) }}">
+                                <label style="font-weight:400;font-size: 16px;color:{{ $boton_nuevo }}"
+                                    class="float-end trending_tag"> <span style="opacity: .6">Categoría:
+                                    </span>{{ $producto->category->name }}</label>
+                            </a>
+                            @php $rate_number = number_format($rating_value) @endphp
+                            <div class="rating d-flex justify-content-end align-items-center">
+                                @for ($i = 1; $i <= $rate_number; $i++)
+                                    <i class="fa fa-star gold" style="font-size:12px" aria-hidden="true"></i>
+                                @endfor
+                                @for ($j = $rate_number + 1; $j <= 5; $j++)
+                                    <i class="fa fa-star" style="font-size:12px" aria-hidden="true"></i>
+                                @endfor
+                                <span style="font-size:14px">({{ $rating->count() }}
+                                    {{ $rating->count() == 1 ? 'Calificación' : 'Calificaciones' }})</span>
                             </div>
                         </div>
-                        <div class="row mt-2 align-items-center">
-                            <div class="col-md-3">
-                                <input type="hidden" value="{{ $producto->id }}" class="prod_id">
-                                <label for="qty">Cantidad</label>
-                                <div class="input-group text-center">
-                                    <button class="input-group-text decrement-btn">-</button>
-                                    <input type="text" name="qty" value="1" class="form-control qty-input">
-                                    <button class="input-group-text increment-btn">+</button>
-                                </div>
+                        <hr class="m-2">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-end">
+                                <h2 class="py-2 m-0" style="margin-right:15px!important;">
+                                    <strong style="color:{{ $boton_nuevo }}">${{ $producto->selling_price }}</strong>
+                                </h2>
+                                <h5 class="py-2 m-0" style="opacity:.8"><s>${{ $producto->original_price }}</s></h5>
                             </div>
-                            <div class="col-md-9">
-                                <br>
-                                <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
-                                    style="background-color: {{ $boton_lista }}; color:white;"
-                                    class="btn me-3 float-start addToWishlist"><i class="fa-regular fa-heart"></i> Añadir a
-                                    la lista</button>
+                            <div>
                                 @if ($producto->qty > 0)
-                                    <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
-                                        style="background-color: {{ $boton_carrito }}; color:white;"
-                                        class="btn me-3 float-start addCartBtn"><i class="fa fa-cart-plus"
-                                            aria-hidden="true"></i> Añadir al carrito</button>
+                                    <label class="badge bg-success text-white">En stock</label>
+                                @else
+                                    <label class="badge bg-danger  text-white">Sin stock</label>
                                 @endif
-
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-footer bg-white">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                            aria-controls="home" aria-selected="true">Descripción</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                            aria-controls="profile" aria-selected="false">Reseñas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                            aria-controls="contact" aria-selected="false">Especificaciones</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <p class="pt-4 pb-2">{{ $producto->description }}</p>
-                    </div>
-                    <div class="tab-pane fade pt-4 pb-2" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
-                        @foreach ($reviews as $item)
-                            <label for="">{{ $item->user->name . ' ' . $item->user->lname }}</label>
-                            @if ($item->user->id == Auth::id())
-                                <a href="{{ url('edit-review/' . $producto->slug . '/userreview') }}"><i
-                                        class="fas fa-edit text-danger"></i></a>
+                        <hr class="m-2">
+                        <div class="text-center">
+                            <p class="py-3 m-0">
+                                {!! $producto->description !!}
+                            </p>
+                        </div>
+                        <hr class="m-0">
+                        <div class="row mt-2 d-flex align-items-center px-3">
+                            <input type="hidden" value="{{ $producto->id }}" class="prod_id">
+                            <div class="input-group text-center mr-2"
+                                style="border: 1px solid rgba(128, 128, 128, 0.363);border-radius:8px; width:100px">
+                                <button class="input-group-text decrement-btn bg-white"
+                                    style="border:none;border-radius:15px">-</button>
+                                <input type="text" name="qty" value="1" class="form-control qty-input"
+                                    style="border:none;">
+                                <button class="input-group-text
+                                    increment-btn bg-white"
+                                    style="border:none; border-radius:15px">+</button>
+                            </div>
+                            @if ($producto->qty > 0)
+                                <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
+                                    style="background-color: {{ $boton_carrito }}; color:white;"
+                                    class="btn my-1 mr-2 float-start addCartBtn  mr-2"><i class="fa fa-cart-plus"
+                                        aria-hidden="true"></i>Añadir al Carrito</button>
                             @endif
-                            <br>
-                            @php
-                                $rating = App\Models\Rating::where('product_id', $producto->id)
-                                    ->where('user_id', $item->user->id)
-                                    ->first();
-                            @endphp
-                            @if ($rating)
-                                @php $user_rated = $rating->stars_rated @endphp
-                                @for ($i = 1; $i <= $user_rated; $i++)
-                                    <i class="fa fa-star gold"></i>
-                                @endfor
-                                @for ($j = $user_rated + 1; $j <= 5; $j++)
-                                    <i class="fa fa-star"></i>
-                                @endfor
-                            @endif
-                            <small>Comentado el {{ $item->created_at->format('d/m/Y') }}</small>
-                            <p>{{ $item->user_review }}</p>
-                        @endforeach
+                            <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
+                                style="border-color: {{ $boton_lista }}; color:{{ $boton_lista }};"
+                                class="btn my-1 mr-2 float-start addToWishlist"><i class="fa-regular fa-heart"></i></button>
+                            <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
+                                style="border-color: {{ $boton_calificacion }}; color:{{ $boton_calificacion }};"
+                                type="button" class="btn my-1 mr-2" data-toggle="modal" data-target="#exampleModalCenter">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </button>
+                            <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
+                                style="border-color: {{ $boton_review }}; color:{{ $boton_review }};"
+                                href="{{ url('add-review/' . $producto->slug . '/userreview') }}" class="btn my-1"><i
+                                    class="fas fa-book    "></i> Añadir Review</a>
+                        </div>
+
                     </div>
-                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
                 </div>
             </div>
         </div>
+
+        <div class="card-footer bg-white">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                        aria-controls="home" aria-selected="true">Reseñas</a>
+                </li>
+                {{-- <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                        aria-controls="profile" aria-selected="false">Reseñas</a>
+                </li> --}}
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                        aria-controls="contact" aria-selected="false">Especificaciones</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <br>
+                    @foreach ($reviews as $item)
+                        <label for="">{{ $item->user->name . ' ' . $item->user->lname }}</label>
+                        @if ($item->user->id == Auth::id())
+                            <a href="{{ url('edit-review/' . $producto->slug . '/userreview') }}"><i
+                                    class="fas fa-edit text-danger"></i></a>
+                        @endif
+                        <br>
+                        @php
+                            $rating = App\Models\Rating::where('product_id', $producto->id)
+                                ->where('user_id', $item->user->id)
+                                ->first();
+                        @endphp
+                        @if ($rating)
+                            @php $user_rated = $rating->stars_rated @endphp
+                            @for ($i = 1; $i <= $user_rated; $i++)
+                                <i class="fa fa-star gold"></i>
+                            @endfor
+                            @for ($j = $user_rated + 1; $j <= 5; $j++)
+                                <i class="fa fa-star"></i>
+                            @endfor
+                        @endif
+                        <small>Comentado el {{ $item->created_at->format('d/m/Y') }}</small>
+                        <p>{{ $item->user_review }}</p>
+                    @endforeach
+                </div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+            </div>
+        </div>
+    </div>
     </div>
 
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"

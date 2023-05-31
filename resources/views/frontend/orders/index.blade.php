@@ -3,21 +3,23 @@
     Mis pedidos | {{ $sitio }}
 @endsection
 @section('content')
-    <div class="py-1 mb-4 shadow-sm border-top" style="background-color: {{ $color_secundario }}">
-        <div class="container">
+    <div class="py-3 shadow-sm border-top" style="background-color: {{ $color_secundario }}; opacity:.6">
+        <div class="container" style="color:white">
             <h6 class="mb-0">
-                <a href="{{ url('/') }}">Inicio</a> /
-                <a href="{{ url('mis-ordenes') }}">Mis Pedidos</a>
+                <a style="color:white" href="{{ url('/') }}">Inicio</a> /
+                <a style="color:white" href="{{ url('mis-ordenes') }}">Mis Pedidos</a>
             </h6>
         </div>
     </div>
+    <br>
+
 
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header bg-primary">
-                        <h4 class="text-white">Mis Ordenes</h4>
+                    <div class="card-header">
+                        <h4 class="text-dark">Mis Ordenes</h4>
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered">
@@ -58,4 +60,10 @@
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 @endsection

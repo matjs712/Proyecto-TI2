@@ -3,21 +3,16 @@
     Proveedores | {{ $sitio }}
 @endsection
 @section('content')
-    <div class="py-3 mb-1 border-bottom border-top">
-        <div class="container ml-3">
-            <h6 class="mb-0">
-                <a href="{{ url('dashboard') }}">Inicio</a> /
-                <a href="{{ url('proveedores') }}">Proveedores</a> /
-                <a href="{{ url('edit-prov/' . $proveedor->id) }}">Editar proveedor</a>
-            </h6>
-        </div>
-    </div>
-
     <div class="card">
-        <div class="card-header">
-            <h4>Editar Proveedor</h4>
-        </div>
         <div class="card-body">
+            <div class="mb-4 d-flex align-items-center justify-content-between" style="width: 100%; flex-wrap:wrap">
+                <h2>Editar proveedor</h2>
+                <h6 class="mb-0 d-flex align-items-center justify-content-end">
+                    <a class="mr-1" href="{{ url('dashboard') }}">Inicio</a> /
+                    <a class="mr-1 ml-1" href="{{ url('proveedores') }}">Proveedores</a> /
+                    <a class="mr-1 ml-1" href="{{ url('edit-prov/' . $proveedor->id) }}">Editar proveedor</a>
+                </h6>
+            </div>
             <form action="{{ url('update-prov/' . $proveedor->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')

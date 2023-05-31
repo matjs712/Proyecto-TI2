@@ -409,7 +409,6 @@ class ProductController extends Controller
                                     ->get();
 
                                 foreach ($ingredientesNoEntregados as $ingredienteNoEntregado) {
-                                    dd($ingredienteNoEntregado);
                                     $productoIngrediente = ProductoIngrediente::where('id_producto', $producto->id)
                                         ->where('id_ingrediente', $ingredienteNoEntregado->id_ingrediente)
                                         ->first();
