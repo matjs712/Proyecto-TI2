@@ -335,8 +335,8 @@
             <div class="col-md-3">
               <label for="ingrediente${ingredienteCount}">Medida </label>
               <select name="medida" class="form-control">
-                    <option value="gr" {{ old('medida') == 'gramos' ? 'selected' : '' }}>Gramos</option>
-                    <option value="kg" {{ old('medida') == 'kilogramos' ? 'selected' : '' }}>Kilogramos</option>
+                    <option value="gramos" {{ old('medida') == 'gramos' ? 'selected' : '' }}>Gramos</option>
+                    <option value="kilogramos" {{ old('medida') == 'kilogramos' ? 'selected' : '' }}>Kilogramos</option>
               </select>
             </div>
             <div class="col-md-2">

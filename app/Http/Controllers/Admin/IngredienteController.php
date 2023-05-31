@@ -158,8 +158,9 @@ class IngredienteController extends Controller
                     $ingrediente->cantidad = $request->input('cantidad')*1000;
                 } else {
                     $ingrediente->cantidad = $request->input('cantidad');
+                    $ingrediente->medida = 'gramos';
                 }
-                $ingrediente->medida = 'gramos';
+
                 $ingrediente->update();
 
                 if($ingrediente->cantidad <= 1000){

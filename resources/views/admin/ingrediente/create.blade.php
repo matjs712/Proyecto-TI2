@@ -44,8 +44,8 @@
                         <div class="form-group">
                             <label for="medida">Medida</label>
                             <select name="medida" class="form-control">
-                                <option value="gr" {{ old('medida') == 'gr' ? 'selected' : '' }}>gr</option>
-                                <option value="kg" {{ old('medida') == 'kg' ? 'selected' : '' }}>kg</option>
+                                <option value="gramos" {{ old('medida') == 'gramos' ? 'selected' : '' }}>Gramos</option>
+                                <option value="kilogramos" {{ old('medida') == 'kilogramos' ? 'selected' : '' }}>Kilogramos</option>
                             </select>
                             @if ($errors->has('medida'))
                                 <span class="error text-danger" for="input-name">{{ $errors->first('medida') }}</span>
