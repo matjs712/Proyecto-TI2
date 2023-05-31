@@ -24,8 +24,8 @@ class RecipeController extends Controller
         logo_sitio();
         secciones();
 
-        $receta = Recipe::all();
-        return view('admin.recipe.index', compact('receta'));
+        $recetas = Recipe::all();
+        return view('admin.recipe.index', compact('recetas'));
     }
     public function create()
     {
@@ -112,11 +112,11 @@ class RecipeController extends Controller
         if (!$validator->fails()) {
             try {
 
-                $receta = new Recipe();
+                $receta = Recipe::find($id);
                 $receta->name = $request->input('name');
                 $receta->slug = $request->input('slug');
                 $receta->description = $request->input('description');
-                $receta->save();
+                $receta->update();
                 DB::commit();
                 return redirect('/recetas')->with('status', 'Receta se a actualizado exitosamente!.');
             } catch (\Illuminate\Database\QueryException $e) {

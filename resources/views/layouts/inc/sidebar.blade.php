@@ -63,6 +63,7 @@
                     </li>
                 @endcan
                 @if (auth()->user()->hasPermissionTo('ver productos') ||
+                        auth()->user()->hasPermissionTo('ver recetas') ||
                         auth()->user()->hasPermissionTo('ver categorias') ||
                         auth()->user()->hasPermissionTo('ver ingredientes'))
                     <li class="nav-header" style="color: {{ $color_a_tag_sidebar }}">
@@ -83,6 +84,20 @@
                         </li>
                     @endif
                 @endcan
+
+                @can('ver recetas')
+                    @if ($recetas)
+                        <li class="nav-item has-treeview">
+                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                                onmouseout="this.style.backgroundColor='transparent'"
+                                style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/recetas') }}" class="nav-link">
+                                <i class="fa-solid fa-cart-flatbed"></i>
+                                <p>Recetas</p>
+                            </a>
+                        </li>
+                    @endif
+                @endcan
+
                 @can('ver categorias')
                     @if ($categorias)
                         <li class="nav-item">

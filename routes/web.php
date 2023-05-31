@@ -25,7 +25,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Admin\NotificationController;
-
+use App\Http\Controllers\Admin\RecipeController;
 use App\Http\Mail\NotificationEmail;
 
 use App\Http\Controllers\Admin\RegistroController as AdminRegistroController;

@@ -8,6 +8,7 @@ function secciones()
     $ingredientes = false;
     $categorias = false;
     $proveedores = false;
+    $recetas = false;
     $registros = false;
     $ordenes = false;
     $usuarios = false;
@@ -16,6 +17,7 @@ function secciones()
     $ingredientesFront = false;
     $categoriasFront = false;
     $proveedoresFront = false;
+    $recetasFront = false;
     $registrosFront = false;
     $ordenesFront = false;
     $usuariosFront = false;
@@ -31,6 +33,10 @@ function secciones()
         $ingredientes = true;
         $ingredientesFront = true;
     }
+    if ($configurations->recetas == 1) {
+        $recetas = true;
+        $recetasFront = true;
+    }
     if ($configurations->categorias == 1) {
         $categorias = true;
         $categoriasFront = true;
@@ -39,6 +45,7 @@ function secciones()
         $proveedores = true;
         $proveedoresFront = true;
     }
+
     if ($configurations->registros == 1) {
         $registros = true;
         $registrosFront = true;
@@ -61,6 +68,7 @@ function secciones()
         'ingredientes' => $ingredientes,
         'categorias' => $categorias,
         'proveedores' => $proveedores,
+        'recetas' => $recetas,
         'registros' => $registros,
         'ordenes' => $ordenes,
         'usuarios' => $usuarios,
@@ -69,6 +77,7 @@ function secciones()
         'ingredientesFront' => $ingredientesFront,
         'categoriasFront' => $categoriasFront,
         'proveedoresFront' => $proveedoresFront,
+        'recetasFront' => $recetasFront,
         'registrosFront' => $registrosFront,
         'ordenesFront' => $ordenesFront,
         'usuariosFront' => $usuariosFront,

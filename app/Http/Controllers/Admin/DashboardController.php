@@ -200,6 +200,7 @@ class DashboardController extends Controller
         $secciones->productos = $request->productos === 'productos' ? 1 : 0;
         $secciones->ingredientes = $request->ingredientes === 'ingredientes' ? 1 : 0;
         $secciones->categorias = $request->categorias === 'categorias' ? 1 : 0;
+        $secciones->recetas = $request->recetas === 'recetas' ? 1 : 0;
         $secciones->proveedores = $request->proveedores === 'proveedores' ? 1 : 0;
         $secciones->registros = $request->registros === 'registros' ? 1 : 0;
         $secciones->usuarios = $request->usuarios === 'usuarios' ? 1 : 0;

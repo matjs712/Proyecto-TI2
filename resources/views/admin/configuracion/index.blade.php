@@ -59,6 +59,11 @@
                                                 <label for="productos">Productos</label>
                                             </div>
                                             <div>
+                                                <input type="checkbox" id="tecetas" name="recetas"
+                                                    {{ $recetas ? 'checked' : '' }} value="recetas">
+                                                <label for="recetas">Recetas</label>
+                                            </div>
+                                            <div>
                                                 <input type="checkbox" id="categorias" name="categorias"
                                                     {{ $categorias ? 'checked' : '' }} value="categorias">
                                                 <label for="categorias">Categorías</label>
