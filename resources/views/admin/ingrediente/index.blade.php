@@ -99,7 +99,7 @@
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <label for="cantidad">Cantidad</label>
-                                    <input type="number" name="cantidad" class="form-control" placeholder="100"
+                                    <input name="cantidad" class="form-control" placeholder="100"
                                         value="{{ old('cantidad') }}">
                                     @if ($errors->has('cantidad'))
                                         <span class="error text-danger"

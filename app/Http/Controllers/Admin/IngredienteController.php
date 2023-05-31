@@ -61,7 +61,7 @@ class IngredienteController extends Controller
         $rules = [
 
             'name' => 'required|string|min:3',
-            'cantidad' => 'required',
+            'cantidad' => 'required|numeric',
             'medida' => 'required',
         ];
 
@@ -69,6 +69,7 @@ class IngredienteController extends Controller
 
             'required' => 'El campo es requerido.',
             'min' => 'El campo debe tener al menos :min caracteres.',
+            'numeric' => 'El campo debe ser númerico',
 
         ];
 

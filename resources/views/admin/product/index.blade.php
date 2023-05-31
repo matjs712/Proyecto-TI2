@@ -341,6 +341,13 @@
               <label for="ingrediente${ingredienteCount}">Cantidad </label>
               <input class="form-control" type="number" name="cantidad${ingredienteCount}" id="cantidad${ingredienteCount}" value="0">
             </div>
+            <div class="col-md-3">
+              <label for="ingrediente${ingredienteCount}">Medida </label>
+              <select name="medida" class="form-control">
+                    <option value="gr" {{ old('medida') == 'gramos' ? 'selected' : '' }}>Gramos</option>
+                    <option value="kg" {{ old('medida') == 'kilogramos' ? 'selected' : '' }}>Kilogramos</option>
+              </select>
+            </div>
             <div class="col-md-2">
                 <button type="button" class="btn btn-danger btn-eliminar-ingrediente">Eliminar</button>
             </div>
