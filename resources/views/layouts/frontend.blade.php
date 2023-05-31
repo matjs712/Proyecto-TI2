@@ -29,7 +29,6 @@
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
     </script>
     <script src="{{ asset('frontend/js/owl.carousel.js') }}"></script>
-    <script src="{{ asset('frontend/js/owl.carousel.js') }}"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="{{ asset('frontend/css/login.css') }}">
 
@@ -48,20 +47,12 @@
     @include('layouts.inc.frontNavbar')
     <div class="wrapper">
         @include('layouts.inc.slider')
-        <br>
-        <br>
-        <div style="height: 90vh;">
-            @yield('trending')
-            @yield('trending_script')
-        </div>
-        <br>
-        <br>
+        @yield('trending')
+        @yield('trending_script')
         @yield('trending_cat')
         @yield('trending_cat_script')
-
         @include('layouts.inc.footer')
         @yield('footer_script')
-
     </div>
 
     <script src="{{ asset('frontend/js/custom.js') }}"></script>
@@ -72,6 +63,7 @@
         integrity="sha384-Zf4gKd+sTJzlc2+V8ymwqUrlypFtZlPxMWJppW8tcvzg49pkVmJHZMnOMjF48MnC" crossorigin="anonymous">
     </script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
     <script>
         var availableTags = [];
 
@@ -104,26 +96,27 @@
         })
     </script>
 
-@if (session('status'))
-  <script>
-    Swal.fire({
-      toast: true,
-      position: 'bottom-end',
-      timer: 2000,
-      timerProgressBar: true,
-      icon: 'success',
-      title: "{{ session('status')}}",
-      showConfirmButton: false,
-    })
-  </script>
-@endif
-<script>
-  
-  var loader = document.getElementById('preloader');
-  window.addEventListener("load", function (){
-    loader.style.display = "none";
-  }) 
+    @if (session('status'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'bottom-end',
+                timer: 2000,
+                timerProgressBar: true,
+                icon: 'success',
+                title: "{{ session('status') }}",
+                showConfirmButton: false,
+            })
+        </script>
+    @endif
+    <script>
+        var loader = document.getElementById('preloader');
+        window.addEventListener("load", function() {
+                loader.style.display = "none";
+            })
 
-</body>
+            <
+            /body>
 
-</html>
+            <
+            /html>

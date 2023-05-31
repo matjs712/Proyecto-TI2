@@ -70,7 +70,9 @@ Route::post('iniciar_compra', [CheckoutController::class, 'iniciar_compra']);
 Route::post('iniciar-compra-presencial', [CheckoutController::class, 'iniciar_compra_presencial']);
 
 Route::middleware(['auth'])->group(function () { //solo usuarios autenticados
-    // Route::post('place-order',[CheckoutController::class, 'placeorder']);
+   // Route::post('place-order',[CheckoutController::class, 'placeorder']);
+   Route::post('iniciar_compra',[CheckoutController::class, 'iniciar_compra']);
+   Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
 
 
     Route::get('mis-ordenes', [UserController::class, 'index']);
@@ -85,15 +87,32 @@ Route::middleware(['auth'])->group(function () { //solo usuarios autenticados
 
 // ADMIN ROUTES
 Route::middleware(['auth', 'isAdmin'])->group(function () {
-    Route::get('/dashboard', 'Admin\FrontendController@index')->name('dashboard');
-    Route::get('/datos-graficos', 'Admin\FrontendController@ChartIngredientes');
+   Route::get('/dashboard',  'Admin\FrontendController@index')->name('dashboard');
 
-    //VENTA PRESENCIAL
-    Route::get('venta-presencial', 'Admin\SellInPersonController@index');
-    Route::get('agregar-producto', 'Admin\SellInPersonController@agregarProducto');
-    Route::post('completar-pago', [SellInPersonController::class, 'completar_pago']);
-    Route::post('generar-pdf', [SellInPersonController::class, 'generatePDF']);
-    Route::post('enviar-correo', [SellInPersonController::class, 'enviar_email']);
+   //ESTADISTICAS
+   Route::get('/usuarios-nuevos',  'Admin\FrontendController@UsuariosNuevos');
+   Route::get('/productos-comprados',  'Admin\FrontendController@ProductosComprados');
+   Route::get('/ordenes-nuevas',  'Admin\FrontendController@OrdenesNuevas');
+   Route::get('/ingresos-mes',  'Admin\FrontendController@IngresosMes');
+   Route::get('/ventas-mes',  'Admin\FrontendController@VentasMes');
+   Route::get('/ingresos-diarios',  'Admin\FrontendController@IngresosDiarios');
+   Route::get('/productos-top',  'Admin\FrontendController@ProductosTop');
+
+   //GRAFICOS
+   Route::get('/datos-graficos',  'Admin\FrontendController@ChartIngredientes');
+   Route::get('/grafico-productos',  'Admin\FrontendController@GraficoProductos');
+   Route::get('/grafico-ordenes',  'Admin\FrontendController@GraficoOrdenes');
+   Route::get('/grafico-registros',  'Admin\FrontendController@GraficoRegistro');
+
+
+   //VENTA PRESENCIAL
+   Route::get('venta-presencial', 'Admin\SellInPersonController@index');
+   Route::get('agregar-producto', 'Admin\SellInPersonController@agregarProducto');
+   Route::post('completar-pago',[SellInPersonController::class, 'completar_pago']);
+   Route::post('generar-pdf',[SellInPersonController::class, 'generatePDF']);
+   Route::post('enviar-correo',[SellInPersonController::class, 'enviar_email']);
+   Route::post('iniciar-compra-presencial',[SellInPersonController::class, 'iniciar_compra_presencial']);
+   Route::any('confirmar_pago_qr', [SellInPersonController::class, 'confirmar_pago'])->name('confirmar_pago_qr');
 
     //NOTIFICAIONES
     Route::get('/notificaciones', 'Admin\NotificationController@index');

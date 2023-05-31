@@ -108,6 +108,7 @@
     <script>
         $('body').addClass('layout-fixed');
     </script>
+
     @if (session('status'))
         <script>
             Swal.fire({

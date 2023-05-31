@@ -52,9 +52,10 @@ class OrdenController extends Controller
         $notifications->tipo = 1;
         $notifications->save();
 
-        $correo = new NotificacionEmail($orders);
-        Mail::to($orders->email)->send($correo);
-
+        if($orders->email != 'No aplica'){
+            $correo = new NotificacionEmail($orders);
+            Mail::to($orders->email)->send($correo);
+        }
         return redirect('ordenes')->with('status', 'Orden actualizada exitosamente.');
     }
 }
