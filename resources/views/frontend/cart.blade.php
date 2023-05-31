@@ -3,16 +3,14 @@
     Mi Carrito | {{ $sitio }}
 @endsection
 @section('content')
-
-    <div class="py-1 mb-4 shadow-sm border-top" style="background-color: {{ $color_secundario }}">
-        <div class="container">
+    <div class="py-3 shadow-sm border-top" style="background-color: {{ $color_secundario }}; opacity:.6">
+        <div class="container" style="color:white">
             <h6 class="mb-0">
-                <a href="{{ url('/') }}">Inicio</a> /
-                <a href="{{ url('/carrito') }}">Mi Carrito</a>
+                <a class="text-white" href="{{ url('/') }}">Inicio</a> /
+                <a class="text-white" href="{{ url('/carrito') }}">Mi Carrito</a>
             </h6>
         </div>
     </div>
-
 
     <div class="container my-5">
         <div class="card shadow">
@@ -64,8 +62,7 @@
                 <div class="card-body text-center">
                     <h2>Tu <i class="fa fa-shopping-cart" aria-hidden="true"></i> carrito esta vacio</h2>
                     <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
-                        style="background-color: {{ $boton_principal_busqueda }}; color:white;" href="{{ url('/') }}"
-                        class="btn">Continua comprando</a>
+                        href="{{ url('/') }}" class="btn btn-outline-primary">Continua comprando</a>
                 </div>
             @endif
         </div>

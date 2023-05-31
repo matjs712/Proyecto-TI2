@@ -17,7 +17,7 @@ class ConfigurationSeeder extends Seeder
         DB::table('configurations')->insert([
             [
                 'color_principal' => '#ffffff',
-                'color_secundario' => '#EE9B57',
+                'color_secundario' => '#088178',
                 'color_barra_lateral' => '#343838',
                 'color_fondo_admin' => '#ffffff',
                 'color_barra_horizontal' => '#ffffff',

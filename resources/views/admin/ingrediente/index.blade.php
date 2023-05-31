@@ -5,14 +5,13 @@
 @section('content')
     <div class="card hide2">
         <div class="card-body">
-            <div class="mb-4 d-flex align-items-center justify-content-between" style="width: 100%">
+            <div class="mb-4 d-flex align-items-center justify-content-between" style="width: 100%; flex-wrap:wrap">
                 <h2>Ingredientes</h2>
-                <div class="container">
-                    <h6 class="mb-0 d-flex align-items-center justify-content-end">
-                        <a href="{{ url('dashboard') }}" class="mr-2">Inicio</a> /
-                        <a href="{{ url('ingredientes') }}" class="ml-2">Ingredientes</a>
-                    </h6>
-                </div>
+
+                <h6 class="mb-0 d-flex align-items-center justify-content-end">
+                    <a href="{{ url('dashboard') }}" class="mr-2">Inicio</a> /
+                    <a href="{{ url('ingredientes') }}" class="ml-2">Ingredientes</a>
+                </h6>
             </div>
             <div class="d-flex aling-items-center flex-wrap">
 
@@ -111,11 +110,14 @@
                                 <div class="form-group">
                                     <label for="medida">Medida</label>
                                     <select name="medida" class="form-control">
-                                        <option value="gr" {{ old('medida') == 'gramos' ? 'selected' : '' }}>Gramos</option>
-                                        <option value="kg" {{ old('medida') == 'kilogramos' ? 'selected' : '' }}>Kilogramos</option>
+                                        <option value="gr" {{ old('medida') == 'gramos' ? 'selected' : '' }}>Gramos
+                                        </option>
+                                        <option value="kg" {{ old('medida') == 'kilogramos' ? 'selected' : '' }}>
+                                            Kilogramos</option>
                                     </select>
                                     @if ($errors->has('medida'))
-                                        <span class="error text-danger" for="input-name">{{ $errors->first('medida') }}</span>
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('medida') }}</span>
                                     @endif
                                 </div>
                             </div>
