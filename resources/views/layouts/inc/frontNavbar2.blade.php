@@ -285,13 +285,9 @@
     </div>
 </div>
 
-{{-- <nav class="navbar navbar-home navbar-expand-lg navbar-dark" style="background-color: transparent;"> --}}
 <nav class="navbar navbar-expand-lg navbar-dark"
     style="background-color: {{ $color_principal }}; margin-botom: 0 !important;">
-    {{-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button> --}}
+
 
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <div style="flex:.4;">
@@ -316,16 +312,16 @@
             @endif
             @if ($categoriasFront)
                 <li class="nav-item">
-                    <a class="nav-link text-dark mr-4" href="{{ url('todo-categorias') }}"><i
+                    <a class="nav-link text-dark mr-4" href="{{ url('about-us') }}"><i
                             class="fas fa-people-carry    "></i> Nosotros</a>
                 </li>
             @endif
-            @if ($categoriasFront)
+            {{-- @if ($categoriasFront)
                 <li class="nav-item">
                     <a class="nav-link text-dark mr-4" href="{{ url('todo-categorias') }}"><i
                             class="fas fa-phone    "></i> Contacto</a>
                 </li>
-            @endif
+            @endif --}}
         </ul>
         <ul class="navbar-nav d-flex justify-content-start">
             <li class="nav-item">

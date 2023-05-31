@@ -47,6 +47,9 @@ Route::post('searchproduct', [FrontendController::class, 'searchproduct']);
 Route::get('productos/sort-by', [FrontendController::class, 'filter'])->name('products.filter');
 // Route::get('productos/range-price', [FrontendController::class, 'range'])->name('products.range');
 
+// ABOUT US
+Route::get('/about-us', [FrontendController::class, 'aboutus']);
+
 Auth::routes();
 
 

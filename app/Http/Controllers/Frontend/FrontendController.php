@@ -32,6 +32,13 @@ class FrontendController extends Controller
 
         return view('frontend.index', compact('banners', 'categorias', 'productos'));
     }
+    public function aboutus()
+    {
+        logo_sitio();
+        secciones();
+        return view('frontend.about');
+    }
+
 
     /**
      * Show the form for creating a new resource.
