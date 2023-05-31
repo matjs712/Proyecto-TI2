@@ -86,7 +86,7 @@ class IngredienteController extends Controller
                 if($ingrediente->medida == 'kilogramos'){
                     $ingrediente->cantidad = $request->input('cantidad')*1000;
                 } else {
-                    $ingrediente->cantidad = $request->input('cantidad')*1000;
+                    $ingrediente->cantidad = $request->input('cantidad');
                 }
                 $ingrediente->medida = 'gramos';
                 $ingrediente->save();
@@ -157,7 +157,7 @@ class IngredienteController extends Controller
                 if($ingrediente->medida == 'kilogramos'){
                     $ingrediente->cantidad = $request->input('cantidad')*1000;
                 } else {
-                    $ingrediente->cantidad = $request->input('cantidad')*1000;
+                    $ingrediente->cantidad = $request->input('cantidad');
                 }
                 $ingrediente->medida = 'gramos';
                 $ingrediente->update();
