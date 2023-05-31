@@ -97,9 +97,11 @@
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-2">
                                                 <span class=""
-                                                    style="font-size: 20px;font-style: bold; font-weight:900; color:{{ $boton_nuevo }}">${{ $producto->selling_price }}</span>
+                                                    style="font-size: 20px;font-style: bold; font-weight:900; color:{{ $boton_nuevo }}">${{ number_format($producto->selling_price, 0, '', '') }}
+                                                </span>
                                                 <span
-                                                    style="text-decoration: line-through">${{ $producto->original_price }}</span>
+                                                    style="text-decoration: line-through">${{ number_format($producto->original_price, 0, '', '') }}
+                                                </span>
                                                 <a href="{{ url('ver-producto/' . $producto->slug) }}"><span class="p-2"
                                                         style="border-radius: 50%; background-color:{{ $boton_principal_busqueda }}; opacity:.8; color:white"><i
                                                             class="fas fa-shopping-bag    "></i></span></a>
