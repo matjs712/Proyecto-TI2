@@ -110,7 +110,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color de fondo del menu en el inicio de los clientes">
+                                                title="Color de fondo del menú en el inicio de los clientes">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Principal: </label>
                                         <div class="input-group mb-3 my-colorpicker1">
@@ -125,7 +125,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color de los precios, boton 'Elige tu producto' en el inicio">
+                                                title="Color de los precios, botón 'Elige tu producto' en el inicio">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Secundario: </label>
                                         <div class="input-group mb-3 my-colorpicker2">
@@ -140,7 +140,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color de fondo de la barra de busqueda en las vistas de los clientes">
+                                                title="Color de fondo de la barra de busqueda de los clientes">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Barra de busqueda: </label>
                                         <div class="input-group mb-3 my-colorpicker8">
@@ -177,7 +177,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color del boton de 'calificar' en las vistas del cliente">
+                                                title="Color del botón de 'calificar' en las vistas del cliente">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Calificación: </label>
                                         <div class="input-group mb-3 my-colorpicker10">
@@ -192,7 +192,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color del boton de 'añadir review' en las vistas del cliente">
+                                                title="Color del botón de 'añadir review' en las vistas del cliente">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Review: </label>
                                         <div class="input-group mb-3 my-colorpicker11">
@@ -207,7 +207,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color del boton de añadir a la lista magica o 'wishlist' en las vistas del cliente">
+                                                title="Color del botón de añadir a la lista magica o 'wishlist' en las vistas del cliente">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Wishlist: </label>
                                         <div class="input-group mb-3 my-colorpicker12">
@@ -222,7 +222,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color del boton de añadir al carrito, vista de clientes">
+                                                title="Color del botón de añadir al carrito, vista de clientes">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Carrito: </label>
                                         <div class="input-group mb-3 my-colorpicker13">
@@ -237,7 +237,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color del boton de 'añadir' en las tablas">
+                                                title="Color del botón de 'añadir' en las tablas">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Nuevo: </label>
                                         <div class="input-group mb-3 my-colorpicker14">
@@ -252,7 +252,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color del boton de 'editar' en las tablas">
+                                                title="Color del botón de 'editar' en las tablas">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Editar: </label>
                                         <div class="input-group mb-3 my-colorpicker15">
@@ -267,7 +267,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color del boton de 'eliminar' en las tablas">
+                                                title="Color del botón de 'eliminar' en las tablas">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Borrar: </label>
                                         <div class="input-group mb-3 my-colorpicker16">
@@ -282,7 +282,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color del boton 'ver más' en las tablas">
+                                                title="Color del botón 'ver más' en las tablas">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Ver más: </label>
                                         <div class="input-group mb-3 my-colorpicker17">
@@ -297,7 +297,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color del boton actualizar (al fondo de esta pagina)">
+                                                title="Color del botón actualizar (al fondo de esta página)">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Actualizar: </label>
                                         <div class="input-group mb-3 my-colorpicker18">
@@ -318,7 +318,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color de fondo del menu lateral">
+                                                title="Color de fondo del menú lateral">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Menu lateral: </label>
                                         <div class="input-group mb-3 my-colorpicker3">
@@ -348,7 +348,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color de fondo del menu superior (horizontal)">
+                                                title="Color de fondo del menú superior (horizontal)">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Barra horizontal: </label>
                                         <div class="input-group mb-3 my-colorpicker5">
@@ -363,7 +363,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color de las letras de la barra del menu de la izquierda">
+                                                title="Color de las letras de la barra del menú de la izquierda">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Letra menu lateral: </label>
                                         <div class="input-group mb-3 my-colorpicker6">
@@ -378,7 +378,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Color de las letras del menu lateral cuando se posa el mouse sobre ellas">
+                                                title="Color de las letras del menú lateral cuando se posa el mouse sobre ellas">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Letra bajo mouse: </label>
                                         <div class="input-group mb-3 my-colorpicker7">
