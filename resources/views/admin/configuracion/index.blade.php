@@ -162,7 +162,7 @@
                                     <div class="col-md-3">
                                         <label><button type="button" class="btn p-2" style="border:none"
                                                 data-toggle="tooltip" data-placement="top"
-                                                title="Boton carrito, trending, comprar ahora">
+                                                title="Botón carrito, trending, comprar ahora">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </button>Principal: </label>
                                         <div class="input-group mb-3 my-colorpicker9">
