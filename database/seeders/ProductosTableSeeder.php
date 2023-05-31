@@ -26,13 +26,9 @@ class ProductosTableSeeder extends Seeder
                 'original_price' => '2000',
                 'selling_price' => '1600',
                 'qty' => '2',
-                // 'tax' => '18',
                 'status' => 1,
                 'trending' => 1,
-                'image' => 'sal-merken.png',
-                // 'meta_title' => 'pantalones',
-                // 'meta_description' => 'Pantalones increibles',
-                // 'meta_keywords' => 'Pantalones, Pantalones negros, Cargos',
+                'image' => 'sal2.png',
             ], [
                 'cate_id' => 1,
                 'name' => 'Sal de merken',
@@ -57,8 +53,8 @@ class ProductosTableSeeder extends Seeder
                 'status' => 1,
                 'trending' => 1,
                 'image' => 'sal-tomate.png',
-            ]
-                ,['cate_id' => 1,
+            ], [
+                'cate_id' => 1,
                 'name' => 'Sal de tomate',
                 'slug' => 'sal-tomate',
                 'description' => 'Exquisita Sal de tomate, perfecto para condimentar tus comidas.',
@@ -69,8 +65,8 @@ class ProductosTableSeeder extends Seeder
                 'status' => 1,
                 'trending' => 1,
                 'image' => 'sal-tomate.png',
-            ]
-                ,['cate_id' => 1,
+            ], [
+                'cate_id' => 1,
                 'name' => 'Sal de tomate',
                 'slug' => 'sal-tomate',
                 'description' => 'Exquisita Sal de tomate, perfecto para condimentar tus comidas.',
@@ -81,8 +77,8 @@ class ProductosTableSeeder extends Seeder
                 'status' => 1,
                 'trending' => 1,
                 'image' => 'sal-tomate.png',
-            ]
-                ,['cate_id' => 1,
+            ], [
+                'cate_id' => 1,
                 'name' => 'Sal de tomate',
                 'slug' => 'sal-tomate',
                 'description' => 'Exquisita Sal de tomate, perfecto para condimentar tus comidas.',
@@ -93,8 +89,8 @@ class ProductosTableSeeder extends Seeder
                 'status' => 1,
                 'trending' => 1,
                 'image' => 'sal-tomate.png',
-            ]
-                ,['cate_id' => 1,
+            ], [
+                'cate_id' => 1,
                 'name' => 'Sal de tomate',
                 'slug' => 'sal-tomate',
                 'description' => 'Exquisita Sal de tomate, perfecto para condimentar tus comidas.',
@@ -105,8 +101,8 @@ class ProductosTableSeeder extends Seeder
                 'status' => 1,
                 'trending' => 1,
                 'image' => 'sal-tomate.png',
-            ]
-                ,['cate_id' => 1,
+            ], [
+                'cate_id' => 1,
                 'name' => 'Sal de tomate',
                 'slug' => 'sal-tomate',
                 'description' => 'Exquisita Sal de tomate, perfecto para condimentar tus comidas.',
@@ -117,8 +113,8 @@ class ProductosTableSeeder extends Seeder
                 'status' => 1,
                 'trending' => 1,
                 'image' => 'sal-tomate.png',
-            ]
-                ,['cate_id' => 1,
+            ], [
+                'cate_id' => 1,
                 'name' => 'Sal de tomate',
                 'slug' => 'sal-tomate',
                 'description' => 'Exquisita Sal de tomate, perfecto para condimentar tus comidas.',
@@ -129,8 +125,8 @@ class ProductosTableSeeder extends Seeder
                 'status' => 1,
                 'trending' => 1,
                 'image' => 'sal-tomate.png',
-            ]
-                ,['cate_id' => 1,
+            ], [
+                'cate_id' => 1,
                 'name' => 'Sal de tomate',
                 'slug' => 'sal-tomate',
                 'description' => 'Exquisita Sal de tomate, perfecto para condimentar tus comidas.',
@@ -141,8 +137,8 @@ class ProductosTableSeeder extends Seeder
                 'status' => 1,
                 'trending' => 1,
                 'image' => 'sal-tomate.png',
-            ]
-                ,['cate_id' => 1,
+            ], [
+                'cate_id' => 1,
                 'name' => 'Sal de tomate',
                 'slug' => 'sal-tomate',
                 'description' => 'Exquisita Sal de tomate, perfecto para condimentar tus comidas.',
