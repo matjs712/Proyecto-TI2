@@ -52,9 +52,11 @@
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-end">
                                 <h2 class="py-2 m-0" style="margin-right:15px!important;">
-                                    <strong style="color:{{ $boton_nuevo }}">${{ $producto->selling_price }}</strong>
+                                    <strong
+                                        style="color:{{ $boton_nuevo }}">${{ number_format($producto->selling_price, 0, '', '') }}</strong>
                                 </h2>
-                                <h5 class="py-2 m-0" style="opacity:.8"><s>${{ $producto->original_price }}</s></h5>
+                                <h5 class="py-2 m-0" style="opacity:.8">
+                                    <s>${{ number_format($producto->original_price, 0, '', '') }}</s></h5>
                             </div>
                             <div>
                                 @if ($producto->qty > 0)
