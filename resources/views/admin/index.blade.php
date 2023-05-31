@@ -210,7 +210,7 @@ $(document).ready(function(){
             let data = {
             labels: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
             datasets: [{
-                label: 'Ventas por mes',
+                label: 'Ventas',
                 data: datos,
                  backgroundColor: 'rgba(0, 123, 255, 0.5)',
                 borderColor: 'rgba(0, 123, 255, 1)', // Color de la línea
@@ -285,7 +285,7 @@ $(document).ready(function(){
             // Define los datos del gráfico
 
             let data = {
-            labels: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+                labels: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
             datasets: [{
                 label: 'Ventas por mes',
                 data: datos,
@@ -359,6 +359,7 @@ $(document).ready(function(){
             // Define los datos del gráfico
 
             let data = {
+
             labels: labels,
             datasets: [{
                 label: 'Ingreso',
@@ -379,11 +380,15 @@ $(document).ready(function(){
                     xAxes: [{
                         display: false,
                     }],
-                    y: {
-                        beginAtZero: false,
-                    }
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1000,
+                        }
+                    }],
                 }
-            };
+            }
+
 
             // Crea el gráfico de líneas
             var lineChart = new Chart(ctx, {

@@ -71,7 +71,7 @@ Route::post('iniciar-compra-presencial', [CheckoutController::class, 'iniciar_co
 
 Route::middleware(['auth'])->group(function () { //solo usuarios autenticados
    // Route::post('place-order',[CheckoutController::class, 'placeorder']);
-   Route::post('iniciar_compra',[CheckoutController::class, 'iniciar_compra']);  
+   Route::post('iniciar_compra',[CheckoutController::class, 'iniciar_compra']);
    Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
 
 
@@ -88,7 +88,8 @@ Route::middleware(['auth'])->group(function () { //solo usuarios autenticados
 // ADMIN ROUTES
 Route::middleware(['auth', 'isAdmin'])->group(function () {
    Route::get('/dashboard',  'Admin\FrontendController@index')->name('dashboard');
-   Route::get('/datos-graficos',  'Admin\FrontendController@ChartIngredientes');
+
+   //ESTADISTICAS
    Route::get('/usuarios-nuevos',  'Admin\FrontendController@UsuariosNuevos');
    Route::get('/productos-comprados',  'Admin\FrontendController@ProductosComprados');
    Route::get('/ordenes-nuevas',  'Admin\FrontendController@OrdenesNuevas');
@@ -97,7 +98,13 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
    Route::get('/ingresos-diarios',  'Admin\FrontendController@IngresosDiarios');
    Route::get('/productos-top',  'Admin\FrontendController@ProductosTop');
 
-    
+   //GRAFICOS
+   Route::get('/datos-graficos',  'Admin\FrontendController@ChartIngredientes');
+   Route::get('/grafico-productos',  'Admin\FrontendController@GraficoProductos');
+   Route::get('/grafico-ordenes',  'Admin\FrontendController@GraficoOrdenes');
+   Route::get('/grafico-registros',  'Admin\FrontendController@GraficoRegistro');
+
+
    //VENTA PRESENCIAL
    Route::get('venta-presencial', 'Admin\SellInPersonController@index');
    Route::get('agregar-producto', 'Admin\SellInPersonController@agregarProducto');
@@ -108,7 +115,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
    Route::any('confirmar_pago_qr', [SellInPersonController::class, 'confirmar_pago'])->name('confirmar_pago_qr');
 
 
-   
+
     //NOTIFICAIONES
     Route::get('/notificaciones',  'Admin\NotificationController@index');
     Route::put('update-notification/{id}', [NotificationController::class, 'updatenotification']);

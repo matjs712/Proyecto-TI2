@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\OrderItem;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Registro;
+use App\Models\Proveedor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -233,6 +235,69 @@ class FrontendController extends Controller
         usort($jsonData, function ($a, $b) {
             return $b['total'] - $a['total'];
         });
+
+        return json_encode($jsonData);
+    }
+
+    public function graficoProductos(){
+        $sellProducts = Product::Select('name', 'qty')->get();
+        $jsonData = [];
+
+        foreach ($sellProducts as $sellProduct) {
+            $jsonData[] = [
+                'nombre' => $sellProduct->name,
+                'cantidad' => $sellProduct->qty,
+            ];
+        }
+        return json_encode($jsonData);
+    }
+    public function graficoOrdenes(){
+        $sellProducts = Order::select('id', 'status')->get();
+        $jsonData = [
+            'Pendiente' => 0, // Contador para el estado 1
+            'Completado' => 0, // Contador para el estado 1
+            'Aprobado' => 0, // Contador para el estado 2
+        ];
+
+        foreach ($sellProducts as $sellProduct) {
+            if ($sellProduct->status == 1) {
+                $jsonData['Completado']++;
+            } elseif ($sellProduct->status == 2) {
+                $jsonData['Aprobado']++;
+            }
+            else
+                $jsonData['Pendiente']++;
+
+        }
+
+        return json_encode($jsonData);
+    }
+    public function GraficoRegistro(){
+        $sellProducts = Registro::Select('id_proveedor', 'id_ingrediente', 'cantidad')->get();
+        $groupedProducts = [];
+
+        foreach ($sellProducts as $sellProduct) {
+            $proveedor = $sellProduct->id_proveedor;
+            $ingrediente = $sellProduct->id_ingrediente;
+            if (!isset($groupedProducts[$proveedor][$ingrediente])) {
+                $groupedProducts[$proveedor][$ingrediente] = $sellProduct->cantidad;
+            }
+
+        }
+
+        foreach ($groupedProducts as $idProveedor => $ingredientes) {
+            $datos = [];
+            $proveedor = Proveedor::where('id', $idProveedor)->first();
+
+            foreach ($ingredientes as $idIngrediente => $cantidad) {
+                $ingrediente = Ingrediente::where('id', $idIngrediente)->first();
+                $jsonData[] = [
+                    'proveedor' => $proveedor->name,
+                    'ingrediente' => $ingrediente->name,
+                    'cantidad' => $cantidad
+                ];
+            }
+        }
 
         return json_encode($jsonData);
     }
