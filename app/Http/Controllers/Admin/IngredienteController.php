@@ -77,16 +77,16 @@ class IngredienteController extends Controller
 
         if (!$validator->fails()) {
 
-
+            DB::beginTransaction();
             try {
                 $ingrediente = new Ingrediente();
 
                 $ingrediente->name = $request->input('name');
                 $ingrediente->medida = $request->input('medida');
-                if($ingrediente->medida == 'kilogramos'){
-                    $ingrediente->cantidad = $request->input('cantidad')*1000;
+                if ($ingrediente->medida == 'kilogramos') {
+                    $ingrediente->cantidad = $request->input('cantidad') * 1000;
                 } else {
-                    $ingrediente->cantidad = $request->input('cantidad')*1000;
+                    $ingrediente->cantidad = $request->input('cantidad') * 1000;
                 }
                 $ingrediente->medida = 'gramos';
                 $ingrediente->save();
@@ -154,17 +154,17 @@ class IngredienteController extends Controller
 
                 $ingrediente->name = $request->input('name');
                 $ingrediente->medida = $request->input('medida');
-                if($ingrediente->medida == 'kilogramos'){
-                    $ingrediente->cantidad = $request->input('cantidad')*1000;
+                if ($ingrediente->medida == 'kilogramos') {
+                    $ingrediente->cantidad = $request->input('cantidad') * 1000;
                 } else {
-                    $ingrediente->cantidad = $request->input('cantidad')*1000;
+                    $ingrediente->cantidad = $request->input('cantidad') * 1000;
                 }
                 $ingrediente->medida = 'gramos';
                 $ingrediente->update();
 
-                if($ingrediente->cantidad <= 1000){
+                if ($ingrediente->cantidad <= 1000) {
                     $notifications = new Notification();
-                    $notifications->detalle = 'Ingrediente: ' . $ingrediente->name. ' en estado crítico, solo quedan '. $ingrediente->cantidad.' '.$ingrediente->medida;
+                    $notifications->detalle = 'Ingrediente: ' . $ingrediente->name . ' en estado crítico, solo quedan ' . $ingrediente->cantidad . ' ' . $ingrediente->medida;
                     $notifications->id_usuario = Auth::id();
                     $notifications->tipo = 2;
                     $notifications->save();

@@ -27,64 +27,104 @@
                                 <div class="col-md-6">
                                     <label for="firstName">Primer nombre</label>
                                     <input type="text" name="fname"
-                                        value="{{ Auth::check() ? Auth::user()->name : '' }}" class="fname form-control"
-                                        placeholder="Juan">
+                                        value="{{ Auth::check() ? Auth::user()->fname : '' }}" class="fname form-control"
+                                        placeholder="Juan" value="{{ old('fname') }}">
+                                    @if ($errors->has('fname'))
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('fname') }}</span>
+                                    @endif
                                     <span style="color:red" id="fname_error"></span>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="lastName">Apellido</label>
                                     <input type="text" name="lname"
                                         value="{{ Auth::check() ? Auth::user()->lname : '' }}" class="lname form-control"
-                                        placeholder="Aguirre">
+                                        placeholder="Aguirre" value="{{ old('lname') }}">
+                                    @if ($errors->has('lname'))
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('lname') }}</span>
+                                    @endif
                                     <span style="color:red" id="lname_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Email</label>
                                     <input type="text" name="email"
                                         value="{{ Auth::check() ? Auth::user()->email : '' }}" class="email form-control"
-                                        placeholder="email@gmail.com">
+                                        placeholder="email@gmail.com" value="{{ old('email') }}">
+                                    @if ($errors->has('email'))
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('email') }}</span>
+                                    @endif
                                     <span style="color:red" id="email_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Numero de teléfono</label>
                                     <input type="text" name="telefono"
-                                        value="{{ Auth::check() ? Auth::user()->telefono : '' }}" class="phone form-control"
-                                        placeholder="9 12345678">
+                                        value="{{ Auth::check() ? Auth::user()->telefono : '' }}"
+                                        class="phone form-control" placeholder="9 12345678" value="{{ old('telefono') }}">
+                                    @if ($errors->has('telefono'))
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('telefono') }}</span>
+                                    @endif
                                     <span style="color:red" id="phone_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Dirección 1</label>
                                     <input type="text" name="direccion1"
                                         value="{{ Auth::check() ? Auth::user()->direccion1 : '' }}"
-                                        class="direccion1 form-control" placeholder="Calle fantasia 123">
+                                        class="direccion1 form-control" placeholder="Calle fantasia 123"
+                                        value="{{ old('direccion1') }}">
+                                    @if ($errors->has('direccion1'))
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('dirrecion1') }}</span>
+                                    @endif
                                     <span style="color:red" id="direccion1_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Direccion 2</label>
                                     <input type="text" name="direccion2"
                                         value="{{ Auth::check() ? Auth::user()->direccion2 : '' }}"
-                                        class="direccion2 form-control" placeholder="Calle fantasia 123">
+                                        class="direccion2 form-control" placeholder="Calle fantasia 123"
+                                        value="{{ old('direccion2') }}">
+                                    @if ($errors->has('direccion2'))
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('dirrecion2') }}</span>
+                                    @endif
                                     <span style="color:red" id="direccion2_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Región</label>
                                     <input type="text" name="region"
                                         value="{{ Auth::check() ? Auth::user()->region : '' }}" class="region form-control"
-                                        placeholder="Metropolitana">
+                                        placeholder="Metropolitana" value="{{ old('region') }}">
+                                    @if ($errors->has('region'))
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('region') }}</span>
+                                    @endif
                                     <span style="color:red" id="region_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Ciudad</label>
                                     <input type="text" name="ciudad"
-                                        value="{{ Auth::check() ? Auth::user()->ciudad : '' }}" class="ciudad form-control"
-                                        placeholder="Metropolitana">
+                                        value="{{ Auth::check() ? Auth::user()->ciudad : '' }}"
+                                        class="ciudad form-control" placeholder="Metropolitana"
+                                        value="{{ old('ciudad') }}">
+                                    @if ($errors->has('ciudad'))
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('ciudad') }}</span>
+                                    @endif
                                     <span style="color:red" id="ciudad_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Comuna</label>
                                     <input type="text" name="comuna"
-                                        value="{{ Auth::check() ? Auth::user()->comuna : '' }}" class="comuna form-control"
-                                        placeholder="Providencia">
+                                        value="{{ Auth::check() ? Auth::user()->comuna : '' }}"
+                                        class="comuna form-control" placeholder="Providencia"
+                                        value="{{ old('comuna') }}">
+                                    @if ($errors->has('comuna'))
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('comuna') }}</span>
+                                    @endif
                                     <span style="color:red" id="comuna_error"></span>
                                 </div>
                             </div>
