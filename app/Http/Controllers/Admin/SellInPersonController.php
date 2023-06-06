@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Cart;
@@ -30,6 +29,13 @@ class SellInPersonController extends Controller
         return view('admin.sell_in_person')->with('pago', '0');
     }
 
+    public function notificationStock(Product $product){
+        $notifications = new Notification();
+        $notifications->detalle = 'El producto: '. $product->name . ' no tiene stock.';
+        $notifications->id_usuario = Auth::id();
+        $notifications->tipo = 1;
+        $notifications->save();
+    }
     //CARRITO DE COMPRA
     public function agregarProducto(Request $request){
         $codigo_barra = $request->input('codigo');
@@ -37,7 +43,7 @@ class SellInPersonController extends Controller
         $producto = Product::find($id);
         return response()->json($producto);
     }
-    
+
     //PAGO POR EFECTIVO
     public function completar_pago(Request $request){
         $order = New Order();
@@ -51,10 +57,10 @@ class SellInPersonController extends Controller
         $order->region      = "No aplica";
         $order->ciudad      = "No aplica";
         $order->comuna      = "No aplica";
-        $order->tracking_number      = 'SALES' . rand(1111, 9999);
+        $order->tracking_number      = 'SALES'.rand(1111,9999);
         $total = 0;
         $cartItems_total = Cart::where('user_id', Auth::id())->get();
-        foreach ($cartItems_total as $prod) {
+        foreach($cartItems_total as $prod){
             $total += $prod->products->selling_price * $prod->prod_qty;
         }
         $order->status = 2;
@@ -62,7 +68,7 @@ class SellInPersonController extends Controller
         $order->save();
 
         $cartItems = Cart::where('user_id', Auth::id())->get();
-        foreach ($cartItems as $item) {
+        foreach($cartItems as $item){
             OrderItem::create([
                 'order_id' => $order->id,
                 'prod_id'  => $item->prod_id,
@@ -72,23 +78,24 @@ class SellInPersonController extends Controller
             $prod = Product::where('id', $item->prod_id)->first();
             if($prod->qty > 0)
                     $prod->qty = $prod->qty - $item->prod_qty;
-                else
-                    notificationStock($prod);
+                else{
+                    // notificationStock($prod);
                     $prod->qty = 0;
+                }
                 $prod->update();
         }
         Cart::destroy($cartItems);
 
         $notifications = new Notification();
-        $notifications->detalle = 'Se agrego la orden de servicio: ' . $order->id;
+        $notifications->detalle = 'Se agrego la orden de servicio: '. $order->id;
         $notifications->id_usuario = Auth::id();
         $notifications->tipo = 1;
-        $notifications->save();        
+        $notifications->save();
     }
 
     public function generatePDF($order)
     {
-        // Crear una instancia de TCPDF
+           // Crear una instancia de TCPDF
         $pdf = new TCPDF();
 
         // Establecer la configuración del PDF
@@ -110,13 +117,13 @@ class SellInPersonController extends Controller
         $pdf->Output(storage_path('app/public/pdf/example.pdf'), 'F');
     }
 
-    public function enviar_email(Request $request)
-    {
-        $order = Order::where('user_id', Auth::id())->first();
+    public function enviar_email(Request $request){
+        $order = Order::where('user_id', Auth::id())->latest()->first();
+
         self::generatePDF($order);
         $correo = new NotificacionEmail($order);
         Mail::to($request->input('email'))->send($correo);
-        
+
         return $request->input('email');
     }
 
@@ -135,8 +142,8 @@ class SellInPersonController extends Controller
         $order->comuna      = "No aplica";
         $order->tracking_number      = 'SALES'.rand(1111,9999);
 
-        $user = User::where('id', Auth::user()->id)->first();          
-        
+        $user = User::where('id', Auth::user()->id)->first();
+
         $total = 0;
         $cartItems_total = Cart::where('user_id', Auth::id())->get();
         foreach($cartItems_total as $prod){
@@ -166,9 +173,9 @@ class SellInPersonController extends Controller
         $order = Order::where('id', $confirmacion->buyOrder)->first();
         if($confirmacion->isApproved()){
             $order->status = 2;
-            
+
             $cartItems = Cart::where('user_id', Auth::id())->get();
-            
+
             foreach($cartItems as $item){
                 OrderItem::create([
                     'order_id' => $order->id,
@@ -179,9 +186,10 @@ class SellInPersonController extends Controller
                 $prod = Product::where('id', $item->prod_id)->first();
                 if($prod->qty > 0)
                     $prod->qty = $prod->qty - $item->prod_qty;
-                else
-                    notificationStock($prod);
+                else{
+                    // notificationStock($prod);
                     $prod->qty = 0;
+                }
                 $prod->update();
             }
             $order->update();
@@ -201,11 +209,5 @@ class SellInPersonController extends Controller
         return redirect('/mis-ordenes')->with('status','La compra no se ha podido realizar!!');
     }
 
-    public function notificationStock(Product $product){
-        $notifications = new Notification();
-        $notifications->detalle = 'El producto: '. $product->name . ' no tiene stock.';
-        $notifications->id_usuario = Auth::id();
-        $notifications->tipo = 1;
-        $notifications->save();
-    }
+
 }

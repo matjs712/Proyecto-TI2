@@ -1,36 +1,37 @@
 @extends('layouts.admin')
 @section('title')
-    Venta Presencial | {{ $sitio }}
+Venta Presencial | {{ $sitio }}
 @endsection
 
 @section('content')
-    <style>
-        #video {
-            position: relative;
-        }
 
-        #video video {
-            position: relative;
-            z-index: 1;
-        }
+<style>
 
-        #video canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 0;
-        }
-    </style>
+    #video {
+  position: relative;
+}
 
-    <div class="container">
+#video video {
+  position: relative;
+  z-index: 1;
+}
+
+#video canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+</style>
+
+<div class="container">
 
         <div class="row vh-100">
             <div class="col-md-7">
                 <div class="card h-75">
                     <div class="card-body h-100 d-flex flex-column">
                         <h6>Detalles</h6>
-                        <div class="h-100" style="max-height:500px; overflow-y:auto; overflow-x:hidden"
-                            id="productos-container">
+                        <div class="h-100" style="max-height:500px; overflow-y:auto; overflow-x:hidden" id="productos-container">
 
                         </div>
                         <button id="btnMostrarModal" class="btn btn-primary" style="width: 100%">Escanear Producto</button>
@@ -56,15 +57,14 @@
                               <hr>
                             <button style="width: 100%;" class="btn btn-primary btnPagar">Seleccione metodo de pago</button>
                         </div>
-                    
                 </div>
             </div>
         </div>
-    </div>
 </div>
+
+
 <!-- Modal de escaneo -->
-<div id="escanerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="escanerModalLabel"
-    aria-hidden="true">
+<div id="escanerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="escanerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content overflow-hidden">
             <div class="modal-header">
@@ -90,9 +90,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body d-flex justify-content-center">
-                <canvas style="height: 300px; width: 300px" id="qr"></canvas>
+            <div class="modal-body justify-content-center">
+                <canvas class="row m-auto" style="height: 300px; width: 300px" id="qr"></canvas>
+                <button id="completarPago" class="row btn btn-primary w-100 mt-4">Completar pago</button>
             </div>
+
         </div>
     </div>
 </div>
@@ -107,58 +109,42 @@
                 </button>
             </div>
             <div class="modal-body d-flex justify-content-center">
-                <embed src="{{ asset('storage/pdf/example.pdf') }}" width="100%" height="500"
-                    type="application/pdf">
+                <embed src="{{ asset('storage/pdf/example.pdf') }}" width="100%" height="500" type="application/pdf">
             </div>
         </div>
     </div>
 </div>
+
+
 @endsection()
 @section('after_scripts')
-    <script>
-        $('#btnMostrarModal').on('click', function() {
-            let codigoLeido = false;
-            Quagga.init({
-                inputStream: {
-                    name: "Live",
-                    type: "LiveStream",
-                    constraints: {
-                        width: 480,
-                        height: 360,
-                    },
-                    target: document.querySelector('#video')
+<script>
+
+    $('#btnMostrarModal').on('click', function () {
+        let codigoLeido = false;
+        Quagga.init({
+            inputStream: {
+                name: "Live",
+                type: "LiveStream",
+                constraints:{
+                    width: 480,
+                    height: 360,
                 },
-                // frequency: 10,
-                decoder: {
-                    readers: [
-                        "code_128_reader"
-                    ] // Puedes agregar otros tipos de lectores según tus necesidades
-                }
-            }, function(err) {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
+                target: document.querySelector('#video')
+            },
+            // frequency: 10,
+            decoder: {
+                readers: ["code_128_reader"] // Puedes agregar otros tipos de lectores según tus necesidades
+            }
+        }, function (err) {
+            if (err) {
+                console.error(err);
+                return;
+            }
 
-                Quagga.start();
-                $('#escanerModal').modal('show');
-            });
-
-            Quagga.onDetected(function(result) {
-                if (!codigoLeido) {
-                    codigoLeido = true;
-                    let code = result.codeResult.code;
-                    console.log(code);
-                    Quagga.stop();
-                    agregarProducto(code);
-                    $('#escanerModal').modal('hide');
-                }
-            });
-
-
-    
-        let productos = [];
-        let precio;
+            Quagga.start();
+            $('#escanerModal').modal('show');
+        });
 
         Quagga.onDetected(function (result) {
             if(!codigoLeido){
@@ -169,7 +155,7 @@
                 $('#escanerModal').modal('hide');
             }
         });
-        
+
 
     });
     let productos = [];
@@ -184,7 +170,7 @@
             url: "agregar-producto",
             method: 'GET',
             data: {
-                codigo: codigo 
+                codigo: codigo
             },
             success: function (codigo) {
                 //obtenerProductosEscaneados();
@@ -229,12 +215,12 @@
 
     $('#metodoPago').on('change', function(){
         let valor = $(this).val();
-        if(valor == 1) 
+        if(valor == 1)
             $('.btnPagar').html("Completar pago");
         else
             $('.btnPagar').html("Obtener QR");
     });
-    
+
     $('#productos-container').on('click', '.btn-danger', function () {
         let productId = $(this).closest('.card').attr('id');
         console.log(productId);
@@ -243,13 +229,13 @@
             return producto.id == productId;
         });
         // console.log(productIndex);
-    
+
     // Verificar si se encontró el índice y eliminar el producto del array
         if (productIndex !== -1) {
             precio -= parseInt(productos[productIndex].selling_price);
             productos.splice(productIndex, 1);
         }
-        
+
         // Eliminar el elemento de la vista
         $(this).closest('.card').remove();
         $('#precio').html('$ ' + precio);
@@ -257,7 +243,7 @@
 
     $('.btnPagar').click(function(e){
 
-        
+
         e.preventDefault();
 
         let carrito = {};
@@ -282,19 +268,17 @@
                 }
             })
             $.ajax({
-                url: "agregar-producto",
-                method: 'GET',
+                method: "POST",
+                url: "/add-to-cart",
                 data: {
-                    codigo: codigo
+                    'product_id': carrito[producto].id,
+                    'product_qty': carrito[producto].cantidad,
                 },
-                success: function(codigo) {
-                    //obtenerProductosEscaneados();
-                    productos.push(codigo);
-                    console.log(productos);
-                    actualizarListaProductos(productos);
+                success: function (response) {
+                    console.log(response);
                 },
-                error: function(e) {
-                    console.log(e);
+                error: function (response){
+                    console.log(response);
                 }
             });
         }
@@ -327,7 +311,7 @@
                     }
                 });
 
-                
+
 
             }
             else if(metodoPago == 1){
@@ -404,24 +388,31 @@
                                                     text: 'se ah enviado la boleta.',
                                                     icon: 'success'
                                                 });
+
                                             },
                                             error: function(response){
                                                 console.log(response);
                                             }
-                                        });
+                                        }).then((result) => {
+                                            setTimeout(function() {
+                                                location.reload();
+                                            }, 500);
+                                        })
                                     }
-                                    
-                                }).then(() => {
-                                    setTimeout(function() {
-                                        location.reload();
-                                    }, 500);
-                                });
+                                    else{
+                                        setTimeout(function() {
+                                            location.reload();
+                                        }, 500);
+                                    }
+
+                                })
+
                             },
                             error: function (response){
                                 console.log(response);
                             }
                         });
-                        
+
                     }
                 })
             }
@@ -439,80 +430,90 @@
                 }
             })
         }
-        
+
     });
-    
+
     $('#completarPago').click( function(e){
+        $('#qrModal').modal('hide');
         Swal.fire({
-            title: 'Estas seguro?',
-            text: "La orden estará pagada!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#28A745',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, confirmar!',
-            customClass:{
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger'
-            },
-        }).then((result) => {
-            Swal.fire({
-                title: 'Pago realizado con exito!',
-                text: "Deseas recibir el comprobante por correo?",
-                input: 'email',
-                icon: 'success',
-                showCancelButton: true,
-                confirmButtonColor: '#28A745',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, enviar!',
-                cancelButtonText: 'No, salir.',
-                customClass:{
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger'
-                },
-                inputValidator: (email) => {
-                    if (!email.includes('@')) {
-                    return 'Ingrese un correo electronico valido.';
-                    }
-                },
-                allowOutsideClick: () => !Swal.isLoading()
+                    title: 'Estas seguro?',
+                    text: "La orden estará pagada!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#28A745',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, confirmar!',
+                    customClass:{
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    },
                 }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    }),
-                    $.ajax({
-                        method: 'POST',
-                        url: '/enviar-correo',
-                        data:{ email: result.value },
-                        success: function(response){
-                            console.log(result.value);
-                            Swal.fire({
-                                title: '¡Correo enviado con exito!',
-                                text: 'se ah enviado la boleta.',
-                                icon: 'success'
-                            });
-                        },
-                        error: function(response){
-                            console.log(response);
-                        }
+                    if (result.isConfirmed) {
+
+                                Swal.fire({
+                                    title: 'Pago realizado con exito!',
+                                    text: "Deseas recibir el comprobante por correo?",
+                                    input: 'email',
+                                    icon: 'success',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#28A745',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Si, enviar!',
+                                    cancelButtonText: 'No, salir.',
+                                    customClass:{
+                                        confirmButton: 'btn btn-success',
+                                        cancelButton: 'btn btn-danger'
+                                    },
+
+                                    allowOutsideClick: () => !Swal.isLoading()
+                                    }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $.ajaxSetup({
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                            }
+                                        }),
+                                        $.ajax({
+                                            method: 'POST',
+                                            url: '/enviar-correo',
+                                            data:{ email: result.value },
+                                            success: function(response){
+                                                console.log(result.value);
+                                                Swal.fire({
+                                                    title: '¡Correo enviado con exito!',
+                                                    text: 'se ah enviado la boleta.',
+                                                    icon: 'success'
+                                                });
+
+                                            },
+                                            error: function(response){
+                                                console.log(response);
+                                            }
+                                        }).then((result) => {
+                                            setTimeout(function() {
+                                                location.reload();
+                                            }, 500);
+                                        })
+                                    }
+                                    else{
+                                        setTimeout(function() {
+                                            location.reload();
+                                        }, 500);
+                                    }
+
+                                })
+                            }
                     });
-                }
-                
-            }).then(() => {
-                location.reload();
-            });
-        });
+
     });
 
 </script>
-@if(session('pago'))
+{{-- @if(session('pago'))
     <script>
         setTimeout(function() {
             location.reload();
         }, 500);
     </script>
-@endif
+@endif --}}
+
 @endsection()
