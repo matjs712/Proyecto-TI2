@@ -352,6 +352,4 @@
 
         });
     </script>
-
-    </script>
 @endsection

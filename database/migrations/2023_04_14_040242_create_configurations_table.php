@@ -20,6 +20,7 @@ class CreateConfigurationsTable extends Migration
             $table->integer('categorias')->default(1);
             $table->integer('proveedores')->default(1);
             $table->integer('recetas')->default(1);
+            $table->integer('nutricionales')->default(1);
             $table->integer('registros')->default(1);
             $table->integer('ordenes')->default(1);
             $table->integer('usuarios')->default(1);

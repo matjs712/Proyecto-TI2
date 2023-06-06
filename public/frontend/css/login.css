@@ -738,3 +738,12 @@ border-radius: 10px;
 .custom-shape-divider-top-1685474875 .shape-fill {
   fill: #F5F5F5;
 }
+
+.img-parallax{
+  object-fit: cover;
+  height: 60vh;
+  width: 100%;
+  background-size: cover;
+  background-position: left;
+  background-attachment: fixed;
+}

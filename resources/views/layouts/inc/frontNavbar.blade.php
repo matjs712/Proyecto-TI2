@@ -326,16 +326,16 @@
             @endif
             @if ($categoriasFront)
                 <li class="nav-item">
-                    <a class="nav-link text-dark mr-4" href="{{ url('todo-categorias') }}"><i
+                    <a class="nav-link text-dark mr-4" href="{{ url('about-us') }}"><i
                             class="fas fa-people-carry    "></i> Nosotros</a>
                 </li>
             @endif
-            @if ($categoriasFront)
+            {{-- @if ($categoriasFront)
                 <li class="nav-item">
                     <a class="nav-link text-dark mr-4" href="{{ url('todo-categorias') }}"><i
                             class="fas fa-phone    "></i> Contacto</a>
                 </li>
-            @endif
+            @endif --}}
         </ul>
         <ul class="navbar-nav d-flex justify-content-start">
             <li class="nav-item">
