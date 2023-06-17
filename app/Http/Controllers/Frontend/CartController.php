@@ -28,13 +28,6 @@ class CartController extends Controller
 
         if (Auth::check()) {
             $cartItems = Cart::where('user_id', Auth::id())->get();
-        } else {
-            $guest_id = session('guest_id');
-            if (!$guest_id) {
-                $cartItems = [];
-            } else {
-                $cartItems = Cart::where('user_id', $guest_id)->get();
-            }
         }
         return view('frontend.cart', compact('cartItems'));
     }
@@ -66,33 +59,6 @@ class CartController extends Controller
                     return response()->json(['status' => $prod_check->name . ' añadido al carrito.']);
                 }
             }
-        } else {
-            $guest_id = session()->get('guest_id');
-            $count = 0;
-
-            if (!$guest_id) {
-                $guest_id = User::count() + 1;
-                session()->put('guest_id', $guest_id);
-                $count++;
-            }
-
-            $prod_check = Product::find($product_id);
-
-            if ($prod_check) {
-                if (Cart::where('prod_id', $product_id)->where('user_id', $guest_id)->exists()) {
-                    return response()->json(['status' => $prod_check->name . ' ya está añadido al carrito.']);
-                } else {
-                    $cartItem = new Cart();
-                    $cartItem->prod_id = $product_id;
-                    $cartItem->user_id = $guest_id;
-                    $cartItem->prod_qty = $product_qty;
-                    $cartItem->save();
-                    $count++;
-
-
-                    return response()->json(['status' => $prod_check->name . ' añadido al carrito.']);
-                }
-            }
         }
 
         return response()->json(['status' => 'El producto no existe.']);
@@ -114,20 +80,6 @@ class CartController extends Controller
             } else {
                 return response()->json(['status' => "El producto no existe en el carrito"]);
             }
-        } else {
-            $guest_id = session('guest_id');
-            if (!$guest_id) {
-                return response()->json(['status' => "Inicia sesión para continuar."]);
-            }
-
-            if (Cart::where('prod_id', $prod_id)->where('user_id', $guest_id)->exists()) {
-                $cart = Cart::where('prod_id', $prod_id)->where('user_id', $guest_id)->first();
-                $cart->prod_qty = $product_qty;
-                $cart->update();
-                return response()->json(['status' => "Cantidad actualizada"]);
-            } else {
-                return response()->json(['status' => "El producto no existe en el carrito"]);
-            }
         }
     }
 
@@ -143,20 +95,6 @@ class CartController extends Controller
             } else {
                 return response()->json(['status' => "El producto no existe en el carrito"]);
             }
-        } else {
-            $guest_id = session('guest_id');
-            if (!$guest_id) {
-                return response()->json(['status' => "Inicia sesión para continuar."]);
-            }
-
-            $prod_id = $request->input('product_id');
-            if (Cart::where('prod_id', $prod_id)->where('user_id', $guest_id)->exists()) {
-                $cartItem = Cart::where('prod_id', $prod_id)->where('user_id', $guest_id)->first();
-                $cartItem->delete();
-                return response()->json(['status' => "Producto eliminado correctamente"]);
-            } else {
-                return response()->json(['status' => "El producto no existe en el carrito"]);
-            }
         }
     }
 
@@ -164,9 +102,6 @@ class CartController extends Controller
     {
         if (Auth::check()) {
             $count = Cart::where('user_id', Auth::id())->count();
-        } else {
-            $guest_id = session('guest_id');
-            $count = Cart::where('user_id', $guest_id)->count();
         }
 
         return response()->json(['count' => $count]);
