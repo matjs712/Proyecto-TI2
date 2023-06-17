@@ -154,7 +154,11 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Slug</label>
+                                    <label><button type="button" class="btn p-0" style="border:none; margin-right:4px"
+                                            data-toggle="tooltip" data-placement="top"
+                                            title="Enlace que se ve en la barra de navegación">
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                        </button>Slug: </label>
                                     <input type="text" name="slug" class="form-control" placeholder="sal mar"
                                         value="{{ old('slug') }}">
                                     @if ($errors->has('slug'))
@@ -255,6 +259,9 @@
 
 @section('after_scripts')
     <script>
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
         $(document).ready(function() {
             $('#tablaProductos').DataTable({
                 responsive: true,

@@ -130,6 +130,11 @@
 @endsection
 @section('after_scripts')
     <script>
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
         $(document).ready(function() {
 
             $('#sort_by, #filter_by_category, #filter_by_ingredient').on('change', function() {

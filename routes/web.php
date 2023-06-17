@@ -74,8 +74,8 @@ Route::post('iniciar-compra-presencial', [CheckoutController::class, 'iniciar_co
 
 Route::middleware(['auth'])->group(function () { //solo usuarios autenticados
     // Route::post('place-order',[CheckoutController::class, 'placeorder']);
-    Route::post('iniciar_compra', [CheckoutController::class, 'iniciar_compra']);
-    Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
+    // Route::post('iniciar_compra', [CheckoutController::class, 'iniciar_compra']);
+    // Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
 
 
     Route::get('mis-ordenes', [UserController::class, 'index']);
