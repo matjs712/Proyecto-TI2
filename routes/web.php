@@ -53,29 +53,29 @@ Route::get('/about-us', [FrontendController::class, 'aboutus']);
 Auth::routes();
 
 
-// CARRITO
-Route::get('load-cart-data', [CartController::class, 'cartCount']);
-Route::post('add-to-cart', [CartController::class, 'addProduct']);
-Route::post('delete-cart-item', [CartController::class, 'deleteProduct']);
-Route::post('update-cart', [CartController::class, 'updateCart']);
 
-//WISHLIST
-Route::get('load-wish-data', [WishListController::class, 'wishCount']);
-Route::post('add-to-wishlist', [WishlistController::class, 'add']);
-Route::post('delete-wishlist-item', [WishlistController::class, 'destroy']);
-Route::get('carrito', [CartController::class, 'viewCart']);
-Route::get('checkout', [CheckoutController::class, 'index']);
-Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
-Route::get('wishlist', [WishlistController::class, 'index']);
-Route::get('/check-guest-session', [WishlistController::class, 'checkGuestSession'])->name('check.guest.session');
 
-Route::post('iniciar_compra', [CheckoutController::class, 'iniciar_compra']);
 Route::post('iniciar-compra-presencial', [CheckoutController::class, 'iniciar_compra_presencial']);
 
 Route::middleware(['auth'])->group(function () { //solo usuarios autenticados
     // Route::post('place-order',[CheckoutController::class, 'placeorder']);
+    Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
+    Route::get('wishlist', [WishlistController::class, 'index']);
     Route::post('iniciar_compra', [CheckoutController::class, 'iniciar_compra']);
     Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
+
+    // CARRITO
+    Route::get('load-cart-data', [CartController::class, 'cartCount']);
+    Route::post('add-to-cart', [CartController::class, 'addProduct']);
+    Route::post('delete-cart-item', [CartController::class, 'deleteProduct']);
+    Route::post('update-cart', [CartController::class, 'updateCart']);
+
+    //WISHLIST
+    Route::get('load-wish-data', [WishListController::class, 'wishCount']);
+    Route::post('add-to-wishlist', [WishlistController::class, 'add']);
+    Route::post('delete-wishlist-item', [WishlistController::class, 'destroy']);
+    Route::get('carrito', [CartController::class, 'viewCart']);
+    Route::get('checkout', [CheckoutController::class, 'index']);
 
 
     Route::get('mis-ordenes', [UserController::class, 'index']);
@@ -190,8 +190,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     //ROLES Y PERMISOS
     Route::get('roles', [RoleController::class, 'index']);
     Route::get('add-roles', [RoleController::class, 'create']);
-    Route::post('store-roles', [RoleController::class, 'store'])->name('roles.store');
-    ;
+    Route::post('store-roles', [RoleController::class, 'store'])->name('roles.store');;
     Route::get('roles/{rol}/show', [RoleController::class, 'show'])->name('roles.show');
     Route::get('roles/{rol}/edit', [RoleController::class, 'edit'])->name('roles.edit');
     Route::put('roles/{rol}', [RoleController::class, 'update'])->name('roles.update');
@@ -219,5 +218,4 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::put('update-nutricional/{id}', [NutritionalController::class, 'update']);
     Route::get('delete-nutricional/{id}', [NutritionalController::class, 'destroy']);
     Route::get('/modal-nutricionales/{id}', 'Admin\NutritionalController@show');
-
 });

@@ -1,15 +1,26 @@
 $(document).ready(function(){
-const sweet = (response) =>{
-    return Swal.fire({
-        toast: true,
-        position: 'bottom-end',
-        timer: 2000,
-        timerProgressBar: true,
-        icon: 'success',
-        title: `${response.status}`,
-        showConfirmButton: false,
-      })
-}
+    const sweet = (response) =>{
+        return Swal.fire({
+            toast: true,
+            position: 'bottom-end',
+            timer: 2000,
+            timerProgressBar: true,
+            icon: 'success',
+            title: `${response.status}`,
+            showConfirmButton: false,
+        })
+    }
+    const sweetError = (error) =>{
+        return Swal.fire({
+            toast: true,
+            position: 'bottom-end',
+            timer: 2000,
+            timerProgressBar: true,
+            icon: 'warning',
+            title: `${error == 'Unauthorized' ? 'Inicie sesión para continuar': error}`,
+            showConfirmButton: false,
+        })
+    }
     loadCart();
     loadWish();
     getQTY();
@@ -109,8 +120,12 @@ const sweet = (response) =>{
             success: function (response) {
                 loadCart();
                 sweet(response);
+            },
+            error: function (xhr, status, error) {
+                sweetError(error);
             }
         });
+        
     })
 
     function loadCart() {
@@ -153,6 +168,9 @@ const sweet = (response) =>{
             success: function (response) {
                 loadWish();
                 sweet(response);
+            },
+            error: function (xhr, status, error) {
+                sweetError(error);
             }
         });
     })
@@ -317,5 +335,5 @@ const countdown = () =>{
     //     // Hacer algo
     // }
 }
-setInterval(() => countdown(), 1000);
+// setInterval(() => countdown(), 1000);
 
