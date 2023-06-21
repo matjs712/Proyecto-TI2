@@ -6,6 +6,7 @@ use App\Models\Logo;
 use App\Models\Rating;
 use App\Models\Review;
 use App\Models\Product;
+use App\Models\Order;
 use App\Models\Category;
 use App\Models\Ingrediente;
 use Illuminate\Http\Request;

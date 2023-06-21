@@ -113,6 +113,10 @@ $(document).ready(function () {
         e.preventDefault();
         var prod_id = $(this).closest(".prod_data").find(".prod_id").val();
         var prod_qty = $(this).closest(".prod_data").find(".qty-input").val();
+        let prod_stock = $(this).closest(".prod_data").find(".prod-qty").text();
+
+        if (prod_qty < 1) prod_qty = 1;
+        if (prod_qty > prod_stock) prod_qty = prod_stock;
         $.ajaxSetup({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -190,7 +194,7 @@ $(document).ready(function () {
         if (value < cantidad) {
             value++;
             $(this).closest(".prod_data").find(".qty-input").val(value);
-        }
+        } else $(this).closest(".prod_data").find(".qty-input").val(cantidad);
     });
     $(".decrement-btn").click(function (e) {
         e.preventDefault();
@@ -200,7 +204,7 @@ $(document).ready(function () {
         if (value > 1) {
             value--;
             $(this).closest(".prod_data").find(".qty-input").val(value);
-        }
+        } else $(this).closest(".prod_data").find(".qty-input").val(1);
     });
     $(".delete-cart-item").click(function (e) {
         e.preventDefault();
@@ -272,6 +276,13 @@ $(document).ready(function () {
                 window.location.reload();
             },
         });
+    });
+    $(".editReview").click(function (e) {
+        e.preventDefault();
+        let review = $("#userReview").text();
+        let reviewId = $("#review_id").text();
+        $("#modalReview").text(review);
+        $("#reviewId").val(reviewId);
     });
 });
 

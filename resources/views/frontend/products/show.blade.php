@@ -98,10 +98,17 @@
                                 type="button" class="btn my-1 mr-2" data-toggle="modal" data-target="#exampleModalCenter">
                                 <i class="fa fa-star" aria-hidden="true"></i>
                             </button>
-                            <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
-                                style="border-color: {{ $boton_review }}; color:{{ $boton_review }};"
-                                href="{{ url('add-review/' . $producto->slug . '/userreview') }}" class="btn my-1"><i
-                                    class="fas fa-book    "></i> Añadir Review</a>
+                            @if(App\Models\Review::where('user_id', Auth::id())->first())
+                                <button type="button" class="btn my-1 editReview" data-toggle="modal" data-target="#editReviewModal" nmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
+                                style="border-color: {{ $boton_review }}; color:{{ $boton_review }};">
+                                    <i class="fas fa-book"></i> Editar Review
+                                </button>
+                            @else
+                            <button type="button" class="btn my-1" data-toggle="modal" data-target="#reviewModal" nmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
+                            style="border-color: {{ $boton_review }}; color:{{ $boton_review }};">
+                                <i class="fas fa-book"></i> Añadir Review
+                            </button>
+                            @endif
                         </div>
 
                     </div>
@@ -130,8 +137,11 @@
                     @foreach ($reviews as $item)
                         <label for="">{{ $item->user->name . ' ' . $item->user->lname }}</label>
                         @if ($item->user->id == Auth::id())
-                            <a href="{{ url('edit-review/' . $producto->slug . '/userreview') }}"><i
-                                    class="fas fa-edit text-danger"></i></a>
+                            {{-- <a href="{{ url('edit-review/' . $producto->slug . '/userreview') }}"><i
+                                    class="fas fa-edit text-danger"></i></a> --}}
+                                    <button type="button" class="btn my-1 editReview" data-toggle="modal" data-target="#editReviewModal" nmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+                                <i class="fas fa-edit text-danger"></i>
+                                </button>
                         @endif
                         <br>
                         @php
@@ -149,7 +159,8 @@
                             @endfor
                         @endif
                         <small>Comentado el {{ $item->created_at->format('d/m/Y') }}</small>
-                        <p>{{ $item->user_review }}</p>
+                        <p id="userReview">{{ $item->user_review }}</p>
+                        <p hidden id="review_id">{{ $item->id }}</p>
                     @endforeach
                 </div>
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
@@ -157,7 +168,7 @@
         </div>
     </div>
     </div>
-
+    {{-- MODAL ESTRELLAS --}}
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -208,4 +219,82 @@
             </div>
         </div>
     </div>
+
+    {{-- MODAL REVIEW --}}
+    <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog"
+        aria-labelledby="reviewModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Estas escribiendo una Reseña del producto: {{ $producto->name }}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ url('add-review') }}" class="d-flex align-items-center flex-column"
+                            method="POST">
+                            @csrf
+                            <div class="d-flex flex-column w-100">
+                                <input type="hidden" name="product_id" value="{{ $producto->id }}">
+                                <textarea name="user_review" style="resize: none; height:200px;" placeholder="Me encantó este producto!!"></textarea>
+                                <button type="submit" class="mt-4 btn btn-success">Agregar reseña</button>
+                            </div>
+                        </form>
+                    </div>
+            </div>
+        </div>
+    </div>
+    {{-- MODAL EDITAR REVIEW --}}
+    <div class="modal fade" id="editReviewModal" tabindex="-1" role="dialog"
+        aria-labelledby="editReviewModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Estas escribiendo una Reseña del producto: {{ $producto->name }}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ url('update-review') }}" class="d-flex align-items-center flex-column" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="d-flex flex-column w-100">
+                                <input type="hidden" name="review_id" id="reviewId">
+                                <textarea id="modalReview" name="user_review" style="resize: none; height:200px;" placeholder="Me encantó este producto!!"></textarea>
+                                <button type="submit" class="mt-4 btn btn-success">Agregar reseña</button>
+                            </div>
+                        </form>
+
+                        {{-- <form action="{{ url('update-review') }}" class=" d-flex align-items-center flex-column" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="d-flex flex-column col-md-6">
+                                <input type="hidden" name="review_id" value="{{ $review->products->id }}">
+                                <textarea name="user_review" rows="5" style="resize: none;" placeholder="Me encantó este producto!!">{{ $review->user_review }}</textarea>
+                                <button type="submit" class="mt-4 btn btn-success">Edit reseña</button>
+                            </div>
+                        </form> --}}
+                    </div>
+            </div>
+        </div>
+    </div>
+    {{-- @else    
+        <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog"
+            aria-labelledby="reviewModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                        <div class="modal-header">
+                            Reseña
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger">
+                                <h5>No estas autorizado para escribir una reseña de este producto</h5>
+                                <p>Tienes que haber comprado este producto anteriormente.</p>
+                                <a href="{{ url('/') }}" class="btn btn-success">Ir al inicio</a>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-red">Guardar</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+    @endif --}}
 @endsection
