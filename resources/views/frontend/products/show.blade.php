@@ -58,9 +58,10 @@
                             </div>
                             <div>
                                 @if ($producto->qty > 0)
-                                    <label class="badge bg-success text-white">En stock</label>
+                                    <label class="badge bg-success text-white prod-qty">{{ $producto->qty }}</label>
+                                    <label class="badge bg-success text-white" value = "">En stock</label>
                                 @else
-                                    <label class="badge bg-danger  text-white">Sin stock</label>
+                                    <label class="badge bg-danger text-white">Sin stock</label>
                                 @endif
                             </div>
                         </div>
