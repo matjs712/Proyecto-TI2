@@ -13,50 +13,28 @@
             <form action="{{ route('register') }}" method="post">
                 @csrf
                 <h3 class="title">{{ __('Register') }}</h3>
-                <div class="text-input">
+                <div @if ($errors->has('name')) class="is-invalid" @endif class="text-input">
                     <i class="fa-solid fa-user"></i>
-                    <input id="name" type="text" name="name" placeholder="Nombre" value="{{ old('name') }}">
+                    <input  id="name" type="text" name="name" placeholder="Nombre" value="{{ old('name') }}">
 
                 </div>
-                <div>
-                    @if ($errors->has('name'))
-                        <span class="error text-danger" for="input-name">{{ $errors->first('name') }}</span>
-                    @endif
-                </div>
-                <div class="text-input">
+                <div @if ($errors->has('email')) class="is-invalid" @endif class="text-input">
                     <i class="fa-solid fa-envelope"></i>
-                    <input id="email" type="email" name="email" placeholder="Correo electronico"
-                        value="{{ old('email') }}">
+                    <input  id="email" type="email" name="email" placeholder="Correo electronico" value="{{ old('email') }}">
                 </div>
                 <div class="text-input">
                     <i class="fa-solid fa-phone"></i>
                     <input id="tel" type="tel" name="phone" placeholder="9XXXXXXXX" pattern="9[0-9]{8}$" maxlength="9">
                 </div>
-                <div>
-                    @if ($errors->has('email'))
-                        <span class="error text-danger" for="input-name">{{ $errors->first('email') }}</span>
-                    @endif
-                </div>
-                <div class="text-input">
+                <div @if ($errors->has('password')) class="is-invalid" @endif class="text-input">
                     <i class="fa-solid fa-lock"></i>
                     <input id="password" type="password" name="password" placeholder="Contraseña">
 
                 </div>
-                <div>
-                    @if ($errors->has('password'))
-                        <span class="error text-danger" for="input-name">{{ $errors->first('password') }}</span>
-                    @endif
-                </div>
-                <div class="text-input">
+                <div @if ($errors->has('password_confirmation')) class="is-invalid" @endif class="text-input">
                     <i class="fa-solid fa-lock"></i>
                     <input id="password-confirm" type="password" name="password_confirmation"
                         placeholder="Confirmar contraseña" required autocomplete="new-password">
-                </div>
-                <div>
-                    @if ($errors->has('password_confirmation'))
-                        <span class="error text-danger"
-                            for="input-name">{{ $errors->first('password_confirmation') }}</span>
-                    @endif
                 </div>
                 <button type="submit" class="login-btn">{{ __('Register') }}</button>
             </form>

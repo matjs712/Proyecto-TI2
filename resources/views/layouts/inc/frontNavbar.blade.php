@@ -126,7 +126,6 @@
     aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content clearfix">
-            {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button> --}}
             <div class="modal-content clearfix">
                 <div class="modal-body">
                     <div class="modal-icon">
@@ -243,6 +242,21 @@
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
                                         value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3 d-flex flex-column">
+                                <label for="email"
+                                    class="col-md-12 col-form-label text-md-end">Teléfono</label>
+                                <div class="col-md-12">
+                                    <input id="tel" type="tel placeholder="9XXXXXXXX" pattern="9[0-9]{8}$" maxlength="9"
+                                        class="form-control @error('email') is-invalid @enderror" name="phone"
+                                         required autocomplete="telefono" autofocus>
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
