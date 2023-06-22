@@ -109,6 +109,30 @@
                                     </div>
                                 </div>
                                 <hr>
+                                <h4 for="secciones">Oferta</h4>
+                                <div class="form-group d-flex align-items-center flex-wrap">
+                                    <div class="row" style="width: 100% !important;">
+                                        <div class="col-md-3">
+                                            <label>Titulo oferta:</label>
+                                            <div class="input-group">
+                                                <textarea name="titulo_oferta" class="form-control" style="resize:none;" cols="20" rows="5">{{ $titulo_oferta }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Subtitulo oferta:</label>
+                                            <div class="input-group">
+                                                <textarea name="subtitulo_oferta" class="form-control" style="resize:none;" cols="20" rows="5">{{ $subtitulo_oferta }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Texto oferta:</label>
+                                            <div class="input-group">
+                                                <textarea name="texto_oferta" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_oferta }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
                                 <h4>Colores del sitio web</h4>
                                 <br>
                                 <div class="row">
@@ -159,7 +183,6 @@
                                     </div>
                                 </div>
                                 <br>
-
 
                                 <h4>Colores botones</h4>
                                 <br>

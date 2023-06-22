@@ -40,6 +40,16 @@ class Configuration extends Model
         'boton_eliminar',
         'boton_vermas',
         'boton_actualizar',
-        'banner'
+        'banner',
+        //SECCION OFERTA
+        'habilitar_oferta',
+        'imagen_oferta',
+        'titulo_oferta',
+        'subtitulo_oferta',
+        'texto_oferta',
+        'color_oferta',
+        'fecha_oferta',
+        'color_boton_oferta',
+
     ];
 }
