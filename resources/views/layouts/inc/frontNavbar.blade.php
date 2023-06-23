@@ -126,7 +126,7 @@
     aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content clearfix">
-            {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button> --}}
+            <button hidden type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             <div class="modal-content clearfix">
                 <div class="modal-body">
                     <div class="modal-icon">
@@ -199,6 +199,10 @@
                         <a class="btn btn-link"
                             href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
                     @endif
+
+                    <a onclick="closeLogin()" class="btn btn-link" data-toggle="modal"
+                        data-target="#myModalRegister">{{ __('Registrate') }}</a>
+
                 </div>
             </div>
         </div>
@@ -210,7 +214,7 @@
     aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content clearfix">
-            {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button> --}}
+            <button hidden type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             <div class="modal-content clearfix">
                 <div class="modal-body">
                     <div class="modal-icon">
@@ -289,6 +293,12 @@
 
                         </form>
                     </div>
+                </div>
+                <div class="modal-footer">
+
+                    <a class="btn btn-link" data-toggle="modal" data-target="#myModal"
+                        onclick="closeRegister()">{{ __('Login') }}</a>
+
                 </div>
             </div>
         </div>
@@ -424,5 +434,16 @@
                 100%{${position}: 100%;}
             }`;
         document.head.append(style);
+    </script>
+
+
+    <script>
+        function closeRegister() {
+            $("#myModalRegister .close").click();
+        }
+
+        function closeLogin() {
+            $("#myModal .close").click();
+        }
     </script>
 @endsection
