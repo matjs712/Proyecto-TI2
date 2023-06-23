@@ -266,7 +266,7 @@ class ProductController extends Controller
             'small_description' => 'required',
             'price' => 'required',
             'selling_price' => 'required',
-            'image' => 'required|image|mimes:jpg,png',
+            'image' => 'image|mimes:jpg,png',
             'qty' => 'required',
 
         ];
