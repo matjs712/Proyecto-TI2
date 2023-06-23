@@ -17,7 +17,43 @@
             <div class="col-md-12">
                 <div class="d-flex align-items-center flex-wrap justify-content-between">
                     <h2 class="hide">Nuestros Productos</h2>
-                    <div class="d-flex align-items-center">
+
+                    <div class="container text-center">
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-12 mt-2">
+                                <div class="form-group m-0 mr-4">
+                                    <select name="sort_by" id="sort_by" class="form-control">
+                                        <option value="">Ordenar por precio</option>
+                                        <option value="precio_alto">Precio más alto</option>
+                                        <option value="precio_bajo">Precio más bajo</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <div class="form-group m-0  mr-4 mt-2">
+                                    <select name="filter_by_category" id="filter_by_category" class="form-control">
+                                        <option value="">Filtrar por categoría</option>
+                                        @foreach ($categorias as $item)
+                                            <option value="{{ $item->slug }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <div class="form-group m-0 mr-4 mt-2">
+                                    <select name="filter_by_ingredient" id="filter_by_ingredient" class="form-control">
+                                        <option value="">Filtrar por Ingrediente</option>
+                                        @foreach ($ingredientes as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- <div class="d-flex align-items-center">
+
                         <div class="form-group m-0 mr-4">
                             <select name="sort_by" id="sort_by" class="form-control">
                                 <option value="">Ordenar por precio</option>
@@ -41,7 +77,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
