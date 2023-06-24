@@ -46,7 +46,16 @@ class ConfigurationSeeder extends Seeder
                 'ordenes' => 1,
                 'usuarios' => 1,
                 'roles_permisos' => 1,
-                'banner' => 'banner.jpg'
+                'banner' => 'banner.jpg',
+                'habilitar_oferta' => 1,
+                'imagen_oferta' => 'popup.jpg',
+                'titulo_oferta' => 'Ofertas de apertura',
+                'subtitulo_oferta' => 'Cantidades limitadas.',
+                'texto_oferta' => 'Descuentos en todos los productos!! ',
+                'valor_oferta' => '30%',
+                'fecha_oferta' => '2023-06-24',
+
+
             ]
         ]);
     }

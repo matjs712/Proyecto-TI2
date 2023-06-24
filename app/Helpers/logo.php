@@ -81,4 +81,22 @@ function logo_sitio()
     $path = 'banner/' . $banner->banner;
 
     View::share('banner', Storage::url($path));
+
+    $habilitar_oferta = DB::table('configurations')->select('habilitar_oferta')->first();
+    View::share('habilitar_oferta', $habilitar_oferta->habilitar_oferta);
+    $titulo_oferta = DB::table('configurations')->select('titulo_oferta')->first();
+    View::share('titulo_oferta', $titulo_oferta->titulo_oferta);
+    $subtitulo_oferta = DB::table('configurations')->select('subtitulo_oferta')->first();
+    View::share('subtitulo_oferta', $subtitulo_oferta->subtitulo_oferta);
+    $texto_oferta = DB::table('configurations')->select('texto_oferta')->first();
+    View::share('texto_oferta', $texto_oferta->texto_oferta);
+    $valor_oferta = DB::table('configurations')->select('valor_oferta')->first();
+    View::share('valor_oferta', $valor_oferta->valor_oferta);
+    $fecha_oferta = DB::table('configurations')->select('fecha_oferta')->first();
+    View::share('fecha_oferta', $fecha_oferta->fecha_oferta);
+    
+    $imagen_oferta = DB::table('configurations')->select('imagen_oferta')->first();
+    $path_oferta = 'popup/' . $imagen_oferta->imagen_oferta;
+    
+    View::share('imagen_oferta', Storage::url($path_oferta));
 }

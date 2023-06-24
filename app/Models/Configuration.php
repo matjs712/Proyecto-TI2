@@ -47,9 +47,8 @@ class Configuration extends Model
         'titulo_oferta',
         'subtitulo_oferta',
         'texto_oferta',
-        'color_oferta',
+        'valor_oferta',
         'fecha_oferta',
-        'color_boton_oferta',
 
     ];
 }

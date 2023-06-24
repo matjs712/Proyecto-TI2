@@ -320,11 +320,12 @@ window.addEventListener("load", () => {
     setTimeout(function () {
         // $('#modalInicio').modal('show');
         modalBootstrap.show();
-    }, 2000); // esperar 2 segundos antes de mostrar el modal
+    }, 500); // esperar 2 segundos antes de mostrar el modal
 });
 
 const countdown = () => {
-    const countDate = new Date("june 3, 2023 22:00:00").getTime();
+    const fecha = document.querySelector("#fecha_oferta").getAttribute("value");
+    const countDate = new Date(fecha).getTime();
     const now = new Date().getTime();
     const gap = countDate - now;
 
@@ -347,4 +348,4 @@ const countdown = () => {
     //     // Hacer algo
     // }
 };
-// setInterval(() => countdown(), 1000);
+setInterval(() => countdown(), 1000);

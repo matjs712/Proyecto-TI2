@@ -176,6 +176,26 @@ class DashboardController extends Controller
         }
         $banner->update();
 
+        $oferta = Configuration::first();
+
+        if ($request->hasFile('imagen_oferta')) {
+            $path = storage_path('app/public/popup/' . $oferta->imagen_oferta);
+
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+            $file = $request->file('imagen_oferta');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $ext;
+            $image = Image::make($file);
+            $image->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->encode('jpg', 70);
+            $image->save(storage_path('app/public/popup/' . $filename));
+            $oferta->imagen_oferta = $filename;
+        }
+        $oferta->update();
+
 
         // SECCIONES
         $secciones = Configuration::first();
@@ -224,6 +244,13 @@ class DashboardController extends Controller
         $colores->texto_banner_dos = $request->texto_banner_2;
         $colores->texto_banner_tres = $request->texto_banner_3;
         $colores->texto_banner_cuatro = $request->texto_banner_4;
+
+        $colores->habilitar_oferta = $request->habilitar_oferta === 'habilitado' ? 1 : 0;
+        $colores->titulo_oferta = $request->titulo_oferta;
+        $colores->subtitulo_oferta = $request->subtitulo_oferta;
+        $colores->texto_oferta = $request->texto_oferta;
+        $colores->valor_oferta = $request->valor_oferta;
+        $colores->fecha_oferta = $request->fecha_oferta;
 
         $colores->boton_calificacion = $request->boton_calificacion;
         $colores->boton_principal_busqueda = $request->boton_principal_busqueda;

@@ -113,22 +113,82 @@
                                 <div class="form-group d-flex align-items-center flex-wrap">
                                     <div class="row" style="width: 100% !important;">
                                         <div class="col-md-3">
-                                            <label>Titulo oferta:</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="habilitar_oferta" id="habilitar_oferta" @if($habilitar_oferta && $fecha_oferta >= now()) checked @endif value="habilitado">
+                                                <label class="form-check-label" for="habilitar_oferta"><strong>Habilitar oferta</strong></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="width: 100% !important;">
+                                        <div class="col-md-3">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Título de la  oferta que aparece en el inicio">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Titulo oferta: </label>
                                             <div class="input-group">
                                                 <textarea name="titulo_oferta" class="form-control" style="resize:none;" cols="20" rows="5">{{ $titulo_oferta }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label>Subtitulo oferta:</label>
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Subtitulo de la  oferta que aparece en el inicio">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Subtítulo oferta: </label>
                                             <div class="input-group">
                                                 <textarea name="subtitulo_oferta" class="form-control" style="resize:none;" cols="20" rows="5">{{ $subtitulo_oferta }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label>Texto oferta:</label>
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="texto al lado del descuento que aparece en el inicio">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Texto oferta: </label>
                                             <div class="input-group">
                                                 <textarea name="texto_oferta" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_oferta }}</textarea>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="width: 100% !important;">
+                                        <div class="col-md-3">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Porcentaje de descuento que aparece en el inicio">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Descuento oferta: </label>
+                                            <div class="input-group">
+                                                <input type="text" name="valor_oferta" class="form-control" cols="20" rows="5" value="{{ $valor_oferta }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Hasta cuando necesita que aparezca la oferta en el inicio">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Fecha termino oferta: </label>
+                                            <div class="input-group">
+                                                <input type="datetime-local" name="fecha_oferta" class="form-control" cols="20" rows="5" value="{{ $fecha_oferta }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="width: 100% !important;">
+                                        <div class="col-md-4">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Imagen de fondo que tendra la oferta en el inicio">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Imagen de fondo oferta: </label>
+                                                <input type="file" id="imagen_oferta" name="imagen_oferta" class="form-control">
+                                                <img id="previewImagenOferta" width="200" height="200"
+                                                    src="{{ asset($imagen_oferta) }}" alt=" ">
                                         </div>
                                     </div>
                                 </div>
@@ -638,5 +698,20 @@
             });
             reader.readAsDataURL(file);
         });
+
+        const input3 = document.querySelector('#imagen_oferta');
+        const preview3 = document.querySelector('#previewImagenOferta');
+
+        input3.addEventListener('change', () => {
+            const file = input3.files[0];
+            const reader = new FileReader();
+
+            reader.addEventListener('load', () => {
+                preview3.setAttribute('src', reader.result);
+            });
+            reader.readAsDataURL(file);
+        });
+
+        
     </script>
 @endsection

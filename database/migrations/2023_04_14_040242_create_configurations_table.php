@@ -51,6 +51,15 @@ class CreateConfigurationsTable extends Migration
 
 
             $table->string('banner');
+
+            $table->integer('habilitar_oferta')->default(1);
+            $table->string('imagen_oferta');
+            $table->string('titulo_oferta');
+            $table->string('subtitulo_oferta');
+            $table->string('texto_oferta');
+            $table->string('valor_oferta');
+            $table->datetime('fecha_oferta');
+
             $table->timestamps();
         });
     }
