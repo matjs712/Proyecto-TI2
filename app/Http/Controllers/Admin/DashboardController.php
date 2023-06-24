@@ -176,6 +176,84 @@ class DashboardController extends Controller
         }
         $banner->update();
 
+        $oferta = Configuration::first();
+
+        if ($request->hasFile('imagen_oferta')) {
+            $path = storage_path('app/public/popup/' . $oferta->imagen_oferta);
+
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+            $file = $request->file('imagen_oferta');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $ext;
+            $image = Image::make($file);
+            $image->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->encode('jpg', 70);
+            $image->save(storage_path('app/public/popup/' . $filename));
+            $oferta->imagen_oferta = $filename;
+        }
+        $oferta->update();
+
+        $sobre_nosotros = Configuration::first();
+
+        if ($request->hasFile('imagen_sobre_nosotros')) {
+            $path = storage_path('app/public/aboutUs/' . $sobre_nosotros->image_sobre_nosotros);
+
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+            $file = $request->file('imagen_sobre_nosotros');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $ext;
+            $image = Image::make($file);
+            $image->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->encode('jpg', 70);
+            $image->save(storage_path('app/public/aboutUs/' . $filename));
+            $sobre_nosotros->imagen_sobre_nosotros = $filename;
+        }
+        $sobre_nosotros->update();
+        
+        $historia = Configuration::first();
+
+        if ($request->hasFile('imagen_fondo_historia')) {
+            $path = storage_path('app/public/aboutUs/' . $historia->image_fondo_historia);
+
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+            $file = $request->file('imagen_fondo_historia');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $ext;
+            $image = Image::make($file);
+            $image->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->encode('jpg', 70);
+            $image->save(storage_path('app/public/aboutUs/' . $filename));
+            $historia->imagen_fondo_historia = $filename;
+        }
+        $historia->update();
+
+        if ($request->hasFile('imagen_texto_historia')) {
+            $path = storage_path('app/public/aboutUs/' . $historia->image_texto_historia);
+
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+            $file = $request->file('imagen_texto_historia');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $ext;
+            $image = Image::make($file);
+            $image->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->encode('jpg', 70);
+            $image->save(storage_path('app/public/aboutUs/' . $filename));
+            $historia->imagen_texto_historia = $filename;
+        }
+        $historia->update();
+
 
         // SECCIONES
         $secciones = Configuration::first();
@@ -224,6 +302,25 @@ class DashboardController extends Controller
         $colores->texto_banner_dos = $request->texto_banner_2;
         $colores->texto_banner_tres = $request->texto_banner_3;
         $colores->texto_banner_cuatro = $request->texto_banner_4;
+
+        $colores->habilitar_oferta = $request->habilitar_oferta === 'habilitado' ? 1 : 0;
+        $colores->titulo_oferta = $request->titulo_oferta;
+        $colores->subtitulo_oferta = $request->subtitulo_oferta;
+        $colores->texto_oferta = $request->texto_oferta;
+        $colores->valor_oferta = $request->valor_oferta;
+        $colores->fecha_oferta = $request->fecha_oferta;
+
+        $colores->titulo_sobre_nosotros = $request->titulo_sobre_nosotros;
+        $colores->texto_1_sobre_nosotros = $request->texto_1_sobre_nosotros;
+        $colores->texto_2_sobre_nosotros = $request->texto_2_sobre_nosotros;
+        $colores->titulo_texto_3_sobre_nosotros = $request->titulo_texto_3_sobre_nosotros;
+        $colores->texto_3_sobre_nosotros = $request->texto_3_sobre_nosotros;
+        $colores->titulo_texto_4_sobre_nosotros = $request->titulo_texto_4_sobre_nosotros;
+        $colores->texto_4_sobre_nosotros = $request->texto_4_sobre_nosotros;
+        $colores->titulo_historia = $request->titulo_historia;
+        $colores->texto_1_historia = $request->texto_1_historia;
+        $colores->texto_2_historia = $request->texto_2_historia;
+        $colores->texto_3_historia = $request->texto_3_historia;
 
         $colores->boton_calificacion = $request->boton_calificacion;
         $colores->boton_principal_busqueda = $request->boton_principal_busqueda;

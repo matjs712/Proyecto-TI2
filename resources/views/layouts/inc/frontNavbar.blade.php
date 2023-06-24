@@ -126,7 +126,6 @@
     aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content clearfix">
-            <button hidden type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             <div class="modal-content clearfix">
                 <div class="modal-body">
                     <div class="modal-icon">
@@ -214,7 +213,8 @@
     aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content clearfix">
-            <button hidden type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <button hidden type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">×</span></button>
             <div class="modal-content clearfix">
                 <div class="modal-body">
                     <div class="modal-icon">
@@ -241,12 +241,41 @@
                                 </div>
                             </div>
                             <div class="row mb-3 d-flex flex-column">
+                                <label for="lname"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Last name') }}</label>
+                                <div class="col-md-12">
+                                    <input id="lname" type="text"
+                                        class="form-control @error('lname') is-invalid @enderror" name="lname"
+                                        value="{{ old('lname') }}" required autocomplete="lname" autofocus>
+
+                                    @error('lname')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3 d-flex flex-column">
                                 <label for="email"
                                     class="col-md-12 col-form-label text-md-end">{{ __('Email Address') }}</label>
                                 <div class="col-md-12">
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
                                         value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3 d-flex flex-column">
+                                <label for="email" class="col-md-12 col-form-label text-md-end">Teléfono</label>
+                                <div class="col-md-12">
+                                    <input id="tel" type="tel placeholder="9XXXXXXXX" pattern="9[0-9]{8}$"
+                                        maxlength="9" class="form-control @error('email') is-invalid @enderror"
+                                        name="phone" required autocomplete="telefono" autofocus>
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -369,59 +398,64 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalInicio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-container" role="document">
-        <div class="modal-content p-2"
-            style="background-image: url('{{ Storage::url('popup/popup.jpg') }}'); background-position:center; background-size:cover ;height:70vh">
-            <div class="modal-header" style=" border:none;">
-                <div class="d-flex flex-column align-content-start">
-                    <h2 class="modal-title modal-titulo text-white" style="color:white;" id="exampleModalLongTitle">
-                        Ofertas de Apertura
-                    </h2>
-                    <p class="text-white" style="font-size: 18px">Cantidades limitadas.</p>
+@if ($habilitar_oferta)
+    <div class="modal fade" id="modalInicio" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-container" role="document">
+            <div class="modal-content p-2"
+                style="background-image: url('{{ asset($imagen_oferta) }}'); background-position:center; background-size:cover ;height:70vh">
+                <div class="modal-header" style=" border:none;">
+                    <div class="d-flex flex-column align-content-start">
+                        <h2 class="modal-title modal-titulo text-white" style="color:white;"
+                            id="exampleModalLongTitle">
+                            {{-- Ofertas de Apertura --}}
+                            {{ $titulo_oferta }}
+                        </h2>
+                        <p class="text-white" style="font-size: 18px">{{ $subtitulo_oferta }}</p>
+                    </div>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color:black; font-weight: 800; font-size:3rem;">&times;</span>
+                    </button>
                 </div>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" style="color:black; font-weight: 800; font-size:3rem;">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <span class="text-white h4">Descuentos de <strong class="text-danger">30%</strong> en todos los
-                    productos!!</span>
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="countdown">
-                            <div class="container-day">
-                                <h3 class="dayy">Time</h3>
-                                <h3>Dias</h3>
-                            </div>
-                            <div class="container-hour">
-                                <h3 class="hourr">Time</h3>
-                                <h3>horas</h3>
-                            </div>
-                            <div class="container-minute">
-                                <h3 class="minutee">Time</h3>
-                                <h3>minutos</h3>
-                            </div>
-                            <div class="container-second">
-                                <h3 class="secondd">Time</h3>
-                                <h3>segundos</h3>
+                <div class="modal-body">
+                    <span class="text-white h4">{{ $texto_oferta }} <strong
+                            class="text-danger">{{ $valor_oferta }}%</strong> </span>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="countdown">
+                                <p hidden id="fecha_oferta" value="{{ $fecha_oferta }}"></p>
+                                <div class="container-day">
+                                    <h3 class="dayy">Time</h3>
+                                    <h3>Dias</h3>
+                                </div>
+                                <div class="container-hour">
+                                    <h3 class="hourr">Time</h3>
+                                    <h3>horas</h3>
+                                </div>
+                                <div class="container-minute">
+                                    <h3 class="minutee">Time</h3>
+                                    <h3>minutos</h3>
+                                </div>
+                                <div class="container-second">
+                                    <h3 class="secondd">Time</h3>
+                                    <h3>segundos</h3>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <a class="btn btn-home hide" href="{{ url('todo-productos') }}"
-                    style="background-color: {{ $boton_principal_busqueda }}; margin:20px 0 0 10px !important;left:0;"
-                    onmouseover="this.style.backgroundColor='transparent';
+                    <a class="btn btn-home hide" href="{{ url('todo-productos') }}"
+                        style="background-color: {{ $boton_principal_busqueda }}; margin:20px 0 0 10px !important;left:0;"
+                        onmouseover="this.style.backgroundColor='transparent';
                    this.style.border='1px solid {{ $boton_principal_busqueda }}';"
-                    onmouseout="this.style.backgroundColor='{{ $boton_principal_busqueda }}';
+                        onmouseout="this.style.backgroundColor='{{ $boton_principal_busqueda }}';
                 this.style.border='1px solid {{ $boton_principal_busqueda }}';">
-                    Comprar ahora<i class="ml-2 fas fa-arrow-alt-circle-right"></i>
-                </a>
+                        Comprar ahora<i class="ml-2 fas fa-arrow-alt-circle-right"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+@endif
 
 
 @section('after_scripts')
@@ -429,9 +463,9 @@
         let style = document.createElement('style');
         let position = 'right';
         style.innerHTML = `
-            @keyframes move-text{
-                0%{${position}: -${document.querySelector('.text').offsetWidth + 10}px;}
-                100%{${position}: 100%;}
+    @keyframes move-text{
+        0%{${position}: -${document.querySelector('.text').offsetWidth + 10}px;}
+        100%{${position}: 100%;}
             }`;
         document.head.append(style);
     </script>

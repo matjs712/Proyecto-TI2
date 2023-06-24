@@ -27,11 +27,11 @@
                                 <div class="col-md-6">
                                     <label for="firstName">Primer nombre</label>
                                     <input type="text" name="fname"
-                                        value="{{ Auth::check() ? Auth::user()->fname : '' }}" class="fname form-control"
-                                        placeholder="Juan" value="{{ old('fname') }}">
-                                    @if ($errors->has('fname'))
+                                        value="{{ Auth::check() ? Auth::user()->name : '' }}" class="fname form-control"
+                                        placeholder="Juan">
+                                    @if ($errors->has('name'))
                                         <span class="error text-danger"
-                                            for="input-name">{{ $errors->first('fname') }}</span>
+                                            for="input-name">{{ $errors->first('name') }}</span>
                                     @endif
                                     <span style="color:red" id="fname_error"></span>
                                 </div>
@@ -39,7 +39,7 @@
                                     <label for="lastName">Apellido</label>
                                     <input type="text" name="lname"
                                         value="{{ Auth::check() ? Auth::user()->lname : '' }}" class="lname form-control"
-                                        placeholder="Aguirre" value="{{ old('lname') }}">
+                                        placeholder="Aguirre">
                                     @if ($errors->has('lname'))
                                         <span class="error text-danger"
                                             for="input-name">{{ $errors->first('lname') }}</span>

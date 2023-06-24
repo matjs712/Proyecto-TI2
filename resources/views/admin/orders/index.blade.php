@@ -37,6 +37,7 @@
                                     <thead style="background-color:#343a40; color:white;">
                                         <tr>
                                             <th>Fecha de orden</th>
+                                            <th>Hora de orden</th>
                                             <th>Numero de seguimiento</th>
                                             <th>Precio Total</th>
                                             <th>Estado</th>
@@ -47,6 +48,7 @@
                                         @foreach ($orders as $item)
                                             <tr>
                                                 <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
+                                                <td>{{ date('H:i:s', strtotime($item->created_at)) }}</td>
                                                 <td>{{ $item->tracking_number }}</td>
                                                 <td>{{ $item->total_price }}</td>
                                                 <td>
