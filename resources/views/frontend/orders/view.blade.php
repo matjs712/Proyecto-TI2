@@ -25,11 +25,11 @@ Información orden | {{ $sitio }}
                             <div class="border p-2">{{ $orders->telefono }}</div>
                             <label>Información de entrega</label>
                             <div class="border p-2">
-                                {{ $orders->direccion1 }}
+                                <strong>{{ $orders->direccion1 }}<strong>,
                                 {{ $orders->direccion2 }}
-                                {{ $orders->region }}
-                                {{ $orders->ciudad }}
-                                {{ $orders->comuna }}
+                                {{ $orders->region }},
+                                {{ $orders->ciudad }},
+                                {{ $orders->comuna }}.
                             </div>
                         </div>
                         <div class="col-md-6">
