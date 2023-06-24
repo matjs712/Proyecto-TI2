@@ -30,8 +30,7 @@
                                         value="{{ Auth::check() ? Auth::user()->name : '' }}" class="fname form-control"
                                         placeholder="Juan">
                                     @if ($errors->has('name'))
-                                        <span class="error text-danger"
-                                            for="input-name">{{ $errors->first('name') }}</span>
+                                        <span class="error text-danger" for="input-name">{{ $errors->first('name') }}</span>
                                     @endif
                                     <span style="color:red" id="fname_error"></span>
                                 </div>
@@ -107,8 +106,7 @@
                                     <label for="">Ciudad</label>
                                     <input type="text" name="ciudad"
                                         value="{{ Auth::check() ? Auth::user()->ciudad : '' }}"
-                                        class="ciudad form-control" placeholder="Metropolitana"
-                                        value="{{ old('ciudad') }}">
+                                        class="ciudad form-control" placeholder="Santiago" value="{{ old('ciudad') }}">
                                     @if ($errors->has('ciudad'))
                                         <span class="error text-danger"
                                             for="input-name">{{ $errors->first('ciudad') }}</span>
