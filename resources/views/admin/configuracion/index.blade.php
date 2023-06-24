@@ -193,6 +193,177 @@
                                     </div>
                                 </div>
                                 <hr>
+                                <h4 for="secciones">Sobre Nosotros</h4>
+                                <div class="form-group d-flex align-items-center flex-wrap">
+                                    <div class="row" style="width: 100% !important;">
+                                        <div class="col-md-3">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Título de la seccion sobre nosotros">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Titulo sobre nosotros: </label>
+                                            <div class="input-group">
+                                                <textarea name="titulo_sobre_nosotros" class="form-control" style="resize:none;" cols="20" rows="5">{{ $titulo_sobre_nosotros }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Texto 1 seccion sobre nosotros">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Texto 1 sobre nosotros: </label>
+                                            <div class="input-group">
+                                                <textarea name="texto_1_sobre_nosotros" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_1_sobre_nosotros }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Texto 2 seccion sobre nosotros">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Texto 2 sobre nosotros: </label>
+                                            <div class="input-group">
+                                                <textarea name="texto_2_sobre_nosotros" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_2_sobre_nosotros }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="titulo sobre texto 3 seccion sobre nosotros">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Título texto 3 sobre nosotros: </label>
+                                            <div class="input-group">
+                                                <textarea name="titulo_texto_3_sobre_nosotros" class="form-control" style="resize:none;" cols="20" rows="5">{{ $titulo_texto_3_sobre_nosotros }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="width: 100% !important;">
+                                        <div class="col-md-3">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Texto 3 seccion sobre nosotros">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Texto 3 sobre nosotros: </label>
+                                            <div class="input-group">
+                                                <textarea name="texto_3_sobre_nosotros" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_3_sobre_nosotros }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="titulo sobre texto 4 seccion sobre nosotros">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Título texto 4 sobre nosotros: </label>
+                                            <div class="input-group">
+                                                <textarea name="titulo_texto_4_sobre_nosotros" class="form-control" style="resize:none;" cols="20" rows="5">{{ $titulo_texto_4_sobre_nosotros }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Texto 4 seccion sobre nosotros">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Texto 4 sobre nosotros: </label>
+                                            <div class="input-group">
+                                                <textarea name="texto_4_sobre_nosotros" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_4_sobre_nosotros }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="width: 100% !important;">
+                                        <div class="col-md-4">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Imagen al lado del texto en la seccion sobre nosotros">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Imagen sobre nosotros: </label>
+                                                <input type="file" id="imagen_sobre_nosotros" name="imagen_sobre_nosotros" class="form-control">
+                                                <img id="previewImagenSobreNosotros" width="200" height="200"
+                                                    src="{{ asset($imagen_sobre_nosotros) }}" alt=" ">
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 for="secciones">Historia</h4>
+                                <div class="form-group d-flex align-items-center flex-wrap">
+                                    <div class="row" style="width: 100% !important;">
+                                        <div class="col-md-3">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Título de la  seccion historia en sobre nosotros">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Titulo historia: </label>
+                                            <div class="input-group">
+                                                <textarea name="titulo_historia" class="form-control" style="resize:none;" cols="20" rows="5">{{ $titulo_historia }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Imagen de fondo que tendra la seccion historia en sobre nosotros">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Imagen de fondo historia: </label>
+                                                <input type="file" id="imagen_fondo_historia" name="imagen_fondo_historia" class="form-control">
+                                                <img id="previewImagenFondoHistoria" width="200" height="200"
+                                                    src="{{ asset($imagen_fondo_historia) }}" alt=" ">
+                                        </div>
+                                    </div>
+                                    <div class="row" style="width: 100% !important;">
+                                        <div class="col-md-3">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Texto 1 de la seccion historia">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Texto 1 historia: </label>
+                                            <div class="input-group">
+                                                <textarea name="texto_1_historia" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_1_historia }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Texto 2 de la seccion historia">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Texto 2 historia: </label>
+                                            <div class="input-group">
+                                                <textarea name="texto_2_historia" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_2_historia }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Texto 3 de la seccion historia">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Texto 3 historia: </label>
+                                            <div class="input-group">
+                                                <textarea name="texto_3_historia" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_3_historia }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <br>
+                                            <label><button type="button" class="btn p-2" style="border:none"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="Imagen al lado del texto de la seccion historia">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                            </button>Imagen texto historia: </label>
+                                                <input type="file" id="imagen_texto_historia" name="imagen_texto_historia" class="form-control">
+                                                <img id="previewImagenTextoHistoria" width="200" height="200"
+                                                    src="{{ asset($imagen_texto_historia) }}" alt=" ">
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
                                 <h4>Colores del sitio web</h4>
                                 <br>
                                 <div class="row">
@@ -708,6 +879,43 @@
 
             reader.addEventListener('load', () => {
                 preview3.setAttribute('src', reader.result);
+            });
+            reader.readAsDataURL(file);
+        });
+
+        const input4 = document.querySelector('#imagen_sobre_nosotros');
+        const preview4 = document.querySelector('#previewImagenSobreNosotros');
+
+        input4.addEventListener('change', () => {
+            const file = input4.files[0];
+            const reader = new FileReader();
+
+            reader.addEventListener('load', () => {
+                preview4.setAttribute('src', reader.result);
+            });
+            reader.readAsDataURL(file);
+        });
+        const input5 = document.querySelector('#imagen_fondo_historia');
+        const preview5 = document.querySelector('#previewImagenFondoHistoria');
+
+        input5.addEventListener('change', () => {
+            const file = input5.files[0];
+            const reader = new FileReader();
+
+            reader.addEventListener('load', () => {
+                preview5.setAttribute('src', reader.result);
+            });
+            reader.readAsDataURL(file);
+        });
+        const input6 = document.querySelector('#imagen_texto_historia');
+        const preview6 = document.querySelector('#previewImagenTextoHistoria');
+
+        input6.addEventListener('change', () => {
+            const file = input6.files[0];
+            const reader = new FileReader();
+
+            reader.addEventListener('load', () => {
+                preview6.setAttribute('src', reader.result);
             });
             reader.readAsDataURL(file);
         });

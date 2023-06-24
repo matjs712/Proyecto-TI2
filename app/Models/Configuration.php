@@ -49,6 +49,20 @@ class Configuration extends Model
         'texto_oferta',
         'valor_oferta',
         'fecha_oferta',
-
+        //SECCION SOBRE NOSOTROS
+        'titulo_sobre_nosotros',
+        'texto_1_sobre_nosotros',
+        'texto_2_sobre_nosotros',
+        'titulo_texto_3_sobre_nosotros',
+        'texto_3_sobre_nosotros',
+        'titulo_texto_4_sobre_nosotros',
+        'texto_4_sobre_nosotros',
+        'imagen_sobre_nosotros',
+        'titulo_historia',
+        'imagen_fondo_historia',
+        'texto_1_historia',
+        'texto_2_historia',
+        'texto_3_historia',
+        'imagen_texto_historia',
     ];
 }
