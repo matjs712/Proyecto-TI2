@@ -21,7 +21,7 @@
                         <div class="form-group">
                             <label for="name">Nombre</label>
                             <input type="text" name="name" value="{{ $proveedor->name }}" class="form-control"
-                                placeholder="Poleras">
+                                placeholder="John doe">
                             @if ($errors->has('name'))
                                 <span class="error text-danger" for="input-name">{{ $errors->first('name') }}</span>
                             @endif

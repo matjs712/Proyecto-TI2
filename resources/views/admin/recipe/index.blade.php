@@ -123,7 +123,7 @@
                                 <div class="form-group">
                                     <label for="slug">Slug</label>
                                     <input type="text" name="slug"
-                                        class="form-control @error('slug') is-invalid @enderror" placeholder="sales"
+                                        class="form-control @error('slug') is-invalid @enderror" placeholder="Sales"
                                         value="{{ old('slug') }}">
                                     @error('slug')
                                         <div class="invalid-feedback">{{ $message }}</div>

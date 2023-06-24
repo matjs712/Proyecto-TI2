@@ -24,7 +24,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="name">Nombre</label>
-                            <input type="text" name="name" class="form-control" placeholder="Poleras"
+                            <input type="text" name="name" class="form-control" placeholder="Sales"
                                 value="{{ old('name') }}" autofocus>
                             @if ($errors->has('name'))
                                 <span class="error text-danger" for="input-name">{{ $errors->first('name') }}</span>
