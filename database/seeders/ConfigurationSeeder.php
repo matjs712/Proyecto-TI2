@@ -52,8 +52,8 @@ class ConfigurationSeeder extends Seeder
                 'titulo_oferta' => 'Ofertas de apertura',
                 'subtitulo_oferta' => 'Cantidades limitadas.',
                 'texto_oferta' => 'Descuentos en todos los productos!! ',
-                'valor_oferta' => '30%',
-                'fecha_oferta' => '2023-06-24',
+                'valor_oferta' => '30',
+                'fecha_oferta' => '2023-12-24',
 
 
             ]
