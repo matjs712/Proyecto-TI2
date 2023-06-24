@@ -18,6 +18,11 @@
                     <input  id="name" type="text" name="name" placeholder="Nombre" value="{{ old('name') }}">
 
                 </div>
+                <div @if ($errors->has('lname')) class="is-invalid" @endif class="text-input">
+                    <i class="fa-solid fa-user"></i>
+                    <input  id="lname" type="text" name="lname" placeholder="Apellido" value="{{ old('lname') }}">
+
+                </div>
                 <div @if ($errors->has('email')) class="is-invalid" @endif class="text-input">
                     <i class="fa-solid fa-envelope"></i>
                     <input  id="email" type="email" name="email" placeholder="Correo electronico" value="{{ old('email') }}">
