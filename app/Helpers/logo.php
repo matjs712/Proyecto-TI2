@@ -99,4 +99,48 @@ function logo_sitio()
     $path_oferta = 'popup/' . $imagen_oferta->imagen_oferta;
     
     View::share('imagen_oferta', Storage::url($path_oferta));
+
+    $titulo_sobre_nosotros = DB::table('configurations')->select('titulo_sobre_nosotros')->first();
+    View::share('titulo_sobre_nosotros', $titulo_sobre_nosotros->titulo_sobre_nosotros);
+    $texto_1_sobre_nosotros = DB::table('configurations')->select('texto_1_sobre_nosotros')->first();
+    View::share('texto_1_sobre_nosotros', $texto_1_sobre_nosotros->texto_1_sobre_nosotros);
+    $texto_2_sobre_nosotros = DB::table('configurations')->select('texto_2_sobre_nosotros')->first();
+    View::share('texto_2_sobre_nosotros', $texto_2_sobre_nosotros->texto_2_sobre_nosotros);
+    $titulo_texto_3_sobre_nosotros = DB::table('configurations')->select('titulo_texto_3_sobre_nosotros')->first();
+    View::share('titulo_texto_3_sobre_nosotros', $titulo_texto_3_sobre_nosotros->titulo_texto_3_sobre_nosotros);
+    $texto_3_sobre_nosotros = DB::table('configurations')->select('texto_3_sobre_nosotros')->first();
+    View::share('texto_3_sobre_nosotros', $texto_3_sobre_nosotros->texto_3_sobre_nosotros);
+    $titulo_texto_4_sobre_nosotros = DB::table('configurations')->select('titulo_texto_4_sobre_nosotros')->first();
+    View::share('titulo_texto_4_sobre_nosotros', $titulo_texto_4_sobre_nosotros->titulo_texto_4_sobre_nosotros);
+    $texto_4_sobre_nosotros = DB::table('configurations')->select('texto_4_sobre_nosotros')->first();
+    View::share('texto_4_sobre_nosotros', $texto_4_sobre_nosotros->texto_4_sobre_nosotros);
+    
+    //imagen sobre nosotros
+    $imagen_sobre_nosotros = DB::table('configurations')->select('imagen_sobre_nosotros')->first();
+    $path_imagen_sobre_nosotros = 'aboutUs/' . $imagen_sobre_nosotros->imagen_sobre_nosotros;
+    
+    View::share('imagen_sobre_nosotros', Storage::url($path_imagen_sobre_nosotros));
+
+    $titulo_historia = DB::table('configurations')->select('titulo_historia')->first();
+    View::share('titulo_historia', $titulo_historia->titulo_historia);
+
+//imagen fondo historia
+    $imagen_fondo_historia = DB::table('configurations')->select('imagen_fondo_historia')->first();
+    $path_imagen_fondo_historia = 'aboutUs/' . $imagen_fondo_historia->imagen_fondo_historia;
+
+    View::share('imagen_fondo_historia', Storage::url($path_imagen_fondo_historia));
+
+    $texto_1_historia = DB::table('configurations')->select('texto_1_historia')->first();
+    View::share('texto_1_historia', $texto_1_historia->texto_1_historia);
+    $texto_2_historia = DB::table('configurations')->select('texto_2_historia')->first();
+    View::share('texto_2_historia', $texto_2_historia->texto_2_historia);
+    $texto_3_historia = DB::table('configurations')->select('texto_3_historia')->first();
+    View::share('texto_3_historia', $texto_3_historia->texto_3_historia);
+
+    //imagen texto historia
+
+    $imagen_texto_historia = DB::table('configurations')->select('imagen_texto_historia')->first();
+    $path_imagen_texto_historia = 'aboutUs/' . $imagen_texto_historia->imagen_texto_historia;
+
+    View::share('imagen_texto_historia', Storage::url($path_imagen_texto_historia));
 }

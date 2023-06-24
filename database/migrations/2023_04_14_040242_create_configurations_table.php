@@ -60,6 +60,22 @@ class CreateConfigurationsTable extends Migration
             $table->string('valor_oferta');
             $table->datetime('fecha_oferta');
 
+
+            $table->string('titulo_sobre_nosotros');
+            $table->longText('texto_1_sobre_nosotros');
+            $table->longText('texto_2_sobre_nosotros');
+            $table->string('titulo_texto_3_sobre_nosotros');
+            $table->longText('texto_3_sobre_nosotros');
+            $table->string('titulo_texto_4_sobre_nosotros');
+            $table->longText('texto_4_sobre_nosotros');
+            $table->string('imagen_sobre_nosotros');
+            $table->string('titulo_historia');
+            $table->string('imagen_fondo_historia');
+            $table->longText('texto_1_historia');
+            $table->longText('texto_2_historia');
+            $table->longText('texto_3_historia');
+            $table->string('imagen_texto_historia');
+            
             $table->timestamps();
         });
     }

@@ -1,4 +1,4 @@
-<aside class="main-sidebar  elevation-4" style="background-color: {{ $color_barra_lateral }}">
+<aside class="main-sidebar elevation-4" style=" background-color: {{ $color_barra_lateral }}">
     <!-- Brand Logo -->
     <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
         onmouseout="this.style.backgroundColor='transparent'" style="color: {{ $color_a_tag_sidebar }}"
@@ -251,18 +251,7 @@
                         </a>
                     </li>
                 @endcan
-                {{-- <li class="nav-item mt-3">
-                    <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                        onmouseout="this.style.backgroundColor='transparent'"
-                        style="color: {{ $color_a_tag_sidebar }}" class="nav-link" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                        {{ __('Salir') }}
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-                </li> --}}
+                
 
             </ul>
         </nav>

@@ -51,6 +51,13 @@
             background-color: #07c443 !important;
             color: white !important;
         }
+        ::-webkit-scrollbar {
+            width: 8px; /* Ancho de la barra de desplazamiento */
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(128, 128, 128, 0.629); /* Color del pulgar */
+            border-radius: 10px; /* Radio de esquina del pulgar */
+        }
     </style>
     @yield('css_before')
 
