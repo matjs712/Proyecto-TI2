@@ -11,6 +11,7 @@
     @include('layouts.inc.trending')
     @include('layouts.inc.about-us')
     @include('layouts.inc.contact')
+    @include('layouts.inc.tracking')
 @endsection
 
 {{-- @section('trending_cat')

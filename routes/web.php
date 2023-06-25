@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\IngredienteController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\WishlistController;
+use App\Http\Controllers\Frontend\TrackingController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\RecipeController;
 use App\Http\Mail\NotificationEmail;
@@ -50,8 +51,11 @@ Route::get('productos/sort-by', [FrontendController::class, 'filter'])->name('pr
 // ABOUT US
 Route::get('/about-us', [FrontendController::class, 'aboutus']);
 
-Auth::routes();
+// SEGUIMIENTO DE COMPRA
+Route::get('/seguimiento', [TrackingController::class, 'index'])->name('seguimiento');
+Route::post('/seguimiento', [TrackingController::class, 'view'])->name('seguimiento_compra');
 
+Auth::routes();
 
 
 
@@ -190,7 +194,8 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     //ROLES Y PERMISOS
     Route::get('roles', [RoleController::class, 'index']);
     Route::get('add-roles', [RoleController::class, 'create']);
-    Route::post('store-roles', [RoleController::class, 'store'])->name('roles.store');;
+    Route::post('store-roles', [RoleController::class, 'store'])->name('roles.store');
+    ;
     Route::get('roles/{rol}/show', [RoleController::class, 'show'])->name('roles.show');
     Route::get('roles/{rol}/edit', [RoleController::class, 'edit'])->name('roles.edit');
     Route::put('roles/{rol}', [RoleController::class, 'update'])->name('roles.update');
