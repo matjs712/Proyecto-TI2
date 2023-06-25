@@ -114,8 +114,11 @@
                                     <div class="row" style="width: 100% !important;">
                                         <div class="col-md-3">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="habilitar_oferta" id="habilitar_oferta" @if($habilitar_oferta && $fecha_oferta >= now()) checked @endif value="habilitado">
-                                                <label class="form-check-label" for="habilitar_oferta"><strong>Habilitar oferta</strong></label>
+                                                <input class="form-check-input" type="checkbox" name="habilitar_oferta"
+                                                    id="habilitar_oferta" @if ($habilitar_oferta && $fecha_oferta >= now()) checked @endif
+                                                    value="habilitado">
+                                                <label class="form-check-label" for="habilitar_oferta"><strong>Habilitar
+                                                        oferta</strong></label>
                                             </div>
                                         </div>
                                     </div>
@@ -123,10 +126,10 @@
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Título de la  oferta que aparece en el inicio">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Titulo oferta: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Título de la  oferta que aparece en el inicio">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Titulo oferta: </label>
                                             <div class="input-group">
                                                 <textarea name="titulo_oferta" class="form-control" style="resize:none;" cols="20" rows="5">{{ $titulo_oferta }}</textarea>
                                             </div>
@@ -134,10 +137,10 @@
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Subtitulo de la  oferta que aparece en el inicio">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Subtítulo oferta: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Subtitulo de la  oferta que aparece en el inicio">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Subtítulo oferta: </label>
                                             <div class="input-group">
                                                 <textarea name="subtitulo_oferta" class="form-control" style="resize:none;" cols="20" rows="5">{{ $subtitulo_oferta }}</textarea>
                                             </div>
@@ -145,10 +148,10 @@
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="texto al lado del descuento que aparece en el inicio">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Texto oferta: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="texto al lado del descuento que aparece en el inicio">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Texto oferta: </label>
                                             <div class="input-group">
                                                 <textarea name="texto_oferta" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_oferta }}</textarea>
                                             </div>
@@ -158,23 +161,25 @@
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Porcentaje de descuento que aparece en el inicio">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Descuento oferta: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Porcentaje de descuento que aparece en el inicio">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Descuento oferta: </label>
                                             <div class="input-group">
-                                                <input type="text" name="valor_oferta" class="form-control" cols="20" rows="5" value="{{ $valor_oferta }}">
+                                                <input type="text" name="valor_oferta" class="form-control"
+                                                    cols="20" rows="5" value="{{ $valor_oferta }}">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Hasta cuando necesita que aparezca la oferta en el inicio">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Fecha termino oferta: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Hasta cuando necesita que aparezca la oferta en el inicio">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Fecha termino oferta: </label>
                                             <div class="input-group">
-                                                <input type="datetime-local" name="fecha_oferta" class="form-control" cols="20" rows="5" value="{{ $fecha_oferta }}">
+                                                <input type="datetime-local" name="fecha_oferta" class="form-control"
+                                                    cols="20" rows="5" value="{{ $fecha_oferta }}">
                                             </div>
                                         </div>
                                     </div>
@@ -182,13 +187,14 @@
                                         <div class="col-md-4">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Imagen de fondo que tendra la oferta en el inicio">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Imagen de fondo oferta: </label>
-                                                <input type="file" id="imagen_oferta" name="imagen_oferta" class="form-control">
-                                                <img id="previewImagenOferta" width="200" height="200"
-                                                    src="{{ asset($imagen_oferta) }}" alt=" ">
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Imagen de fondo que tendra la oferta en el inicio">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Imagen de fondo oferta: </label>
+                                            <input type="file" id="imagen_oferta" name="imagen_oferta"
+                                                class="form-control">
+                                            <img id="previewImagenOferta" width="200" height="200"
+                                                src="{{ asset($imagen_oferta) }}" alt=" ">
                                         </div>
                                     </div>
                                 </div>
@@ -199,10 +205,10 @@
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Título de la seccion sobre nosotros">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Titulo sobre nosotros: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Título de la seccion sobre nosotros">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Titulo sobre nosotros: </label>
                                             <div class="input-group">
                                                 <textarea name="titulo_sobre_nosotros" class="form-control" style="resize:none;" cols="20" rows="5">{{ $titulo_sobre_nosotros }}</textarea>
                                             </div>
@@ -210,10 +216,10 @@
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Texto 1 seccion sobre nosotros">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Texto 1 sobre nosotros: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Texto 1 seccion sobre nosotros">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Texto 1 sobre nosotros: </label>
                                             <div class="input-group">
                                                 <textarea name="texto_1_sobre_nosotros" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_1_sobre_nosotros }}</textarea>
                                             </div>
@@ -221,10 +227,10 @@
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Texto 2 seccion sobre nosotros">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Texto 2 sobre nosotros: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Texto 2 seccion sobre nosotros">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Texto 2 sobre nosotros: </label>
                                             <div class="input-group">
                                                 <textarea name="texto_2_sobre_nosotros" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_2_sobre_nosotros }}</textarea>
                                             </div>
@@ -232,12 +238,13 @@
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="titulo sobre texto 3 seccion sobre nosotros">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Título texto 3 sobre nosotros: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="titulo sobre texto 3 seccion sobre nosotros">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Título texto 3 sobre nosotros: </label>
                                             <div class="input-group">
-                                                <textarea name="titulo_texto_3_sobre_nosotros" class="form-control" style="resize:none;" cols="20" rows="5">{{ $titulo_texto_3_sobre_nosotros }}</textarea>
+                                                <textarea name="titulo_texto_3_sobre_nosotros" class="form-control" style="resize:none;" cols="20"
+                                                    rows="5">{{ $titulo_texto_3_sobre_nosotros }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -245,10 +252,10 @@
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Texto 3 seccion sobre nosotros">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Texto 3 sobre nosotros: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Texto 3 seccion sobre nosotros">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Texto 3 sobre nosotros: </label>
                                             <div class="input-group">
                                                 <textarea name="texto_3_sobre_nosotros" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_3_sobre_nosotros }}</textarea>
                                             </div>
@@ -256,21 +263,22 @@
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="titulo sobre texto 4 seccion sobre nosotros">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Título texto 4 sobre nosotros: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="titulo sobre texto 4 seccion sobre nosotros">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Título texto 4 sobre nosotros: </label>
                                             <div class="input-group">
-                                                <textarea name="titulo_texto_4_sobre_nosotros" class="form-control" style="resize:none;" cols="20" rows="5">{{ $titulo_texto_4_sobre_nosotros }}</textarea>
+                                                <textarea name="titulo_texto_4_sobre_nosotros" class="form-control" style="resize:none;" cols="20"
+                                                    rows="5">{{ $titulo_texto_4_sobre_nosotros }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Texto 4 seccion sobre nosotros">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Texto 4 sobre nosotros: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Texto 4 seccion sobre nosotros">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Texto 4 sobre nosotros: </label>
                                             <div class="input-group">
                                                 <textarea name="texto_4_sobre_nosotros" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_4_sobre_nosotros }}</textarea>
                                             </div>
@@ -280,13 +288,14 @@
                                         <div class="col-md-4">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Imagen al lado del texto en la seccion sobre nosotros">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Imagen sobre nosotros: </label>
-                                                <input type="file" id="imagen_sobre_nosotros" name="imagen_sobre_nosotros" class="form-control">
-                                                <img id="previewImagenSobreNosotros" width="200" height="200"
-                                                    src="{{ asset($imagen_sobre_nosotros) }}" alt=" ">
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Imagen al lado del texto en la seccion sobre nosotros">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Imagen sobre nosotros: </label>
+                                            <input type="file" id="imagen_sobre_nosotros" name="imagen_sobre_nosotros"
+                                                class="form-control">
+                                            <img id="previewImagenSobreNosotros" width="200" height="200"
+                                                src="{{ asset($imagen_sobre_nosotros) }}" alt=" ">
                                         </div>
                                     </div>
                                 </div>
@@ -296,10 +305,10 @@
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Título de la  seccion historia en sobre nosotros">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Titulo historia: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Título de la  seccion historia en sobre nosotros">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Titulo historia: </label>
                                             <div class="input-group">
                                                 <textarea name="titulo_historia" class="form-control" style="resize:none;" cols="20" rows="5">{{ $titulo_historia }}</textarea>
                                             </div>
@@ -307,23 +316,24 @@
                                         <div class="col-md-4">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Imagen de fondo que tendra la seccion historia en sobre nosotros">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Imagen de fondo historia: </label>
-                                                <input type="file" id="imagen_fondo_historia" name="imagen_fondo_historia" class="form-control">
-                                                <img id="previewImagenFondoHistoria" width="200" height="200"
-                                                    src="{{ asset($imagen_fondo_historia) }}" alt=" ">
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Imagen de fondo que tendra la seccion historia en sobre nosotros">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Imagen de fondo historia: </label>
+                                            <input type="file" id="imagen_fondo_historia" name="imagen_fondo_historia"
+                                                class="form-control">
+                                            <img id="previewImagenFondoHistoria" width="200" height="200"
+                                                src="{{ asset($imagen_fondo_historia) }}" alt=" ">
                                         </div>
                                     </div>
                                     <div class="row" style="width: 100% !important;">
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Texto 1 de la seccion historia">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Texto 1 historia: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Texto 1 de la seccion historia">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Texto 1 historia: </label>
                                             <div class="input-group">
                                                 <textarea name="texto_1_historia" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_1_historia }}</textarea>
                                             </div>
@@ -331,10 +341,10 @@
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Texto 2 de la seccion historia">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Texto 2 historia: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Texto 2 de la seccion historia">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Texto 2 historia: </label>
                                             <div class="input-group">
                                                 <textarea name="texto_2_historia" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_2_historia }}</textarea>
                                             </div>
@@ -342,10 +352,10 @@
                                         <div class="col-md-3">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Texto 3 de la seccion historia">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Texto 3 historia: </label>
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Texto 3 de la seccion historia">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Texto 3 historia: </label>
                                             <div class="input-group">
                                                 <textarea name="texto_3_historia" class="form-control" style="resize:none;" cols="20" rows="5">{{ $texto_3_historia }}</textarea>
                                             </div>
@@ -353,17 +363,31 @@
                                         <div class="col-md-4">
                                             <br>
                                             <label><button type="button" class="btn p-2" style="border:none"
-                                                data-toggle="tooltip" data-placement="top"
-                                                title="Imagen al lado del texto de la seccion historia">
-                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                            </button>Imagen texto historia: </label>
-                                                <input type="file" id="imagen_texto_historia" name="imagen_texto_historia" class="form-control">
-                                                <img id="previewImagenTextoHistoria" width="200" height="200"
-                                                    src="{{ asset($imagen_texto_historia) }}" alt=" ">
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Imagen al lado del texto de la seccion historia">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                </button>Imagen texto historia: </label>
+                                            <input type="file" id="imagen_texto_historia" name="imagen_texto_historia"
+                                                class="form-control">
+                                            <img id="previewImagenTextoHistoria" width="200" height="200"
+                                                src="{{ asset($imagen_texto_historia) }}" alt=" ">
                                         </div>
                                     </div>
                                 </div>
                                 <hr>
+
+                                <h4>Tema predeterminado </h4>
+                                <BR>
+                                <div class="row">
+                                    <div class="col-md-3">
+
+
+                                        <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
+                                            style="background-color: {{ $boton_actualizar }}; color:white;"
+                                            class="btn" href="{{ route('setDefaultTheme') }}">Default</a>
+                                    </div>
+                                </div>
+                                <br>
                                 <h4>Colores del sitio web</h4>
                                 <br>
                                 <div class="row">
@@ -919,7 +943,5 @@
             });
             reader.readAsDataURL(file);
         });
-
-        
     </script>
 @endsection

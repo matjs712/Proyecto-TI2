@@ -190,6 +190,8 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('configuracion', [DashboardController::class, 'configuracion']);
     Route::put('update-general', [DashboardController::class, 'updateConfiguracion']);
     Route::put('update-admin', [DashboardController::class, 'updateCredenciales']);
+    Route::get('set-default-theme', [DashboardController::class, 'setDefaultTheme'])->name('setDefaultTheme');
+
 
     //ROLES Y PERMISOS
     Route::get('roles', [RoleController::class, 'index']);

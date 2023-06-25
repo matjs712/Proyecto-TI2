@@ -215,7 +215,7 @@ class DashboardController extends Controller
             $sobre_nosotros->imagen_sobre_nosotros = $filename;
         }
         $sobre_nosotros->update();
-        
+
         $historia = Configuration::first();
 
         if ($request->hasFile('imagen_fondo_historia')) {
@@ -409,5 +409,37 @@ class DashboardController extends Controller
 
         $user->delete();
         return redirect('/usuarios')->with('status', 'Usuarios eliminado exitosamente.');
+    }
+
+
+    public function setDefaultTheme()
+    {
+        $config = Configuration::find(1);
+
+        $config->update([
+            'color_principal' => '#ffffff',
+            'color_secundario' => '#088178',
+            'color_barra_lateral' => '#343838',
+            'color_fondo_admin' => '#ffffff',
+            'color_barra_horizontal' => '#ffffff',
+            'color_a_tag_sidebar' => '#ffffff',
+            'color_a_tag_hover' => '#008C9E',
+            'color_barra_busqueda' => '#ffffff',
+            'boton_principal_busqueda' => '#EF2B41',
+            'boton_calificacion' => '#F9BF76',
+            'boton_review' => '#8EB2C5',
+            'boton_lista' => '#615375',
+            'boton_carrito' => '#EF2B41',
+            'boton_nuevo' => '#00B4CC',
+            'boton_editar' => '#F2A73D',
+            'boton_eliminar' => '#C22047',
+            'boton_vermas' => '#758918',
+            'boton_actualizar' => '#F2A73D',
+        ]);
+
+
+        return redirect('/configuracion')->with('status', 'Se ha configurado el tema Default en el sistema.');
+
+
     }
 }
