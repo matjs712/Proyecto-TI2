@@ -49,6 +49,13 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
+    public function showRegistrationForm()
+    {
+        logo_sitio();
+        return view('auth.register');
+    }
+
     protected function validator(array $data)
     {
         return Validator::make(
@@ -106,4 +113,5 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ])->assignRole('usuario');
     }
+    
 }

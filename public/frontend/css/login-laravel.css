@@ -173,6 +173,7 @@ a.forgot {
     }
 }
 .is-invalid {
+    font-size: 12px;
     height: 40px;
     display: flex;
     width: 60%;
