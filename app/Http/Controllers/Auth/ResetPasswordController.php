@@ -26,10 +26,6 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    public function showResetForm(){
-        logo_sitio();
-        return view('auth.passwords.reset')->with('token');
-    }
     protected $redirectTo = RouteServiceProvider::HOME;
 
 }

@@ -15,23 +15,24 @@
             <div class="alert alert-success" role="alert">
                 {{ session('status') }}
             </div>
-        @endif
+        @else
         <form method="POST" action="{{ route('password.email') }}">
             @csrf
-            <div class="text-input">
-                <i class="fa-solid fa-envelope"></i>
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Correo electronico">
-
-            </div>
             @error('email')
                 <span class="is-invalid text-input" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
+            <div class="text-input">
+                <i class="fa-solid fa-envelope"></i>
+                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Correo electronico">
+
+            </div>
             <button type="submit" class="login-btn">
                 {{ __('Send Password Reset Link') }}
             </button>
         </form>
+        @endif
     </div>
 </div>
 @endsection
