@@ -49,50 +49,50 @@
 <div class="row">
     <div class="col-md-12 d-flex">
         <div class="col-md-6"><strong>Estado:</strong></div>
-        <div class="col-md-6">{{ $producto->status == 1 ? 'Visible':'No visible' }}</div>
+        <div class="col-md-6">{{ $producto->status == 1 ? 'Visible' : 'No visible' }}</div>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12 d-flex">
         <div class="col-md-6"><strong>Popular:</strong></div>
-        <div class="col-md-6">{{ $producto->trending == 1 ? 'Producto Destacado':'No Destacado' }}</div>
+        <div class="col-md-6">{{ $producto->trending == 1 ? 'Producto Destacado' : 'No Destacado' }}</div>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12 d-flex">
         <div class="col-md-6"><strong>Imagen:</strong></div>
         <div class="col-md-6">
-            <img src=" {{Storage::url('uploads/productos/'.$producto->image)}} " width="100" alt="">
+            <img src=" {{ Storage::url('uploads/productos/' . $producto->image) }} " width="100" alt="">
         </div>
     </div>
 </div>
 <br>
 <div class="row">
     <div class="col-md-12 d-flex">
-        <div class="col-md-3"><strong>Ingredientes:</strong></div>
-        <div class="col-md-3"><strong>Cantidad x u</strong></div>
-        <div class="col-md-3"><strong>Cantidad Total</strong></div>
-        <div class="col-md-3"><strong>Unidad de medida</strong></div>
+        <div class="col-md-3"><strong>Ing:</strong></div>
+        <div class="col-md-3"><strong>Cant./unidad</strong></div>
+        <div class="col-md-3"><strong>Cant. total</strong></div>
+        <div class="col-md-3"><strong>U. de medida</strong></div>
     </div>
     <div class="col-md-12 d-flex">
         <div class="col-md-3 d-flex flex-column">
             @foreach ($producto->ingredientes as $ing)
-            <span>{{ $ing->name }}</span>
+                <span>{{ $ing->name }}</span>
             @endforeach
         </div>
         <div class="col-md-3 d-flex flex-column">
             @foreach ($productoIngrediente as $ing)
-            <span>{{ $ing->cantidad / 2 }} </span>
+                <span>{{ $ing->cantidad / 2 }} </span>
             @endforeach
         </div>
         <div class="col-md-3 d-flex flex-column">
             @foreach ($productoIngrediente as $ing)
-            <span>{{ $ing->cantidad}} </span>
+                <span>{{ $ing->cantidad }} </span>
             @endforeach
         </div>
         <div class="col-md-3 d-flex flex-column">
             @foreach ($producto->ingredientes as $ing)
-            <span>{{ $ing->medida }}</span>
+                <span>{{ $ing->medida }}</span>
             @endforeach
         </div>
     </div>

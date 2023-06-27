@@ -78,7 +78,7 @@
                                 <button class="input-group-text decrement-btn bg-white"
                                     style="border:none;border-radius:15px">-</button>
                                 <input type="text" name="qty" value="1" class="form-control qty-input"
-                                    style="border:none;">
+                                    style="border:none">
                                 <button class="input-group-text
                                     increment-btn bg-white"
                                     style="border:none; border-radius:15px">+</button>
@@ -86,7 +86,7 @@
                             @if ($producto->qty > 0)
                                 <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
                                     style="background-color: {{ $boton_carrito }}; color:white;"
-                                    class="btn my-1 mr-2 float-start addCartBtn  mr-2"><i class="fa fa-cart-plus"
+                                    class="btn my-1 mr-2 float-start addCartBtn  mr-2"><i class="fa fa-cart-plus mr-1"
                                         aria-hidden="true"></i>Añadir al Carrito</button>
                             @endif
                             <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
@@ -100,7 +100,7 @@
                             <a onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
                                 style="border-color: {{ $boton_review }}; color:{{ $boton_review }};"
                                 href="{{ url('add-review/' . $producto->slug . '/userreview') }}" class="btn my-1"><i
-                                    class="fas fa-book    "></i> Añadir Review</a>
+                                    class="fas fa-book"></i> Añadir Review</a>
                         </div>
 
                     </div>

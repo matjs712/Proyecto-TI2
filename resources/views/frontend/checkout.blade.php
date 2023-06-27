@@ -61,7 +61,9 @@
                                     <label for="">Numero de teléfono</label>
                                     <input type="text" name="telefono"
                                         value="{{ Auth::check() ? Auth::user()->telefono : '' }}"
-                                        class="phone form-control" placeholder="9 12345678" value="{{ old('telefono') }}">
+                                        class="phone form-control" placeholder="912345678"
+                                        value="{{ old('telefono') }}"oninput="restrictLength(this, 9)">
+
                                     @if ($errors->has('telefono'))
                                         <span class="error text-danger"
                                             for="input-name">{{ $errors->first('telefono') }}</span>
@@ -172,4 +174,13 @@
             </div>
         </form>
     </div>
+@endsection
+@section('after_scripts')
+    <script>
+        function restrictLength(element, maxLength) {
+            if (element.value.length > maxLength) {
+                element.value = element.value.slice(0, maxLength);
+            }
+        }
+    </script>
 @endsection
