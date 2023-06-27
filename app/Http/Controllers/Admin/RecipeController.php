@@ -60,6 +60,7 @@ class RecipeController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
         if (!$validator->fails()) {
+            session()->flash('loading', true);
             try {
 
                 $receta = new Recipe();

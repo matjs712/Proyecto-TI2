@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Logo;
@@ -87,6 +88,7 @@ class CategoryController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
         if (!$validator->fails()) {
+            session()->flash('loading', true);
             try {
 
                 $categoria = new Category();

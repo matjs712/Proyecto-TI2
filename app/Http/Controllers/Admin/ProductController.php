@@ -101,7 +101,7 @@ class ProductController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
         if (!$validator->fails()) {
-
+            session()->flash('loading', true);
             try {
                 $producto = new Product();
                 $ingredientes = Ingrediente::all();

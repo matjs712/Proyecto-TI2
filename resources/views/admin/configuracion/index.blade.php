@@ -28,7 +28,8 @@
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                             aria-labelledby="v-pills-home-tab">
-                            <form action="{{ url('update-general') }}" method="POST" enctype="multipart/form-data">
+                            <form id="myForm" action="{{ url('update-general') }}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
@@ -714,14 +715,22 @@
                                 </div>
                                 <br>
 
-                                <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
+                                <button id="btn-submit" onmouseover="this.style.opacity='0.9'"
+                                    onmouseout="this.style.opacity='1'"
                                     style="background-color: {{ $boton_actualizar }}; color:white;" type="submit"
-                                    class="mt-4 btn">Actualizar</button>
+                                    class="mt-4 btn">
+                                    @if (session('loading'))
+                                        Cargando...
+                                    @else
+                                        Actualizar
+                                    @endif
+                                </button>
                             </form>
                         </div>
                         <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
                             aria-labelledby="v-pills-profile-tab">
-                            <form action="{{ url('update-admin') }}" method="POST" enctype="multipart/form-data">
+                            <form id="myForm2" action="{{ url('update-admin') }}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group d-flex align-items-center flex-wrap">
@@ -747,9 +756,16 @@
                                     <label for="logo">Verificar contraseña</label>
                                     <input type="password" name="passConf" class="form-control">
                                 </div>
-                                <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
+                                <button id="btn-submit2" onmouseover="this.style.opacity='0.9'"
+                                    onmouseout="this.style.opacity='1'"
                                     style="background-color: {{ $boton_actualizar }}; color:white;" type="submit"
-                                    class="btn">Actualizar</button>
+                                    class="btn">
+                                    @if (session('loading'))
+                                        Cargando...
+                                    @else
+                                        Actualizar
+                                    @endif
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -761,6 +777,14 @@
 
 @section('after_scripts')
     <script src="{{ asset('admin/dist/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') }}"></script>
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function() {
+            document.getElementById('btn-submit').innerHTML = 'Cargando...';
+        });
+        document.getElementById('myForm2').addEventListener('submit', function() {
+            document.getElementById('btn-submit2').innerHTML = 'Cargando...';
+        });
+    </script>
     <script>
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()

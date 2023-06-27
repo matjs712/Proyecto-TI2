@@ -76,7 +76,7 @@ class IngredienteController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if (!$validator->fails()) {
-
+            session()->flash('loading', true);
             DB::beginTransaction();
             try {
                 $ingrediente = new Ingrediente();

@@ -12,10 +12,11 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('admin/plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" />
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css" />
-        
+
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
@@ -53,20 +54,26 @@
             background-color: #07c443 !important;
             color: white !important;
         }
+
         ::-webkit-scrollbar {
-            width: 8px; /* Ancho de la barra de desplazamiento */
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: rgba(128, 128, 128, 0.629); /* Color del pulgar */
-            border-radius: 10px; /* Radio de esquina del pulgar */
+            width: 8px;
+            /* Ancho de la barra de desplazamiento */
         }
 
-        .buttons-collection{
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(128, 128, 128, 0.629);
+            /* Color del pulgar */
+            border-radius: 10px;
+            /* Radio de esquina del pulgar */
+        }
+
+        .buttons-collection {
             margin-bottom: 5% !important;
             margin-left: 10% !important;
             transition: none !important;
         }
-        .dt-button{
+
+        .dt-button {
             transition: none !important;
         }
     </style>
@@ -103,7 +110,8 @@
     {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js">
+    </script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>

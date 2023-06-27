@@ -166,6 +166,7 @@
                 }
             });
         })
+
         $(document).ready(function() {
             $('#tablaNotificacionesOld_length').find('#buttonUpdate').closest('button').css('display', 'none');
         });
@@ -178,6 +179,9 @@
             });
 
             if (ids.length > 0) {
+                var btnSubmit = document.getElementById('buttonUpdate');
+                btnSubmit.textContent = 'Cargando...';
+
                 $.ajax({
                     url: "{{ url('actualizar-notificaciones') }}",
                     type: "POST",
@@ -201,6 +205,7 @@
                         setTimeout(() => {
                             location.reload();
                         }, 2000);
+                        btnSubmit.textContent = 'Actualizar';
                     },
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);

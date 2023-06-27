@@ -116,7 +116,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('insert-category') }}" method="POST" enctype="multipart/form-data">
+                    <form id="myForm" action="{{ url('insert-category') }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
@@ -183,7 +184,13 @@
                             </div>
 
                             <div class="col-md-12 mt-4">
-                                <button type="submit" class="btn btn-primary">Crear</button>
+                                <button id="btn-submit" type="submit" class="btn btn-primary">
+                                    @if (session('loading'))
+                                        Cargando...
+                                    @else
+                                        Crear
+                                    @endif
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -195,53 +202,56 @@
 
 @section('after_scripts')
     <script>
+        document.getElementById('myForm').addEventListener('submit', function() {
+            document.getElementById('btn-submit').innerHTML = 'Cargando...';
+        });
         $(document).ready(function() {
             $('#tablaCategorias').DataTable({
                 responsive: true,
                 "language": spanishLanguage,
                 dom: '<"toolbar">lBfrtip',
-                "buttons": [
-                    {
-                        extend: 'collection',
-                        text: 'Exportar',
-                        buttons: [
-                            {
-                                extend: 'excel',
-                                exportOptions: {
+                "buttons": [{
+                    extend: 'collection',
+                    text: 'Exportar',
+                    buttons: [{
+                            extend: 'excel',
+                            exportOptions: {
                                 columns: [0, 1, 2, 3, 4, 5, 6]
-                                }
+                            }
+                        },
+                        {
+                            extend: 'csv',
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5, 6]
+                            }
+                        },
+                        {
+                            extend: 'pdf',
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5, 6]
                             },
-                            {
-                                extend: 'csv',
-                                exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 6]
-                                }
-                            },
-                            {
-                                extend: 'pdf',
-                                exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 6]
-                                },
-                                customize: function(doc) {
+                            customize: function(doc) {
                                 // Estilos CSS para centrar el contenido
-                                doc.defaultStyle.alignment = 'center'; // Alineación centrada para todo el documento
-                                doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split(''); // Ancho automático de las columnas
+                                doc.defaultStyle.alignment =
+                                    'center'; // Alineación centrada para todo el documento
+                                doc.content[1].table.widths = Array(doc.content[1].table
+                                    .body[0].length + 1).join('*').split(
+                                    ''); // Ancho automático de las columnas
 
                                 // Ajustar estilos de las celdas
                                 doc.styles.tableBodyEven.alignment = 'center';
                                 doc.styles.tableBodyOdd.alignment = 'center';
-                                },
                             },
-                            {
-                                extend: 'print',
-                                text: 'Imprimir',
-                                exportOptions: {
+                        },
+                        {
+                            extend: 'print',
+                            text: 'Imprimir',
+                            exportOptions: {
                                 columns: [0, 1, 2, 3, 4, 5, 6]
-                                }
-                            },
-                        ]
-                    }
-                ],
+                            }
+                        },
+                    ]
+                }],
                 initComplete: function() {
                     @if (isset($urlCrearCategoria))
                         $('<button onmouseover="this.style.opacity=\'0.9\'" onmouseout="this.style.opacity=\'1\'" style="background-color: {{ $boton_nuevo }}; color:white;" class="btn ml-4"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryModal"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Agregar categoría</button>')
