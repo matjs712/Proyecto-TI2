@@ -87,7 +87,7 @@
                             @if ($producto->qty > 0)
                                 <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
                                     style="background-color: {{ $boton_carrito }}; color:white;"
-                                    class="btn my-1 mr-2 float-start addCartBtn  mr-2"><i class="fa fa-cart-plus"
+                                    class="btn my-1 mr-2 float-start addCartBtn  mr-2"><i class="fa fa-cart-plus mr-1"
                                         aria-hidden="true"></i>Añadir al Carrito</button>
                             @endif
                             <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
