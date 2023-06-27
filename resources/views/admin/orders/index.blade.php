@@ -111,6 +111,49 @@
             $('#tablaOrdenesOld').DataTable({
                 responsive: true,
                 "language": spanishLanguage,
+                dom: '<"toolbar">lBfrtip',
+                "buttons": [
+                    {
+                        extend: 'collection',
+                        text: 'Exportar',
+                        buttons: [
+                            {
+                                extend: 'excel',
+                                exportOptions: {
+                                columns: [0, 1, 2, 3, 4]
+                                }
+                            },
+                            {
+                                extend: 'csv',
+                                exportOptions: {
+                                columns: [0, 1, 2, 3, 4]
+                                }
+                            },
+                            {
+                                extend: 'pdf',
+                                exportOptions: {
+                                columns: [0, 1, 2, 3, 4]
+                                },
+                                customize: function(doc) {
+                                // Estilos CSS para centrar el contenido
+                                doc.defaultStyle.alignment = 'center'; // Alineación centrada para todo el documento
+                                doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split(''); // Ancho automático de las columnas
+
+                                // Ajustar estilos de las celdas
+                                doc.styles.tableBodyEven.alignment = 'center';
+                                doc.styles.tableBodyOdd.alignment = 'center';
+                                },
+                            },
+                            {
+                                extend: 'print',
+                                text: 'Imprimir',
+                                exportOptions: {
+                                columns: [0, 1, 2, 3, 4]
+                                }
+                            },
+                        ]
+                    }
+                ],
             });
         })
     </script>
@@ -119,6 +162,49 @@
             $('#tablaOrdenes').DataTable({
                 responsive: true,
                 "language": spanishLanguage,
+                dom: '<"toolbar">lBfrtip',
+                "buttons": [
+                    {
+                        extend: 'collection',
+                        text: 'Exportar',
+                        buttons: [
+                            {
+                                extend: 'excel',
+                                exportOptions: {
+                                columns: [0, 1, 2, 3, 4]
+                                }
+                            },
+                            {
+                                extend: 'csv',
+                                exportOptions: {
+                                columns: [0, 1, 2, 3, 4]
+                                }
+                            },
+                            {
+                                extend: 'pdf',
+                                exportOptions: {
+                                columns: [0, 1, 2, 3, 4]
+                                },
+                                customize: function(doc) {
+                                // Estilos CSS para centrar el contenido
+                                doc.defaultStyle.alignment = 'center'; // Alineación centrada para todo el documento
+                                doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split(''); // Ancho automático de las columnas
+
+                                // Ajustar estilos de las celdas
+                                doc.styles.tableBodyEven.alignment = 'center';
+                                doc.styles.tableBodyOdd.alignment = 'center';
+                                },
+                            },
+                            {
+                                extend: 'print',
+                                text: 'Imprimir',
+                                exportOptions: {
+                                columns: [0, 1, 2, 3, 4]
+                                }
+                            },
+                        ]
+                    }
+                ],
             });
         })
     </script>

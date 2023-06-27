@@ -65,9 +65,9 @@ class FrontendController extends Controller
         return response()->json($products);
     }
     public function OrdenesNuevas(){
-        $products = Order::whereDate('created_at', Carbon::today())->count();
+        $orders = Order::whereDate('created_at', Carbon::today())->count();
         
-        return response()->json($products);
+        return response()->json($orders);
     }
     public function IngresosMes(){
         $orders = Order::Select('id','total_price', 'created_at')->get();
@@ -120,7 +120,8 @@ class FrontendController extends Controller
         return json_encode($jsonData);
     }
     public function IngresosDiarios(){
-        $orders = Order::Select('id','total_price', 'created_at')->get();
+        $orders = Order::Select('id','total_price', 'created_at')->whereDate('created_at', Carbon::today())->get();
+        
         $groupedOrders = [];
 
         foreach ($orders as $order) {
@@ -134,7 +135,6 @@ class FrontendController extends Controller
         }
 
         $jsonData = [];
-
         foreach ($groupedOrders as $date => $orders) {
             $jsonData[] = [
                 'fecha' => $date,

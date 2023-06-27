@@ -24,6 +24,7 @@
                     <tr class="text-center">
                         <th>Id</th>
                         <th>Nombre</th>
+                        <th>Apellido</th>
                         <th>Email</th>
                         <th>Teléfono</th>
                         <th>Opciones</th>
@@ -34,6 +35,7 @@
                         <tr class="text-center">
                             <td scope="row">{{ $user->id }}</td>
                             <td>{{ $user->name }}</td>
+                            <td>{{ $user->lname }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->telefono }}</td>
                             <td>
@@ -132,6 +134,7 @@
             </div>
         </div>
     </div>
+    
 @endsection
 
 @section('after_scripts')
@@ -140,13 +143,58 @@
             $('#tablaUsuarios').DataTable({
                 responsive: true,
                 "language": spanishLanguage,
+                dom: '<"toolbar">lBfrtip',
+                "buttons": [
+                    {
+                        extend: 'collection',
+                        text: 'Exportar',
+                        buttons: [
+                            {
+                                extend: 'excel',
+                                exportOptions: {
+                                columns: [0, 1, 2, 3, 4]
+                                }
+                            },
+                            {
+                                extend: 'csv',
+                                exportOptions: {
+                                columns: [0, 1, 2, 3, 4]
+                                }
+                            },
+                            {
+                                extend: 'pdf',
+                                exportOptions: {
+                                columns: [0, 1, 2, 3, 4]
+                                },
+                                customize: function(doc) {
+                                // Estilos CSS para centrar el contenido
+                                doc.defaultStyle.alignment = 'center'; // Alineación centrada para todo el documento
+                                doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split(''); // Ancho automático de las columnas
+
+                                // Ajustar estilos de las celdas
+                                doc.styles.tableBodyEven.alignment = 'center';
+                                doc.styles.tableBodyOdd.alignment = 'center';
+                                },
+                            },
+                            {
+                                extend: 'print',
+                                text: 'Imprimir',
+                                exportOptions: {
+                                columns: [0, 1, 2, 3, 4]
+                                }
+                            },
+                        ]
+                    }
+                ],
                 initComplete: function() {
                     @if (isset($urlCrearUsuario))
                         $('<button onmouseover="this.style.opacity=\'0.9\'" onmouseout="this.style.opacity=\'1\'" style="background-color: {{ $boton_nuevo }}; color:white;" class="btn ml-4"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarUsuarioModal"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Agregar usuario</button>')
-                            .appendTo('.dataTables_length');
+                            .appendTo('div.toolbar');
                     @endif
                 }
             });
         })
+
     </script>
+    
 @endsection
