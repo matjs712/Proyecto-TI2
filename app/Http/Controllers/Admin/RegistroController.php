@@ -81,7 +81,7 @@ class RegistroController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if (!$validator->fails()) {
-
+            session()->flash('loading', true);
             try {
                 $registro = new Registro();
 
@@ -108,9 +108,9 @@ class RegistroController extends Controller
                 $registro->id_ingrediente = $request->input('id_ingrediente');
 
                 $registro->medida = $request->input('medida');
-                if($medida == 'kilogramos'){
+                if ($registro->medida == 'kilogramos') {
                     $registro->cantidad = $request->input('cantidad') * 1000;
-                } else{
+                } else {
                     $registro->cantidad = $request->input('cantidad');
                 }
                 $registro->medida = 'gramos';
@@ -129,12 +129,15 @@ class RegistroController extends Controller
                 $notifications->save();
 
                 DB::commit();
+                session()->flash('loading', false);
                 return redirect('/registros')->with('status', 'Registro añadido exitosamente!.');
             } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
+                session()->flash('loading', false);
                 return back()->withErrors($validator)->withInput();
             }
         }
+        session()->flash('loading', false);
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
 
@@ -178,20 +181,16 @@ class RegistroController extends Controller
             'id_ingrediente' => 'required',
             'cantidad' => 'required|integer',
             'medida' => 'required',
-            'factura' => 'required'
-
-
+            // 'factura' => 'required'
         ];
 
         $messages = [
             'required' => 'El campo es requerido.',
-
-
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if (!$validator->fails()) {
-
+            session()->flash('loading', true);
             try {
 
                 $registro = Registro::find($id);
@@ -218,19 +217,16 @@ class RegistroController extends Controller
                     $registro->factura = $filename;
                 }
 
-
-
                 $ingrediente = Ingrediente::find($request->input('id_ingrediente'));
 
-
                 $registro->medida = $request->input('medida');
-                if($medida == 'kilogramos'){
+                if ($registro->medida == 'kilogramos') {
                     $nuevaCantidad = $request->input('cantidad') * 1000;
-                } else{
+                } else {
                     $nuevaCantidad = $request->input('cantidad');
                 }
 
-                
+
                 if ($nuevaCantidad < $registro->cantidad) {
                     $ingrediente->decrement('cantidad', $registro->cantidad - $nuevaCantidad);
                 } else if ($nuevaCantidad > $registro->cantidad) {
@@ -247,12 +243,15 @@ class RegistroController extends Controller
 
                 $registro->update();
                 DB::commit();
+                session()->flash('loading', false);
                 return redirect('/registros')->with('status', 'Registro Editado exitosamente!.');
             } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
+                session()->flash('loading', false);
                 return back()->withErrors($validator)->withInput();
             }
         }
+        session()->flash('loading', false);
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
 

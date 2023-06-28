@@ -78,10 +78,10 @@ class ProductController extends Controller
             'slug' => 'required||unique:products',
             'description' => 'required',
             'small_description' => 'required',
-            'price' => 'required',
+            'price' => 'required|gt:0',
             'selling_price' => 'required',
             'image' => 'required|image|mimes:jpg,png',
-            'qty' => 'required',
+            'qty' => 'required|gt:0',
         ];
 
         $messages = [
@@ -97,11 +97,14 @@ class ProductController extends Controller
             'image.image' => 'El archivo debe ser una imagen.',
             'image.mimes' => 'El archivo debe tener un formato de imagen válido (jpg, png).',
             'qty.required' => 'La cantidad es obligatoria.',
+            'qty.gt' => 'La cantidad tiene que ser un número positivo.',
+            'price.gt' => 'El precio tiene que tener un valor positivo.',
+
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
         if (!$validator->fails()) {
-
+            session()->flash('loading', true);
             try {
                 $producto = new Product();
                 $ingredientes = Ingrediente::all();
@@ -207,12 +210,15 @@ class ProductController extends Controller
                 $notifications->save();
 
                 DB::commit();
+                session()->flash('loading', false);
                 return redirect('/productos')->with('status', 'Producto añadido exitosamente!.');
             } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
+                session()->flash('loading', false);
                 return back()->withErrors($validator)->withInput();
             }
         }
+        session()->flash('loading', false);
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
 
@@ -264,10 +270,10 @@ class ProductController extends Controller
             'slug' => ['required', Rule::unique('products')->ignore($products->id)],
             'description' => 'required',
             'small_description' => 'required',
-            'price' => 'required',
+            'price' => 'required|gt:0',
             'selling_price' => 'required',
-            'image' => 'required|image|mimes:jpg,png',
-            'qty' => 'required',
+            'image' => 'image|mimes:jpg,png',
+            'qty' => 'required|gt:0',
 
         ];
 
@@ -277,9 +283,13 @@ class ProductController extends Controller
             'mimes' => 'Solo se adminten los siguientes formatos :mimes.',
             'slug.required' => 'El slug es obligatorio.',
             'slug.unique' => 'El slug ya ha sido utilizado por otro producto.',
+            'qty.gt' => 'La cantidad tiene que ser un número positivo.',
+            'price.gt' => 'El precio tiene que tener un valor positivo.',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
+
         if (!$validator->fails()) {
+            session()->flash('loading', true);
             try {
                 $producto = Product::find($id);
                 $ingredientesCount = count(preg_grep('/^ingrediente/', array_keys($request->all())));
@@ -441,17 +451,16 @@ class ProductController extends Controller
                     }
                 }
 
-
-
-
                 DB::commit();
-
+                session()->flash('loading', false);
                 return redirect('/productos')->with('status', 'Producto Editado exitosamente!.');
             } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
+                session()->flash('loading', false);
                 return back()->withErrors($validator)->withInput();
             }
         }
+        session()->flash('loading', false);
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
 

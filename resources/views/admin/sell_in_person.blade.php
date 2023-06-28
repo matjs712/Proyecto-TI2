@@ -133,7 +133,8 @@
                 // frequency: 10,
                 decoder: {
                     readers: [
-                        "code_128_reader"] // Puedes agregar otros tipos de lectores según tus necesidades
+                        "code_128_reader"
+                    ] // Puedes agregar otros tipos de lectores según tus necesidades
                 }
             }, function(err) {
                 if (err) {
@@ -379,7 +380,7 @@
                                                     headers: {
                                                         'X-CSRF-TOKEN': $(
                                                             'meta[name="csrf-token"]'
-                                                            ).attr('content')
+                                                        ).attr('content')
                                                     }
                                                 }),
                                                 $.ajax({
@@ -439,7 +440,6 @@
         });
 
         $('#completarPago').click(function(e) {
-            $('#qrModal').modal('hide');
             Swal.fire({
                 title: 'Estas seguro?',
                 text: "La orden estará pagada!",

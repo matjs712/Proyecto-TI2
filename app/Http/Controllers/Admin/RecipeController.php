@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+
+use App\Models\Logo;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -58,6 +60,7 @@ class RecipeController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
         if (!$validator->fails()) {
+            session()->flash('loading', true);
             try {
 
                 $receta = new Recipe();
@@ -66,12 +69,15 @@ class RecipeController extends Controller
                 $receta->description = $request->input('description');
                 $receta->save();
                 DB::commit();
+                session()->flash('loading', false);
                 return redirect('/recetas')->with('status', 'Receta añadida exitosamente!.');
             } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
+                session()->flash('loading', false);
                 return back()->withErrors($validator)->withInput();
             }
         }
+        session()->flash('loading', false);
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
 

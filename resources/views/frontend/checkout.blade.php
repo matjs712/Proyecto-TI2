@@ -44,11 +44,7 @@
                                         <span class="error text-danger"
                                             for="input-name">{{ $errors->first('lname') }}</span>
                                     @endif
-                                    <span style="color:red" id="lname_error"></span>
                                 </div>
-                                <div class="col-md-6 mt-3">
-                                    <label for="">Email</label>
-                                    <input type="text" name="email"
                                         value="{{ Auth::check() ? Auth::user()->email : '' }}" class="email form-control"
                                         placeholder="email@gmail.com" value="{{ old('email') }}">
                                     @if ($errors->has('email'))
@@ -61,7 +57,9 @@
                                     <label for="">Numero de teléfono</label>
                                     <input type="text" name="telefono"
                                         value="{{ Auth::check() ? Auth::user()->telefono : '' }}"
-                                        class="phone form-control" placeholder="9 12345678" value="{{ old('telefono') }}">
+                                        class="phone form-control" placeholder="912345678"
+                                        value="{{ old('telefono') }}"oninput="restrictLength(this, 9)">
+
                                     @if ($errors->has('telefono'))
                                         <span class="error text-danger"
                                             for="input-name">{{ $errors->first('telefono') }}</span>
@@ -76,7 +74,7 @@
                                         value="{{ old('direccion1') }}">
                                     @if ($errors->has('direccion1'))
                                         <span class="error text-danger"
-                                            for="input-name">{{ $errors->first('dirrecion1') }}</span>
+                                            for="input-name">{{ $errors->first('direccion1') }}</span>
                                     @endif
                                     <span style="color:red" id="direccion1_error"></span>
                                 </div>
@@ -88,32 +86,27 @@
                                         value="{{ old('direccion2') }}">
                                     @if ($errors->has('direccion2'))
                                         <span class="error text-danger"
-                                            for="input-name">{{ $errors->first('dirrecion2') }}</span>
+                                            for="input-name">{{ $errors->first('direccion2') }}</span>
                                     @endif
                                     <span style="color:red" id="direccion2_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Región</label>
-                                    <input type="text" name="region"
-                                        value="{{ Auth::check() ? Auth::user()->region : '' }}" class="region form-control"
-                                        placeholder="Metropolitana" value="{{ old('region') }}">
+                                    <select name="region" id="regiones"class="region form-control"></select>
                                     @if ($errors->has('region'))
                                         <span class="error text-danger"
                                             for="input-name">{{ $errors->first('region') }}</span>
                                     @endif
-                                    <span style="color:red" id="region_error"></span>
+                                    <span style="color:red" id="region"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Ciudad</label>
-                                    <input type="text" name="ciudad"
-                                        value="{{ Auth::check() ? Auth::user()->ciudad : '' }}"
-                                        class="ciudad form-control" placeholder="Metropolitana"
-                                        value="{{ old('ciudad') }}">
+                                    <select name="ciudad" id="ciudades" class="ciudad form-control" onchange="llenarInputs()"></select>
                                     @if ($errors->has('ciudad'))
                                         <span class="error text-danger"
                                             for="input-name">{{ $errors->first('ciudad') }}</span>
                                     @endif
-                                    <span style="color:red" id="ciudad_error"></span>
+                                    <span style="color:red" id="ciudad"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Comuna</label>
@@ -172,4 +165,21 @@
             </div>
         </form>
     </div>
+@endsection
+@section('after_scripts')
+    <script>
+        function restrictLength(element, maxLength) {
+            if (element.value.length > maxLength) {
+                element.value = element.value.slice(0, maxLength);
+            }
+        }
+    </script>
+    <script type="text/javascript" src="{{ asset('js/regiones.js') }}"></script>
+    <script type="text/javascript">
+        function llenarInputs(){
+            nombreSelec = document.getElementeById("ciudades"); 
+            comuna = document.getElementeById("comuna");
+            comuna.value = nombreSelec.options[nombreSelec.selectedIndex].text;
+        }
+        </script>
 @endsection

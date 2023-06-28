@@ -21,7 +21,7 @@
                         <div class="form-group">
                             <label for="name">Nombre</label>
                             <input type="text" name="name" value="{{ $ingrediente->name }}" class="form-control"
-                                placeholder="Poleras">
+                                placeholder="Sales">
                             @if ($errors->has('name'))
                                 <span class="error text-danger" for="input-name">{{ $errors->first('name') }}</span>
                             @endif
@@ -52,11 +52,24 @@
 
 
                     <div class="col-md-12 mt-4">
-                        <button type="submit" class="btn btn-primary">Editar</button>
+                        <button id="btn-submit" type="submit" class="btn btn-primary">
+                            @if (session('loading') == true)
+                                Cargando...
+                            @else
+                                Actualizar
+                            @endif
+                        </button>
                     </div>
 
                 </div>
             </form>
         </div>
     </div>
+@endsection
+@section('after_scripts')
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function() {
+            document.getElementById('btn-submit').innerHTML = 'Cargando...';
+        });
+    </script>
 @endsection

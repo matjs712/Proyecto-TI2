@@ -49,12 +49,20 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
+    public function showRegistrationForm()
+    {
+        logo_sitio();
+        return view('auth.register');
+    }
+
     protected function validator(array $data)
     {
         return Validator::make(
             $data,
             [
                 'name' => ['required', 'string', 'max:255'],
+                'lname' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'string', 'min:8'],
                 'password_confirmation' => ['required', 'min:8', 'max:50', 'same:password'],
@@ -92,15 +100,18 @@ class RegisterController extends Controller
     {
 
         $notifications = new Notification();
-        $notifications->detalle = 'Se unido el nuevo usuario: ' . $data['name'];
+        $notifications->detalle = 'Se unido el nuevo usuario: ' . $data['name'] . " " . $data['lname'];
         $notifications->id_usuario = 1;
         $notifications->tipo = 0;
         $notifications->save();
 
         return User::create([
             'name' => $data['name'],
+            'lname' => $data['lname'],
             'email' => $data['email'],
+            'telefono' => $data['phone'],
             'password' => Hash::make($data['password']),
         ])->assignRole('usuario');
     }
+    
 }

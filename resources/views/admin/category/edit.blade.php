@@ -14,7 +14,8 @@
                     <a href="#" class="ml-2">Editar categoría</a>
                 </h6>
             </div>
-            <form action="{{ url('update-cat/' . $categoria->id) }}" method="POST" enctype="multipart/form-data">
+            <form id="myForm" action="{{ url('update-cat/' . $categoria->id) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="row">
@@ -22,7 +23,7 @@
                         <div class="form-group">
                             <label for="name">Nombre Categoría</label>
                             <input type="text" name="name" value="{{ $categoria->name }}" class="form-control"
-                                placeholder="Poleras">
+                                placeholder="Sales">
                             @error('name')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -32,7 +33,7 @@
                         <div class="form-group">
                             <label for="slug">Slug</label>
                             <input type="text" name="slug" value="{{ $categoria->slug }}" class="form-control"
-                                placeholder="Poleras">
+                                placeholder="Sales">
                             @error('slug')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -42,7 +43,7 @@
                         <div class="form-group">
                             <label for="descripcion">Descripción</label>
                             <textarea type="text" rows="5" style="resize:none;" name="description" class="form-control"
-                                placeholder="Categoría dedicada solo a peloras de ...">{{ $categoria->description }}</textarea>
+                                placeholder="Sales de mar...">{{ $categoria->description }}</textarea>
                             @error('description')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -78,7 +79,13 @@
                         </div>
                     </div>
                     <div class="col-md-12 mt-4">
-                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                        <button id="btn-submit" type="submit" class="btn btn-primary">
+                            @if (session('loading') == true)
+                                Cargando...
+                            @else
+                                Actualizar
+                            @endif
+                        </button>
                     </div>
                 </div>
             </form>
@@ -87,6 +94,11 @@
     </div>
 @endsection
 @section('after_scripts')
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function() {
+            document.getElementById('btn-submit').innerHTML = 'Cargando...';
+        });
+    </script>
     <script>
         const input = document.querySelector('#image');
         const preview = document.querySelector('#preview');

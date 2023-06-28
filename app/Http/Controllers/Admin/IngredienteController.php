@@ -61,7 +61,7 @@ class IngredienteController extends Controller
         $rules = [
 
             'name' => 'required|string|min:3',
-            'cantidad' => 'required|numeric',
+            'cantidad' => 'required|numeric|gt:0',
             'medida' => 'required',
         ];
 
@@ -70,21 +70,22 @@ class IngredienteController extends Controller
             'required' => 'El campo es requerido.',
             'min' => 'El campo debe tener al menos :min caracteres.',
             'numeric' => 'El campo debe ser númerico',
+            'cantidad.gt' => 'La cantidad tiene que ser un número positivo.',
 
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if (!$validator->fails()) {
-
-
+            session()->flash('loading', true);
+            DB::beginTransaction();
             try {
                 $ingrediente = new Ingrediente();
 
                 $ingrediente->name = $request->input('name');
                 $ingrediente->medida = $request->input('medida');
-                if($ingrediente->medida == 'kilogramos'){
-                    $ingrediente->cantidad = $request->input('cantidad')*1000;
+                if ($ingrediente->medida == 'kilogramos') {
+                    $ingrediente->cantidad = $request->input('cantidad') * 1000;
                 } else {
                     $ingrediente->cantidad = $request->input('cantidad');
                 }
@@ -133,7 +134,7 @@ class IngredienteController extends Controller
         $rules = [
 
             'name' => 'required|string|min:3',
-            'cantidad' => 'required',
+            'cantidad' => 'required|numeric|gt:0',
             'medida' => 'required',
         ];
 
@@ -141,7 +142,7 @@ class IngredienteController extends Controller
 
             'required' => 'El campo es requerido.',
             'min' => 'El campo debe tener al menos :min caracteres.',
-
+            'cantidad.gt' => 'La cantidad tiene que ser un número positivo.',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -154,17 +155,17 @@ class IngredienteController extends Controller
 
                 $ingrediente->name = $request->input('name');
                 $ingrediente->medida = $request->input('medida');
-                if($ingrediente->medida == 'kilogramos'){
-                    $ingrediente->cantidad = $request->input('cantidad')*1000;
+                if ($ingrediente->medida == 'kilogramos') {
+                    $ingrediente->cantidad = $request->input('cantidad') * 1000;
                 } else {
                     $ingrediente->cantidad = $request->input('cantidad');
                 }
                 $ingrediente->medida = 'gramos';
                 $ingrediente->update();
 
-                if($ingrediente->cantidad <= 1000){
+                if ($ingrediente->cantidad <= 1000) {
                     $notifications = new Notification();
-                    $notifications->detalle = 'Ingrediente: ' . $ingrediente->name. ' en estado crítico, solo quedan '. $ingrediente->cantidad.' '.$ingrediente->medida;
+                    $notifications->detalle = 'Ingrediente: ' . $ingrediente->name . ' en estado crítico, solo quedan ' . $ingrediente->cantidad . ' ' . $ingrediente->medida;
                     $notifications->id_usuario = Auth::id();
                     $notifications->tipo = 2;
                     $notifications->save();

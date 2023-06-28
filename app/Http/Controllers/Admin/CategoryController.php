@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Logo;
@@ -87,6 +88,7 @@ class CategoryController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
         if (!$validator->fails()) {
+            session()->flash('loading', true);
             try {
 
                 $categoria = new Category();
@@ -176,12 +178,12 @@ class CategoryController extends Controller
             'slug.required' => 'El slug es obligatorio.',
             'slug.unique' => 'El slug ya ha sido utilizado por otra categoría.',
             'description.max' => 'La descripción no debe exceder los 65535 caracteres.',
-            'image.required' => 'La imagen es obligatoria.',
+            // 'image.required' => 'La imagen es obligatoria.',
             'image.image' => 'El archivo seleccionado debe ser una imagen.',
             'image.mimes' => 'La imagen debe tener un formato válido (jpg, jpeg, png o gif).',
             'image.max' => 'La imagen no debe pesar más de 2MB.'
         ]);
-
+        session()->flash('loading', true);
         if ($request->hasFile('image')) {
             $path = storage_path('app/public/uploads/categorias/' . $categoria->imagen);
             if (File::exists($path)) {
@@ -206,7 +208,7 @@ class CategoryController extends Controller
         $categoria->status = $request->input('status') == TRUE ? '1' : '0';
         $categoria->popular = $request->input('popular') == TRUE ? '1' : '0';
         $categoria->update();
-
+        session()->flash('loading', false);
         return redirect('/categorias')->with('status', 'Categoría actualizada exitosamente.');
     }
 
@@ -218,6 +220,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        session()->flash('loading', true);
         $categoria = Category::find($id);
 
         if ($categoria->image) {
@@ -235,7 +238,7 @@ class CategoryController extends Controller
         $notifications->save();
 
         $categoria->delete();
-
+        session()->flash('loading', false);
         return redirect('/categorias')->with('status', 'Categoría eliminada Exitosamente');
     }
 }

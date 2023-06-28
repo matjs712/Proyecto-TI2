@@ -26,11 +26,11 @@ Ordenes | {{ $sitio }}
                             <label>Información de entrega</label>
                             @if($orders->fname != 'No aplica')
                             <div class="border p-2">
-                                {{ $orders->direccion1 }}
-                                {{ $orders->direccion2 }}
-                                {{ $orders->region }}
-                                {{ $orders->ciudad }}
-                                {{ $orders->comuna }}
+                                <strong>{{ $orders->direccion1 }}</strong>,
+                                {{ $orders->direccion2 }} 
+                                {{ $orders->ciudad }}, 
+                                {{ $orders->comuna }}, 
+                                {{ $orders->region }}.
                             </div>
                             @else
                                 <div class="border p-2">

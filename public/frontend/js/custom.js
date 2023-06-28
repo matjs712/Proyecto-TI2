@@ -1,15 +1,28 @@
-$(document).ready(function(){
-const sweet = (response) =>{
-    return Swal.fire({
-        toast: true,
-        position: 'bottom-end',
-        timer: 2000,
-        timerProgressBar: true,
-        icon: 'success',
-        title: `${response.status}`,
-        showConfirmButton: false,
-      })
-}
+$(document).ready(function () {
+    const sweet = (response) => {
+        return Swal.fire({
+            toast: true,
+            position: "bottom-end",
+            timer: 2000,
+            timerProgressBar: true,
+            icon: "success",
+            title: `${response.status}`,
+            showConfirmButton: false,
+        });
+    };
+    const sweetError = (error) => {
+        return Swal.fire({
+            toast: true,
+            position: "bottom-end",
+            timer: 2000,
+            timerProgressBar: true,
+            icon: "warning",
+            title: `${
+                error == "Unauthorized" ? "Inicie sesión para continuar" : error
+            }`,
+            showConfirmButton: false,
+        });
+    };
     loadCart();
     loadWish();
     getQTY();
@@ -41,233 +54,251 @@ const sweet = (response) =>{
     //     event.stopPropagation();
     // });
 
-
-    $('.qty-button').click(function () {
-        $('.qty-count').html('');
+    $(".qty-button").click(function () {
+        $(".qty-count").html("");
     });
-
 
     $.ajaxSetup({
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    })
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
     function getQTY() {
         $.ajax({
-          method: "GET",
-          url: "/notificationsajax",
-          success: function (response) {
-            $('.qty-item').html('');
-            $('.qty-count').html('');
-            var count = 0;
-            var remainingCount = 0;
-            console.log(response);
-            $.each(response, function (key, value) {
-              if (key === '+') {
-                remainingCount = value;
-              } else {
-                count++;
-                var color = 'black';
-                if (value == '1') {
-                  color = 'orange';
-                } else if (value == '2') {
-                  color = 'red';
-                }
-                var linkHTML = '<a href="/notificaciones" class="dropdown-item" style="color: ' + color + '"><div class="media"><div class="media-body"><span>' + key + '</span></div></div></a>';
-                $('.qty-item').append(linkHTML);
-              }
-            });
-      
-            if (remainingCount > 0) {
-                
-              var remainingText = '<a href="/notificaciones" class="dropdown-item text-primary" ><div class="media"><div class="media-body"><span>' + '+' + remainingCount + ' notificaciones restantes'  + '</span></div></div></a>';
-              $('.qty-item').append('<div>' + remainingText + '</div>');
-            }
-      
-            $('.qty-count').html(count);
-          }
-        });
-      }
+            method: "GET",
+            url: "/notificationsajax",
+            success: function (response) {
+                $(".qty-item").html("");
+                $(".qty-count").html("");
+                var count = 0;
+                var remainingCount = 0;
+                console.log(response);
+                $.each(response, function (key, value) {
+                    if (key === "+") {
+                        remainingCount = value;
+                    } else {
+                        count++;
+                        var color = "black";
+                        if (value == "1") {
+                            color = "orange";
+                        } else if (value == "2") {
+                            color = "red";
+                        }
+                        var linkHTML =
+                            '<a href="/notificaciones" class="dropdown-item" style="color: ' +
+                            color +
+                            '"><div class="media"><div class="media-body"><span>' +
+                            key +
+                            "</span></div></div></a>";
+                        $(".qty-item").append(linkHTML);
+                    }
+                });
 
-    $('.addCartBtn').click(function (e) {
-        e.preventDefault()
-        var prod_id = $(this).closest('.prod_data').find('.prod_id').val();
-        var prod_qty = $(this).closest('.prod_data').find('.qty-input').val();
+                if (remainingCount > 0) {
+                    var remainingText =
+                        '<a href="/notificaciones" class="dropdown-item text-primary" ><div class="media"><div class="media-body"><span>' +
+                        "+" +
+                        remainingCount +
+                        " notificaciones restantes" +
+                        "</span></div></div></a>";
+                    $(".qty-item").append("<div>" + remainingText + "</div>");
+                }
+
+                $(".qty-count").html(count);
+            },
+        });
+    }
+
+    $(".addCartBtn").click(function (e) {
+        e.preventDefault();
+        var prod_id = $(this).closest(".prod_data").find(".prod_id").val();
+        var prod_qty = $(this).closest(".prod_data").find(".qty-input").val();
+        let prod_stock = $(this).closest(".prod_data").find(".prod-qty").text();
+
+        if (prod_qty < 1) prod_qty = 1;
+        if (prod_qty > prod_stock) prod_qty = prod_stock;
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        })
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
 
         $.ajax({
             method: "POST",
             url: "/add-to-cart",
             data: {
-                'product_id': prod_id,
-                'product_qty': prod_qty,
+                product_id: prod_id,
+                product_qty: prod_qty,
             },
             success: function (response) {
                 loadCart();
                 sweet(response);
-            }
+            },
+            error: function (xhr, status, error) {
+                sweetError(error);
+            },
         });
-    })
+    });
 
     function loadCart() {
-
         $.ajax({
             method: "GET",
             url: "/load-cart-data",
             success: function (response) {
-                $('.cart-count').html('');
-                $('.cart-count').html(response.count);
-            }
+                $(".cart-count").html("");
+                $(".cart-count").html(response.count);
+            },
         });
     }
     function loadWish() {
-
         $.ajax({
             method: "GET",
             url: "/load-wish-data",
             success: function (response) {
-                $('.wish-count').html('');
-                $('.wish-count').html(response.count);
-            }
+                $(".wish-count").html("");
+                $(".wish-count").html(response.count);
+            },
         });
     }
 
-    $('.addToWishlist').click(function (e) {
-        e.preventDefault()
-        var prod_id = $(this).closest('.prod_data').find('.prod_id').val();
+    $(".addToWishlist").click(function (e) {
+        e.preventDefault();
+        var prod_id = $(this).closest(".prod_data").find(".prod_id").val();
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        })
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
         $.ajax({
             method: "POST",
             url: "/add-to-wishlist",
             data: {
-                'prod_id': prod_id,
+                prod_id: prod_id,
             },
             success: function (response) {
                 loadWish();
                 sweet(response);
-            }
+            },
+            error: function (xhr, status, error) {
+                sweetError(error);
+            },
         });
-    })
-    
-    $('.increment-btn').click(function (e) {
-        e.preventDefault()
+    });
 
-        var inc_value = $(this).closest('.prod_data').find('.qty-input').val();
+    $(".increment-btn").click(function (e) {
+        e.preventDefault();
+        let cantidad = $(this).closest(".prod_data").find(".prod-qty").text();
+        var inc_value = $(this).closest(".prod_data").find(".qty-input").val();
         var value = parseInt(inc_value, 10);
-        value = isNaN(value) ? '0' : value;
-        if (value < 10) {
+        value = isNaN(value) ? "0" : value;
+        if (value < cantidad) {
             value++;
-            $(this).closest('.prod_data').find('.qty-input').val(value);
-        }
-    })
-    $('.decrement-btn').click(function (e) {
-        e.preventDefault()
-
-        var inc_value = $(this).closest('.prod_data').find('.qty-input').val();
+            $(this).closest(".prod_data").find(".qty-input").val(value);
+        } else $(this).closest(".prod_data").find(".qty-input").val(cantidad);
+    });
+    $(".decrement-btn").click(function (e) {
+        e.preventDefault();
+        var inc_value = $(this).closest(".prod_data").find(".qty-input").val();
         var value = parseInt(inc_value, 10);
-        value = isNaN(value) ? '0' : value;
-        if (value > 0) {
+        value = isNaN(value) ? "1" : value;
+        if (value > 1) {
             value--;
-            $(this).closest('.prod_data').find('.qty-input').val(value);
-        }
-    })
-    $('.delete-cart-item').click(function (e) {
-        e.preventDefault()
+            $(this).closest(".prod_data").find(".qty-input").val(value);
+        } else $(this).closest(".prod_data").find(".qty-input").val(1);
+    });
+    $(".delete-cart-item").click(function (e) {
+        e.preventDefault();
 
-        var prod_id = $(this).closest('.prod_data').find('.prod_id').val();
+        var prod_id = $(this).closest(".prod_data").find(".prod_id").val();
 
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        })
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
 
         $.ajax({
             method: "POST",
             url: "delete-cart-item",
             data: {
-                'product_id': prod_id,
+                product_id: prod_id,
             },
-            success: function (response){
+            success: function (response) {
                 sweet(response);
-                setTimeout(function(){
+                setTimeout(function () {
                     window.location.reload();
                 }, 1000);
-            }
+            },
         });
-    })
-    $('.remove-wishlist-item').click(function (e) {
-        e.preventDefault()
+    });
+    $(".remove-wishlist-item").click(function (e) {
+        e.preventDefault();
 
-        var prod_id = $(this).closest('.prod_data').find('.prod_id').val();
+        var prod_id = $(this).closest(".prod_data").find(".prod_id").val();
 
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        })
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
 
         $.ajax({
             method: "POST",
             url: "delete-wishlist-item",
             data: {
-                'prod_id': prod_id,
+                prod_id: prod_id,
             },
-            success: function (response){
+            success: function (response) {
                 sweet(response);
-                setTimeout(function(){
+                setTimeout(function () {
                     window.location.reload();
                 }, 1000);
-            }
+            },
         });
-    })
-    $('.changeQuantity').click(function (e) {
-        e.preventDefault()
-        var prod_id = $(this).closest('.prod_data').find('.prod_id').val();
-        var qty = $(this).closest('.prod_data').find('.qty-input').val();
-
+    });
+    $(".changeQuantity").click(function (e) {
+        e.preventDefault();
+        var prod_id = $(this).closest(".prod_data").find(".prod_id").val();
+        var qty = $(this).closest(".prod_data").find(".qty-input").val();
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        })
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
         $.ajax({
             type: "POST",
             url: "update-cart",
             data: {
-                'product_id': prod_id,
-                'product_qty': qty
+                product_id: prod_id,
+                product_qty: qty,
             },
             success: function (response) {
                 window.location.reload();
-            }
+            },
         });
+    });
+    $(".editReview").click(function (e) {
+        e.preventDefault();
+        let review = $("#userReview").text();
+        let reviewId = $("#review_id").text();
+        $("#modalReview").text(review);
+        $("#reviewId").val(reviewId);
+    });
+});
 
-    })
-
-})
-
-window.addEventListener('load', () => {
+window.addEventListener("load", () => {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('sho');
+                entry.target.classList.add("sho");
             } else {
-                entry.target.classList.remove('sho');
+                entry.target.classList.remove("sho");
             }
-        })
+        });
     });
-    const hiddenElements = document.querySelectorAll('.hide');
+    const hiddenElements = document.querySelectorAll(".hide");
     hiddenElements.forEach((el) => observer.observe(el));
-    const hiddenElements2 = document.querySelectorAll('.hide2');
+    const hiddenElements2 = document.querySelectorAll(".hide2");
     hiddenElements2.forEach((el) => observer.observe(el));
 });
 
@@ -282,19 +313,19 @@ window.addEventListener('load', () => {
 //         $(window).off('scroll'); // Desactiva el evento de scroll después de mostrar el modal
 //     }
 // });
-window.addEventListener('load', () => {
+window.addEventListener("load", () => {
     // Seleccionar el modal
-    var modal = document.getElementById('modalInicio')
-    var modalBootstrap = new bootstrap.Modal(modal)
+    var modal = document.getElementById("modalInicio");
+    var modalBootstrap = new bootstrap.Modal(modal);
     setTimeout(function () {
         // $('#modalInicio').modal('show');
-        modalBootstrap.show()
-    }, 2000); // esperar 2 segundos antes de mostrar el modal
+        modalBootstrap.show();
+    }, 500); // esperar 2 segundos antes de mostrar el modal
 });
 
-
-const countdown = () =>{
-    const countDate = new Date('june 3, 2023 22:00:00').getTime();
+const countdown = () => {
+    const fecha = document.querySelector("#fecha_oferta").getAttribute("value");
+    const countDate = new Date(fecha).getTime();
     const now = new Date().getTime();
     const gap = countDate - now;
 
@@ -308,14 +339,13 @@ const countdown = () =>{
     const textMinute = Math.floor((gap % hour) / minute);
     const textSecond = Math.floor((gap % minute) / second);
 
-    document.querySelector('.dayy').innerText = textDay;
-    document.querySelector('.hourr').innerText = textHour;
-    document.querySelector('.minutee').innerText = textMinute;
-    document.querySelector('.secondd').innerText = textSecond;
+    document.querySelector(".dayy").innerText = textDay;
+    document.querySelector(".hourr").innerText = textHour;
+    document.querySelector(".minutee").innerText = textMinute;
+    document.querySelector(".secondd").innerText = textSecond;
 
     // if(gap < 10000){
     //     // Hacer algo
     // }
-}
+};
 setInterval(() => countdown(), 1000);
-

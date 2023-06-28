@@ -6,6 +6,7 @@ use App\Models\Logo;
 use App\Models\Rating;
 use App\Models\Review;
 use App\Models\Product;
+use App\Models\Order;
 use App\Models\Category;
 use App\Models\Ingrediente;
 use Illuminate\Http\Request;
@@ -29,8 +30,9 @@ class FrontendController extends Controller
         $banners = Category::all();
         $productos = Product::where('trending', '1')->take('4')->get();
         $categorias = Category::where('popular', '1')->take('5')->get();
+        $comentarios = Review::all()->take(3);
 
-        return view('frontend.index', compact('banners', 'categorias', 'productos'));
+        return view('frontend.index', compact('banners', 'categorias', 'productos', 'comentarios'));
     }
     public function aboutus()
     {

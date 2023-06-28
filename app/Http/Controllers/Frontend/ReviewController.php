@@ -28,6 +28,10 @@ class ReviewController extends Controller
                 $verified_purchase = Order::where('orders.user_id', Auth::id())
                 ->join('order_items','orders.id','order_items.order_id')
                 ->where('order_items.prod_id', $product_id)->get();
+
+                if($verified_purchase->count() > 0){
+                    $review = $request->input('user_review');
+                }
                 return view('frontend.reviews.index', compact('producto','verified_purchase'));
             }
         }else{
@@ -37,19 +41,27 @@ class ReviewController extends Controller
 
     public function create(Request $request){
         $product_id = $request->input('product_id');
+        $verified_purchase = Order::where('orders.user_id', Auth::id())
+                ->join('order_items','orders.id','order_items.order_id')
+                ->where('order_items.prod_id', $product_id)->get();
         $product = Product::where('id', $product_id)->where('status',1)->first();
         if($product){
-            $user_review = $request->input('user_review');
-            $new_review = Review::create([
-                'user_id'=>Auth::id(),
-                'product_id'=>$product_id,
-                'user_review'=>$user_review
-            ]);
-            $category_slug = $product->category->slug;
-            $prod_slug = $product->slug;
-            if($new_review){
-                return redirect('categorias/'.$category_slug.'/'.$prod_slug)->with('status','Gracias por la reseña!!');    
+            if($verified_purchase->count() > 0){
+                $user_review = $request->input('user_review');
+                $new_review = Review::create([
+                    'user_id'=>Auth::id(),
+                    'product_id'=>$product_id,
+                    'user_review'=>$user_review
+                ]);
+                $category_slug = $product->category->slug;
+                $prod_slug = $product->slug;
+                if($new_review){
+                    return redirect('ver-producto/'.$prod_slug)->with('status','Gracias por la reseña!!');    
+                }
             }
+            else{
+                return redirect()->back()->with('status','Debe comprar este producto antes.');
+            }    
         }else{
             return redirect()->back()->with('status','El producto no existe');
         }
@@ -81,7 +93,7 @@ class ReviewController extends Controller
             if($review){
                 $review->user_review = $request->input('user_review');
                 $review->update();
-                return redirect('categorias/'.$review->products->category->slug.'/'.$review->products->slug)->with('status','Reseña actualizada');    
+                return redirect('ver-producto/'.$review->products->slug)->with('status','Reseña actualizada');    
             }else{
                 return redirect()->back()->with('status','No estas autorizado');    
             }

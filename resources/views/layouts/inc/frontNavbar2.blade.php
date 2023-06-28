@@ -334,27 +334,3 @@
     </div>
 
 </nav>
-
-<div class="contener">
-    <div class="group">
-        <p class="text d-flex justify-content-between" style="width: 100%;"> <i
-                class="fas fa-gem    "></i><span>Sales</span><i class="fas fa-gem    "></i>
-            <span>Gourmet</span><i class="fas fa-gem    "></i><span>Sabores</span><i
-                class="fas fa-gem    "></i><span>Natural</span><i class="fas fa-gem    "></i><span>Sacos</span>
-        </p>
-    </div>
-</div>
-
-
-@section('after_scripts')
-    <script>
-        let style = document.createElement('style');
-        let position = 'right';
-        style.innerHTML = `
-            @keyframes move-text{
-                0%{${position}: -${document.querySelector('.text').offsetWidth + 10}px;}
-                100%{${position}: 100%;}
-            }`;
-        document.head.append(style);
-    </script>
-@endsection

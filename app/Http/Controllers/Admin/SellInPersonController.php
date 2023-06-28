@@ -51,17 +51,17 @@ class SellInPersonController extends Controller
     public function completar_pago(Request $request)
     {
         $order = new Order();
-        $order->user_id     = Auth::id();
-        $order->lname       = "No aplica";
-        $order->email       = "No aplica";
-        $order->fname       = "No aplica";
-        $order->telefono    = "No aplica";
-        $order->direccion1  = "No aplica";
-        $order->direccion2  = "No aplica";
-        $order->region      = "No aplica";
-        $order->ciudad      = "No aplica";
-        $order->comuna      = "No aplica";
-        $order->tracking_number      = 'SALES' . rand(1111, 9999);
+        $order->user_id = Auth::id();
+        $order->lname = "No aplica";
+        $order->email = "No aplica";
+        $order->fname = "No aplica";
+        $order->telefono = "No aplica";
+        $order->direccion1 = "No aplica";
+        $order->direccion2 = "No aplica";
+        $order->region = "No aplica";
+        $order->ciudad = "No aplica";
+        $order->comuna = "No aplica";
+        $order->tracking_number = 'SALES' . rand(1111, 9999);
         $total = 0;
         $cartItems_total = Cart::where('user_id', Auth::id())->get();
         foreach ($cartItems_total as $prod) {
@@ -75,9 +75,9 @@ class SellInPersonController extends Controller
         foreach ($cartItems as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
-                'prod_id'  => $item->prod_id,
-                'qty'      => $item->prod_qty,
-                'price'    => $item->products->selling_price,
+                'prod_id' => $item->prod_id,
+                'qty' => $item->prod_qty,
+                'price' => $item->products->selling_price,
             ]);
             $prod = Product::where('id', $item->prod_id)->first();
             if ($prod->qty > 0)
@@ -135,18 +135,18 @@ class SellInPersonController extends Controller
     //PAGO POR QR
     public function iniciar_compra_presencial(Request $request)
     {
-        $order              = new Order();
-        $order->user_id     = Auth::id();
-        $order->lname       = "No aplica";
-        $order->email       = "No aplica";
-        $order->fname       = "No aplica";
-        $order->telefono    = "No aplica";
-        $order->direccion1  = "No aplica";
-        $order->direccion2  = "No aplica";
-        $order->region      = "No aplica";
-        $order->ciudad      = "No aplica";
-        $order->comuna      = "No aplica";
-        $order->tracking_number      = 'SALES' . rand(1111, 9999);
+        $order = new Order();
+        $order->user_id = Auth::id();
+        $order->lname = "No aplica";
+        $order->email = "No aplica";
+        $order->fname = "No aplica";
+        $order->telefono = "No aplica";
+        $order->direccion1 = "No aplica";
+        $order->direccion2 = "No aplica";
+        $order->region = "No aplica";
+        $order->ciudad = "No aplica";
+        $order->comuna = "No aplica";
+        $order->tracking_number = 'SALES' . rand(1111, 9999);
 
         $user = User::where('id', Auth::user()->id)->first();
 
@@ -186,9 +186,9 @@ class SellInPersonController extends Controller
             foreach ($cartItems as $item) {
                 OrderItem::create([
                     'order_id' => $order->id,
-                    'prod_id'  => $item->prod_id,
-                    'qty'      => $item->prod_qty,
-                    'price'    => $item->products->selling_price,
+                    'prod_id' => $item->prod_id,
+                    'qty' => $item->prod_qty,
+                    'price' => $item->products->selling_price,
                 ]);
                 $prod = Product::where('id', $item->prod_id)->first();
                 if ($prod->qty > 0)

@@ -41,12 +41,9 @@ class CheckoutController extends Controller
         secciones();
 
         $user_id = Auth::check() ? Auth::id() : null;
-        $guest_id = session('guest_id');
 
         if ($user_id) {
             $cartItems = Cart::where('user_id', $user_id)->get();
-        } elseif ($guest_id) {
-            $cartItems = Cart::where('user_id', $guest_id)->get();
         } else {
             $cartItems = collect(); // Sin elementos en el carrito si no hay usuario autenticado ni guest_id en la sesión
         }
@@ -61,67 +58,6 @@ class CheckoutController extends Controller
         $cartItems = $user_id ? Cart::where('user_id', $user_id)->get() : $cartItems;
         return view('frontend.checkout', compact('cartItems'));
     }
-
-
-
-    // public function placeorder(Request $request){
-
-    //     $order              = new Order();
-    //     $order->user_id     = Auth::id();
-    //     $order->fname       = $request->input('fname');
-    //     $order->lname       = $request->input('lname');
-    //     $order->email       = $request->input('email');
-    //     $order->telefono    = $request->input('telefono');
-    //     $order->direccion1  = $request->input('direccion1');
-    //     $order->direccion2  = $request->input('direccion2');
-    //     $order->region      = $request->input('region');
-    //     $order->ciudad      = $request->input('ciudad');
-    //     $order->comuna      = $request->input('comuna');
-    //     $order->tracking_number      = 'SALES'.rand(1111,9999);
-
-    //     $total = 0;
-    //     $cartItems_total = Cart::where('user_id', Auth::id())->get();
-    //     foreach($cartItems_total as $prod){
-    //         $total += $prod->products->selling_price * $prod->prod_qty;
-    //     }
-    //     $order->total_price = $total;
-
-    //     $order->save();
-
-    //     $cartItems = Cart::where('user_id', Auth::id())->get();
-
-    //     foreach($cartItems as $item){
-    //         OrderItem::create([
-    //             'order_id' => $order->id,
-    //             'prod_id'  => $item->prod_id,
-    //             'qty'      => $item->prod_qty,
-    //             'price'    => $item->products->selling_price,
-    //         ]);
-    //         $prod = Product::where('id', $item->prod_id)->first();
-    //         $prod->qty = $prod->qty - $item->prod_qty;
-    //         $prod->update();
-    //     }
-
-    //     if(Auth::user()->direccion1 != NULL){
-    //         $user = User::where('id', Auth::user()->id)->first();
-    //         $user->name       = $request->input('fname');
-    //         $user->lname       = $request->input('lname');
-    //         $user->telefono    = $request->input('telefono');
-    //         $user->direccion1  = $request->input('direccion1');
-    //         $user->direccion2  = $request->input('direccion2');
-    //         $user->region      = $request->input('region');
-    //         $user->ciudad      = $request->input('ciudad');
-    //         $user->comuna      = $request->input('comuna');
-    //         $user->update();
-    //     }
-    //     $cartItems = Cart::where('user_id', Auth::id())->get();
-    //     Cart::destroy($cartItems);
-
-    //     // return redirect()->away($redirectUrl);
-    //     return redirect('/')->with('status','Orden realizada correctamente!!');
-    // }
-
-
     public function iniciar_compra(Request $request)
     {
 
@@ -133,8 +69,8 @@ class CheckoutController extends Controller
             'telefono' => 'required|numeric|digits:9',
             'direccion1' => 'required|max:255',
             'direccion2' => 'max:255',
-            'region' => 'required|max:255',
-            'ciudad' => 'required|max:255',
+            'region' => 'not_in:sin-region',
+            'ciudad' => 'not_in:sin-ciudad',
             'comuna' => 'required|max:255',
         ];
         $messages = [
@@ -148,8 +84,8 @@ class CheckoutController extends Controller
             'direccion1.required' => 'La direccion es requerida',
             'direccion1.max' => 'La direccion no puede exceder los :max caracteres',
             'direccion2.max' => 'La direccion no puede exceder los :max caracteres',
-            'region.required' => 'la region es requerido.',
-            'ciudad.required' => 'La ciudad es requerido.',
+            'region.not_in' => 'la region no es válida.',
+            'ciudad.not_in' => 'La ciudad no es válida.',
             'comuna.required' => 'La comuna es requerido.',
 
         ];
@@ -196,48 +132,6 @@ class CheckoutController extends Controller
                     DB::commit();
                     $url_to_pay = self::start_web_pay_plus_transaction($order);
                     return redirect($url_to_pay);
-                } else {
-
-                    $guest_id = session('guest_id');
-
-                    $user = new User();
-                    $user->id = $guest_id;
-                    $user->password = 'password';
-                    $user->name = $request->input('fname');
-                    $user->lname = $request->input('lname');
-                    $user->telefono = $request->input('telefono');
-                    $user->email = $request->input('email');
-                    $user->direccion1 = $request->input('direccion1');
-                    $user->direccion2 = $request->input('direccion2');
-                    $user->region = $request->input('region');
-                    $user->ciudad = $request->input('ciudad');
-                    $user->comuna = $request->input('comuna');
-                    $user->save();
-
-                    $order = new Order();
-                    $order->user_id = $guest_id;
-                    $order->fname = $request->input('fname');
-                    $order->lname = $request->input('lname');
-                    $order->email = $request->input('email');
-                    $order->telefono = $request->input('telefono');
-                    $order->direccion1 = $request->input('direccion1');
-                    $order->direccion2 = $request->input('direccion2');
-                    $order->region = $request->input('region');
-                    $order->ciudad = $request->input('ciudad');
-                    $order->comuna = $request->input('comuna');
-                    $order->tracking_number = 'SALES' . rand(1111, 9999);
-
-                    $total = 0;
-                    $cartItems_total = Cart::where('user_id', $guest_id)->get();
-                    foreach ($cartItems_total as $prod) {
-                        $total += $prod->products->selling_price * $prod->prod_qty;
-                    }
-                    $order->total_price = $total;
-                    $order->save();
-                    DB::commit();
-
-                    $url_to_pay = self::start_web_pay_plus_transaction($order);
-                    return redirect($url_to_pay);
                 }
             } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
@@ -269,7 +163,7 @@ class CheckoutController extends Controller
         if ($confirmacion->isApproved()) {
             $order->status = 2;
 
-            $user_id = Auth::check() ? Auth::id() : session('guest_id');
+            $user_id = Auth::check() ? Auth::id() : null;
             $cartItems = Cart::where('user_id', $user_id)->get();
 
             foreach ($cartItems as $item) {

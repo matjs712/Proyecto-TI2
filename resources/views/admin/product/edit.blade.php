@@ -14,7 +14,8 @@
                     <a href="#" class="ml-2">Editar producto</a>
                 </h6>
             </div>
-            <form action="{{ url('update-prod/' . $producto->id) }}" method="POST" enctype="multipart/form-data">
+            <form id="myForm" action="{{ url('update-prod/' . $producto->id) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="row">
@@ -47,7 +48,7 @@
                         <div class="form-group">
                             <label for="name">Slug</label>
                             <input type="text" name="slug" value="{{ $producto->slug }}" class="form-control"
-                                placeholder="Poleras">
+                                placeholder="Sales">
                             @if ($errors->has('slug'))
                                 <span class="error text-danger" for="input-name">{{ $errors->first('slug') }}</span>
                             @endif
@@ -57,7 +58,7 @@
                         <div class="form-group">
                             <label for="slug">Descripción pequeña</label>
                             <input type="text" name="small_description" value="{{ $producto->small_description }}"
-                                class="form-control" placeholder="Poleras">
+                                class="form-control" placeholder="Sales">
                             @if ($errors->has('small_description'))
                                 <span class="error text-danger"
                                     for="input-name">{{ $errors->first('small_description') }}</span>
@@ -68,7 +69,7 @@
                         <div class="form-group">
                             <label for="descripcion">Descripción</label>
                             <textarea type="text" rows="5" style="resize:none;" name="description" class="form-control"
-                                placeholder="Categoría dedicada solo a peloras de ...">{{ $producto->description }}</textarea>
+                                placeholder="Sales de mar...">{{ $producto->description }}</textarea>
                             @if ($errors->has('description'))
                                 <span class="error text-danger" for="input-name">{{ $errors->first('description') }}</span>
                             @endif
@@ -109,7 +110,8 @@
                             <label for="medida">Medida</label>
                             <select name="medida" class="form-control">
                                 <option value="gramos" {{ old('medida') == 'gramos' ? 'selected' : '' }}>Gramos</option>
-                                <option value="kilogramos" {{ old('medida') == 'kilogramos' ? 'selected' : '' }}>Kilogramos
+                                <option value="kilogramos" {{ old('medida') == 'kilogramos' ? 'selected' : '' }}>
+                                    Kilogramos
                                 </option>
                             </select>
                             @if ($errors->has('medida'))
@@ -175,7 +177,13 @@
 
 
                 <div class="col-md-12 mt-4">
-                    <button type="submit" class="btn btn-primary">Editar</button>
+                    <button id="btn-submit" type="submit" class="btn btn-primary">
+                        @if (session('loading') == true)
+                            Cargando...
+                        @else
+                            Actualizar
+                        @endif
+                    </button>
                 </div>
 
         </div>
@@ -184,6 +192,11 @@
     </div>
 @endsection
 @section('after_scripts')
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function() {
+            document.getElementById('btn-submit').innerHTML = 'Cargando...';
+        });
+    </script>
     <script>
         const input = document.querySelector('#image');
         const preview = document.querySelector('#preview');
@@ -216,7 +229,7 @@
             </div>
             <div class="col-md-3">
                 <label for="ingrediente${ingredienteCount}">Cantidad </label>
-                <input class="form-control" type="number" name="cantidad${ingredienteCount}" id="cantidad${ingredienteCount}" value="1">
+                <input class="form-control" type="number" name="cantidad${ingredienteCount}" min="0" id="cantidad${ingredienteCount}" value="1">
             </div>
             <div class="col-md-2">
                 <button type="button" class="btn btn-danger btn-eliminar-ingrediente">Eliminar</button>
