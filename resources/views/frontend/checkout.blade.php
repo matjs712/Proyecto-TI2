@@ -26,11 +26,11 @@
                             <div class="row checkout-form">
                                 <div class="col-md-6">
                                     <label for="firstName">Primer nombre</label>
-                                    <input type="text" name="name"
-                                        value="{{ Auth::check() ? Auth::user()->name : '' }}" class="name form-control"
+                                    <input type="text" name="fname"
+                                        value="{{ Auth::check() ? Auth::user()->name : '' }}" class="fname form-control"
                                         placeholder="Juan">
-                                    @if ($errors->has('name'))
-                                        <span class="error text-danger" for="input-name">{{ $errors->first('name') }}</span>
+                                    @if ($errors->has('fname'))
+                                        <span class="error text-danger" for="input-fname">{{ $errors->first('fname') }}</span>
                                     @endif
                                     <span style="color:red" id="name_error"></span>
                                 </div>
