@@ -383,7 +383,7 @@
             </div>
             <div class="col-md-3">
               <label for="ingrediente${ingredienteCount}">Cantidad </label>
-              <input class="form-control" type="number" name="cantidad${ingredienteCount}" id="cantidad${ingredienteCount}" value="0">
+              <input class="form-control" type="number" name="cantidad${ingredienteCount}"  min="0"  id="cantidad${ingredienteCount}" value="0">
             </div>
             <div class="col-md-3">
               <label for="ingrediente${ingredienteCount}">Medida </label>
