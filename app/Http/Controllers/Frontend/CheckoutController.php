@@ -63,7 +63,7 @@ class CheckoutController extends Controller
 
 
         $rules = [
-            'fname' => 'required|max:255',
+            'name' => 'required|max:255',
             'lname' => 'required|max:255',
             'email' => 'required|max:255',
             'telefono' => 'required|numeric|digits:9',
@@ -73,10 +73,10 @@ class CheckoutController extends Controller
             'ciudad' => 'not_in:sin-ciudad',
             'comuna' => 'required|max:255',
         ];
-        
+
         $messages = [
-            'fname.required' => 'El nombre del usuario es requerido.',
-            'fname.max' => 'El nombre del usuario no puede exceder los :max caracteres.',
+            'name.required' => 'El nombre del usuario es requerido.',
+            'name.max' => 'El nombre del usuario no puede exceder los :max caracteres.',
             'lname.required' => 'El apellido del usuario es requerido.',
             'lname.max' => 'El apellido del usuario no puede exceder los :max caracteres.',
             'email.required' => 'El correo es requerido.',
