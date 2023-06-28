@@ -230,6 +230,7 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('after_scripts')
