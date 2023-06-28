@@ -719,7 +719,7 @@
                                     onmouseout="this.style.opacity='1'"
                                     style="background-color: {{ $boton_actualizar }}; color:white;" type="submit"
                                     class="mt-4 btn">
-                                    @if (session('loading'))
+                                    @if (session('loading') == true)
                                         Cargando...
                                     @else
                                         Actualizar
@@ -781,6 +781,7 @@
         document.getElementById('myForm').addEventListener('submit', function() {
             document.getElementById('btn-submit').innerHTML = 'Cargando...';
         });
+
         document.getElementById('myForm2').addEventListener('submit', function() {
             document.getElementById('btn-submit2').innerHTML = 'Cargando...';
         });

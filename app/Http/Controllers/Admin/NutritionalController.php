@@ -71,12 +71,15 @@ class NutritionalController extends Controller
 
 
                 DB::commit();
+                session()->flash('loading', false);
                 return redirect('/nutricionales')->with('status', 'Informacion nutricional añadida exitosamente!.');
             } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
+                session()->flash('loading', false);
                 return back()->withErrors($validator)->withInput();
             }
         }
+        session()->flash('loading', false);
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
 
@@ -108,6 +111,7 @@ class NutritionalController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if (!$validator->fails()) {
+            session()->flash('loading', true);
             try {
                 $nutricional = InfoNutricional::find($id);
 
@@ -123,24 +127,24 @@ class NutritionalController extends Controller
                 $nutricional->update();
 
                 DB::commit();
-
+                session()->flash('loading', false);
                 return redirect('/nutricionales')->with('status', 'Informacion nutricional Editado exitosamente!.');
             } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
+                session()->flash('loading', false);
                 return back()->withErrors($validator)->withInput();
             }
         }
+        session()->flash('loading', false);
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
 
     public function destroy($id)
     {
+        session()->flash('loading', true);
         $nutricional = InfoNutricional::find($id);
-
-
-
-
         $nutricional->delete();
+        session()->flash('loading', false);
         return redirect('/nutricionales')->with('status', 'Infromacion Nutricional eliminada Exitosamente');
     }
 }

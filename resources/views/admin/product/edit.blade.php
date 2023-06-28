@@ -14,7 +14,8 @@
                     <a href="#" class="ml-2">Editar producto</a>
                 </h6>
             </div>
-            <form action="{{ url('update-prod/' . $producto->id) }}" method="POST" enctype="multipart/form-data">
+            <form id="myForm" action="{{ url('update-prod/' . $producto->id) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="row">
@@ -109,7 +110,8 @@
                             <label for="medida">Medida</label>
                             <select name="medida" class="form-control">
                                 <option value="gramos" {{ old('medida') == 'gramos' ? 'selected' : '' }}>Gramos</option>
-                                <option value="kilogramos" {{ old('medida') == 'kilogramos' ? 'selected' : '' }}>Kilogramos
+                                <option value="kilogramos" {{ old('medida') == 'kilogramos' ? 'selected' : '' }}>
+                                    Kilogramos
                                 </option>
                             </select>
                             @if ($errors->has('medida'))
@@ -175,7 +177,13 @@
 
 
                 <div class="col-md-12 mt-4">
-                    <button type="submit" class="btn btn-primary">Editar</button>
+                    <button id="btn-submit" type="submit" class="btn btn-primary">
+                        @if (session('loading') == true)
+                            Cargando...
+                        @else
+                            Actualizar
+                        @endif
+                    </button>
                 </div>
 
         </div>
@@ -184,6 +192,11 @@
     </div>
 @endsection
 @section('after_scripts')
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function() {
+            document.getElementById('btn-submit').innerHTML = 'Cargando...';
+        });
+    </script>
     <script>
         const input = document.querySelector('#image');
         const preview = document.querySelector('#preview');

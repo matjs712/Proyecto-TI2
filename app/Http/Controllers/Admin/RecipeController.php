@@ -69,12 +69,15 @@ class RecipeController extends Controller
                 $receta->description = $request->input('description');
                 $receta->save();
                 DB::commit();
+                session()->flash('loading', false);
                 return redirect('/recetas')->with('status', 'Receta añadida exitosamente!.');
             } catch (\Illuminate\Database\QueryException $e) {
                 DB::rollBack();
+                session()->flash('loading', false);
                 return back()->withErrors($validator)->withInput();
             }
         }
+        session()->flash('loading', false);
         return back()->withErrors($validator)->withInput()->with('error', 'Existe un error en el formulario');
     }
 

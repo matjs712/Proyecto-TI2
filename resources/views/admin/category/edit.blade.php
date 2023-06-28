@@ -14,7 +14,8 @@
                     <a href="#" class="ml-2">Editar categoría</a>
                 </h6>
             </div>
-            <form action="{{ url('update-cat/' . $categoria->id) }}" method="POST" enctype="multipart/form-data">
+            <form id="myForm" action="{{ url('update-cat/' . $categoria->id) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="row">
@@ -78,7 +79,13 @@
                         </div>
                     </div>
                     <div class="col-md-12 mt-4">
-                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                        <button id="btn-submit" type="submit" class="btn btn-primary">
+                            @if (session('loading') == true)
+                                Cargando...
+                            @else
+                                Actualizar
+                            @endif
+                        </button>
                     </div>
                 </div>
             </form>
@@ -87,6 +94,11 @@
     </div>
 @endsection
 @section('after_scripts')
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function() {
+            document.getElementById('btn-submit').innerHTML = 'Cargando...';
+        });
+    </script>
     <script>
         const input = document.querySelector('#image');
         const preview = document.querySelector('#preview');
