@@ -78,10 +78,10 @@ class ProductController extends Controller
             'slug' => 'required||unique:products',
             'description' => 'required',
             'small_description' => 'required',
-            'price' => 'required',
+            'price' => 'required|gt:0',
             'selling_price' => 'required',
             'image' => 'required|image|mimes:jpg,png',
-            'qty' => 'required',
+            'qty' => 'required|gt:0',
         ];
 
         $messages = [
@@ -97,6 +97,9 @@ class ProductController extends Controller
             'image.image' => 'El archivo debe ser una imagen.',
             'image.mimes' => 'El archivo debe tener un formato de imagen válido (jpg, png).',
             'qty.required' => 'La cantidad es obligatoria.',
+            'qty.gt' => 'La cantidad tiene que ser un número positivo.',
+            'price.gt' => 'El precio tiene que tener un valor positivo.',
+            
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -264,11 +267,11 @@ class ProductController extends Controller
             'slug' => ['required', Rule::unique('products')->ignore($products->id)],
             'description' => 'required',
             'small_description' => 'required',
-            'price' => 'required',
+            'price' => 'required|gt:0',
             'selling_price' => 'required',
             'image' => 'image|mimes:jpg,png',
-            'qty' => 'required',
-
+            'qty' => 'required|gt:0',
+            
         ];
 
         $messages = [
@@ -276,9 +279,12 @@ class ProductController extends Controller
             'image' => 'El archivo debe ser una imagen.',
             'mimes' => 'Solo se adminten los siguientes formatos :mimes.',
             'slug.required' => 'El slug es obligatorio.',
-            'slug.unique' => 'El slug ya ha sido utilizado por otro producto.',
+            'slug.unique' => 'El slug ya ha sido utilizado por otro producto.',            
+            'qty.gt' => 'La cantidad tiene que ser un número positivo.',
+            'price.gt' => 'El precio tiene que tener un valor positivo.',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
+
         if (!$validator->fails()) {
             try {
                 $producto = Product::find($id);
