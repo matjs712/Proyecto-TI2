@@ -81,7 +81,7 @@ class RegistroController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if (!$validator->fails()) {
-
+            session()->flash('loading', true);
             try {
                 $registro = new Registro();
 
@@ -108,9 +108,9 @@ class RegistroController extends Controller
                 $registro->id_ingrediente = $request->input('id_ingrediente');
 
                 $registro->medida = $request->input('medida');
-                if($medida == 'kilogramos'){
+                if ($medida == 'kilogramos') {
                     $registro->cantidad = $request->input('cantidad') * 1000;
-                } else{
+                } else {
                     $registro->cantidad = $request->input('cantidad');
                 }
                 $registro->medida = 'gramos';
@@ -224,13 +224,13 @@ class RegistroController extends Controller
 
 
                 $registro->medida = $request->input('medida');
-                if($medida == 'kilogramos'){
+                if ($medida == 'kilogramos') {
                     $nuevaCantidad = $request->input('cantidad') * 1000;
-                } else{
+                } else {
                     $nuevaCantidad = $request->input('cantidad');
                 }
 
-                
+
                 if ($nuevaCantidad < $registro->cantidad) {
                     $ingrediente->decrement('cantidad', $registro->cantidad - $nuevaCantidad);
                 } else if ($nuevaCantidad > $registro->cantidad) {

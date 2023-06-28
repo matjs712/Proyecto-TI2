@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\OrdenController;
 use App\Http\Controllers\Admin\PerfilController;
 use App\Http\Controllers\Admin\SellInPersonController;
-
+use App\Http\Controllers\Admin\NutritionalController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\UserController;
@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\IngredienteController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\WishlistController;
+use App\Http\Controllers\Frontend\TrackingController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\RecipeController;
 use App\Http\Mail\NotificationEmail;
@@ -50,32 +51,35 @@ Route::get('productos/sort-by', [FrontendController::class, 'filter'])->name('pr
 // ABOUT US
 Route::get('/about-us', [FrontendController::class, 'aboutus']);
 
+// SEGUIMIENTO DE COMPRA
+Route::get('/seguimiento', [TrackingController::class, 'index'])->name('seguimiento');
+Route::post('/seguimiento', [TrackingController::class, 'view'])->name('seguimiento_compra');
+
 Auth::routes();
 
 
-// CARRITO
-Route::get('load-cart-data', [CartController::class, 'cartCount']);
-Route::post('add-to-cart', [CartController::class, 'addProduct']);
-Route::post('delete-cart-item', [CartController::class, 'deleteProduct']);
-Route::post('update-cart', [CartController::class, 'updateCart']);
 
-//WISHLIST
-Route::get('load-wish-data', [WishListController::class, 'wishCount']);
-Route::post('add-to-wishlist', [WishlistController::class, 'add']);
-Route::post('delete-wishlist-item', [WishlistController::class, 'destroy']);
-Route::get('carrito', [CartController::class, 'viewCart']);
-Route::get('checkout', [CheckoutController::class, 'index']);
-Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
-Route::get('wishlist', [WishlistController::class, 'index']);
-Route::get('/check-guest-session', [WishlistController::class, 'checkGuestSession'])->name('check.guest.session');
-
-Route::post('iniciar_compra', [CheckoutController::class, 'iniciar_compra']);
 Route::post('iniciar-compra-presencial', [CheckoutController::class, 'iniciar_compra_presencial']);
 
 Route::middleware(['auth'])->group(function () { //solo usuarios autenticados
     // Route::post('place-order',[CheckoutController::class, 'placeorder']);
+    Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
+    Route::get('wishlist', [WishlistController::class, 'index']);
     Route::post('iniciar_compra', [CheckoutController::class, 'iniciar_compra']);
     Route::any('confirmar_pago', [CheckoutController::class, 'confirmar_pago'])->name('confirmar_pago');
+
+    // CARRITO
+    Route::get('load-cart-data', [CartController::class, 'cartCount']);
+    Route::post('add-to-cart', [CartController::class, 'addProduct']);
+    Route::post('delete-cart-item', [CartController::class, 'deleteProduct']);
+    Route::post('update-cart', [CartController::class, 'updateCart']);
+
+    //WISHLIST
+    Route::get('load-wish-data', [WishListController::class, 'wishCount']);
+    Route::post('add-to-wishlist', [WishlistController::class, 'add']);
+    Route::post('delete-wishlist-item', [WishlistController::class, 'destroy']);
+    Route::get('carrito', [CartController::class, 'viewCart']);
+    Route::get('checkout', [CheckoutController::class, 'index']);
 
 
     Route::get('mis-ordenes', [UserController::class, 'index']);
@@ -90,22 +94,22 @@ Route::middleware(['auth'])->group(function () { //solo usuarios autenticados
 
 // ADMIN ROUTES
 Route::middleware(['auth', 'isAdmin'])->group(function () {
-    Route::get('/dashboard',  'Admin\FrontendController@index')->name('dashboard');
+    Route::get('/dashboard', 'Admin\FrontendController@index')->name('dashboard');
 
     //ESTADISTICAS
-    Route::get('/usuarios-nuevos',  'Admin\FrontendController@UsuariosNuevos');
-    Route::get('/productos-comprados',  'Admin\FrontendController@ProductosComprados');
-    Route::get('/ordenes-nuevas',  'Admin\FrontendController@OrdenesNuevas');
-    Route::get('/ingresos-mes',  'Admin\FrontendController@IngresosMes');
-    Route::get('/ventas-mes',  'Admin\FrontendController@VentasMes');
-    Route::get('/ingresos-diarios',  'Admin\FrontendController@IngresosDiarios');
-    Route::get('/productos-top',  'Admin\FrontendController@ProductosTop');
+    Route::get('/usuarios-nuevos', 'Admin\FrontendController@UsuariosNuevos');
+    Route::get('/productos-comprados', 'Admin\FrontendController@ProductosComprados');
+    Route::get('/ordenes-nuevas', 'Admin\FrontendController@OrdenesNuevas');
+    Route::get('/ingresos-mes', 'Admin\FrontendController@IngresosMes');
+    Route::get('/ventas-mes', 'Admin\FrontendController@VentasMes');
+    Route::get('/ingresos-diarios', 'Admin\FrontendController@IngresosDiarios');
+    Route::get('/productos-top', 'Admin\FrontendController@ProductosTop');
 
     //GRAFICOS
-    Route::get('/datos-graficos',  'Admin\FrontendController@ChartIngredientes');
-    Route::get('/grafico-productos',  'Admin\FrontendController@GraficoProductos');
-    Route::get('/grafico-ordenes',  'Admin\FrontendController@GraficoOrdenes');
-    Route::get('/grafico-registros',  'Admin\FrontendController@GraficoRegistro');
+    Route::get('/datos-graficos', 'Admin\FrontendController@ChartIngredientes');
+    Route::get('/grafico-productos', 'Admin\FrontendController@GraficoProductos');
+    Route::get('/grafico-ordenes', 'Admin\FrontendController@GraficoOrdenes');
+    Route::get('/grafico-registros', 'Admin\FrontendController@GraficoRegistro');
 
 
     //VENTA PRESENCIAL
@@ -186,11 +190,14 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('configuracion', [DashboardController::class, 'configuracion']);
     Route::put('update-general', [DashboardController::class, 'updateConfiguracion']);
     Route::put('update-admin', [DashboardController::class, 'updateCredenciales']);
+    Route::get('set-default-theme', [DashboardController::class, 'setDefaultTheme'])->name('setDefaultTheme');
+
 
     //ROLES Y PERMISOS
     Route::get('roles', [RoleController::class, 'index']);
     Route::get('add-roles', [RoleController::class, 'create']);
-    Route::post('store-roles', [RoleController::class, 'store'])->name('roles.store');;
+    Route::post('store-roles', [RoleController::class, 'store'])->name('roles.store');
+    ;
     Route::get('roles/{rol}/show', [RoleController::class, 'show'])->name('roles.show');
     Route::get('roles/{rol}/edit', [RoleController::class, 'edit'])->name('roles.edit');
     Route::put('roles/{rol}', [RoleController::class, 'update'])->name('roles.update');
@@ -209,4 +216,13 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::put('update-receta/{id}', [RecipeController::class, 'update']);
     Route::get('delete-receta/{id}', [RecipeController::class, 'destroy']);
     Route::get('/modal-recetas/{id}', 'Admin\RecipeController@show');
+
+    //INFORMACION NUTRICIONAL
+    Route::get('nutricionales', 'Admin\NutritionalController@index');
+    Route::get('crear-nutricional', 'Admin\NutritionalController@create');
+    Route::post('insert-nutricional', 'Admin\NutritionalController@store');
+    Route::get('edit-nutricional/{id}', [NutritionalController::class, 'edit']);
+    Route::put('update-nutricional/{id}', [NutritionalController::class, 'update']);
+    Route::get('delete-nutricional/{id}', [NutritionalController::class, 'destroy']);
+    Route::get('/modal-nutricionales/{id}', 'Admin\NutritionalController@show');
 });

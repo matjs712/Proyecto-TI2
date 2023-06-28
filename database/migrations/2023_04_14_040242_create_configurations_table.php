@@ -20,6 +20,7 @@ class CreateConfigurationsTable extends Migration
             $table->integer('categorias')->default(1);
             $table->integer('proveedores')->default(1);
             $table->integer('recetas')->default(1);
+            $table->integer('nutricionales')->default(1);
             $table->integer('registros')->default(1);
             $table->integer('ordenes')->default(1);
             $table->integer('usuarios')->default(1);
@@ -50,6 +51,31 @@ class CreateConfigurationsTable extends Migration
 
 
             $table->string('banner');
+
+            $table->integer('habilitar_oferta')->default(1);
+            $table->string('imagen_oferta');
+            $table->string('titulo_oferta');
+            $table->string('subtitulo_oferta');
+            $table->string('texto_oferta');
+            $table->string('valor_oferta');
+            $table->datetime('fecha_oferta');
+
+
+            $table->string('titulo_sobre_nosotros');
+            $table->longText('texto_1_sobre_nosotros');
+            $table->longText('texto_2_sobre_nosotros');
+            $table->string('titulo_texto_3_sobre_nosotros');
+            $table->longText('texto_3_sobre_nosotros');
+            $table->string('titulo_texto_4_sobre_nosotros');
+            $table->longText('texto_4_sobre_nosotros');
+            $table->string('imagen_sobre_nosotros');
+            $table->string('titulo_historia');
+            $table->string('imagen_fondo_historia');
+            $table->longText('texto_1_historia');
+            $table->longText('texto_2_historia');
+            $table->longText('texto_3_historia');
+            $table->string('imagen_texto_historia');
+            
             $table->timestamps();
         });
     }

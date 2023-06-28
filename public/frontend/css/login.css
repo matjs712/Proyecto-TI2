@@ -340,7 +340,7 @@ a:hover{
     padding: 0;
     font-weight: 600;
     width: max-content;
-    animation: move-text 10s linear infinite;
+    animation: move-text 25s linear infinite;
 }
 .btn-home{
     /* position: absolute;

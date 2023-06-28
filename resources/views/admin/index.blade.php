@@ -11,7 +11,7 @@ Home | {{ $sitio }}
                     <div class="card-header">
                         Nuevos usuarios
                     </div>
-                    <div class="card-body new-users d-flex justify-content-between align-items-center">
+                    <div class="card-body new-users d-flex justify-content-between align-items-center px-2 shadow-lg">
                         <i class="fa-solid fa-chart-column fa-2xl" style="color: #3bc43d;"></i>
                     </div>
                 </div>
@@ -21,7 +21,7 @@ Home | {{ $sitio }}
                     <div class="card-header">
                         Productos comprados
                     </div>
-                    <div class="card-body sell-products d-flex justify-content-between align-items-center">
+                    <div class="card-body sell-products d-flex justify-content-between align-items-center px-2 shadow-lg">
                         <i class="fa-solid fa-chart-column fa-2xl" style="color: #3bc43d;"></i>
 
                     </div>
@@ -32,7 +32,7 @@ Home | {{ $sitio }}
                     <div class="card-header">
                         Ordenes nuevas
                     </div>
-                    <div class="card-body new-orders d-flex justify-content-between align-items-center">
+                    <div class="card-body new-orders d-flex justify-content-between align-items-center px-2 shadow-lg">
                         <i class="fa-solid fa-chart-column fa-2xl" style="color: #3bc43d;"></i>
 
                     </div>
@@ -43,7 +43,7 @@ Home | {{ $sitio }}
                     <div class="card-header">
                         Total de visitas
                     </div>
-                    <div class="card-body d-flex justify-content-between align-items-center">
+                    <div class="card-body d-flex justify-content-between align-items-center px-2 shadow-lg">
                         <i class="fa-solid fa-chart-column fa-2xl" style="color: #3bc43d;"></i>
                         <div class="bg-green rounded-pill w-25 text-center ml-auto">{{ Cache::get('contador-visitas', 0) }}</div>
                     </div>
@@ -55,10 +55,10 @@ Home | {{ $sitio }}
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         Ingresos diarios
-                        <div class="bg-primary rounded-pill w-25 text-center ml-auto sell-daily"></div>
+                        <div class="bg-primary rounded-pill w-50 text-center ml-auto sell-daily"></div>
 
                     </div>
-                    <div class="card-body p-0">
+                    <div class="card-body p-0 shadow-lg">
                         <canvas class="p-2" id="line-sell-daily"></canvas>
                     </div>
                 </div>
@@ -67,7 +67,7 @@ Home | {{ $sitio }}
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         Ingresos por mes
-                        <div class="bg-primary rounded-pill w-25 text-center ml-auto sell-month"></div>
+                        <div class="bg-primary rounded-pill w-50 text-center ml-auto px-2 sell-month shadow-lg"></div>
 
                     </div>
                     <div class="card-body p-0">
@@ -79,7 +79,7 @@ Home | {{ $sitio }}
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         Total de ventas mensuales
-                        <div class="bg-primary rounded-pill w-25 text-center ml-auto sell-all"></div>
+                        <div class="bg-primary rounded-pill w-25 text-center ml-auto px-2 sell-all shadow-lg" style=""></div>
 
                     </div>
                     <div class="card-body p-0">
@@ -97,7 +97,8 @@ Home | {{ $sitio }}
                 <div class="card-header">
                     Productos top
                 </div>
-                <div class="card-body top-products py-0 px-3 ">
+                <div class="card-body top-products py-0 px-3 shadow-lg">
+
 
                 </div>
             </div>
@@ -110,7 +111,6 @@ Home | {{ $sitio }}
 
 @section('after_scripts')
 <script>
-$(document).ready(function(){
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -122,13 +122,7 @@ $(document).ready(function(){
         url:'/usuarios-nuevos',
         success: function(response){
             let usuariosNuevos = 0;
-            JSON.parse(response).forEach(function(usuario){
-                usuariosNuevos += usuario.usuarios;
-            });
-            $('.new-users').append($('<div>').addClass('bg-green rounded-pill w-25 text-center ml-auto').text(usuariosNuevos));
-
-            console.log('usuarios nuevos: ');
-            console.log(JSON.parse(response));
+            $('.new-users').append($('<div>').addClass('bg-green rounded-pill w-25 text-center ml-auto').text(response));
         },
         error: function(response){
             console.log(response);
@@ -140,15 +134,7 @@ $(document).ready(function(){
         url:'/productos-comprados',
         success: function(response){
             let productosComprados = 0;
-            JSON.parse(response).forEach(function(productos){
-                productos.productos.forEach(function(cantidad){
-                    productosComprados += parseInt(cantidad.count);
-                });
-            });
-            $('.sell-products').append($('<div>').addClass('bg-green rounded-pill w-25 text-center ml-auto').text(productosComprados));
-
-            console.log('productos comprados: ')
-            console.log(JSON.parse(response));
+            $('.sell-products').append($('<div>').addClass('bg-green rounded-pill w-25 text-center ml-auto').text(response));
         },
         error: function(response){
             console.log(response);
@@ -160,13 +146,9 @@ $(document).ready(function(){
         url:'/ordenes-nuevas',
         success: function(response){
             let ordenesNuevas = 0;
-            JSON.parse(response).forEach(function(orden){
-                ordenesNuevas += orden.ordenes;
-            });
-            $('.new-orders').append($('<div>').addClass('bg-green rounded-pill w-25 text-center ml-auto').text(ordenesNuevas));
+    
+            $('.new-orders').append($('<div>').addClass('bg-green rounded-pill w-25 text-center ml-auto').text(response));
 
-            console.log('ordenes nuevas: ')
-            console.log(JSON.parse(response));
         },
         error: function(response){
             console.log(response);
@@ -336,35 +318,34 @@ $(document).ready(function(){
             let ctx = canvas.getContext('2d');
             let ordenes = {};
             let ingresos = 0;
-            JSON.parse(response).forEach(function(venta){
-                let mes = parseInt(venta.fecha);
-                console.log('mes = ' + mes);
-                    if(ordenes[mes] > 0){
-                        ordenes[mes] += venta.total;
-                    }
-                    else
-                        ordenes[mes] = venta.total;
-                        ingresos += venta.total;
-
-
-            });
-            let labels = [];
-            let datos = [];
-            for(let mes in ordenes){
-                labels.push(mes);
-                datos.push(ordenes[mes]);
+            JSON.parse(response).forEach(function(venta) {
+            let hora = parseInt(venta.fecha);
+            console.log('hora = ' + hora);
+            if (ordenes[hora] > 0) {
+                ordenes[hora] += venta.total;
+            } else {
+                ordenes[hora] = venta.total;
             }
+            ingresos += venta.total;
+            });
+
+            let labels = ['hora: 00', 'hora: 01', 'hora: 02', 'hora: 03', 'hora: 04', 'hora: 05', 'hora: 06', 'hora: 07', 'hora: 08', 'hora: 09', 'hora: 10', 'hora: 11', 'hora: 12', 'hora: 13', 'hora: 14', 'hora: 15', 'hora: 16', 'hora: 17', 'hora: 18', 'hora: 19', 'hora: 20', 'hora: 21', 'hora: 22', 'hora: 23'];
+            let datos = Array(labels.length).fill(0);
+
+            for (let hora in ordenes) {
+            datos[hora] = ordenes[hora];
+            }
+
             console.log("Ordenes: ");
             console.log(ordenes);
+
             // Define los datos del gráfico
-
             let data = {
-
             labels: labels,
             datasets: [{
                 label: 'Ingreso',
                 data: datos,
-                 backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                backgroundColor: 'rgba(0, 123, 255, 0.5)',
                 borderColor: 'rgba(0, 123, 255, 1)', // Color de la línea
             }]
             };
@@ -410,20 +391,19 @@ $(document).ready(function(){
         method: 'GET',
         url:'/productos-top',
         success: function(response){
-            if(JSON.parse(response)){
+            if(JSON.parse(response).length > 0){
                 JSON.parse(response).forEach(function(orden){
                     $('.top-products').append($('<div>').addClass('w-100 text-left pb-2 pt-3 border-bottom').text(orden.name));
                     });
                 }
             else
-            $('.top-products').append($('<div>').addClass('w-100 text-left pb-2 pt-3 border-bottom').text("no se han vendido productos."));
+            $('.top-products').append($('<div>').addClass('w-100 text-center pb-2 pt-3 border-bottom').text("no se han vendido productos."));
             console.log('Productos top: ')
-            console.log(JSON.parse(response));
+            console.log(JSON.parse(response).length);
         },
         error: function(response){
             console.log(response);
         }
     })
-});
 </script>
 @endsection

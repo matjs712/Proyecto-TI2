@@ -24,6 +24,8 @@ Usuarios | {{ $sitio }}
                                             <span>Nutricionista</span>
                                         @elseif ($usuario->role_as == '3')
                                             <span>Chef</span>
+                                        @elseif ($usuario->role_as == '4')
+                                            <span>Normal</span>
                                     @endif
                                 </div>
                             </div>

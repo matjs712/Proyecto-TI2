@@ -33,6 +33,7 @@
                                 <input hidden class="prod_id" type="text" value="{{ $item->prod_id }}">
                                 @if ($item->products->qty >= $item->prod_qty)
                                     <label for="qty">Cantidad</label>
+                                    <label hidden class="prod-qty">{{ $item->products->qty }}</label>
                                     <div class="input-group text-center mb-3" style="width:130px;">
                                         <button class="input-group-text changeQuantity decrement-btn">-</button>
                                         <input type="text" name="qty" class="form-control qty-input text-center"
@@ -41,7 +42,14 @@
                                     </div>
                                     @php $total += $item->products->selling_price * $item->prod_qty; @endphp
                                 @else
-                                    <h6>Fuera de stock</h6>
+                                    <label for="qty">Cantidad</label>
+                                    <label hidden class="prod-qty">{{ $item->prod_qty }}</label>
+                                    <div class="input-group text-center mb-3" style="width:130px;">
+                                        <button class="input-group-text changeQuantity decrement-btn">-</button>
+                                        <input type="text" name="qty" class="form-control qty-input text-center"
+                                            value="{{ $item->prod_qty }}">
+                                    </div>
+                                    @php $total += $item->products->selling_price * $item->prod_qty; @endphp
                                 @endif
                             </div>
                             <div class="col-md-2">

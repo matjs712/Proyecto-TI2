@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Logo;
 use App\Models\Ingrediente;
 use App\Models\User;
@@ -54,84 +55,19 @@ class FrontendController extends Controller
         return response()->json($data);
     }
     public function UsuariosNuevos(){
-        $users = User::Select('id', 'created_at')->get();
-        $groupedUsers = [];
+        $users = User::whereDate('created_at', Carbon::today())->count();
 
-        foreach ($users as $user) {
-            $date = substr($user->created_at, 0, 10);
-
-            if (!isset($groupedUsers[$date])) {
-                $groupedUsers[$date] = 0;
-            }
-
-            $groupedUsers[$date]++;
-        }
-
-        $jsonData = [];
-
-        foreach ($groupedUsers as $date => $users) {
-            $jsonData[] = [
-                'fecha' => $date,
-                'usuarios' => $users
-            ];
-        }
-        return json_encode($jsonData);
+        return response()->json($users);
     }
     public function ProductosComprados(){
-        $products = OrderItem::Select('prod_id', 'qty', 'created_at')->get();
-        $groupedProducts = [];
+        $products = OrderItem::whereDate('created_at', Carbon::today())->count();
 
-        foreach ($products as $product) {
-            $date = substr($product->created_at, 0, 10);
-            $id = $product->prod_id;
-                if(!isset($groupedProducts[$date][$id])){
-                    $groupedProducts[$date][$id] = $product->qty;
-                }
-                else{
-                    $groupedProducts[$date][$id] += $product->qty;
-                }
-        }
-        $jsonData = [];
-
-        foreach ($groupedProducts as $date => $products) {
-            $productData = [];
-            foreach ($products as $id => $count) {
-                $productData[] = [
-                    'id' => $id,
-                    'count' => $count
-                ];
-            }
-
-            $jsonData[] = [
-                'fecha' => $date,
-                'productos' => $productData
-            ];
-        }
-        return json_encode($jsonData);
+        return response()->json($products);
     }
     public function OrdenesNuevas(){
-        $orders = Order::Select('id', 'created_at')->get();
-        $groupedOrders = [];
-
-        foreach ($orders as $order) {
-            $date = substr($order->created_at, 0, 10);
-
-            if (!isset($groupedOrders[$date])) {
-                $groupedOrders[$date] = 0;
-            }
-
-            $groupedOrders[$date]++;
-        }
-
-        $jsonData = [];
-
-        foreach ($groupedOrders as $date => $orders) {
-            $jsonData[] = [
-                'fecha' => $date,
-                'ordenes' => $orders
-            ];
-        }
-        return json_encode($jsonData);
+        $orders = Order::whereDate('created_at', Carbon::today())->count();
+        
+        return response()->json($orders);
     }
     public function IngresosMes(){
         $orders = Order::Select('id','total_price', 'created_at')->get();
@@ -184,7 +120,8 @@ class FrontendController extends Controller
         return json_encode($jsonData);
     }
     public function IngresosDiarios(){
-        $orders = Order::Select('id','total_price', 'created_at')->get();
+        $orders = Order::Select('id','total_price', 'created_at')->whereDate('created_at', Carbon::today())->get();
+        
         $groupedOrders = [];
 
         foreach ($orders as $order) {
@@ -198,7 +135,6 @@ class FrontendController extends Controller
         }
 
         $jsonData = [];
-
         foreach ($groupedOrders as $date => $orders) {
             $jsonData[] = [
                 'fecha' => $date,

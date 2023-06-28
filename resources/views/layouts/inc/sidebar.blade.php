@@ -1,4 +1,4 @@
-<aside class="main-sidebar  elevation-4" style="background-color: {{ $color_barra_lateral }}">
+<aside class="main-sidebar elevation-4" style=" background-color: {{ $color_barra_lateral }}">
     <!-- Brand Logo -->
     <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
         onmouseout="this.style.backgroundColor='transparent'" style="color: {{ $color_a_tag_sidebar }}"
@@ -64,6 +64,7 @@
                 @endcan
                 @if (auth()->user()->hasPermissionTo('ver productos') ||
                         auth()->user()->hasPermissionTo('ver recetas') ||
+                        auth()->user()->hasPermissionTo('ver nutricionales') ||
                         auth()->user()->hasPermissionTo('ver categorias') ||
                         auth()->user()->hasPermissionTo('ver ingredientes'))
                     <li class="nav-header" style="color: {{ $color_a_tag_sidebar }}">
@@ -97,7 +98,19 @@
                         </li>
                     @endif
                 @endcan
-
+                @can('ver nutricionales')
+                    @if ($nutricionales)
+                        <li class="nav-item has-treeview">
+                            <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
+                                onmouseout="this.style.backgroundColor='transparent'"
+                                style="color: {{ $color_a_tag_sidebar }}" href="{{ url('/nutricionales') }}"
+                                class="nav-link">
+                                <i class="fa-regular fa-rectangle-list"></i>
+                                <p>Informacion nutricional</p>
+                            </a>
+                        </li>
+                    @endif
+                @endcan
                 @can('ver categorias')
                     @if ($categorias)
                         <li class="nav-item">
@@ -238,18 +251,7 @@
                         </a>
                     </li>
                 @endcan
-                {{-- <li class="nav-item mt-3">
-                    <a onmouseover="this.style.backgroundColor='{{ $color_a_tag_hover }}'"
-                        onmouseout="this.style.backgroundColor='transparent'"
-                        style="color: {{ $color_a_tag_sidebar }}" class="nav-link" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                        {{ __('Salir') }}
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-                </li> --}}
+                
 
             </ul>
         </nav>

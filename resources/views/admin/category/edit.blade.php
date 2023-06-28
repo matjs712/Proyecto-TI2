@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <label for="name">Nombre Categoría</label>
                             <input type="text" name="name" value="{{ $categoria->name }}" class="form-control"
-                                placeholder="Poleras">
+                                placeholder="Sales">
                             @error('name')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -32,7 +32,7 @@
                         <div class="form-group">
                             <label for="slug">Slug</label>
                             <input type="text" name="slug" value="{{ $categoria->slug }}" class="form-control"
-                                placeholder="Poleras">
+                                placeholder="Sales">
                             @error('slug')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -42,7 +42,7 @@
                         <div class="form-group">
                             <label for="descripcion">Descripción</label>
                             <textarea type="text" rows="5" style="resize:none;" name="description" class="form-control"
-                                placeholder="Categoría dedicada solo a peloras de ...">{{ $categoria->description }}</textarea>
+                                placeholder="Sales de mar...">{{ $categoria->description }}</textarea>
                             @error('description')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
