@@ -27,10 +27,10 @@
                                 <div class="col-md-6">
                                     <label for="firstName">Primer nombre</label>
                                     <input type="text" name="fname"
-                                        value="{{ Auth::check() ? Auth::user()->name : '' }}" class="fname form-control"
+                                        value="{{ Auth::check() ? Auth::user()->fname : '' }}" class="fname form-control"
                                         placeholder="Juan">
-                                    @if ($errors->has('name'))
-                                        <span class="error text-danger" for="input-name">{{ $errors->first('name') }}</span>
+                                    @if ($errors->has('fname'))
+                                        <span class="error text-danger" for="input-fname">{{ $errors->first('fname') }}</span>
                                     @endif
                                     <span style="color:red" id="fname_error"></span>
                                 </div>
@@ -77,7 +77,7 @@
                                         value="{{ old('direccion1') }}">
                                     @if ($errors->has('direccion1'))
                                         <span class="error text-danger"
-                                            for="input-name">{{ $errors->first('dirrecion1') }}</span>
+                                            for="input-name">{{ $errors->first('direccion1') }}</span>
                                     @endif
                                     <span style="color:red" id="direccion1_error"></span>
                                 </div>
@@ -89,17 +89,27 @@
                                         value="{{ old('direccion2') }}">
                                     @if ($errors->has('direccion2'))
                                         <span class="error text-danger"
-                                            for="input-name">{{ $errors->first('dirrecion2') }}</span>
+                                            for="input-name">{{ $errors->first('direccion2') }}</span>
                                     @endif
                                     <span style="color:red" id="direccion2_error"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Región</label>
                                     <select name="region" id="regiones"class="region form-control"></select>
+                                    @if ($errors->has('region'))
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('region') }}</span>
+                                    @endif
+                                    <span style="color:red" id="region"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Ciudad</label>
                                     <select name="ciudad" id="ciudades" class="ciudad form-control" onchange="llenarInputs()"></select>
+                                    @if ($errors->has('ciudad'))
+                                        <span class="error text-danger"
+                                            for="input-name">{{ $errors->first('ciudad') }}</span>
+                                    @endif
+                                    <span style="color:red" id="ciudad"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Comuna</label>

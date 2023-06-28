@@ -73,6 +73,7 @@ class CheckoutController extends Controller
             'ciudad' => 'not_in:sin-ciudad',
             'comuna' => 'required|max:255',
         ];
+        
         $messages = [
             'fname.required' => 'El nombre del usuario es requerido.',
             'fname.max' => 'El nombre del usuario no puede exceder los :max caracteres.',
