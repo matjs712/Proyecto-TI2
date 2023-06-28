@@ -25,26 +25,7 @@
         <div class="me-5 d-none d-lg-block text-white">
             <span>Contactate con nosotros a travez de nuestras redes sociales :</span>
         </div>
-        <div>
-            <a href="" class="me-4 text-reset">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fab fa-google"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fab fa-github"></i>
-            </a>
-        </div>
+
         <!-- Right -->
     </section>
     <!-- Section: Social media -->
@@ -61,8 +42,7 @@
                         <i class="fas fa-gem me-3"></i>De Sabelle
                     </h6>
                     <p class="text-white">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo officiis eius iure consectetur
-                        voluptatum dolorum odio soluta, nostrum commodi error.
+                        Sales desabelle gourmet
                     </p>
                 </div>
                 <!-- Grid column -->
@@ -110,13 +90,11 @@
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4 text-white">Contact</h6>
-                    <p class="text-white"><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
                     <p class="text-white">
                         <i class="fas fa-envelope me-3"></i>
-                        info@example.com
+                        desabello@gmail.com
                     </p>
-                    <p class="text-white"><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
-                    <p class="text-white"><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+                    <p class="text-white"><i class="fas fa-phone me-3"></i> + 922332123</p>
                 </div>
                 <!-- Grid column -->
             </div>
