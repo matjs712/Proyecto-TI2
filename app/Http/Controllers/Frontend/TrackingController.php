@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Validator;
 
 class TrackingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:seguimiento')->only('index');
+
+    }
+
     public function index()
     {
         logo_sitio();

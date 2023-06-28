@@ -14,6 +14,7 @@ function secciones()
     $ordenes = false;
     $usuarios = false;
     $roles_permisos = false;
+    $seguimiento = false;
     $productosFront = false;
     $ingredientesFront = false;
     $categoriasFront = false;
@@ -24,6 +25,7 @@ function secciones()
     $ordenesFront = false;
     $usuariosFront = false;
     $roles_permisosFront = false;
+    $seguimientoFront = false;
 
     $configurations = Configuration::first();
 
@@ -68,7 +70,10 @@ function secciones()
         $roles_permisos = true;
         $roles_permisosFront = true;
     }
-
+    if ($configurations->seguimiento == 1) {
+        $seguimiento = true;
+        $seguimientoFront = true;
+    }
     view()->share([
         'productos' => $productos,
         'ingredientes' => $ingredientes,
@@ -80,6 +85,7 @@ function secciones()
         'ordenes' => $ordenes,
         'usuarios' => $usuarios,
         'roles_permisos' => $roles_permisos,
+        'seguimiento' => $seguimiento,
         'productosFront' => $productosFront,
         'ingredientesFront' => $ingredientesFront,
         'categoriasFront' => $categoriasFront,
@@ -90,5 +96,6 @@ function secciones()
         'ordenesFront' => $ordenesFront,
         'usuariosFront' => $usuariosFront,
         'roles_permisosFront' => $roles_permisosFront,
+        'seguimientoFront' => $seguimientoFront
     ]);
 }

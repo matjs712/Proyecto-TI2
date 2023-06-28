@@ -322,6 +322,12 @@
                             class="fas fa-phone    "></i> Contacto</a>
                 </li>
             @endif --}}
+            @if ($seguimientoFront)
+                <li class="nav-item">
+                    <a class="nav-link text-dark mr-4" href="{{ url('seguimiento') }}"><i
+                            class="fas fa-people-carry    "></i> Seguimiento Producto</a>
+                </li>
+            @endif
         </ul>
         <ul class="navbar-nav d-flex justify-content-start">
             <li class="nav-item">

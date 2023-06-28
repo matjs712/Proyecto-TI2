@@ -24,6 +24,7 @@ class CreateConfigurationsTable extends Migration
             $table->integer('registros')->default(1);
             $table->integer('ordenes')->default(1);
             $table->integer('usuarios')->default(1);
+            $table->integer('seguimiento')->default(1);
             $table->integer('roles_permisos')->default(1);
             $table->string('color_principal');
             $table->string('color_secundario');
@@ -75,7 +76,7 @@ class CreateConfigurationsTable extends Migration
             $table->longText('texto_2_historia');
             $table->longText('texto_3_historia');
             $table->string('imagen_texto_historia');
-            
+
             $table->timestamps();
         });
     }
