@@ -95,9 +95,7 @@
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Región</label>
-                                    <input type="text" name="region"
-                                        value="{{ Auth::check() ? Auth::user()->region : '' }}" class="region form-control"
-                                        placeholder="Metropolitana" value="{{ old('region') }}">
+                                    <select name="regiones" id="regiones"class="region form-control"></select>
                                     @if ($errors->has('region'))
                                         <span class="error text-danger"
                                             for="input-name">{{ $errors->first('region') }}</span>
@@ -106,9 +104,7 @@
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Ciudad</label>
-                                    <input type="text" name="ciudad"
-                                        value="{{ Auth::check() ? Auth::user()->ciudad : '' }}"
-                                        class="ciudad form-control" placeholder="Santiago" value="{{ old('ciudad') }}">
+                                    <select name="ciudades" id="ciudades" class="ciudad form-control" onchange="llenarInputs()"></select>
                                     @if ($errors->has('ciudad'))
                                         <span class="error text-danger"
                                             for="input-name">{{ $errors->first('ciudad') }}</span>
@@ -181,4 +177,12 @@
             }
         }
     </script>
+    <script type="text/javascript" src="{{ asset('js/regiones.js') }}"></script>
+    <script type="text/javascript">
+        function llenarInputs(){
+            nombreSelec = document.getElementeById("ciudades"); 
+            comuna = document.getElementeById("comuna");
+            comuna.value = nombreSelec.options[nombreSelec.selectedIndex].text;
+        }
+        </script>
 @endsection
