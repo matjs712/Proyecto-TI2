@@ -69,8 +69,8 @@ class CheckoutController extends Controller
             'telefono' => 'required|numeric|digits:9',
             'direccion1' => 'required|max:255',
             'direccion2' => 'max:255',
-            'region' => 'required|max:255',
-            'ciudad' => 'required|max:255',
+            'region' => 'not_in:sin-region',
+            'ciudad' => 'not_in:sin-ciudad',
             'comuna' => 'required|max:255',
         ];
         $messages = [
@@ -84,8 +84,8 @@ class CheckoutController extends Controller
             'direccion1.required' => 'La direccion es requerida',
             'direccion1.max' => 'La direccion no puede exceder los :max caracteres',
             'direccion2.max' => 'La direccion no puede exceder los :max caracteres',
-            'region.required' => 'la region es requerido.',
-            'ciudad.required' => 'La ciudad es requerido.',
+            'region.not_in' => 'La region no es válida.',
+            'ciudad.not_in' => 'La ciudad no es válida.',
             'comuna.required' => 'La comuna es requerido.',
 
         ];

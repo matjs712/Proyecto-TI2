@@ -95,21 +95,11 @@
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Región</label>
-                                    <select name="regiones" id="regiones"class="region form-control"></select>
-                                    @if ($errors->has('region'))
-                                        <span class="error text-danger"
-                                            for="input-name">{{ $errors->first('region') }}</span>
-                                    @endif
-                                    <span style="color:red" id="region_error"></span>
+                                    <select name="region" id="regiones"class="region form-control"></select>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Ciudad</label>
-                                    <select name="ciudades" id="ciudades" class="ciudad form-control" onchange="llenarInputs()"></select>
-                                    @if ($errors->has('ciudad'))
-                                        <span class="error text-danger"
-                                            for="input-name">{{ $errors->first('ciudad') }}</span>
-                                    @endif
-                                    <span style="color:red" id="ciudad_error"></span>
+                                    <select name="ciudad" id="ciudades" class="ciudad form-control" onchange="llenarInputs()"></select>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Comuna</label>
