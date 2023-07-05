@@ -45,6 +45,9 @@
                                             for="input-name">{{ $errors->first('lname') }}</span>
                                     @endif
                                 </div>
+                                <div class="col-md-6">
+                                    <label for="lastName">Email</label>
+                                    <input type="email" name="email"
                                         value="{{ Auth::check() ? Auth::user()->email : '' }}" class="email form-control"
                                         placeholder="email@gmail.com" value="{{ old('email') }}">
                                     @if ($errors->has('email'))
@@ -101,7 +104,8 @@
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label for="">Ciudad</label>
-                                    <select name="ciudad" id="ciudades" class="ciudad form-control" onchange="llenarInputs()"></select>
+                                    <select name="ciudad" id="ciudades" class="ciudad form-control"
+                                        onchange="llenarInputs()"></select>
                                     @if ($errors->has('ciudad'))
                                         <span class="error text-danger"
                                             for="input-name">{{ $errors->first('ciudad') }}</span>
@@ -176,10 +180,10 @@
     </script>
     <script type="text/javascript" src="{{ asset('js/regiones.js') }}"></script>
     <script type="text/javascript">
-        function llenarInputs(){
-            nombreSelec = document.getElementeById("ciudades"); 
+        function llenarInputs() {
+            nombreSelec = document.getElementeById("ciudades");
             comuna = document.getElementeById("comuna");
             comuna.value = nombreSelec.options[nombreSelec.selectedIndex].text;
         }
-        </script>
+    </script>
 @endsection
