@@ -81,7 +81,8 @@ class ProductController extends Controller
             'price' => 'required|gt:0',
             'selling_price' => 'required',
             'image' => 'required|image|mimes:jpg,png',
-            'qty' => 'required|gte:0',
+            'qty' => 'required|gt:0',
+            // 'qty' => 'required|gte:0',
         ];
 
         $messages = [
@@ -273,7 +274,7 @@ class ProductController extends Controller
             'price' => 'required|gt:0',
             'selling_price' => 'required',
             'image' => 'image|mimes:jpg,png',
-            'qty' => 'required|gte:0',
+            'qty' => 'required|gt:0',
 
         ];
 

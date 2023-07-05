@@ -4,12 +4,12 @@
 @endsection
 @section('content')
 
-    <div class="py-1 mb-4 shadow-sm border-top" style="background-color: {{ $color_secundario }}">
+    <div class="py-1 mb-4 text-white shadow-sm border-top" style="background-color: {{ $color_secundario }}">
         <div class="container">
             <h6 class="mb-0">
-                <a href="{{ url('/') }}">Inicio</a> /
-                <a href="{{ url('/carrito') }}">Mi Carrito</a>/
-                <a href="{{ url('/checkout') }}">Checkout</a>
+                <a class="text-white" href="{{ url('/') }}">Inicio</a> /
+                <a class="text-white" href="{{ url('/carrito') }}">Mi Carrito</a>/
+                <a class="text-white" href="{{ url('/checkout') }}">Checkout</a>
             </h6>
         </div>
     </div>
