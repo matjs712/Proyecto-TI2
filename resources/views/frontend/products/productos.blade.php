@@ -102,9 +102,16 @@
                                     <div class="team-item bg-white">
                                         <a href="{{ url('ver-producto/' . $producto->slug) }}">
                                             <div class="position-relative overflow-hidden text-center img-container-home">
-                                                @if ($producto->trending == 1)
+                                                @if ($producto->qty > 0)
+                                                    @if ($producto->trending == 1)
+                                                        <span
+                                                            style="color:white;position: absolute; border-radius:10px; padding: 2px 4px; top:10px;left:5px; background-color:{{ $boton_principal_busqueda }}; font-size:12px; opacity:0.8">Trending</span>
+                                                    @endif
+                                                @endif
+                                                @if ($producto->qty == 0)
                                                     <span
-                                                        style="color:white;position: absolute; border-radius:10px; padding: 2px 4px; top:10px;left:5px; background-color:{{ $boton_principal_busqueda }}; font-size:12px; opacity:0.8">Trending</span>
+                                                        style="background-color:white;position: absolute; border-radius:10px; padding: 2px 4px; top:10px;right:5px;color:{{ $boton_principal_busqueda }}; font-size:12px; opacity:0.8">Sin
+                                                        Stock</span>
                                                 @endif
                                                 <img src="{{ Storage::url('uploads/productos/' . $producto->image) }}"
                                                     alt="" class="img-fluid" style="height:200px; width:auto">
@@ -134,9 +141,9 @@
                                             <div class="d-flex align-items-center justify-content-between mt-2">
                                                 <div class="d-flex align-items-center" style="flex: 1">
                                                     <span class="mr-2"
-                                                        style="font-size: 20px;font-style: bold; font-weight:900; color:{{ $boton_nuevo }}">${{ $producto->selling_price }}</span>
+                                                        style="font-size: 20px;font-style: bold; font-weight:900; color:{{ $boton_nuevo }}">${{ number_format($producto->selling_price, 0, '', '.') }}</span>
                                                     <span
-                                                        style="text-decoration: line-through">${{ $producto->original_price }}</span>
+                                                        style="text-decoration: line-through">${{ number_format($producto->original_price, 0, '', '.') }}</span>
                                                 </div>
                                                 <a href="{{ url('ver-producto/' . $producto->slug) }}"><span class="p-2"
                                                         style="border-radius: 50%; background-color:{{ $boton_principal_busqueda }}; opacity:.8; color:white"><i

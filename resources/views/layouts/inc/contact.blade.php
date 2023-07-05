@@ -9,10 +9,9 @@
                         <h2 class="text-white font-secondary hide">Sacos de 20 kg de sal</h2>
                         <h1 class="display-4 text-uppercase text-white hide">Sin retocar</h1>
                     </div>
-                    <p class="text-white mb-4 hide2">Eirmod sed tempor lorem ut dolores sit kasd ipsum. Dolor ea et
-                        dolore et
-                        at sea ea at dolor justo ipsum duo rebum sea. Eos vero eos vero ea et dolore eirmod et. Dolores
-                        diam duo lorem. Elitr ut dolores magna sit. Sea dolore sed et.</p>
+                    <p class="text-white mb-4 hide2">¡Descubre nuestra sección de sacos de sal! Aquí encontrarás una
+                        amplia variedad de opciones para satisfacer tus necesidades. Nuestros sacos de sal son perfectos
+                        para múltiples usos, desde cocina hasta tratamiento de agua y deshielo.</p>
                     <a href="{{ url('ver-categoria/sacos') }}" class="btn border-inner py-3 px-5 me-3"
                         style="background-color: {{ $boton_principal_busqueda }}; color:white">Compralo ahora <i
                             class="fas fa-arrow-right    "></i></a>

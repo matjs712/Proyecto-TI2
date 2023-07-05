@@ -32,6 +32,13 @@ class FrontendController extends Controller
         $categorias = Category::where('popular', '1')->take('5')->get();
         $comentarios = Review::all()->take(3);
 
+        if (!session('oferta')) {
+            session()->put('oferta', true);
+        } else {
+            session()->put('oferta', false);
+        }
+
+
         return view('frontend.index', compact('banners', 'categorias', 'productos', 'comentarios'));
     }
     public function aboutus()

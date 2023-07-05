@@ -53,10 +53,11 @@
                             <div class="d-flex align-items-end">
                                 <h2 class="py-2 m-0" style="margin-right:15px!important;">
                                     <strong
-                                        style="color:{{ $boton_nuevo }}">${{ number_format($producto->selling_price, 0, '', '') }}</strong>
+                                        style="color:{{ $boton_nuevo }}">${{ number_format($producto->selling_price, 0, '', '.') }}</strong>
                                 </h2>
                                 <h5 class="py-2 m-0" style="opacity:.8">
-                                    <s>${{ number_format($producto->original_price, 0, '', '') }}</s></h5>
+                                    <s>${{ number_format($producto->original_price, 0, '', '.') }}</s>
+                                </h5>
                             </div>
                             <div>
                                 @if ($producto->qty > 0)
@@ -75,16 +76,19 @@
                         <hr class="m-0">
                         <div class="row mt-2 d-flex align-items-center px-3">
                             <input type="hidden" value="{{ $producto->id }}" class="prod_id">
-                            <div class="input-group text-center mr-2"
-                                style="border: 1px solid rgba(128, 128, 128, 0.363);border-radius:8px; width:100px">
-                                <button class="input-group-text decrement-btn bg-white"
-                                    style="border:none;border-radius:15px">-</button>
-                                <input type="text" name="qty" value="1" class="form-control qty-input"
-                                    style="border:none">
-                                <button class="input-group-text
+                            @if ($producto->qty > 0)
+                                <div class="input-group text-center mr-2"
+                                    style="border: 1px solid rgba(128, 128, 128, 0.363);border-radius:8px; width:100px">
+                                    <button class="input-group-text decrement-btn bg-white"
+                                        style="border:none;border-radius:15px">-</button>
+                                    <input type="text" name="qty" value="1" class="form-control qty-input"
+                                        style="border:none">
+                                    <button
+                                        class="input-group-text
                                     increment-btn bg-white"
-                                    style="border:none; border-radius:15px">+</button>
-                            </div>
+                                        style="border:none; border-radius:15px">+</button>
+                                </div>
+                            @endif
                             @if ($producto->qty > 0)
                                 <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
                                     style="background-color: {{ $boton_carrito }}; color:white;"

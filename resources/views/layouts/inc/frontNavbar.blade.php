@@ -36,7 +36,8 @@
                                     onfocus="this.style.borderBottom='1.5px solid black';"
                                     onfocus="this.style.boxShadow = 'none'; this.style.outline = 'none';"
                                     name="nameProduct" id="search_product"
-                                    class="form-control d-flex align-items-center" placeholder="Busca un producto">
+                                    class="form-control d-flex align-items-center"
+                                    placeholder="Busca un producto, presiona enter o dale a la lupa">
 
                                 {{-- <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
                                     type="submit" class="input-group-text search search-submit"
@@ -398,7 +399,7 @@
     </div>
 </div>
 
-@if ($habilitar_oferta)
+@if ($habilitar_oferta && session('oferta'))
     <div class="modal fade" id="modalInicio" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-container" role="document">

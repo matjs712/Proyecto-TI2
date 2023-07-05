@@ -164,6 +164,7 @@ $(document).ready(function () {
     $(".addToWishlist").click(function (e) {
         e.preventDefault();
         var prod_id = $(this).closest(".prod_data").find(".prod_id").val();
+        var prod_id_color = $(this);
         $.ajaxSetup({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -178,6 +179,7 @@ $(document).ready(function () {
             success: function (response) {
                 loadWish();
                 sweet(response);
+                prod_id_color.css('color', 'red');
             },
             error: function (xhr, status, error) {
                 sweetError(error);

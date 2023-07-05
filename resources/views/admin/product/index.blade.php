@@ -43,7 +43,9 @@
                             <td>{{ $product->category->name }}</td>
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->qty }}</td>
-                            <td><span class="badge badge-primary">{{ $product->original_price }}</span></td>
+                            <td><span
+                                    class="badge badge-primary">${{ number_format($product->original_price, 0, ',', '.') }}</span>
+                            </td>
                             <td>{!! $product->status == 0
                                 ? '<span class="badge badge-danger">No visible</span>'
                                 : '<span class="badge badge-success">Visible</span>' !!}</td>

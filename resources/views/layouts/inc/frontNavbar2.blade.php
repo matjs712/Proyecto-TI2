@@ -36,7 +36,8 @@
                                     onfocus="this.style.borderBottom='1.5px solid black';"
                                     onfocus="this.style.boxShadow = 'none'; this.style.outline = 'none';"
                                     name="nameProduct" id="search_product"
-                                    class="form-control d-flex align-items-center" placeholder="Busca un producto">
+                                    class="form-control d-flex align-items-center"
+                                    placeholder="Busca un producto, presiona enter o dale a la lupa">
                             </div>
                         </form>
                     </div>

@@ -53,16 +53,16 @@
                             <div class="d-flex align-items-end">
                                 <h2 class="py-2 m-0" style="margin-right:15px!important;">
                                     <strong
-                                        style="color:{{ $boton_nuevo }}">${{ number_format($producto->selling_price, 0, '', '') }}</strong>
+                                        style="color:{{ $boton_nuevo }}">${{ number_format($producto->selling_price, 0, '', '.') }}</strong>
                                 </h2>
                                 <h5 class="py-2 m-0" style="opacity:.8">
-                                    <s>${{ number_format($producto->original_price, 0, '', '') }}</s>
+                                    <s>${{ number_format($producto->original_price, 0, '', '.') }}</s>
                                 </h5>
                             </div>
                             <div>
                                 @if ($producto->qty > 0)
                                     <label class="badge bg-success text-white prod-qty">{{ $producto->qty }}</label>
-                                    <label class="badge bg-success text-white" value = "">En stock</label>
+                                    <label class="badge bg-success text-white" value="">En stock</label>
                                 @else
                                     <label class="badge bg-danger text-white">Sin stock</label>
                                 @endif
@@ -77,16 +77,19 @@
                         <hr class="m-0">
                         <div class="row mt-2 d-flex align-items-center px-3">
                             <input type="hidden" value="{{ $producto->id }}" class="prod_id">
-                            <div class="input-group text-center mr-2"
-                                style="border: 1px solid rgba(128, 128, 128, 0.363);border-radius:8px; width:100px">
-                                <button class="input-group-text decrement-btn bg-white"
-                                    style="border:none;border-radius:15px">-</button>
-                                <input type="text" name="qty" value="1" class="form-control qty-input"
-                                    style="border:none;">
-                                <button class="input-group-text
-                                    increment-btn bg-white"
-                                    style="border:none; border-radius:15px">+</button>
-                            </div>
+                            @if ($producto->qty > 0)
+                                <div class="input-group text-center mr-2"
+                                    style="border: 1px solid rgba(128, 128, 128, 0.363);border-radius:8px; width:100px">
+                                    <button class="input-group-text decrement-btn bg-white"
+                                        style="border:none;border-radius:15px">-</button>
+                                    <input type="text" name="qty" value="1" class="form-control qty-input"
+                                        style="border:none;">
+                                    <button
+                                        class="input-group-text
+                                        increment-btn bg-white"
+                                        style="border:none; border-radius:15px">+</button>
+                                </div>
+                            @endif
                             @if ($producto->qty > 0)
                                 <button onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
                                     style="background-color: {{ $boton_carrito }}; color:white;"
@@ -101,16 +104,19 @@
                                 type="button" class="btn my-1 mr-2" data-toggle="modal" data-target="#exampleModalCenter">
                                 <i class="fa fa-star" aria-hidden="true"></i>
                             </button>
-                            @if(App\Models\Review::where('user_id', Auth::id())->first())
-                                <button type="button" class="btn my-1 editReview" data-toggle="modal" data-target="#editReviewModal" nmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
-                                style="border-color: {{ $boton_review }}; color:{{ $boton_review }};">
+                            @if (App\Models\Review::where('user_id', Auth::id())->first())
+                                <button type="button" class="btn my-1 editReview" data-toggle="modal"
+                                    data-target="#editReviewModal" nmouseover="this.style.opacity='0.9'"
+                                    onmouseout="this.style.opacity='1'"
+                                    style="border-color: {{ $boton_review }}; color:{{ $boton_review }};">
                                     <i class="fas fa-book"></i> Editar Review
                                 </button>
                             @else
-                            <button type="button" class="btn my-1" data-toggle="modal" data-target="#reviewModal" nmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
-                            style="border-color: {{ $boton_review }}; color:{{ $boton_review }};">
-                                <i class="fas fa-book"></i> Añadir Review
-                            </button>
+                                <button type="button" class="btn my-1" data-toggle="modal" data-target="#reviewModal"
+                                    nmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'"
+                                    style="border-color: {{ $boton_review }}; color:{{ $boton_review }};">
+                                    <i class="fas fa-book"></i> Añadir Review
+                                </button>
                             @endif
                         </div>
 
@@ -142,9 +148,11 @@
                         @if ($item->user->id == Auth::id())
                             {{-- <a href="{{ url('edit-review/' . $producto->slug . '/userreview') }}"><i
                                     class="fas fa-edit text-danger"></i></a> --}}
-                                    <button type="button" class="btn my-1 editReview" data-toggle="modal" data-target="#editReviewModal" nmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+                            <button type="button" class="btn my-1 editReview" data-toggle="modal"
+                                data-target="#editReviewModal" nmouseover="this.style.opacity='0.9'"
+                                onmouseout="this.style.opacity='1'">
                                 <i class="fas fa-edit text-danger"></i>
-                                </button>
+                            </button>
                         @endif
                         <br>
                         @php
@@ -224,47 +232,48 @@
     </div>
 
     {{-- MODAL REVIEW --}}
-    <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog"
-        aria-labelledby="reviewModalTitle" aria-hidden="true">
+    <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalTitle"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                    <div class="modal-header">
-                        <h5>Estas escribiendo una Reseña del producto: {{ $producto->name }}</h5>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ url('add-review') }}" class="d-flex align-items-center flex-column"
-                            method="POST">
-                            @csrf
-                            <div class="d-flex flex-column w-100">
-                                <input type="hidden" name="product_id" value="{{ $producto->id }}">
-                                <textarea name="user_review" style="resize: none; height:200px;" placeholder="Me encantó este producto!!"></textarea>
-                                <button type="submit" class="mt-4 btn btn-success">Agregar reseña</button>
-                            </div>
-                        </form>
-                    </div>
+                <div class="modal-header">
+                    <h5>Estas escribiendo una Reseña del producto: {{ $producto->name }}</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url('add-review') }}" class="d-flex align-items-center flex-column" method="POST">
+                        @csrf
+                        <div class="d-flex flex-column w-100">
+                            <input type="hidden" name="product_id" value="{{ $producto->id }}">
+                            <textarea name="user_review" style="resize: none; height:200px;" placeholder="Me encantó este producto!!"></textarea>
+                            <button type="submit" class="mt-4 btn btn-success">Agregar reseña</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
     {{-- MODAL EDITAR REVIEW --}}
-    <div class="modal fade" id="editReviewModal" tabindex="-1" role="dialog"
-        aria-labelledby="editReviewModalTitle" aria-hidden="true">
+    <div class="modal fade" id="editReviewModal" tabindex="-1" role="dialog" aria-labelledby="editReviewModalTitle"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                    <div class="modal-header">
-                        <h5>Estas escribiendo una Reseña del producto: {{ $producto->name }}</h5>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ url('update-review') }}" class="d-flex align-items-center flex-column" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="d-flex flex-column w-100">
-                                <input type="hidden" name="review_id" id="reviewId">
-                                <textarea id="modalReview" name="user_review" style="resize: none; height:200px;" placeholder="Me encantó este producto!!"></textarea>
-                                <button type="submit" class="mt-4 btn btn-success">Agregar reseña</button>
-                            </div>
-                        </form>
+                <div class="modal-header">
+                    <h5>Estas escribiendo una Reseña del producto: {{ $producto->name }}</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url('update-review') }}" class="d-flex align-items-center flex-column"
+                        method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="d-flex flex-column w-100">
+                            <input type="hidden" name="review_id" id="reviewId">
+                            <textarea id="modalReview" name="user_review" style="resize: none; height:200px;"
+                                placeholder="Me encantó este producto!!"></textarea>
+                            <button type="submit" class="mt-4 btn btn-success">Agregar reseña</button>
+                        </div>
+                    </form>
 
-                        {{-- <form action="{{ url('update-review') }}" class=" d-flex align-items-center flex-column" method="POST">
+                    {{-- <form action="{{ url('update-review') }}" class=" d-flex align-items-center flex-column" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="d-flex flex-column col-md-6">
@@ -273,7 +282,7 @@
                                 <button type="submit" class="mt-4 btn btn-success">Edit reseña</button>
                             </div>
                         </form> --}}
-                    </div>
+                </div>
             </div>
         </div>
     </div>

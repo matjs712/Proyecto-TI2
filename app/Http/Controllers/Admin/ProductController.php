@@ -81,7 +81,7 @@ class ProductController extends Controller
             'price' => 'required|gt:0',
             'selling_price' => 'required',
             'image' => 'required|image|mimes:jpg,png',
-            'qty' => 'required|gt:0',
+            'qty' => 'required|gte:0',
         ];
 
         $messages = [
@@ -98,7 +98,7 @@ class ProductController extends Controller
             'image.mimes' => 'El archivo debe tener un formato de imagen válido (jpg, png).',
             'qty.required' => 'La cantidad es obligatoria.',
             'qty.gt' => 'La cantidad tiene que ser un número positivo.',
-            'price.gt' => 'El precio tiene que tener un valor positivo.',
+            'price.gte' => 'El precio tiene que tener un valor positivo.',
 
         ];
 
@@ -273,7 +273,7 @@ class ProductController extends Controller
             'price' => 'required|gt:0',
             'selling_price' => 'required',
             'image' => 'image|mimes:jpg,png',
-            'qty' => 'required|gt:0',
+            'qty' => 'required|gte:0',
 
         ];
 
@@ -284,7 +284,7 @@ class ProductController extends Controller
             'slug.required' => 'El slug es obligatorio.',
             'slug.unique' => 'El slug ya ha sido utilizado por otro producto.',
             'qty.gt' => 'La cantidad tiene que ser un número positivo.',
-            'price.gt' => 'El precio tiene que tener un valor positivo.',
+            'price.gte' => 'El precio tiene que tener un valor positivo.',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
 
