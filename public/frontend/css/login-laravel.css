@@ -197,3 +197,11 @@ a.forgot {
     margin-left: 10px;
     background-color: rgb(255, 220, 224);
 }
+
+
+@media only screen and (max-width: 767px) {
+    .container {
+        width: 80vw;
+    }
+  }
+  
