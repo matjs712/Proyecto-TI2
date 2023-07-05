@@ -45,7 +45,7 @@
                                             for="input-name">{{ $errors->first('lname') }}</span>
                                     @endif
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 mt-3">
                                     <label for="lastName">Email</label>
                                     <input type="email" name="email"
                                         value="{{ Auth::check() ? Auth::user()->email : '' }}" class="email form-control"
