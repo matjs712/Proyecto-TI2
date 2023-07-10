@@ -69,7 +69,7 @@ class DashboardController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
         if (!$validator->fails()) {
-
+            session()->flash('loading', true);
             try {
                 $user = new User();
                 $user->name = $request->name;
@@ -131,7 +131,7 @@ class DashboardController extends Controller
     {
 
         // dd($request);
-
+        session()->flash('loading', true);
         $logo_sitio = Logo::first();
 
         if ($request->hasFile('logo')) {
@@ -439,7 +439,5 @@ class DashboardController extends Controller
 
 
         return redirect('/configuracion')->with('status', 'Se ha configurado el tema Default en el sistema.');
-
-
     }
 }

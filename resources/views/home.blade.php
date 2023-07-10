@@ -3,22 +3,21 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
+    <div class = "design">
+        <div class="pill-1 rotate-45"></div>
+        <div class="pill-2 rotate-45"></div>
+        <div class="pill-3 rotate-45"></div>
+        <div class="pill-4 rotate-45"></div>
+    </div>
+            <div class="login">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
+                        <h3 class="title" role="alert">
                             {{ session('status') }}
-                        </div>
+                        </h3>
                     @endif
 
-                    {{ __('You are logged in!') }}
-                </div>
+                    <h3 class="title">{{ __('You are logged in!') }}</h3>
+                    <button class="login-btn" onclick="window.location.href = '{{ route('frontend.index') }}'">Ir al inicio!</button>
             </div>
-        </div>
-    </div>
 </div>
 @endsection

@@ -61,7 +61,7 @@ class IngredienteController extends Controller
         $rules = [
 
             'name' => 'required|string|min:3',
-            'cantidad' => 'required|numeric',
+            'cantidad' => 'required|numeric|gt:0',
             'medida' => 'required',
         ];
 
@@ -70,13 +70,14 @@ class IngredienteController extends Controller
             'required' => 'El campo es requerido.',
             'min' => 'El campo debe tener al menos :min caracteres.',
             'numeric' => 'El campo debe ser númerico',
+            'cantidad.gt' => 'La cantidad tiene que ser un número positivo.',
 
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if (!$validator->fails()) {
-
+            session()->flash('loading', true);
             DB::beginTransaction();
             try {
                 $ingrediente = new Ingrediente();
@@ -133,7 +134,7 @@ class IngredienteController extends Controller
         $rules = [
 
             'name' => 'required|string|min:3',
-            'cantidad' => 'required',
+            'cantidad' => 'required|numeric|gt:0',
             'medida' => 'required',
         ];
 
@@ -141,7 +142,7 @@ class IngredienteController extends Controller
 
             'required' => 'El campo es requerido.',
             'min' => 'El campo debe tener al menos :min caracteres.',
-
+            'cantidad.gt' => 'La cantidad tiene que ser un número positivo.',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);

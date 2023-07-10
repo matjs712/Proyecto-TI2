@@ -44,11 +44,7 @@ class NutritionalController extends Controller
 
         //AQUI VA LA VALIDACIÒN DEL FORMULARIO
         // dd($request);
-        $rules = [
-
-
-
-        ];
+        $rules = [];
 
         $messages = [
             'producto.required' => 'El producto es obligatorio.',
@@ -57,7 +53,7 @@ class NutritionalController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
         if (!$validator->fails()) {
-
+            session()->flash('loading', true);
             try {
                 $nutricional = new InfoNutricional();
 
@@ -104,11 +100,7 @@ class NutritionalController extends Controller
     public function update(Request $request, $id)
     {
 
-        $rules = [
-
-
-
-        ];
+        $rules = [];
 
         $messages = [
             'required' => 'El campo es requerido.',

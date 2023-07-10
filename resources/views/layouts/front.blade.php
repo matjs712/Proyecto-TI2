@@ -29,20 +29,6 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="{{ asset('frontend/css/login.css') }}">
 
-
-    <style>
-        body {
-            overflow-x: hidden;
-            font-family: 'Roboto Condensed';
-        }
-
-        a,
-        a:hover {
-            color: black;
-            text-decoration: none;
-        }
-    </style>
-
     @yield('css_after')
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -127,6 +113,7 @@
             });
         }
     </script>
+
     @yield('after_scripts')
 
     @if (session('status'))
@@ -134,7 +121,6 @@
             swal("{{ session('status') }}")
         </script>
     @endif
-
 </body>
 
 </html>
